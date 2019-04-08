@@ -3,3 +3,14 @@
 .menu-busca {
     background: $corVerdeClaro;
 }
+
+// Escolas
+
+.table-escolas {
+    tr {
+        cursor: pointer;
+        &.collapsing, &.collapse {
+            background: $corCinzaEscuro;
+        }
+    }
+}

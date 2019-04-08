@@ -4,7 +4,7 @@ class Mapa extends Component {
 
     render() {
         return(
-            <div></div>
+            <div className="col-4"></div>
         );
     }
 
