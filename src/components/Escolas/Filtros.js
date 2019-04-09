@@ -17,7 +17,7 @@ class Filtros extends Component {
         }
 
         this.filtraListagemEscolas = this.filtraListagemEscolas.bind(this);
-        // this.setEscola = this.setEscola.bind(this);
+        this.setEscola = this.setEscola.bind(this);
         this.setTipoEscola = this.setTipoEscola.bind(this);
         this.setDRE = this.setDRE.bind(this);
     }
@@ -32,14 +32,14 @@ class Filtros extends Component {
         )
     }
 
+    componentDidUpdate() {
+        this.filtraListagemEscolas();
+    }
+
     filtraListagemEscolas() {
         listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre).then(
             lista => PubSub.publish('lista-escolas', lista.results)
         )
-    }
-
-    componentDidUpdate() {
-        this.filtraListagemEscolas();
     }
 
     buscarEscolas(e) {
@@ -54,13 +54,12 @@ class Filtros extends Component {
         }
     }
 
-    setEscola = ( busca, callback ) => {
-        // new Promise(resolve => {
-            setTimeout(() => {
-                callback(this.buscarEscolas(busca));
-            }, 1000);
-        }
-    // });
+    loadEscolas = busca =>
+        new Promise(resolve => {
+            // setTimeout(() => {
+                resolve(this.buscarEscolas(busca));
+            // }, 1000);
+        });
 
     setTipoEscola(event) {
         this.setState({ tipoEscola : event.target.value });
@@ -68,6 +67,10 @@ class Filtros extends Component {
 
     setDRE(event) {
         this.setState({ dre : event.target.value });
+    }
+
+    setEscola(event) {
+        this.setState({ escola : event.label });
     }
 
     render() {
@@ -87,7 +90,7 @@ class Filtros extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-5">
-                                <AsyncSelect name="filtro-escola" id="filtro-escola" placeholder="Selecione a escola" cacheOptions defaultOptions loadOptions={ this.setEscola } />
+                                <AsyncSelect name="filtro-escola" id="filtro-escola" placeholder="Selecione a escola" cacheOptions defaultOptions loadOptions={ this.loadEscolas } onChange={ this.setEscola } />
                             </div>
                             <div className="col-2">
                                 <select name="filtro-tipo" id="filtro-tipo" className="custom-select rounded-pill" onChange={ this.setTipoEscola }>

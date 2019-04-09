@@ -26,7 +26,7 @@ class Escolas extends Component {
         return(
             <div className="bg-light">
                 <div className="container">
-                    <div className="row">
+                    <div className="row mb-4">
                         <div className="col-8">
                             <div className="mt-5 mb-5">
                                 <h2>Título</h2>
