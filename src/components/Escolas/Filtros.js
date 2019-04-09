@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { listarTiposEscola, listarDREs } from '../../services/escolas';
+import { listarTiposEscola, listarDREs, listarEscolas } from '../../services/escolas';
+import PubSub from 'pubsub-js';
 
 class Filtros extends Component {
 
@@ -7,8 +8,14 @@ class Filtros extends Component {
         super(props);
         this.state = {
             tiposEscola : [],
-            dres : []
+            dres : [],
+            tipoEscola : '',
+            dre : ''
         }
+
+        this.filtraListagemEscolas = this.filtraListagemEscolas.bind(this);
+        this.setTipoEscola = this.setTipoEscola.bind(this);
+        this.setDRE = this.setDRE.bind(this);
     }
 
     componentDidMount() {
@@ -19,6 +26,24 @@ class Filtros extends Component {
         listarDREs().then(
             lista => this.setState({ dres : lista.results })
         )
+    }
+
+    filtraListagemEscolas() {
+        listarEscolas(this.state.tipoEscola, this.state.dre).then(
+            lista => PubSub.publish('lista-escolas', lista.results)
+        )
+    }
+
+    componentDidUpdate() {
+        this.filtraListagemEscolas();
+    }
+
+    setTipoEscola(event) {
+        this.setState({ tipoEscola : event.target.value });
+    }
+
+    setDRE(event) {
+        this.setState({ dre : event.target.value });
     }
 
     render() {
@@ -43,17 +68,17 @@ class Filtros extends Component {
                                 </select>
                             </div>
                             <div className="col-2">
-                                <select name="filtro-tipo" id="filtro-tipo" className="custom-select rounded-pill">
+                                <select name="filtro-tipo" id="filtro-tipo" className="custom-select rounded-pill" onChange={ this.setTipoEscola }>
                                     <option value="">Selecione o tipo</option>
                                     {
                                         this.state.tiposEscola.map(function(tipo, indice) {
-                                            return <option key={ indice } value={ indice }>{ tipo.tipoesc }</option>
+                                            return <option key={ indice } value={ tipo.tipoesc }>{ tipo.tipoesc }</option>
                                         })
                                     }
                                 </select>
                             </div>
                             <div className="col-5">
-                            <   select name="filtro-dre" id="filtro-dre" className="custom-select rounded-pill">
+                                <select name="filtro-dre" id="filtro-dre" className="custom-select rounded-pill" onChange={ this.setDRE }>
                                     <option value="">Selecione a DRE</option>
                                     {
                                         this.state.dres.map(function(dre, indice) {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Mapa from '../Mapa/Mapa';
 import { listarEscolas } from '../../services/escolas';
+import PubSub from 'pubsub-js';
 
 class Escolas extends Component {
 
@@ -15,6 +16,10 @@ class Escolas extends Component {
         listarEscolas().then(
             lista => this.setState({ escolas : lista.results })
         )
+
+        PubSub.subscribe('lista-escolas', function(topico, novaLista) {
+            this.setState({ escolas : novaLista })
+        }.bind(this));
     }
 
     render() {
