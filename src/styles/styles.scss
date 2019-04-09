@@ -1,5 +1,7 @@
 @import 'variaveis.scss';
 
+// Menu Busca
+
 .menu-busca {
     background: $corVerdeClaro;
 }
@@ -13,4 +15,11 @@
             background: $corCinzaEscuro;
         }
     }
+}
+
+// Rodapé
+
+.rodape {
+    background: $corVerdeEscuro;
+    color: $corBranco;
 }

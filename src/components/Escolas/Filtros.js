@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { listarTiposEscola, listarDREs, listarEscolas } from '../../services/escolas';
 import PubSub from 'pubsub-js';
+import AsyncSelect from 'react-select/lib/Async';
 
 class Filtros extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            escolas : [],
             tiposEscola : [],
             dres : [],
+            escola : '',
             tipoEscola : '',
             dre : ''
         }
 
         this.filtraListagemEscolas = this.filtraListagemEscolas.bind(this);
+        // this.setEscola = this.setEscola.bind(this);
         this.setTipoEscola = this.setTipoEscola.bind(this);
         this.setDRE = this.setDRE.bind(this);
     }
@@ -29,7 +33,7 @@ class Filtros extends Component {
     }
 
     filtraListagemEscolas() {
-        listarEscolas(this.state.tipoEscola, this.state.dre).then(
+        listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre).then(
             lista => PubSub.publish('lista-escolas', lista.results)
         )
     }
@@ -37,6 +41,26 @@ class Filtros extends Component {
     componentDidUpdate() {
         this.filtraListagemEscolas();
     }
+
+    buscarEscolas(e) {
+        if (e.length >= 3) {
+            let escolas = [];
+            listarEscolas(e).then(
+                lista => lista.results.forEach(function(escola) {
+                    escolas.push({value : escola.codesc, label : escola.nomesc })
+                })
+            )
+            return escolas;
+        }
+    }
+
+    setEscola = ( busca, callback ) => {
+        // new Promise(resolve => {
+            setTimeout(() => {
+                callback(this.buscarEscolas(busca));
+            }, 1000);
+        }
+    // });
 
     setTipoEscola(event) {
         this.setState({ tipoEscola : event.target.value });
@@ -63,9 +87,7 @@ class Filtros extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-5">
-                                <select name="filtro-escola" id="filtro-escola" className="custom-select rounded-pill">
-                                    <option value="">Selecione a escola</option>
-                                </select>
+                                <AsyncSelect name="filtro-escola" id="filtro-escola" placeholder="Selecione a escola" cacheOptions defaultOptions loadOptions={ this.setEscola } />
                             </div>
                             <div className="col-2">
                                 <select name="filtro-tipo" id="filtro-tipo" className="custom-select rounded-pill" onChange={ this.setTipoEscola }>
