@@ -8,31 +8,63 @@ class Escolas extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            escolas : []
+            escolas : [],
+            count : 0,
+            start : 2,
+            escola : '',
+            tipoEscola : '',
+            dre : ''
         }
+        this.loadMore = this.loadMore.bind(this);
     }
 
     componentDidMount() {
         listarEscolas().then(
-            lista => this.setState({ escolas : lista.results })
+            lista => {
+                this.setState({ escolas : lista.results });
+                this.setState({ count : Math.round(lista.count/10) });
+            }
         )
 
-        PubSub.subscribe('lista-escolas', function(topico, novaLista) {
-            this.setState({ escolas : novaLista })
+        PubSub.subscribe('lista-escolas', function(topico, listaEscolas) {
+            this.setState({ escolas : listaEscolas })
         }.bind(this));
+
+        PubSub.subscribe('tipo-escola-filtro', function(topico, filtro) {
+            this.setState({ tipoEscola : filtro })
+        }.bind(this));
+
+        PubSub.subscribe('dre-filtro', function(topico, filtro) {
+            this.setState({ dre : filtro })
+        }.bind(this));
+
+        var tabela = document.querySelector('.tabela-escolas');
+        tabela.addEventListener('scroll', this.olar);
+    }
+
+    olar() {
+        window.alert('olar');
+    }
+
+    loadMore() {
+        if (this.state.start < this.state.count) {
+            listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre, this.state.start).then(
+                lista => {
+                    let novaListaEscolas = this.state.escolas.concat(lista.results);
+                    this.setState({ escolas : novaListaEscolas });
+                    this.setState({ start : this.state.start + 1 });
+                }
+            )
+        }
     }
 
     render() {
         return(
-            <div className="bg-light">
+            <div className="bg-light w-100 h-100">
                 <div className="container">
-                    <div className="row mb-4">
-                        <div className="col-8">
-                            <div className="mt-5 mb-5">
-                                <h2>Título</h2>
-                                <p>Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
-                            </div>
-                            <table className="table table-escolas">
+                    <div className="row">
+                        <div className="col-6">
+                            <table className="table tabela-escolas">
                                 <thead>
                                     <tr>
                                         <th>Código</th>
@@ -75,7 +107,16 @@ class Escolas extends Component {
                                 </tbody>
                             </table>
                         </div>
-                        <Mapa />
+                        <div className="col-6 h-100">
+                            <Mapa />
+                        </div>
+                    </div>
+                </div>
+                <div className="bg-white w-100 p-5">
+                    <div className="container">
+                        <div className="col-12">
+                            <button onClick={ this.loadMore }>Mais Escolas</button>
+                        </div>
                     </div>
                 </div>
             </div>

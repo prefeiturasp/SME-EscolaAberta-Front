@@ -16,7 +16,7 @@ class Filtros extends Component {
             dre : ''
         }
 
-        this.filtraListagemEscolas = this.filtraListagemEscolas.bind(this);
+        this.filtraListagemEscolas = this.filtrarListagemEscolas.bind(this);
         this.setEscola = this.setEscola.bind(this);
         this.setTipoEscola = this.setTipoEscola.bind(this);
         this.setDRE = this.setDRE.bind(this);
@@ -32,45 +32,70 @@ class Filtros extends Component {
         )
     }
 
-    componentDidUpdate() {
-        this.filtraListagemEscolas();
+    componentWillMount() {
+        listarEscolas().then(
+            lista => {
+                let escolas = [];
+                lista.results.forEach(function(escola) {
+                    escolas.push({value : escola.codesc, label : escola.nomesc })
+                })
+                this.setState({ escolas : escolas })
+            }
+        )
     }
 
-    filtraListagemEscolas() {
+    componentDidUpdate() {
+        this.filtrarListagemEscolas();
+    }
+
+    filtrarListagemEscolas() {
         listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre).then(
             lista => PubSub.publish('lista-escolas', lista.results)
         )
     }
 
-    buscarEscolas(e) {
-        if (e.length >= 3) {
-            let escolas = [];
-            listarEscolas(e).then(
-                lista => lista.results.forEach(function(escola) {
-                    escolas.push({value : escola.codesc, label : escola.nomesc })
-                })
-            )
-            return escolas;
-        }
+    buscarEscolas = (e) => {
+        let escolas = [];
+        listarEscolas(e).then(
+            lista => {
+                if (lista.results !== this.state.escolas) {
+                    lista.results.forEach(function(escola) {
+                        escolas.push({value : escola.codesc, label : escola.nomesc })
+                    })
+                    this.setState({ escolas :  escolas });
+                } else {
+                    escolas = this.state.escolas;
+                }
+            }
+        )
+        return escolas;
     }
 
-    loadEscolas = busca =>
-        new Promise(resolve => {
-            // setTimeout(() => {
-                resolve(this.buscarEscolas(busca));
-            // }, 1000);
-        });
+    loadEscolas = e =>
+    new Promise(resolve => {
+        // setTimeout(() => {
+            resolve(this.buscarEscolas(e));
+        // }, 1000);
+    });
 
     setTipoEscola(event) {
         this.setState({ tipoEscola : event.target.value });
+        PubSub.publish('tipo-escola-filtro', event.target.value);
     }
 
     setDRE(event) {
         this.setState({ dre : event.target.value });
+        PubSub.publish('dre-filtro', event.target.value);
     }
 
-    setEscola(event) {
-        this.setState({ escola : event.label });
+    setEscola = (value) => {
+        console.log('valor ' + value);
+        this.setState({ escola : value });
+    }
+
+    clearEscola = (value) => {
+        console.log('limpou');
+        this.setState({ escola : null });
     }
 
     render() {
@@ -90,7 +115,7 @@ class Filtros extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-5">
-                                <AsyncSelect name="filtro-escola" id="filtro-escola" placeholder="Selecione a escola" cacheOptions defaultOptions loadOptions={ this.loadEscolas } onChange={ this.setEscola } />
+                                <AsyncSelect key={ this.state.escolas } loadOptions={ this.buscarEscolas } />
                             </div>
                             <div className="col-2">
                                 <select name="filtro-tipo" id="filtro-tipo" className="custom-select rounded-pill" onChange={ this.setTipoEscola }>

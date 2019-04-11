@@ -8,12 +8,16 @@
 
 // Escolas
 
-.table-escolas {
+.tabela-escolas {
+    font-size: 0.8rem;
     tr {
         cursor: pointer;
         &.collapsing, &.collapse {
             background: $corCinzaEscuro;
         }
+    }
+    tr[aria-expanded=true] {
+        background: $corCinzaEscuro;
     }
 }
 

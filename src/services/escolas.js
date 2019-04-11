@@ -1,13 +1,16 @@
 import { URL_API } from './base';
 
-export async function listarEscolas(nomesc, tipoesc, dre) {
+export async function listarEscolas(nomesc, tipoesc, dre, pagina) {
     var filtros = '';
     if (dre === undefined) dre = '';
     if (tipoesc === undefined) tipoesc = '';
+    if (nomesc === undefined) nomesc = '';
+    if (pagina === undefined) pagina = '1';
+
     filtros += '&dre=' + dre;
     filtros += '&tipoesc=' + tipoesc;
 
-    return fetch(`${URL_API}/escolas/?search=${nomesc}${filtros}`).then(
+    return fetch(`${URL_API}/escolas/?search=${nomesc}${filtros}&page=${pagina}`).then(
         escolas => escolas.json()
     )
 }
