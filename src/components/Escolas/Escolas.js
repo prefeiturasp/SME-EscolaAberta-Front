@@ -48,6 +48,15 @@ export default class Escolas extends Component {
         PubSub.publish('escola', escola);
         PubSub.publish('latitude', latitude);
         PubSub.publish('longitude', longitude);
+        console.log(this);
+    }
+
+    limparCheckboxes(event) {
+        document.querySelectorAll('input[type=checkbox]').forEach(e => {
+            if (e !== event.target) {
+                e.checked = false;
+            }
+        });
     }
 
     carregarMaisEscolas() {
@@ -67,7 +76,7 @@ export default class Escolas extends Component {
             <div className="bg-light w-100 h-100">
                 <div className="container">
                     <div className="row">
-                        <div className="col-6">
+                        <div className="col-lg-6 col-xs-12">
                             <table className="table tabela-escolas">
                                 <thead>
                                     <tr>
@@ -83,12 +92,12 @@ export default class Escolas extends Component {
                                         this.state.escolas.map((escola, indice) => {
                                             return (
                                                 <React.Fragment key={ indice }>
-                                                    <tr data-toggle="collapse" href={ `#escola-${escola.codesc}` } aria-expanded="false" aria-controls={ `escola-${escola.codesc}` }>
+                                                    <tr>
                                                         <td>{ escola.codesc }</td>
                                                         <td>{ escola.nomesc }</td>
                                                         <td>{ escola.tipoesc }</td>
                                                         <td>{ escola.subpref }</td>
-                                                        <td><input type="checkbox" onClick={ () => this.atualizarMapa(escola.nomesc, escola.latitude, escola.longitude) } /></td>
+                                                        <td><input type="checkbox" data-toggle="collapse" href={ `#escola-${escola.codesc}` } aria-controls={ `escola-${escola.codesc}` } onChange={ this.limparCheckboxes } onClick={ () => this.atualizarMapa(escola.nomesc, escola.latitude, escola.longitude) } /></td>
                                                     </tr>
                                                     <tr id={ `escola-${escola.codesc}` } className="collapse">
                                                         <td></td>
