@@ -31,7 +31,7 @@ export default class Mapa extends Component {
 
     render() {
         return(
-            <div className="mapa">
+            <div className="mapa h-100 w-100">
                 <Map center={ [ this.state.lat, this.state.lng ] } zoom={ this.state.zoom } style={ { height: this.state.height } } >
                     <TileLayer
                         attribution=''

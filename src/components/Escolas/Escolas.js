@@ -55,6 +55,9 @@ export default class Escolas extends Component {
         document.querySelectorAll('input[type=checkbox]').forEach(e => {
             if (e !== event.target) {
                 e.checked = false;
+                document.querySelectorAll('.collapse').forEach(c => {
+                    c.classList.remove('show');
+                });
             }
         });
     }
