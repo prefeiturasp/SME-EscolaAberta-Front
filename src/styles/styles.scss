@@ -21,6 +21,21 @@
     }
 }
 
+.btn-success {
+    background: $corVerdeClaro !important;
+    border-color: $corVerdeClaro !important;
+}
+
+// Mapa
+
+.mapa {
+    background: $corBranco;
+    border: 0 none;
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+  }
+
 // Rodapé
 
 .rodape {

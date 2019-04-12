@@ -3,19 +3,20 @@ import Mapa from '../Mapa/Mapa';
 import { listarEscolas } from '../../services/escolas';
 import PubSub from 'pubsub-js';
 
-class Escolas extends Component {
+export default class Escolas extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             escolas : [],
-            count : 0,
-            start : 2,
+            totalItens : 0,
+            comeco : 1,
             escola : '',
             tipoEscola : '',
             dre : ''
         }
-        this.loadMore = this.loadMore.bind(this);
+        this.atualizaMapa = this.atualizarMapa.bind(this);
+        this.carregarMaisEscolas = this.carregarMaisEscolas.bind(this);
     }
 
     componentDidMount() {
@@ -38,21 +39,24 @@ class Escolas extends Component {
             this.setState({ dre : filtro })
         }.bind(this));
 
-        var tabela = document.querySelector('.tabela-escolas');
-        tabela.addEventListener('scroll', this.olar);
+        PubSub.subscribe('total-itens', function(topico, total) {
+            this.setState({ totalItens : total })
+        }.bind(this));
     }
 
-    olar() {
-        window.alert('olar');
+    atualizarMapa(escola, latitude, longitude) {
+        PubSub.publish('escola', escola);
+        PubSub.publish('latitude', latitude);
+        PubSub.publish('longitude', longitude);
     }
 
-    loadMore() {
-        if (this.state.start < this.state.count) {
-            listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre, this.state.start).then(
+    carregarMaisEscolas() {
+        if (this.state.comeco < this.state.totalItens) {
+            listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre, this.state.comeco).then(
                 lista => {
                     let novaListaEscolas = this.state.escolas.concat(lista.results);
                     this.setState({ escolas : novaListaEscolas });
-                    this.setState({ start : this.state.start + 1 });
+                    this.setState({ start : this.state.comeco + 1 });
                 }
             )
         }
@@ -76,7 +80,7 @@ class Escolas extends Component {
                                 </thead>
                                 <tbody>
                                     {
-                                        this.state.escolas.map(function(escola, indice) {
+                                        this.state.escolas.map((escola, indice) => {
                                             return (
                                                 <React.Fragment key={ indice }>
                                                     <tr data-toggle="collapse" href={ `#escola-${escola.codesc}` } aria-expanded="false" aria-controls={ `escola-${escola.codesc}` }>
@@ -84,7 +88,7 @@ class Escolas extends Component {
                                                         <td>{ escola.nomesc }</td>
                                                         <td>{ escola.tipoesc }</td>
                                                         <td>{ escola.subpref }</td>
-                                                        <td><input type="checkbox" /></td>
+                                                        <td><input type="checkbox" onClick={ () => this.atualizarMapa(escola.nomesc, escola.latitude, escola.longitude) } /></td>
                                                     </tr>
                                                     <tr id={ `escola-${escola.codesc}` } className="collapse">
                                                         <td></td>
@@ -107,7 +111,7 @@ class Escolas extends Component {
                                 </tbody>
                             </table>
                         </div>
-                        <div className="col-6 h-100">
+                        <div className="col-6">
                             <Mapa />
                         </div>
                     </div>
@@ -115,7 +119,7 @@ class Escolas extends Component {
                 <div className="bg-white w-100 p-5">
                     <div className="container">
                         <div className="col-12">
-                            <button onClick={ this.loadMore }>Mais Escolas</button>
+                            <button type="button" className="btn btn-lg btn-success" onClick={ this.carregarMaisEscolas }>Mais Escolas</button>
                         </div>
                     </div>
                 </div>
@@ -124,5 +128,3 @@ class Escolas extends Component {
     }
 
 }
-
-export default Escolas;

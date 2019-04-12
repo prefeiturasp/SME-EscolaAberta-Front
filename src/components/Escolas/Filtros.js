@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { listarTiposEscola, listarDREs, listarEscolas } from '../../services/escolas';
 import PubSub from 'pubsub-js';
 import AsyncSelect from 'react-select/lib/Async';
+import { listarTiposEscola, listarDREs, listarEscolas } from '../../services/escolas';
 
 class Filtros extends Component {
 
@@ -50,7 +50,10 @@ class Filtros extends Component {
 
     filtrarListagemEscolas() {
         listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre).then(
-            lista => PubSub.publish('lista-escolas', lista.results)
+            lista => {
+                PubSub.publish('lista-escolas', lista.results);
+                PubSub.publish('total-itens', lista.count);
+            }
         )
     }
 
@@ -88,14 +91,8 @@ class Filtros extends Component {
         PubSub.publish('dre-filtro', event.target.value);
     }
 
-    setEscola = (value) => {
-        console.log('valor ' + value);
-        this.setState({ escola : value });
-    }
-
-    clearEscola = (value) => {
-        console.log('limpou');
-        this.setState({ escola : null });
+    setEscola(event) {
+        this.setState({ escola : event.target.value });
     }
 
     render() {
@@ -104,11 +101,9 @@ class Filtros extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-6">
-                            <h1>Escola Aberta</h1>
+                            <h2>Escola Aberta</h2>
                         </div>
-                        <div className="col-6">
-                            <h2>Consulte sua posição</h2>
-                        </div>
+                        <div className="col-6"></div>
                     </div>
                 </div>
                 <div className="menu-busca p-3">

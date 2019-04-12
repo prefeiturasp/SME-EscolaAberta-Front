@@ -4,7 +4,7 @@ import Escolas from './components/Escolas/Escolas';
 import Rodape from './components/Rodape/Rodape';
 import './styles/styles.scss';
 
-class App extends Component {
+export default class App extends Component {
 	render() {
 		return (
 			<div>
@@ -15,5 +15,3 @@ class App extends Component {
 		);
 	}
 }
-
-export default App;

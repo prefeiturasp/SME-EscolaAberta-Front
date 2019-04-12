@@ -1,15 +1,50 @@
 import React, { Component } from 'react';
+import PubSub from 'pubsub-js';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 
-class Mapa extends Component {
+export default class Mapa extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            escola: '',
+            lat: -23.612237,
+            lng: -46.749888,
+            zoom: 17,
+            height: '540px'
+        }
+    }
+
+    componentDidMount() {
+        PubSub.subscribe('escola', function(topico, escola) {
+            this.setState({ escola : escola })
+        }.bind(this));
+
+        PubSub.subscribe('latitude', function(topico, latitude) {
+            this.setState({ lat : latitude })
+        }.bind(this));
+
+        PubSub.subscribe('longitude', function(topico, longitude) {
+            this.setState({ lng : longitude })
+        }.bind(this));
+    }
 
     render() {
         return(
-            <div>
-                <iframe title="asa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d467692.0488661539!2d-46.87549743438982!3d-23.681531449872665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce448183a461d1%3A0x9ba94b08ff335bae!2zU8OjbyBQYXVsbywgU1A!5e0!3m2!1spt-BR!2sbr!4v1555009297686!5m2!1spt-BR!2sbr" width="100%" height="100%" frameBorder="0" allowFullScreen></iframe>
+            <div className="mapa">
+                <Map center={ [ this.state.lat, this.state.lng ] } zoom={ this.state.zoom } style={ { height: this.state.height } } >
+                    <TileLayer
+                        attribution=''
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={ [ this.state.lat, this.state.lng ] }>
+                        <Popup>
+                            { this.state.escola }
+                        </Popup>
+                    </Marker>
+                </Map>
             </div>
         );
     }
 
 }
-
-export default Mapa;
