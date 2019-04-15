@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
 import Mapa from '../Mapa/Mapa';
-import TabelaEscolas from './TabelaEscolas';
+import TabelaEscolas from './Tabela';
 import { listarEscolas } from '../../services/escolas';
 
 export default class Escolas extends Component {
