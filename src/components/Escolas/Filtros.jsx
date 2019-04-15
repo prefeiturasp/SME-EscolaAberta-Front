@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
-import AsyncSelect from 'react-select/lib/Async';
+import SelectCustomizado from '../Inputs/SelectCustomizado';
+import SelectAutocomplete from '../Inputs/SelectAutocomplete';
 import { listarTiposEscola, listarDREs, listarEscolas } from '../../services/escolas';
 
-class Filtros extends Component {
+export default class Filtros extends Component {
 
     constructor(props) {
         super(props);
@@ -38,8 +39,8 @@ class Filtros extends Component {
                 let escolas = [];
                 lista.results.forEach(function(escola) {
                     escolas.push({value : escola.codesc, label : escola.nomesc })
-                })
-                this.setState({ escolas : escolas })
+                });
+                this.setState({ escolas : escolas });
             }
         )
     }
@@ -58,28 +59,36 @@ class Filtros extends Component {
     }
 
     buscarEscolas = (e) => {
-        let escolas = [];
-        listarEscolas(e).then(
-            lista => {
-                if (lista.results !== this.state.escolas) {
+        if (e.target.value.length >= 3) {
+            let escolas = [];
+            listarEscolas(e.target.value).then(
+                lista => {
                     lista.results.forEach(function(escola) {
-                        escolas.push({value : escola.codesc, label : escola.nomesc })
-                    })
+                        escolas.push({value : escola.codesc, label : escola.nomesc });
+                    });
                     this.setState({ escolas :  escolas });
-                } else {
-                    escolas = this.state.escolas;
                 }
-            }
-        )
-        return escolas;
+            )
+        }
     }
 
-    loadEscolas = e =>
-    new Promise(resolve => {
-        // setTimeout(() => {
-            resolve(this.buscarEscolas(e));
-        // }, 1000);
-    });
+    setEscola(collection, e) {
+        var filter = {};
+
+        Object.entries(collection).map(([key, item]) => {
+            if (item.label.includes(e))
+                filter[key] = item;
+            return filter;
+        });
+
+        collection = filter;
+
+        this.setState({
+            escola: e,
+            escolas: collection
+        });
+        PubSub.publish('escola-filtro', e);
+    }
 
     setTipoEscola(event) {
         this.setState({ tipoEscola : event.target.value });
@@ -89,10 +98,6 @@ class Filtros extends Component {
     setDRE(event) {
         this.setState({ dre : event.target.value });
         PubSub.publish('dre-filtro', event.target.value);
-    }
-
-    setEscola(event) {
-        this.setState({ escola : event.target.value });
     }
 
     render() {
@@ -109,28 +114,39 @@ class Filtros extends Component {
                 <div className="menu-busca p-3">
                     <div className="container">
                         <div className="row">
-                            <div className="col-5">
-                                <AsyncSelect key={ this.state.escolas } loadOptions={ this.buscarEscolas } />
+                            <div className="col-lg-5 col-xs-12">
+                                <SelectAutocomplete
+                                    value={this.state.escola}
+                                    collection={this.state.escolas}
+                                    className="custom-select rounded-pill"
+                                    placeholder="Selecione a escola"
+                                    onChange={this.setEscola}
+                                    onKeyDown={this.buscarEscolas}
+                                />
                             </div>
-                            <div className="col-2">
-                                <select name="filtro-tipo" id="filtro-tipo" className="custom-select rounded-pill" onChange={ this.setTipoEscola }>
-                                    <option value="">Selecione o tipo</option>
-                                    {
-                                        this.state.tiposEscola.map(function(tipo, indice) {
-                                            return <option key={ indice } value={ tipo.tipoesc }>{ tipo.tipoesc }</option>
-                                        })
-                                    }
-                                </select>
+                            <div className="col-lg-2 col-xs-12">
+                                <SelectCustomizado
+                                    name="filtro-tipo"
+                                    id="filtro-tipo"
+                                    className="custom-select rounded-pill"
+                                    emptyLabel="Selecione o tipo"
+                                    lista={this.state.tiposEscola}
+                                    value="tipoesc"
+                                    label="tipoesc"
+                                    onChange={this.setTipoEscola}
+                                />
                             </div>
-                            <div className="col-5">
-                                <select name="filtro-dre" id="filtro-dre" className="custom-select rounded-pill" onChange={ this.setDRE }>
-                                    <option value="">Selecione a DRE</option>
-                                    {
-                                        this.state.dres.map(function(dre, indice) {
-                                            return <option key={ indice } value={ dre.dre }>{ dre.diretoria }</option>
-                                        })
-                                    }
-                                </select>
+                            <div className="col-lg-5 col-xs-12">
+                                <SelectCustomizado
+                                    name="filtro-dre"
+                                    id="filtro-dre"
+                                    className="custom-select rounded-pill"
+                                    emptyLabel="Selecione a DRE"
+                                    lista={this.state.dres}
+                                    value="dre"
+                                    label="diretoria"
+                                    onChange={this.setDRE}
+                                />
                             </div>
                         </div>
                     </div>
@@ -140,5 +156,3 @@ class Filtros extends Component {
     }
 
 }
-
-export default Filtros;
