@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Mapa from '../Mapa/Mapa';
-import { listarEscolas } from '../../services/escolas';
 import PubSub from 'pubsub-js';
+import Mapa from '../Mapa/Mapa';
 import TabelaEscolas from './TabelaEscolas';
+import { listarEscolas } from '../../services/escolas';
 
 export default class Escolas extends Component {
 
@@ -85,10 +85,16 @@ export default class Escolas extends Component {
             <div className="bg-light w-100 h-100">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-6 col-xs-12">
-                            <TabelaEscolas lista={this.state.escolas} limparCheckboxes={this.limparCheckboxes} atualizarMapa={this.atualizarMapa} />
+                        <div className="col-lg-6 col-xs-12 escolas">
+                            <div className="pt-4 pb-4">
+                                <h2>Título</h2>
+                                <p>Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
+                            </div>
+                            <div className="overflow-auto">
+                                <TabelaEscolas lista={this.state.escolas} limparCheckboxes={this.limparCheckboxes} atualizarMapa={this.atualizarMapa} />
+                            </div>
                         </div>
-                        <div className="col-lg-6 col-xs-12">
+                        <div className="col-lg-6 col-xs-12 mapa-completo">
                             <Mapa />
                         </div>
                     </div>
@@ -96,7 +102,8 @@ export default class Escolas extends Component {
                 <div className="bg-white w-100 p-5">
                     <div className="container">
                         <div className="col-12">
-                            <button type="button" className="btn btn-lg btn-success" onClick={this.carregarMaisEscolas}>Mais Escolas</button>
+                            <button type="button" className="btn btn-lg btn-success btn-mais-escolas" onClick={this.carregarMaisEscolas}>Mais Escolas</button>
+                            <button type="button" className="ml-5 btn btn-lg btn-outline-success btn-estatisticas">Estatísticas</button>
                         </div>
                     </div>
                 </div>

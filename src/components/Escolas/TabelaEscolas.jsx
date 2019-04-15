@@ -20,7 +20,7 @@ export default class TabelaEscolas extends Component {
                             return (
                                 <React.Fragment key={indice}>
                                     <tr>
-                                        <td>{escola.codesc}</td>
+                                        <td className="text-primary"><strong>{escola.codesc}</strong></td>
                                         <td>{escola.nomesc}</td>
                                         <td>{escola.tipoesc}</td>
                                         <td>{escola.subpref}</td>

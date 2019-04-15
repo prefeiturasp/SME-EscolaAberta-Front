@@ -35,7 +35,7 @@ export default class SelectAutocomplete extends Component {
     render() {
         return (
             <div className="w-100 position-relative" onBlur={this.focusOut}>
-                <input type="text" {...this.props} onClick={this.toggle} onChange={this.onTextChange} onKeyDown={this.props.onKeyDown} value={this.props.value} />
+                <input type="text" className={this.props.className} placeholder={this.props.placeholder} onKeyDown={this.props.onKeyDown} value={this.props.value} onClick={this.toggle} onChange={this.onTextChange} />
 
                 {this.state.toggle &&
                     <div className="card w-100 position-absolute overflow-hidden" style={{top: '40px', maxHeight: '200px', zIndex: 5, overflowY: 'auto' }}>

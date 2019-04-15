@@ -1,5 +1,11 @@
 @import 'variaveis.scss';
 
+// Fonte
+
+@mixin font-size($size) {
+    font-size: $size;
+}
+
 // Mouse
 
 .cursor-default {
@@ -14,31 +20,61 @@
 
 // Escolas
 
-.tabela-escolas {
-    font-size: 0.8rem;
-    tr {
-        cursor: pointer;
-        &.collapsing, &.collapse {
-            background: $corCinzaEscuro;
-        }
+.escolas {
+    p {
+        @include font-size(0.8rem);
     }
-    tr[aria-expanded=true] {
-        background: $corCinzaEscuro;
+    .overflow-auto {
+        max-height: 370px;
+        .tabela-escolas {
+            @include font-size(0.8rem);
+            tr {
+                cursor: pointer;
+                &.collapsing, &.collapse {
+                    background: $corCinzaEscuro;
+                }
+            }
+            tr[aria-expanded=true] {
+                background: $corCinzaEscuro;
+            }
+        }
     }
 }
 
-.btn-success {
-    background: $corVerdeClaro !important;
-    border-color: $corVerdeClaro !important;
+.btn-mais-escolas {
+    background: $corVerdeEscuro !important;
+    border-color: $corVerdeEscuro !important;
+    color: $corBranco !important;
+    &:hover {
+        background: $corBranco !important;
+        color: $corVerdeEscuro !important;
+    }
+}
+
+.btn-estatisticas {
+    border-color: $corVerdeEscuro !important;
+    color: $corVerdeEscuro !important;
+    &:hover {
+        background: $corVerdeEscuro !important;
+        color: $corBranco !important;
+    }
 }
 
 // Mapa
 
-.mapa {
-    background: $corBranco;
-    border: 0 none;
-    box-sizing: border-box;
-  }
+.mapa-completo {
+    @media (min-width: 992px) {
+        padding-right: 0 !important;
+        position: absolute !important;
+        right: 0;
+        width: 100% !important;
+    }
+    .mapa {
+        background: $corBranco;
+        border: 0 none;
+        box-sizing: border-box;
+    }
+}
 
 // Rodapé
 
