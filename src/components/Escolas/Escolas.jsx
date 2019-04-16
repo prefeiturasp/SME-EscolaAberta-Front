@@ -69,7 +69,7 @@ export default class Escolas extends Component {
     }
 
     carregarMaisEscolas() {
-        if (this.state.pagina < this.state.totalItens) {
+        if (this.state.pagina <= this.state.totalItens) {
             listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre, this.state.pagina).then(
                 lista => {
                     let novaListaEscolas = this.state.escolas.concat(lista.results);

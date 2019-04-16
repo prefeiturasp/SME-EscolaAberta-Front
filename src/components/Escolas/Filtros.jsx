@@ -59,6 +59,7 @@ export default class Filtros extends Component {
     }
 
     buscarEscolas = (e) => {
+        console.log(e);
         if (e.target.value.length >= 3) {
             let escolas = [];
             listarEscolas(e.target.value).then(

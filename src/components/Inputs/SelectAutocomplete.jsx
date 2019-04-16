@@ -34,17 +34,18 @@ export default class SelectAutocomplete extends Component {
         return (
             <div className="w-100 position-relative" onBlur={this.focusOut}>
                 <input type="text" className={this.props.className} placeholder={this.props.placeholder} onKeyDown={this.props.onKeyDown} value={this.props.value} onClick={this.toggle} onChange={this.onTextChange} />
-
-                {this.state.toggle &&
-                    <div className="card w-100 position-absolute overflow-hidden" style={{top: '40px', maxHeight: '200px', zIndex: 5, overflowY: 'auto' }}>
-                        {Object.entries(this.props.collection).length > 0 ?
-                            <table className="table-sm table-hover border-0">
+                {
+                    this.state.toggle &&
+                    <div className="card w-100 position-absolute" style={{top: '40px', maxHeight: '200px', zIndex: 5, overflowY: 'auto' }}>
+                        {
+                            Object.entries(this.props.collection).length > 0 ?
+                            <table className="table-sm table-hover table-borderless">
                                 <tbody>
                                     {Object.entries(this.props.collection).map(([key, item]) =>
                                         item.active ?
-                                            <tr key={key} className="table-active cursor-default"><td className="border-0" onMouseDown={this.onSelect}>{item.label}</td></tr>
+                                            <tr key={key} className="cursor-default"><td onMouseDown={this.onSelect}>{item.label}</td></tr>
                                             :
-                                            <tr key={key} className="cursor-default"><td className="border-0" onMouseDown={this.onSelect}>{item.label}</td></tr>
+                                            <tr key={key} className="cursor-default"><td onMouseDown={this.onSelect}>{item.label}</td></tr>
                                     )}
                                 </tbody>
                             </table>
