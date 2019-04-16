@@ -36,7 +36,7 @@ export default class SelectAutocomplete extends Component {
                 <input type="text" className={this.props.className} placeholder={this.props.placeholder} onKeyDown={this.props.onKeyDown} value={this.props.value} onClick={this.toggle} onChange={this.onTextChange} />
                 {
                     this.state.toggle &&
-                    <div className="card w-100 mt-1 position-absolute shadow resultados-busca">
+                    <div className="card w-100 position-absolute shadow rounded-0 border border-info resultados-busca">
                         {
                             Object.entries(this.props.collection).length > 0 ?
                             <table className="table-sm table-hover table-borderless">
