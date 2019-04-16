@@ -2,32 +2,36 @@
 
 // Fonte
 
-@mixin font-size($size) {
+@mixin fonte($size) {
     font-size: $size;
 }
 
-// Mouse
-
-.cursor-default {
-    cursor: default;
-}
-
-// Menu Busca
+// Filtro
 
 .menu-busca {
     background: $corVerdeClaro;
+}
+
+.cursor-padrao {
+    cursor: default;
+}
+
+.resultados-busca {
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 5;
 }
 
 // Escolas
 
 .escolas {
     p {
-        @include font-size(0.8rem);
+        @include fonte(0.8rem);
     }
     .overflow-auto {
         max-height: 370px;
         .tabela-escolas {
-            @include font-size(0.8rem);
+            @include fonte(0.8rem);
             tr {
                 cursor: pointer;
                 &.collapsing, &.collapse {

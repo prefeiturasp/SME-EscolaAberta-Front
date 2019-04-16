@@ -36,16 +36,13 @@ export default class SelectAutocomplete extends Component {
                 <input type="text" className={this.props.className} placeholder={this.props.placeholder} onKeyDown={this.props.onKeyDown} value={this.props.value} onClick={this.toggle} onChange={this.onTextChange} />
                 {
                     this.state.toggle &&
-                    <div className="card w-100 position-absolute" style={{top: '40px', maxHeight: '200px', zIndex: 5, overflowY: 'auto' }}>
+                    <div className="card w-100 mt-1 position-absolute shadow resultados-busca">
                         {
                             Object.entries(this.props.collection).length > 0 ?
                             <table className="table-sm table-hover table-borderless">
                                 <tbody>
-                                    {Object.entries(this.props.collection).map(([key, item]) =>
-                                        item.active ?
-                                            <tr key={key} className="cursor-default"><td onMouseDown={this.onSelect}>{item.label}</td></tr>
-                                            :
-                                            <tr key={key} className="cursor-default"><td onMouseDown={this.onSelect}>{item.label}</td></tr>
+                                    {Object.entries(this.props.collection).map(([indice, item]) =>
+                                        <tr key={indice} className="pl-2 cursor-padrao"><td onMouseDown={this.onSelect}>{item.label}</td></tr>
                                     )}
                                 </tbody>
                             </table>
