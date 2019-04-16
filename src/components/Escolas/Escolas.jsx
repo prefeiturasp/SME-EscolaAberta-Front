@@ -11,7 +11,7 @@ export default class Escolas extends Component {
         this.state = {
             escolas : [],
             totalItens : 0,
-            comeco : 2,
+            pagina : 2,
             escola : '',
             tipoEscola : '',
             dre : ''
@@ -25,8 +25,8 @@ export default class Escolas extends Component {
         listarEscolas().then(
             lista => {
                 this.setState({ escolas : lista.results });
-                this.setState({ count : Math.round(lista.count/10) });
-                this.setState({ comeco : 2 });
+                this.setState({ totalItens : Math.round(lista.count/10) });
+                this.setState({ pagina : 2 });
             }
         )
 
@@ -69,12 +69,12 @@ export default class Escolas extends Component {
     }
 
     carregarMaisEscolas() {
-        if (this.state.comeco < this.state.totalItens) {
-            listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre, this.state.comeco).then(
+        if (this.state.pagina < this.state.totalItens) {
+            listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre, this.state.pagina).then(
                 lista => {
                     let novaListaEscolas = this.state.escolas.concat(lista.results);
                     this.setState({ escolas : novaListaEscolas });
-                    this.setState({ comeco : this.state.comeco + 1 });
+                    this.setState({ pagina : this.state.pagina + 1 });
                 }
             )
         }
@@ -99,7 +99,7 @@ export default class Escolas extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white w-100 p-5">
+                <div className="bg-white w-100 mt-1 p-5">
                     <div className="container">
                         <div className="col-12">
                             <button type="button" className="btn btn-lg btn-success btn-mais-escolas" onClick={this.carregarMaisEscolas}>Mais Escolas</button>

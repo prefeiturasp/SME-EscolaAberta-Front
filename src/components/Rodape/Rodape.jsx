@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Rodape extends Component {
+export default class Rodape extends Component {
 
     render() {
         return(
@@ -18,5 +18,3 @@ class Rodape extends Component {
     }
 
 }
-
-export default Rodape;

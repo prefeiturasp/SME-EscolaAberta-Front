@@ -4,11 +4,9 @@ export default class SelectAutocomplete extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             toggle: false
         }
-
         this.toggle = this.toggle.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.focusOut = this.focusOut.bind(this);

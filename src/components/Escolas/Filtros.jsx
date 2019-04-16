@@ -53,7 +53,7 @@ export default class Filtros extends Component {
         listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre).then(
             lista => {
                 PubSub.publish('lista-escolas', lista.results);
-                PubSub.publish('total-itens', lista.count);
+                PubSub.publish('total-itens', Math.round(lista.count/10));
             }
         )
     }

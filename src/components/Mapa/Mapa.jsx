@@ -32,7 +32,7 @@ export default class Mapa extends Component {
     render() {
         return(
             <div className="mapa h-100 w-100">
-                <Map center={ [ this.state.lat, this.state.lng ] } zoom={ this.state.zoom } style={ { height: this.state.height } } >
+                <Map center={ [ this.state.lat, this.state.lng ] } zoom={ this.state.zoom } zoomControl={false} style={ { height: this.state.height } } >
                     <TileLayer
                         attribution=''
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
