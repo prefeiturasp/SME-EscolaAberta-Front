@@ -11,7 +11,7 @@ export default class Mapa extends Component {
             lat: -23.5735874,
             lng: -46.6783826,
             zoom: 17,
-            height: '540px'
+            height: '685px'
         }
     }
 

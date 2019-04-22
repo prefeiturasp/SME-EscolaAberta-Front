@@ -49,6 +49,14 @@ export default class Escolas extends Component {
         PubSub.subscribe('total-itens', function(topico, total) {
             this.setState({ totalItens : total });
         }.bind(this));
+
+        window.jQuery('.overflow-auto').on('scroll', function(){
+            if (window.jQuery('.overflow-auto').scrollTop() + window.jQuery('.overflow-auto').innerHeight() >= window.jQuery('.overflow-auto')[0].scrollHeight) {
+                setTimeout(function(){
+                    this.carregarMaisEscolas();
+                }.bind(this), 1000);
+            }
+        }.bind(this));
     }
 
     atualizarMapa(escola, latitude, longitude) {
@@ -85,7 +93,7 @@ export default class Escolas extends Component {
             <div className="bg-light w-100 h-100">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-6 col-xs-12 escolas">
+                        <div className="col-lg-6 col-xs-12 pr-lg-0 escolas">
                             <div className="pt-4 pb-4">
                                 <h2>Título</h2>
                                 <p>Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
@@ -99,11 +107,12 @@ export default class Escolas extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white w-100 mt-1 p-5">
+                <div className="bg-white w-100 mt-1 pt-5 pb-5 shadow-sm">
                     <div className="container">
-                        <div className="col-12">
-                            <button type="button" className="btn btn-lg btn-success btn-mais-escolas" onClick={this.carregarMaisEscolas}>Mais Escolas</button>
-                            <button type="button" className="ml-5 btn btn-lg btn-outline-success btn-estatisticas">Estatísticas</button>
+                        <div className="row">
+                            <div className="col-lg-12 d-flex justify-content-lg-start justify-content-center">
+                                <button type="button" className="btn btn-lg btn-outline-success btn-estatisticas">Estatísticas</button>
+                            </div>
                         </div>
                     </div>
                 </div>

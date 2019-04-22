@@ -3,6 +3,7 @@ import PubSub from 'pubsub-js';
 import SelectCustomizado from '../Inputs/SelectCustomizado';
 import SelectAutocomplete from '../Inputs/SelectAutocomplete';
 import { listarTiposEscola, listarDREs, listarEscolas } from '../../services/escolas';
+import logoEscolaAberta from '../../img/escola_aberta.png';
 
 export default class Filtros extends Component {
 
@@ -59,7 +60,6 @@ export default class Filtros extends Component {
     }
 
     buscarEscolas = (e) => {
-        console.log(e);
         if (e.target.value.length >= 3) {
             let escolas = [];
             listarEscolas(e.target.value).then(
@@ -105,11 +105,13 @@ export default class Filtros extends Component {
         return(
             <div>
                 <div className="container">
-                    <div className="row">
-                        <div className="col-6">
-                            <h2>Escola Aberta</h2>
+                    <div className="row mt-3 mb-4">
+                        <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-start justify-content-center">
+                            <h1 className="m-0"><img className="img-fluid" src={logoEscolaAberta} alt="Escola Aberta"/></h1>
                         </div>
-                        <div className="col-6"></div>
+                        <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-end justify-content-center">
+                            <button className="btn btn-sm btn-success btn-consulte mt-3">Consulte sua posição</button>
+                        </div>
                     </div>
                 </div>
                 <div className="menu-busca p-3">
