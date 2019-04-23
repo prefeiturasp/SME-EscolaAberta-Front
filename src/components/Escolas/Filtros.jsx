@@ -20,6 +20,7 @@ export default class Filtros extends Component {
         }
 
         this.filtraListagemEscolas = this.filtrarListagemEscolas.bind(this);
+        this.buscarEscolas = this.buscarEscolas.bind(this);
         this.setEscola = this.setEscola.bind(this);
         this.setTipoEscola = this.setTipoEscola.bind(this);
         this.setDRE = this.setDRE.bind(this);
@@ -33,9 +34,7 @@ export default class Filtros extends Component {
         listarDREs().then(
             lista => this.setState({ dres : lista.results })
         )
-    }
 
-    componentWillMount() {
         listarEscolas().then(
             lista => {
                 let escolas = [];
@@ -45,10 +44,10 @@ export default class Filtros extends Component {
                 this.setState({ escolas : escolas });
             }
         )
-    }
 
-    componentDidUpdate() {
-        this.filtrarListagemEscolas();
+        PubSub.subscribe('escola-filtro', function(topico, filtro) {
+            this.setState({ escola : filtro });
+        }.bind(this));
     }
 
     filtrarListagemEscolas() {
@@ -88,17 +87,24 @@ export default class Filtros extends Component {
         this.setState({
             escola: e,
             escolas: collection
-        });
+        }, () =>
+            this.filtraListagemEscolas()
+        );
+
         PubSub.publish('escola-filtro', e);
     }
 
     setTipoEscola(event) {
-        this.setState({ tipoEscola : event.target.value });
+        this.setState({ tipoEscola : event.target.value }, () =>
+            this.filtraListagemEscolas()
+        );
         PubSub.publish('tipo-escola-filtro', event.target.value);
     }
 
     setDRE(event) {
-        this.setState({ dre : event.target.value });
+        this.setState({ dre : event.target.value }, () =>
+            this.filtraListagemEscolas()
+        );
         PubSub.publish('dre-filtro', event.target.value);
     }
 

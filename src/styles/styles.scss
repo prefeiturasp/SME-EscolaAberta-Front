@@ -1,9 +1,35 @@
 @import 'variaveis.scss';
 
+body {
+    @include fonteRoboto;
+}
+
 // Fonte
 
 @mixin fonte($size) {
     font-size: $size;
+}
+
+// Home
+
+.mapa-home {
+    background: $corCinzaEscuro url('../img/mapa_home.png');
+    color: $corCinzaHome;
+    height: 488px;
+    .conteudo {
+        margin: -5% auto -25%;
+        top: 50%;
+        h2 {
+            @include fonte(30px);
+            font-weight: bold;
+        }
+        .m-90 {
+            width: 90%;
+            @media (max-width: 576px) {
+                width: 80%;
+            }
+        }
+    }
 }
 
 // Filtro

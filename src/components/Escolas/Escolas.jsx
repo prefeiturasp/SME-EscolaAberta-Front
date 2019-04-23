@@ -53,7 +53,7 @@ export default class Escolas extends Component {
         }.bind(this));
 
         window.jQuery('.overflow-auto').on('scroll', function(){
-            if (window.jQuery('.overflow-auto').scrollTop() + window.jQuery('.overflow-auto').innerHeight() >= window.jQuery('.overflow-auto')[0].scrollHeight) {
+            if (window.jQuery('.overflow-auto').scrollTop() + window.jQuery('.overflow-auto').innerHeight() === window.jQuery('.overflow-auto')[0].scrollHeight) {
                 setTimeout(function(){
                     this.carregarMaisEscolas();
                 }.bind(this), 1000);
@@ -111,7 +111,7 @@ export default class Escolas extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="bg-white w-100 mt-1 pt-5 pb-5 shadow-sm">
+                    <div className="bg-white w-100 mt-1 pt-5 pb-5 shadow">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-12 d-flex justify-content-lg-start justify-content-center">
