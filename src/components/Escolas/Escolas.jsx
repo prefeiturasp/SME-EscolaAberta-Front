@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
+import Filtros from './Filtros';
 import Mapa from '../Mapa/Mapa';
 import TabelaEscolas from './Tabela';
+import Rodape from '../Rodape/Rodape';
 import { listarEscolas } from '../../services/escolas';
 
 export default class Escolas extends Component {
@@ -90,32 +92,36 @@ export default class Escolas extends Component {
 
     render() {
         return(
-            <div className="bg-light w-100 h-100">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-lg-6 col-xs-12 pr-lg-0 escolas">
-                            <div className="pt-4 pb-4">
-                                <h2>Título</h2>
-                                <p>Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
-                            </div>
-                            <div className="overflow-auto">
-                                <TabelaEscolas lista={this.state.escolas} limparCheckboxes={this.limparCheckboxes} atualizarMapa={this.atualizarMapa} />
-                            </div>
-                        </div>
-                        <div className="col-lg-6 col-xs-12 mapa-completo">
-                            <Mapa />
-                        </div>
-                    </div>
-                </div>
-                <div className="bg-white w-100 mt-1 pt-5 pb-5 shadow-sm">
+            <div>
+                <Filtros />
+                <div className="bg-light w-100 h-100">
                     <div className="container">
                         <div className="row">
-                            <div className="col-lg-12 d-flex justify-content-lg-start justify-content-center">
-                                <button type="button" className="btn btn-lg btn-outline-success btn-estatisticas">Estatísticas</button>
+                            <div className="col-lg-6 col-xs-12 pr-lg-0 escolas">
+                                <div className="pt-4 pb-4">
+                                    <h2>Título</h2>
+                                    <p>Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.</p>
+                                </div>
+                                <div className="overflow-auto">
+                                    <TabelaEscolas lista={this.state.escolas} limparCheckboxes={this.limparCheckboxes} atualizarMapa={this.atualizarMapa} />
+                                </div>
+                            </div>
+                            <div className="col-lg-6 col-xs-12 mapa-completo">
+                                <Mapa />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="bg-white w-100 mt-1 pt-5 pb-5 shadow-sm">
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-lg-12 d-flex justify-content-lg-start justify-content-center">
+                                    <button type="button" className="btn btn-lg btn-outline-success btn-estatisticas">Estatísticas</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <Rodape />
             </div>
         );
     }

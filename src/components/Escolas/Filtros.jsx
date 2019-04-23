@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
+import { Link } from 'react-router-dom';
 import SelectCustomizado from '../Inputs/SelectCustomizado';
 import SelectAutocomplete from '../Inputs/SelectAutocomplete';
 import { listarTiposEscola, listarDREs, listarEscolas } from '../../services/escolas';
@@ -107,7 +108,11 @@ export default class Filtros extends Component {
                 <div className="container">
                     <div className="row mt-3 mb-4">
                         <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-start justify-content-center">
-                            <h1 className="m-0"><img className="img-fluid" src={logoEscolaAberta} alt="Escola Aberta"/></h1>
+                            <h1 className="m-0">
+                                <Link to="/">
+                                    <img className="img-fluid" src={logoEscolaAberta} alt="Escola Aberta"/>
+                                </Link>
+                            </h1>
                         </div>
                         <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-end justify-content-center">
                             <button className="btn btn-sm btn-success btn-consulte mt-3">Consulte sua posição</button>
