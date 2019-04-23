@@ -16,7 +16,6 @@ export default class Home extends Component {
         }
 
         this.setEscola = this.setEscola.bind(this);
-        this.testeClick = this.testeClick.bind(this);
     }
 
     componentDidMount() {
@@ -29,6 +28,10 @@ export default class Home extends Component {
                 this.setState({ escolas : escolas });
             }
         )
+    }
+
+    componentWillMount() {
+        PubSub.clearAllSubscriptions();
     }
 
     buscarEscolas = (e) => {
@@ -46,25 +49,9 @@ export default class Home extends Component {
     }
 
     setEscola(collection, e) {
-        var filter = {};
-
-        Object.entries(collection).map(([key, item]) => {
-            if (item.label.includes(e))
-                filter[key] = item;
-            return filter;
-        });
-
-        collection = filter;
-
-        this.setState({
-            escola: e,
-            escolas: collection
-        });
-        PubSub.publish('escola-filtro', e);
-    }
-
-    testeClick() {
-        console.log(this.state.escola);
+        this.setState({ escola: e });
+        var is = PubSub.publish('escola-filtro', collection);
+        console.log(is);
     }
 
     render() {
@@ -84,7 +71,7 @@ export default class Home extends Component {
                                     onChange={this.setEscola}
                                     onKeyDown={this.buscarEscolas}
                                 />
-                                <Link className="btn btn-light d-inline-block ml-1" onClick={this.testeClick} to="/escolas"><img src={lupa} alt="Buscar" /></Link>
+                                <Link className="btn btn-light d-inline-block ml-1" to="/escolas"><img src={lupa} alt="Buscar" /></Link>
                             </div>
                         </div>
                     </div>

@@ -26,6 +26,12 @@ export default class Filtros extends Component {
         this.setDRE = this.setDRE.bind(this);
     }
 
+    componentWillMount() {
+        PubSub.subscribe('escola-filtro', function(topico, filtro) {
+            this.setState({ escola : filtro });
+        }.bind(this));
+    }
+
     componentDidMount() {
         listarTiposEscola().then(
             lista => this.setState({ tiposEscola : lista.results })
@@ -44,10 +50,10 @@ export default class Filtros extends Component {
                 this.setState({ escolas : escolas });
             }
         )
+    }
 
-        PubSub.subscribe('escola-filtro', function(topico, filtro) {
-            this.setState({ escola : filtro });
-        }.bind(this));
+    componentWillUnmount() {
+        PubSub.clearAllSubscriptions();
     }
 
     filtrarListagemEscolas() {
@@ -74,20 +80,7 @@ export default class Filtros extends Component {
     }
 
     setEscola(collection, e) {
-        var filter = {};
-
-        Object.entries(collection).map(([key, item]) => {
-            if (item.label.includes(e))
-                filter[key] = item;
-            return filter;
-        });
-
-        collection = filter;
-
-        this.setState({
-            escola: e,
-            escolas: collection
-        }, () =>
+        this.setState({ escola: e }, () =>
             this.filtraListagemEscolas()
         );
 
