@@ -36,6 +36,8 @@ export default class Escolas extends Component {
             this.setState({ escolas : listaEscolas });
         }.bind(this));
 
+        window.alert('filtro');
+
         PubSub.subscribe('escola-filtro', function(topico, filtro) {
             this.setState({ escola : filtro });
         }.bind(this));

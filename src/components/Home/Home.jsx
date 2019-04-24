@@ -28,10 +28,11 @@ export default class Home extends Component {
                 this.setState({ escolas : escolas });
             }
         )
+        PubSub.subscribe('escola-filtro', () => {});
     }
 
     componentWillMount() {
-        PubSub.clearAllSubscriptions();
+        // PubSub.clearAllSubscriptions();
     }
 
     buscarEscolas = (e) => {
@@ -49,9 +50,9 @@ export default class Home extends Component {
     }
 
     setEscola(collection, e) {
-        this.setState({ escola: e });
-        var is = PubSub.publish('escola-filtro', collection);
-        console.log(is);
+        this.setState({ escola: e }, () => {
+            PubSub.publishSync('escola-filtro', e);
+        });
     }
 
     render() {
