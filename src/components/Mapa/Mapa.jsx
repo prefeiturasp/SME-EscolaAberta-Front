@@ -7,11 +7,12 @@ export default class Mapa extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            escola: 'São Paulo',
-            lat: -23.5735874,
-            lng: -46.6783826,
-            zoom: 17,
-            height: '685px'
+            escola : 'São Paulo',
+            lat : -23.5735874,
+            lng : -46.6783826,
+            zoom : 17,
+            height : '685px',
+            l : [{lat: -23.612237, lng: -46.749888}, {lat: -23.611929, lng: -46.750176}]
         }
     }
 
@@ -37,6 +38,17 @@ export default class Mapa extends Component {
                         attribution=''
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
+                    {/* {
+                        this.state.l.map(function(item, index) {
+                            return(
+                                <Marker position={ [ item.lat, item.lng ] }>
+                                    <Popup>
+                                        { index }
+                                    </Popup>
+                                </Marker>
+                            )
+                        })
+                    } */}
                     <Marker position={ [ this.state.lat, this.state.lng ] }>
                         <Popup>
                             { this.state.escola }
