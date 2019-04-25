@@ -33,18 +33,12 @@ export default class Escolas extends Component {
             }
         )
 
+        // PubSub.publish('escola-filtro', 'marilene');
         PubSub.publish('escola-filtro', this.props.location.state.escola);
 
         PubSub.subscribe('lista-escolas', function(topico, listaEscolas) {
             this.setState({ escolas : listaEscolas });
-
             document.querySelector('.overflow-auto').scrollTop = 0;
-
-            if (listaEscolas.length === 1) {
-                this.atualizarMapa(listaEscolas[0].nomesc, listaEscolas[0].latitude, listaEscolas[0].longitude);
-                document.querySelectorAll('input[type=checkbox]')[0].checked = true;
-                document.querySelectorAll('.collapse')[0].classList.add('show');
-            }
         }.bind(this));
 
         PubSub.subscribe('escola-filtro', function(topico, filtro) {

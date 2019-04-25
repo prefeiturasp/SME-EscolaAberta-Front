@@ -10,8 +10,8 @@ export default class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            escola :  '',
-            escolas : []
+            escolaSelecionada :  '',
+            escolasAutocomplete : []
         }
 
         this.setEscola = this.setEscola.bind(this);
@@ -24,7 +24,7 @@ export default class Home extends Component {
                 lista.results.forEach(function(escola) {
                     escolas.push({value : escola.codesc, label : escola.nomesc })
                 });
-                this.setState({ escolas : escolas });
+                this.setState({ escolasAutocomplete : escolas });
             }
         )
     }
@@ -43,8 +43,8 @@ export default class Home extends Component {
         }
     }
 
-    setEscola(collection, e) {
-        this.setState({ escola: e });
+    setEscola(collection, escola) {
+        this.setState({ escolaSelecionada: escola });
     }
 
     render() {
@@ -55,11 +55,11 @@ export default class Home extends Component {
                     <div className="container d-flex justify-content-center">
                         <div className="col-lg-5 text-center position-absolute conteudo">
                             <h2>Aqui você encontra todas as informações sobre sua escola</h2>
-                            <div className="form-group mt-4">
+                            <div className="form-group mt-4 text-left">
                                 <SelectAutocomplete
-                                    value={this.state.escola}
-                                    collection={this.state.escolas}
-                                    className="form-control form-control-lg rounded-pill shadow m-90 d-inline-block"
+                                    value={this.state.escolaSelecionada}
+                                    collection={this.state.escolasAutocomplete}
+                                    className="form-control form-control-lg rounded-pill shadow d-inline-block"
                                     placeholder="Encontre sua escola pelo nome ou bairro"
                                     onChange={this.setEscola}
                                     onKeyDown={this.buscarEscolas}
@@ -69,7 +69,7 @@ export default class Home extends Component {
                                 to={{
                                     pathname: '/escolas',
                                     state: {
-                                        escola: this.state.escola
+                                        escola: this.state.escolaSelecionada
                                     }
                                 }}>
                                     <img src={lupa} alt="Buscar" />

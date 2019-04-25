@@ -11,12 +11,12 @@ export default class Filtros extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            escolas : [],
+            escolasAutocomplete : [],
             tiposEscola : [],
             dres : [],
-            escola : '',
-            tipoEscola : '',
-            dre : ''
+            escolaSelecionada : '',
+            tipoEscolaSelecionado : '',
+            dreSelecionada : ''
         }
 
         this.filtrarListagemEscolas = this.filtrarListagemEscolas.bind(this);
@@ -50,6 +50,8 @@ export default class Filtros extends Component {
                 this.filtrarListagemEscolas()
             );
         }.bind(this));
+
+        PubSub.subscribe('lista-escolas', () => {});
     }
 
     componentWillUnmount() {
@@ -57,7 +59,7 @@ export default class Filtros extends Component {
     }
 
     filtrarListagemEscolas() {
-        listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre).then(
+        listarEscolas(this.state.escolaSelecionada, this.state.tipoEscolaSelecionado, this.state.dreSelecionada).then(
             lista => {
                 PubSub.publish('lista-escolas', lista.results);
                 PubSub.publish('total-itens', Math.round(lista.count/10));
@@ -122,8 +124,8 @@ export default class Filtros extends Component {
                         <div className="row">
                             <div className="col-lg-5 col-xs-12">
                                 <SelectAutocomplete
-                                    value={this.state.escola}
-                                    collection={this.state.escolas}
+                                    value={this.state.escolaSelecionada}
+                                    collection={this.state.escolasAutocomplete}
                                     className="custom-select rounded-pill"
                                     placeholder="Selecione a escola"
                                     onChange={this.setEscola}
