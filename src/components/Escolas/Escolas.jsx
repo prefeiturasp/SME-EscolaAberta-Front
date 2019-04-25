@@ -38,6 +38,8 @@ export default class Escolas extends Component {
         PubSub.subscribe('lista-escolas', function(topico, listaEscolas) {
             this.setState({ escolas : listaEscolas });
 
+            document.querySelector('.overflow-auto').scrollTop = 0;
+
             if (listaEscolas.length === 1) {
                 this.atualizarMapa(listaEscolas[0].nomesc, listaEscolas[0].latitude, listaEscolas[0].longitude);
                 document.querySelectorAll('input[type=checkbox]')[0].checked = true;
