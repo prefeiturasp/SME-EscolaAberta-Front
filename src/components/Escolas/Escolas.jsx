@@ -18,6 +18,7 @@ export default class Escolas extends Component {
             tipoEscola : '',
             dre : ''
         }
+
         this.atualizarMapa = this.atualizarMapa.bind(this);
         this.carregarMaisEscolas = this.carregarMaisEscolas.bind(this);
         this.limparCheckboxes = this.limparCheckboxes.bind(this);
