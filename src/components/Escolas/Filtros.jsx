@@ -19,7 +19,7 @@ export default class Filtros extends Component {
             dre : ''
         }
 
-        this.filtraListagemEscolas = this.filtrarListagemEscolas.bind(this);
+        this.filtrarListagemEscolas = this.filtrarListagemEscolas.bind(this);
         this.buscarEscolas = this.buscarEscolas.bind(this);
         this.setEscola = this.setEscola.bind(this);
         this.setTipoEscola = this.setTipoEscola.bind(this);
@@ -44,6 +44,12 @@ export default class Filtros extends Component {
                 this.setState({ escolas : escolas });
             }
         )
+
+        PubSub.subscribe('escola-filtro', function(topico, filtro) {
+            this.setState({ escola : filtro }, () =>
+                this.filtrarListagemEscolas()
+            );
+        }.bind(this));
     }
 
     componentWillUnmount() {
@@ -75,23 +81,23 @@ export default class Filtros extends Component {
 
     setEscola(collection, e) {
         this.setState({ escola: e }, () => {
-            this.filtraListagemEscolas();
+            this.filtrarListagemEscolas();
             PubSub.publish('escola-filtro', e);
         });
     }
 
     setTipoEscola(event) {
-        this.setState({ tipoEscola : event.target.value }, () =>
-            this.filtraListagemEscolas()
-        );
-        PubSub.publish('tipo-escola-filtro', event.target.value);
+        this.setState({ tipoEscola : event.target.value }, () => {
+            this.filtrarListagemEscolas();
+            PubSub.publish('tipo-escola-filtro', event.target.value);
+        });
     }
 
     setDRE(event) {
-        this.setState({ dre : event.target.value }, () =>
-            this.filtraListagemEscolas()
-        );
-        PubSub.publish('dre-filtro', event.target.value);
+        this.setState({ dre : event.target.value }, () => {
+            this.filtrarListagemEscolas();
+            PubSub.publish('dre-filtro', event.target.value);
+        });
     }
 
     render() {
