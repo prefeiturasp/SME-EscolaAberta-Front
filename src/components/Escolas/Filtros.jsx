@@ -89,15 +89,15 @@ export default class Filtros extends Component {
     setTipoEscola(event) {
         this.setState({ tipoEscola : event.target.value }, () => {
             this.filtrarListagemEscolas();
-            PubSub.publish('tipo-escola-filtro', event.target.value);
         });
+        PubSub.publish('tipo-escola-filtro', event.target.value);
     }
 
     setDRE(event) {
         this.setState({ dre : event.target.value }, () => {
             this.filtrarListagemEscolas();
-            PubSub.publish('dre-filtro', event.target.value);
         });
+        PubSub.publish('dre-filtro', event.target.value);
     }
 
     render() {
