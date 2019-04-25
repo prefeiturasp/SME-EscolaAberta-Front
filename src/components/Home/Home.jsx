@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PubSub from 'pubsub-js';
 import lupa from '../../img/lupa.png';
 import { Link } from 'react-router-dom';
 import MenuHome from '../MenuSuperior/MenuHome';
@@ -28,11 +27,6 @@ export default class Home extends Component {
                 this.setState({ escolas : escolas });
             }
         )
-        PubSub.subscribe('escola-filtro', () => {});
-    }
-
-    componentWillMount() {
-        // PubSub.clearAllSubscriptions();
     }
 
     buscarEscolas = (e) => {
@@ -50,9 +44,7 @@ export default class Home extends Component {
     }
 
     setEscola(collection, e) {
-        this.setState({ escola: e }, () => {
-            PubSub.publishSync('escola-filtro', e);
-        });
+        this.setState({ escola: e });
     }
 
     render() {
@@ -72,7 +64,16 @@ export default class Home extends Component {
                                     onChange={this.setEscola}
                                     onKeyDown={this.buscarEscolas}
                                 />
-                                <Link className="btn btn-light d-inline-block ml-1" to="/escolas"><img src={lupa} alt="Buscar" /></Link>
+                                <Link
+                                className="btn btn-light d-inline-block ml-1"
+                                to={{
+                                    pathname: '/escolas',
+                                    state: {
+                                        escola: this.state.escola
+                                    }
+                                }}>
+                                    <img src={lupa} alt="Buscar" />
+                                </Link>
                             </div>
                         </div>
                     </div>
