@@ -18,7 +18,7 @@ export default class Escolas extends Component {
             tipoEscola : '',
             dre : ''
         }
-        this.atualizaMapa = this.atualizarMapa.bind(this);
+        this.atualizarMapa = this.atualizarMapa.bind(this);
         this.carregarMaisEscolas = this.carregarMaisEscolas.bind(this);
         this.limparCheckboxes = this.limparCheckboxes.bind(this);
     }
@@ -36,6 +36,12 @@ export default class Escolas extends Component {
 
         PubSub.subscribe('lista-escolas', function(topico, listaEscolas) {
             this.setState({ escolas : listaEscolas });
+
+            if (listaEscolas.length === 1) {
+                this.atualizarMapa(listaEscolas[0].nomesc, listaEscolas[0].latitude, listaEscolas[0].longitude);
+                document.querySelectorAll('input[type=checkbox]')[0].checked = true;
+                document.querySelectorAll('.collapse')[0].classList.add('show');
+            }
         }.bind(this));
 
         PubSub.subscribe('escola-filtro', function(topico, filtro) {
