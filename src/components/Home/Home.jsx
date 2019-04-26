@@ -17,18 +17,6 @@ export default class Home extends Component {
         this.setEscola = this.setEscola.bind(this);
     }
 
-    componentDidMount() {
-        listarEscolas().then(
-            lista => {
-                let escolas = [];
-                lista.results.forEach(function(escola) {
-                    escolas.push({value : escola.codesc, label : escola.nomesc })
-                });
-                this.setState({ escolasAutocomplete : escolas });
-            }
-        )
-    }
-
     buscarEscolas = (e) => {
         if (e.target.value.length >= 3) {
             let escolas = [];
@@ -37,14 +25,14 @@ export default class Home extends Component {
                     lista.results.forEach(function(escola) {
                         escolas.push({value : escola.codesc, label : escola.nomesc });
                     });
-                    this.setState({ escolas :  escolas });
+                    this.setState({ escolasAutocomplete :  escolas });
                 }
             )
         }
     }
 
-    setEscola(collection, escola) {
-        this.setState({ escolaSelecionada: escola });
+    setEscola(event) {
+        this.setState({ escolaSelecionada: event });
     }
 
     render() {

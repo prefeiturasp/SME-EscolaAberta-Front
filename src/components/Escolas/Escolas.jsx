@@ -33,7 +33,6 @@ export default class Escolas extends Component {
             }
         )
 
-        // PubSub.publish('escola-filtro', 'marilene');
         PubSub.publish('escola-filtro', this.props.location.state.escola);
 
         PubSub.subscribe('lista-escolas', function(topico, listaEscolas) {
@@ -113,15 +112,6 @@ export default class Escolas extends Component {
                             </div>
                             <div className="col-lg-6 col-xs-12 mapa-completo">
                                 <Mapa />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="bg-white w-100 mt-1 pt-5 pb-5 shadow">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-lg-12 d-flex justify-content-lg-start justify-content-center">
-                                    <button type="button" className="btn btn-lg btn-outline-success btn-estatisticas">Estatísticas</button>
-                                </div>
                             </div>
                         </div>
                     </div>

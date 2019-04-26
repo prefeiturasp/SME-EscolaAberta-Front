@@ -9,32 +9,32 @@ export default class SelectAutocomplete extends Component {
         }
 
         this.toggle = this.toggle.bind(this);
-        this.onTextChange = this.onTextChange.bind(this);
-        this.focusOut = this.focusOut.bind(this);
-        this.onSelect = this.onSelect.bind(this);
+        this.onBlur = this.onBlur.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.onMouseDown = this.onMouseDown.bind(this);
     }
 
     toggle() {
-        this.setState({ toggle: !this.state.toggle });
+        this.setState({ toggle : !this.state.toggle });
     }
 
-    onTextChange(event) {
-        this.props.onChange(this.props.collection, event.target.value);
-        this.setState({ toggle: true });
+    onBlur() {
+        this.setState({ toggle : false });
     }
 
-    onSelect(event) {
-        this.props.onChange(this.props.collection, event.target.innerText);
+    onChange(event) {
+        this.props.onChange(event.target.value);
+        this.setState({ toggle : true });
     }
 
-    focusOut() {
-        this.setState({ toggle: false });
+    onMouseDown(event) {
+        this.props.onChange(event.target.innerText);
     }
 
     render() {
         return (
-            <div className="w-100 position-relative" onBlur={this.focusOut}>
-                <input type="text" className={this.props.className} placeholder={this.props.placeholder} onKeyDown={this.props.onKeyDown} value={this.props.value} onClick={this.toggle} onChange={this.onTextChange} />
+            <div className="w-100 position-relative" onBlur={this.onBlur}>
+                <input type="text" className={this.props.className} placeholder={this.props.placeholder} value={this.props.value} onKeyDown={this.props.onKeyDown} onClick={this.toggle} onChange={this.onChange} />
                 {
                     this.state.toggle &&
                     <div className="card w-100 position-absolute shadow rounded-0 border border-info resultados-busca">
@@ -43,7 +43,7 @@ export default class SelectAutocomplete extends Component {
                             <table className="table-sm table-hover table-borderless">
                                 <tbody>
                                     {Object.entries(this.props.collection).map(([indice, item]) =>
-                                        <tr key={indice} className="pl-2 cursor-padrao"><td onMouseDown={this.onSelect}>{item.label}</td></tr>
+                                        <tr key={indice} className="pl-2 cursor-padrao"><td onMouseDown={this.onMouseDown}>{item.label}</td></tr>
                                     )}
                                 </tbody>
                             </table>
