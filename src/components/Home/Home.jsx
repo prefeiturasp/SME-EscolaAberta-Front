@@ -17,6 +17,10 @@ export default class Home extends Component {
         this.setEscola = this.setEscola.bind(this);
     }
 
+    componentDidMount() {
+        this.geolocation();
+    }
+
     buscarEscolas = (e) => {
         if (e.target.value.length >= 3) {
             let escolas = [];
@@ -33,6 +37,21 @@ export default class Home extends Component {
 
     setEscola(event) {
         this.setState({ escolaSelecionada: event });
+    }
+
+    geolocation() {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                function success(position) {
+                    console.log('latitude', position.coords.latitude, 'longitude', position.coords.longitude);
+                },
+                function error(error_message) {
+                    console.error('An error has occured while retrieving location', error_message);
+                }
+            )
+        } else {
+            console.log('geolocation is not enabled on this browser');
+        }
     }
 
     render() {
