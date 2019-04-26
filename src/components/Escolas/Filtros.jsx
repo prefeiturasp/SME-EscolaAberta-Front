@@ -35,18 +35,8 @@ export default class Filtros extends Component {
             lista => this.setState({ dres : lista.results })
         )
 
-        listarEscolas().then(
-            lista => {
-                let escolas = [];
-                lista.results.forEach(function(escola) {
-                    escolas.push({value : escola.codesc, label : escola.nomesc })
-                });
-                this.setState({ escolas : escolas });
-            }
-        )
-
         PubSub.subscribe('escola-filtro', function(topico, filtro) {
-            this.setState({ escola : filtro }, () =>
+            this.setState({ escolaSelecionada : filtro }, () =>
                 this.filtrarListagemEscolas()
             );
         }.bind(this));
@@ -75,28 +65,28 @@ export default class Filtros extends Component {
                     lista.results.forEach(function(escola) {
                         escolas.push({value : escola.codesc, label : escola.nomesc });
                     });
-                    this.setState({ escolas :  escolas });
+                    this.setState({ escolasAutocomplete :  escolas });
                 }
             )
         }
     }
 
-    setEscola(collection, e) {
-        this.setState({ escola: e }, () => {
+    setEscola(event) {
+        this.setState({ escolaSelecionada: event }, () => {
             this.filtrarListagemEscolas();
-            PubSub.publish('escola-filtro', e);
         });
+        PubSub.publish('escola-filtro', event);
     }
 
     setTipoEscola(event) {
-        this.setState({ tipoEscola : event.target.value }, () => {
+        this.setState({ tipoEscolaSelecionado : event.target.value }, () => {
             this.filtrarListagemEscolas();
         });
         PubSub.publish('tipo-escola-filtro', event.target.value);
     }
 
     setDRE(event) {
-        this.setState({ dre : event.target.value }, () => {
+        this.setState({ dreSelecionada : event.target.value }, () => {
             this.filtrarListagemEscolas();
         });
         PubSub.publish('dre-filtro', event.target.value);
