@@ -33,7 +33,7 @@ export default class Escolas extends Component {
             }
         )
 
-        PubSub.publish('escola-filtro', this.props.location.state.escola);
+        // PubSub.publish('escola-filtro', this.props.location.state.escola);
 
         PubSub.subscribe('lista-escolas', function(topico, listaEscolas) {
             this.setState({ escolas : listaEscolas });
