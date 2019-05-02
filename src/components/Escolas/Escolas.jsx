@@ -14,9 +14,9 @@ export default class Escolas extends Component {
             escolas : [],
             totalItens : 0,
             pagina : 2,
-            escola : '',
-            tipoEscola : '',
-            dre : ''
+            escolaSelecionada : '',
+            tipoEscolaSelecionado : '',
+            dreSelecionada : ''
         }
 
         this.atualizarMapa = this.atualizarMapa.bind(this);
@@ -27,9 +27,10 @@ export default class Escolas extends Component {
     componentDidMount() {
         listarEscolas().then(
             lista => {
-                this.setState({ escolas : lista.results });
+                this.setState({ escolas : lista.results }, () => {
+                    PubSub.publish('lista-escolas', lista.results);
+                });
                 this.setState({ totalItens : Math.round(lista.count/10) });
-                this.setState({ pagina : 2 });
             }
         )
 
@@ -42,15 +43,15 @@ export default class Escolas extends Component {
         }.bind(this));
 
         PubSub.subscribe('escola-filtro', function(topico, filtro) {
-            this.setState({ escola : filtro });
+            this.setState({ escolaSelecionada : filtro });
         }.bind(this));
 
         PubSub.subscribe('tipo-escola-filtro', function(topico, filtro) {
-            this.setState({ tipoEscola : filtro });
+            this.setState({ tipoEscolaSelecionado : filtro });
         }.bind(this));
 
         PubSub.subscribe('dre-filtro', function(topico, filtro) {
-            this.setState({ dre : filtro });
+            this.setState({ dreSelecionada : filtro });
         }.bind(this));
 
         PubSub.subscribe('total-itens', function(topico, total) {
@@ -85,11 +86,12 @@ export default class Escolas extends Component {
 
     carregarMaisEscolas() {
         if (this.state.pagina <= this.state.totalItens) {
-            listarEscolas(this.state.escola, this.state.tipoEscola, this.state.dre, this.state.pagina).then(
+            listarEscolas(this.state.escolaSelecionada, this.state.tipoEscolaSelecionado, this.state.dreSelecionada, this.state.pagina).then(
                 lista => {
                     let novaListaEscolas = this.state.escolas.concat(lista.results);
                     this.setState({ escolas : novaListaEscolas });
                     this.setState({ pagina : this.state.pagina + 1 });
+                    PubSub.publish('lista-escolas', novaListaEscolas);
                 }
             )
         }
