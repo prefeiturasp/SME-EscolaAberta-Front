@@ -5,9 +5,9 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "i": "^0.3.6",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.1",
     "leaflet": "^1.4.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.12.0",
     "npm": "^6.9.0",
     "popper.js": "^1.14.7",
     "pubsub-js": "^1.7.0",
@@ -16,7 +16,7 @@
     "react-infinite-scroll-component": "^4.5.2",
     "react-leaflet": "^2.2.1",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8",
+    "react-scripts": "^3.0.0",
     "react-select": "^2.0.0-beta.7"
   },
   "scripts": {
