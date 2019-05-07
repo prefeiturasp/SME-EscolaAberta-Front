@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PubSub from 'pubsub-js';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
-import { listarEscolas } from '../../services/escolas';
+// import { listarEscolas } from '../../services/escolas';
 
 export default class Mapa extends Component {
 
@@ -9,9 +9,9 @@ export default class Mapa extends Component {
         super(props);
         this.state = {
             escola : '',
-            lat : -23.5735874,
-            lng : -46.6783826,
-            zoom : 17,
+            lat : -23.5505,
+            lng : -46.6333,
+            zoom : 11,
             height : '535px',
             area : [],
             marcadores : []
@@ -21,6 +21,7 @@ export default class Mapa extends Component {
         this.defineLatitudeLongitude = this.defineLatitudeLongitude.bind(this);
         this.trataErros = this.trataErros.bind(this);
         this.buscarEscolasArea = this.buscarEscolasArea.bind(this);
+        this.criarMarcadores = this.criarMarcadores.bind(this);
     }
 
     componentDidMount() {
@@ -36,6 +37,10 @@ export default class Mapa extends Component {
             this.setState({ lng : longitude })
         }.bind(this));
 
+        PubSub.subscribe('lista-escolas', function(topico, listaEscolas) {
+            this.criarMarcadores(listaEscolas);
+        }.bind(this));
+
         this.retornaLocalizacao();
     }
 
@@ -43,14 +48,15 @@ export default class Mapa extends Component {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(this.defineLatitudeLongitude, this.trataErros)
         } else {
-            console.log('A geolocalização não está habiliata');
+            this.trataErros('A geolocalização não está habilitada');
         }
     }
 
     defineLatitudeLongitude(position) {
         this.setState({
             lat : position.coords.latitude,
-            lng : position.coords.longitude
+            lng : position.coords.longitude,
+            zoom : 15
         });
     }
 
@@ -59,23 +65,28 @@ export default class Mapa extends Component {
     }
 
     buscarEscolasArea() {
-        this.setState({
-            area : this.refs.map.leafletElement.getBounds(),
-            marcadores : []
-        }, () => {
-            listarEscolas(this.state.escola).then(
-                lista => {
-                    this.setState({ escolas : lista.results });
-                    PubSub.publish('lista-escolas', lista.results);
-                    lista.results.forEach(l => {
-                        let marcador = [];
-                        marcador.escola = l.nomesc;
-                        marcador.latitude = l.latitude;
-                        marcador.longitude = l.longitude;
-                        this.state.marcadores.push(marcador);
-                    })
-                }
-            )
+        console.log(this.refs.map.leafletElement.getBounds());
+        // this.setState({
+        //     area : this.refs.map.leafletElement.getBounds()
+        // }, () => {
+        //     listarEscolas(this.state.escola).then(
+        //         lista => {
+        //             PubSub.publish('lista-escolas', lista.results);
+        //             this.criarMarcadores(lista.results);
+        //         }
+        //     )
+        // });
+    }
+
+    criarMarcadores(escolas) {
+        this.setState({ marcadores : [] }, () => {
+            escolas.forEach(escola => {
+                let marcador = [];
+                marcador.escola = escola.nomesc;
+                marcador.latitude = escola.latitude;
+                marcador.longitude = escola.longitude;
+                this.state.marcadores.push(marcador);
+            })
         });
     }
 

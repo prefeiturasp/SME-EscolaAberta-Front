@@ -14,21 +14,37 @@ export default class Home extends Component {
             escolasAutocomplete : []
         }
 
+        this.buscarPorTermo = this.buscarPorTermo.bind(this);
         this.setEscola = this.setEscola.bind(this);
     }
 
-    buscarEscolas = (e) => {
+    buscarPorTermo = (e) => {
+        console.log(e.target.value);
         if (e.target.value.length >= 3) {
-            let escolas = [];
-            listarEscolas(e.target.value).then(
-                lista => {
-                    lista.results.forEach(function(escola) {
-                        escolas.push({value : escola.codesc, label : escola.nomesc });
-                    });
-                    this.setState({ escolasAutocomplete :  escolas });
-                }
-            )
+            console.log(this.buscarEscolasPorNome(e.target.value));
         }
+    }
+
+    buscarEscolasPorNome(e) {
+        let escolas = [];
+        listarEscolas(e).then(
+            lista => {
+                lista.results.forEach(function(escola) {
+                    escolas.push({value : escola.codesc, label : escola.nomesc });
+                });
+                return escolas;
+            }
+        )
+    }
+
+    buscarEscolasPorBairro(e) {
+        let escolas = [];
+        return escolas;
+    }
+
+    buscarEscolasPorDistrito(e) {
+        let escolas = [];
+        return escolas;
     }
 
     setEscola(event) {
@@ -50,7 +66,7 @@ export default class Home extends Component {
                                     className="form-control form-control-lg rounded-pill shadow d-inline-block"
                                     placeholder="Encontre sua escola pelo nome ou bairro"
                                     onChange={this.setEscola}
-                                    onKeyDown={this.buscarEscolas}
+                                    onKeyDown={this.buscarPorTermo}
                                 />
                                 <Link
                                 className="btn btn-light d-inline-block ml-1"
