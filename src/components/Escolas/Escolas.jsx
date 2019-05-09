@@ -26,13 +26,6 @@ export default class Escolas extends Component {
   }
 
   componentDidMount() {
-    // listarEscolas({}).then(lista => {
-    //   this.setState({ escolas: lista.results }, () => {
-    //     PubSub.publish("lista-escolas", lista.results);
-    //   });
-    //   this.setState({ totalItens: Math.round(lista.count / 10) });
-    // });
-
     if (this.props.location.state !== undefined) {
       if (this.props.location.state.escola !== undefined) {
         PubSub.publish("escola-filtro", this.props.location.state.escola);

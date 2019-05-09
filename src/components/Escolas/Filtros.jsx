@@ -5,6 +5,7 @@ import SelectCustomizado from "../Inputs/SelectCustomizado";
 import SelectAutocomplete from "../Inputs/SelectAutocomplete";
 import { listarTiposEscola, listarDREs, listarEscolas } from "../../services/escolas";
 import logoEscolaAberta from "../../img/escola_aberta.png";
+import InputCustomizado from "../Inputs/InputCustomizado";
 
 export default class Filtros extends Component {
   constructor(props) {
@@ -193,11 +194,25 @@ export default class Filtros extends Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-6">
-                <input type="text" onChange={this.setBairro} value={this.state.bairroSelecionado} placeholder="Bairro" className="custom-select form-control rounded-pill" />
+              <div className="col-lg-6 col-xs-12">
+                <InputCustomizado
+                  name="filtro-bairro"
+                  id="filtro-bairro"
+                  className="custom-select form-control rounded-pill"
+                  placeholder="Selecione o bairro"
+                  value={this.state.bairroSelecionado}
+                  onChange={this.setBairro}
+                />
               </div>
-              <div className="col-lg-6">
-                <input type="text" onChange={this.setDistrito} value={this.state.distritoSelecionado} placeholder="Distrito" className="custom-select form-control rounded-pill" />
+              <div className="col-lg-6 col-xs-12">
+                <InputCustomizado
+                  name="filtro-distrito"
+                  id="filtro-distrito"
+                  className="custom-select form-control rounded-pill"
+                  placeholder="Selecione o distrito"
+                  value={this.state.distritoSelecionado}
+                  onChange={this.setDistrito}
+                />
               </div>
             </div>
           </div>
