@@ -26,7 +26,7 @@ export default class Mapa extends Component {
     PubSub.subscribe(
       "escola",
       function (topico, escola) {
-        this.setState({ escola: escola });
+        this.setState({ escola: escola, zoom: 15 });
       }.bind(this)
     );
 
@@ -94,7 +94,7 @@ export default class Mapa extends Component {
     this.setState({ marcadores: [] }, () => {
       escolas.forEach(escola => {
         let marcador = [];
-        marcador.escola = escola.nomesc;
+        marcador.escola = escola;
         marcador.latitude = escola.latitude;
         marcador.longitude = escola.longitude;
         this.state.marcadores.push(marcador);
@@ -122,7 +122,10 @@ export default class Mapa extends Component {
                 key={indice}
                 position={[marcador.latitude, marcador.longitude]}
               >
-                <Popup>{marcador.escola}</Popup>
+                <Popup>
+                  <strong>{marcador.escola.nomesc}</strong>
+                  <div>{marcador.escola.endereco}, {marcador.escola.numero} -  {marcador.escola.bairro}</div>
+                </Popup>
               </Marker>
             );
           })}

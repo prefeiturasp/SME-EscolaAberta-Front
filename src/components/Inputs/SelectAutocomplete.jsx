@@ -57,8 +57,8 @@ export default class SelectAutocomplete extends Component {
                 </tbody>
               </table>
             ) : (
-              <span className="px-2 py-2">Nenhum resultado encontrado!</span>
-            )}
+                <span className="px-2 py-2">Nenhum resultado encontrado!</span>
+              )}
           </div>
         )}
       </div>
