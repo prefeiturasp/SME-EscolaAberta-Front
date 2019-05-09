@@ -81,7 +81,7 @@ export default class Mapa extends Component {
     // this.setState({
     //     area : this.refs.map.leafletElement.getBounds()
     // }, () => {
-    //     listarEscolas(this.state.escola).then(
+    //     listarEscolas({area : this.state.area}).then(
     //         lista => {
     //             PubSub.publish('lista-escolas', lista.results);
     //             this.criarMarcadores(lista.results);

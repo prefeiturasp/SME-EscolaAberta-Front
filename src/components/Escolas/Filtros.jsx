@@ -23,6 +23,8 @@ export default class Filtros extends Component {
     this.filtrarListagemEscolas = this.filtrarListagemEscolas.bind(this);
     this.buscarEscolas = this.buscarEscolas.bind(this);
     this.setEscola = this.setEscola.bind(this);
+    this.setBairro = this.setBairro.bind(this);
+    this.setDistrito = this.setDistrito.bind(this);
     this.setTipoEscola = this.setTipoEscola.bind(this);
     this.setDRE = this.setDRE.bind(this);
   }
@@ -77,7 +79,7 @@ export default class Filtros extends Component {
       dre: this.state.dreSelecionada
     }).then(lista => {
       PubSub.publish("lista-escolas", lista.results);
-      PubSub.publish("total-itens", Math.round(lista.count / 10));
+      PubSub.publish("total-itens", Math.ceil(lista.count / 10));
       document.querySelector(".overflow-auto").scrollTop = 0;
     });
   }
@@ -102,11 +104,17 @@ export default class Filtros extends Component {
   }
 
   setBairro(event) {
-
+    this.setState({ bairroSelecionado: event.target.value }, () => {
+      this.filtrarListagemEscolas();
+    });
+    PubSub.publish("bairro-filtro", event.target.value);
   }
 
   setDistrito(event) {
-
+    this.setState({ distritoSelecionado: event.target.value }, () => {
+      this.filtrarListagemEscolas();
+    });
+    PubSub.publish("distrito-filtro", event.target.value);
   }
 
   setTipoEscola(event) {

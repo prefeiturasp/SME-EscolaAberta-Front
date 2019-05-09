@@ -61,8 +61,6 @@ export default class Buscador extends Component {
     return distritos;
   }
 
-  toggleBusca() { }
-
   render() {
     return (
       <div>
@@ -71,7 +69,6 @@ export default class Buscador extends Component {
             type="text"
             className="form-control form-control-lg rounded-pill shadow d-inline-block h-100 pt-3 pb-3"
             onKeyDown={this.buscarPorTermo}
-            onBlur={this.toggleBusca}
           />
         </div>
         <div className="resultados container bg-white h-100 shadow rounded d-none mb-4">
