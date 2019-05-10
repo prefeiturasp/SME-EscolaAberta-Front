@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { listarEscolas, listarBairros, listarDistritos } from "../../services/escolas";
+import { buscarLogradouroPorCep, buscarLatLngPorLogradouro } from "../../services/endereco";
 
 export default class Buscador extends Component {
   constructor(props) {
@@ -15,19 +16,28 @@ export default class Buscador extends Component {
   }
 
   buscarPorTermo = e => {
+    let { escolas, bairros, distritos, ruas } = [];
     if (e.target.value.length >= 3) {
-      let escolas = this.buscarEscolasPorNome(e.target.value);
-      let bairros = this.buscarBairros(e.target.value);
-      let distritos = this.buscarDistritos(e.target.value);
-      setTimeout(
-        function () {
-          this.setState({ escolasLista: escolas });
-          this.setState({ bairrosLista: bairros });
-          this.setState({ distritosLista: distritos });
-          document.querySelector(".resultados").classList.remove("d-none");
-        }.bind(this),
-        1000
-      );
+      if (!isNaN(e.target.value)) {
+        this.buscarLogradouroCep(e.target.value);
+      } else {
+        escolas = this.buscarEscolasPorNome(e.target.value);
+        bairros = this.buscarBairros(e.target.value);
+        distritos = this.buscarDistritos(e.target.value);
+        buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(local =>
+          ruas = local
+        );
+        setTimeout(
+          function () {
+            console.log(ruas);
+            this.setState({ escolasLista: escolas });
+            this.setState({ bairrosLista: bairros });
+            this.setState({ distritosLista: distritos });
+            document.querySelector(".resultados").classList.remove("d-none");
+          }.bind(this),
+          1000
+        );
+      }
     }
   };
 
@@ -61,6 +71,14 @@ export default class Buscador extends Component {
     return distritos;
   }
 
+  buscarLogradouroCep(e) {
+    buscarLogradouroPorCep({ cep: e }).then(logradouro => {
+      buscarLatLngPorLogradouro({ logradouro: logradouro.logradouro }).then(local => {
+        console.log(local.results[0].lat, local.results[0].lon);
+      })
+    })
+  }
+
   render() {
     return (
       <div>
@@ -68,7 +86,7 @@ export default class Buscador extends Component {
           <input
             type="text"
             className="form-control form-control-lg rounded-pill shadow d-inline-block h-100 pt-3 pb-3"
-            onKeyDown={this.buscarPorTermo}
+            onBlur={this.buscarPorTermo}
           />
         </div>
         <div className="resultados container bg-white h-100 shadow rounded d-none mb-4">

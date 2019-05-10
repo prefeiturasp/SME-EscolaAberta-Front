@@ -69,7 +69,7 @@ export default class Mapa extends Component {
     this.setState({
       lat: position.coords.latitude,
       lng: position.coords.longitude,
-      zoom: 15
+      zoom: 16
     });
   }
 
@@ -78,6 +78,7 @@ export default class Mapa extends Component {
   }
 
   buscarEscolasArea() {
+    console.log(this.refs.map.leafletElement.getBounds());
     // this.setState({
     //     area : this.refs.map.leafletElement.getBounds()
     // }, () => {
