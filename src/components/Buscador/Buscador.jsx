@@ -9,14 +9,18 @@ export default class Buscador extends Component {
     this.state = {
       escolasLista: [],
       bairrosLista: [],
-      distritosLista: []
+      distritosLista: [],
+      ruasLista: []
     };
 
     this.buscarPorTermo = this.buscarPorTermo.bind(this);
   }
 
   buscarPorTermo = e => {
-    let { escolas, bairros, distritos, ruas } = [];
+    let escolas = [];
+    let bairros = [];
+    let distritos = [];
+    let ruas = [];
     if (e.target.value.length >= 3) {
       if (!isNaN(e.target.value)) {
         this.buscarLogradouroCep(e.target.value);
@@ -24,12 +28,18 @@ export default class Buscador extends Component {
         escolas = this.buscarEscolasPorNome(e.target.value);
         bairros = this.buscarBairros(e.target.value);
         distritos = this.buscarDistritos(e.target.value);
-        buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(local =>
-          ruas = local
-        );
+
+        buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(localizacoes => {
+          localizacoes.results.forEach(function (local) {
+            if (local.type.indexOf("residential") !== -1) {
+              ruas.push({ value: { lat: local.lat, lon: local.lon }, label: local.name });
+            }
+          });
+        })
+
         setTimeout(
           function () {
-            console.log(ruas);
+            this.setState({ ruasLista: ruas });
             this.setState({ escolasLista: escolas });
             this.setState({ bairrosLista: bairros });
             this.setState({ distritosLista: distritos });
@@ -73,8 +83,19 @@ export default class Buscador extends Component {
 
   buscarLogradouroCep(e) {
     buscarLogradouroPorCep({ cep: e }).then(logradouro => {
-      buscarLatLngPorLogradouro({ logradouro: logradouro.logradouro }).then(local => {
-        console.log(local.results[0].lat, local.results[0].lon);
+      buscarLatLngPorLogradouro({ logradouro: logradouro.logradouro }).then(localizacoes => {
+        let ruas = [];
+        localizacoes.results.forEach(function (local) {
+          if (local.type.indexOf("residential") !== -1) {
+            ruas.push({ value: { lat: local.lat, lon: local.lon }, label: local.name });
+          }
+        });
+        setTimeout(
+          function () {
+            this.setState({ ruasLista: ruas });
+            document.querySelector(".resultados").classList.remove("d-none");
+          }.bind(this), 1000
+        );
       })
     })
   }
@@ -91,75 +112,108 @@ export default class Buscador extends Component {
         </div>
         <div className="resultados container bg-white h-100 shadow rounded d-none mb-4">
           <div className="row">
-            <div className="col-lg-4 col-xs-12 p-0">
-              <div className="list-group">
-                <li className="list-group-item list-group-item-secondary border-0">
-                  Escolas
-                </li>
-                {this.state.escolasLista.map((escola, indice) => {
-                  return (
-                    <Link
-                      key={indice}
-                      to={{
-                        pathname: "/escolas",
-                        state: {
-                          escola: escola.label
-                        }
-                      }}
-                      className="list-group-item list-group-item-action border-0"
-                    >
-                      {escola.label}
-                    </Link>
-                  );
-                })}
+            {this.state.escolasLista.length > 0 ? (
+              <div className="col-lg col-xs-12 p-0">
+                <div className="list-group">
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
+                    Escolas
+                  </li>
+                  {this.state.escolasLista.map((escola, indice) => {
+                    return (
+                      <Link
+                        key={indice}
+                        to={{
+                          pathname: "/escolas",
+                          state: {
+                            escola: escola.label
+                          }
+                        }}
+                        className="list-group-item list-group-item-action border-0"
+                      >
+                        {escola.label}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-            <div className="col-lg-4 col-xs-12 p-0">
-              <div className="list-group">
-                <li className="list-group-item list-group-item-secondary border-0">
-                  Bairros
+            ) : (null)}
+            {this.state.bairrosLista.length > 0 ? (
+              <div className="col-lg col-xs-12 p-0">
+                <div className="list-group">
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
+                    Bairros
                 </li>
-                {this.state.bairrosLista.map((bairro, indice) => {
-                  return (
-                    <Link
-                      key={indice}
-                      to={{
-                        pathname: "/escolas",
-                        state: {
-                          bairro: bairro.label
-                        }
-                      }}
-                      className="list-group-item list-group-item-action border-0"
-                    >
-                      {bairro.label}
-                    </Link>
-                  );
-                })}
+                  {this.state.bairrosLista.map((bairro, indice) => {
+                    return (
+                      <Link
+                        key={indice}
+                        to={{
+                          pathname: "/escolas",
+                          state: {
+                            bairro: bairro.label
+                          }
+                        }}
+                        className="list-group-item list-group-item-action border-0"
+                      >
+                        {bairro.label}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-            <div className="col-lg-4 col-xs-12 p-0">
-              <div className="list-group">
-                <li className="list-group-item list-group-item-secondary border-0">
-                  Distritos
+            ) : (null)}
+            {this.state.distritosLista.length > 0 ? (
+              <div className="col-lg col-xs-12 p-0">
+                <div className="list-group">
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
+                    Distritos
                 </li>
-                {this.state.distritosLista.map((distrito, indice) => {
-                  return (
-                    <Link
-                      key={indice}
-                      to={{
-                        pathname: "/escolas",
-                        state: {
-                          distrito: distrito.label
-                        }
-                      }}
-                      className="list-group-item list-group-item-action border-0"
-                    >
-                      {distrito.label}
-                    </Link>
-                  );
-                })}
+                  {this.state.distritosLista.map((distrito, indice) => {
+                    return (
+                      <Link
+                        key={indice}
+                        to={{
+                          pathname: "/escolas",
+                          state: {
+                            distrito: distrito.label
+                          }
+                        }}
+                        className="list-group-item list-group-item-action border-0"
+                      >
+                        {distrito.label}
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            ) : (null)}
+            {this.state.ruasLista.length > 0 ? (
+              <div className="col-lg col-xs-12 p-0">
+                <div className="list-group">
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
+                    Logradouros
+                </li>
+                  {this.state.ruasLista.map((rua, indice) => {
+                    return (
+                      <Link
+                        key={indice}
+                        to={{
+                          pathname: "/escolas",
+                          state: {
+                            rua: rua.label,
+                            lat: rua.value.lat,
+                            lon: rua.value.lon
+                          }
+                        }}
+                        className="list-group-item list-group-item-action border-0"
+                      >
+                        {rua.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (null)}
           </div>
         </div>
       </div>
