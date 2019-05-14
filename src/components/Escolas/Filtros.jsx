@@ -18,7 +18,8 @@ export default class Filtros extends Component {
       bairroSelecionado: "",
       distritoSelecionado: "",
       tipoEscolaSelecionado: "",
-      dreSelecionada: ""
+      dreSelecionada: "",
+      logradouroSelecionado: ""
     };
 
     this.filtrarListagemEscolas = this.filtrarListagemEscolas.bind(this);
@@ -59,6 +60,15 @@ export default class Filtros extends Component {
       "distrito-filtro",
       function (topico, filtro) {
         this.setState({ distritoSelecionado: filtro }, () =>
+          this.filtrarListagemEscolas()
+        );
+      }.bind(this)
+    );
+
+    PubSub.subscribe(
+      "logradouro-filtro",
+      function (topico, filtro) {
+        this.setState({ logradouroSelecionado: filtro }, () =>
           this.filtrarListagemEscolas()
         );
       }.bind(this)
@@ -130,6 +140,13 @@ export default class Filtros extends Component {
       this.filtrarListagemEscolas();
     });
     PubSub.publish("dre-filtro", event.target.value);
+  }
+
+  setLogradouro(event) {
+    this.setState({ logradouroSelecionado: event.target.value }, () => {
+      this.filtrarListagemEscolas();
+    });
+    PubSub.publish("logradouro-filtro", event.target.value);
   }
 
   render() {
@@ -212,6 +229,18 @@ export default class Filtros extends Component {
                   placeholder="Selecione o distrito"
                   value={this.state.distritoSelecionado}
                   onChange={this.setDistrito}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-6 col-xs-12">
+                <InputCustomizado
+                  name="filtro-logradouro"
+                  id="filtro-logradouro"
+                  className="custom-select form-control rounded-pill"
+                  placeholder="Selecione o logradouro"
+                  value={this.state.logradouroSelecionado}
+                  onChange={this.setLogradouro}
                 />
               </div>
             </div>

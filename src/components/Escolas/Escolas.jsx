@@ -33,6 +33,8 @@ export default class Escolas extends Component {
         PubSub.publish("bairro-filtro", this.props.location.state.bairro);
       } else if (this.props.location.state.distrito !== undefined) {
         PubSub.publish("distrito-filtro", this.props.location.state.distrito);
+      } else if (this.props.location.state.logradouro !== undefined) {
+        PubSub.publish("logradouro-filtro", this.props.location.state.logradouro);
       }
     }
 
