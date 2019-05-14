@@ -10,7 +10,7 @@ export default class Buscador extends Component {
       escolasLista: [],
       bairrosLista: [],
       distritosLista: [],
-      ruasLista: []
+      logradourosLista: []
     };
 
     this.buscarPorTermo = this.buscarPorTermo.bind(this);
@@ -24,6 +24,9 @@ export default class Buscador extends Component {
     if (e.target.value.length >= 3) {
       if (!isNaN(e.target.value)) {
         this.buscarLogradouroCep(e.target.value);
+        this.setState({ escolasLista: [] });
+        this.setState({ bairrosLista: [] });
+        this.setState({ distritosLista: [] });
       } else {
         escolas = this.buscarEscolasPorNome(e.target.value);
         bairros = this.buscarBairros(e.target.value);
@@ -39,7 +42,7 @@ export default class Buscador extends Component {
 
         setTimeout(
           function () {
-            this.setState({ ruasLista: ruas });
+            this.setState({ logradourosLista: ruas });
             this.setState({ escolasLista: escolas });
             this.setState({ bairrosLista: bairros });
             this.setState({ distritosLista: distritos });
@@ -49,7 +52,7 @@ export default class Buscador extends Component {
         );
       }
     }
-  };
+  }
 
   buscarEscolasPorNome(e) {
     let escolas = [];
@@ -92,7 +95,7 @@ export default class Buscador extends Component {
         });
         setTimeout(
           function () {
-            this.setState({ ruasLista: ruas });
+            this.setState({ logradourosLista: ruas });
             document.querySelector(".resultados").classList.remove("d-none");
           }.bind(this), 1000
         );
@@ -107,7 +110,7 @@ export default class Buscador extends Component {
           <input
             type="text"
             className="form-control form-control-lg rounded-pill shadow d-inline-block h-100 pt-3 pb-3"
-            onBlur={this.buscarPorTermo}
+            onKeyUp={this.buscarPorTermo}
           />
         </div>
         <div className="resultados container bg-white h-100 shadow rounded d-none mb-4">
@@ -187,27 +190,27 @@ export default class Buscador extends Component {
                 </div>
               </div>
             ) : (null)}
-            {this.state.ruasLista.length > 0 ? (
+            {this.state.logradourosLista.length > 0 ? (
               <div className="col-lg col-xs-12 p-0">
                 <div className="list-group">
                   <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
                     Logradouros
                 </li>
-                  {this.state.ruasLista.map((rua, indice) => {
+                  {this.state.logradourosLista.map((logradouro, indice) => {
                     return (
                       <Link
                         key={indice}
                         to={{
                           pathname: "/escolas",
                           state: {
-                            rua: rua.label,
-                            lat: rua.value.lat,
-                            lon: rua.value.lon
+                            logradouro: logradouro.label,
+                            lat: logradouro.value.lat,
+                            lon: logradouro.value.lon
                           }
                         }}
                         className="list-group-item list-group-item-action border-0"
                       >
-                        {rua.label}
+                        {logradouro.label}
                       </Link>
                     );
                   })}
