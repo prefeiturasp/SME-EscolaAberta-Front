@@ -1,4 +1,3 @@
-FROM nginx:alpine
+FROM node:latest
+CMD [ "npm", "run-scripts", "build" ]
 COPY /build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
