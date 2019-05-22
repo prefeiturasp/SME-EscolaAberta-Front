@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { listarEscolas, listarBairros, listarDistritos } from "../../services/escolas";
-import { buscarLogradouroPorCep, buscarLatLngPorLogradouro } from "../../services/endereco";
+import { buscarLogradouroPorCep, buscarLatLngPorLogradouro, buscaLogradouroPorLatLng } from "../../services/endereco";
 
 export default class Buscador extends Component {
   constructor(props) {
@@ -14,6 +14,10 @@ export default class Buscador extends Component {
     };
 
     this.buscarPorTermo = this.buscarPorTermo.bind(this);
+    this.retornaLocalizacao = this.retornaLocalizacao.bind(this);
+    this.defineLatitudeLongitude = this.defineLatitudeLongitude.bind(this);
+    this.trataErros = this.trataErros.bind(this);
+    this.mostrarBusca = this.mostrarBusca.bind(this);
   }
 
   buscarPorTermo = e => {
@@ -46,7 +50,6 @@ export default class Buscador extends Component {
             this.setState({ escolasLista: escolas });
             this.setState({ bairrosLista: bairros });
             this.setState({ distritosLista: distritos });
-            document.querySelector(".resultados").classList.remove("d-none");
           }.bind(this),
           1000
         );
@@ -96,11 +99,41 @@ export default class Buscador extends Component {
         setTimeout(
           function () {
             this.setState({ logradourosLista: ruas });
-            document.querySelector(".resultados").classList.remove("d-none");
           }.bind(this), 1000
         );
       })
     })
+  }
+
+  retornaLocalizacao() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        this.defineLatitudeLongitude,
+        this.trataErros
+      );
+    } else {
+      this.trataErros("A geolocalização não está habilitada");
+    }
+  }
+
+  defineLatitudeLongitude(position) {
+    let ruas = [];
+    buscaLogradouroPorLatLng({ lat: position.coords.latitude, lng: position.coords.longitude }).then(logradouro => {
+      ruas.push({ value: { lat: logradouro.lat, lon: logradouro.lon }, label: logradouro.address.road });
+    });
+    setTimeout(
+      function () {
+        this.setState({ logradourosLista: ruas });
+      }.bind(this), 1000
+    );
+  }
+
+  trataErros(message) {
+    console.log("Não foi possível determinar a localização", message);
+  }
+
+  mostrarBusca() {
+    document.querySelector(".resultados").classList.remove("d-none");
   }
 
   render() {
@@ -111,9 +144,19 @@ export default class Buscador extends Component {
             type="text"
             className="form-control form-control-lg rounded-pill shadow d-inline-block h-100 pt-3 pb-3"
             onKeyUp={this.buscarPorTermo}
+            onFocus={this.mostrarBusca}
           />
         </div>
         <div className="resultados container bg-white h-100 shadow rounded d-none mb-4">
+          <div className="row">
+            <div className="col-lg-12 col-xs-12 p-0">
+              <div className="list-group">
+                <li className="list-group-item list-group-item-action border-0 cursor-link" onClick={this.retornaLocalizacao}>
+                  Usar minha localização
+                </li>
+              </div>
+            </div>
+          </div>
           <div className="row">
             {this.state.escolasLista.length > 0 ? (
               <div className="col-lg col-xs-12 p-0">

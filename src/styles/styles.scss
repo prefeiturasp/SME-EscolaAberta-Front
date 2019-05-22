@@ -42,6 +42,10 @@ body {
     cursor: default;
 }
 
+.cursor-link {
+  cursor: pointer;
+}
+
 .resultados-busca {
     max-height: 300px;
     overflow-y: auto;
