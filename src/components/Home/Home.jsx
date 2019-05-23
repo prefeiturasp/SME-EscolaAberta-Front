@@ -1,25 +1,12 @@
 import React, { Component } from "react";
-import MenuHome from "../MenuSuperior/MenuHome";
+import Menu from "../MenuSuperior/Menu";
 import Buscador from "../Buscador/Buscador";
 
 export default class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      escolaSelecionada: ""
-    };
-
-    this.setEscola = this.setEscola.bind(this);
-  }
-
-  setEscola(event) {
-    this.setState({ escolaSelecionada: event });
-  }
-
   render() {
     return (
       <div>
-        <MenuHome />
+        <Menu />
         <div className="w-100 mapa-home">
           <div className="container d-flex justify-content-center">
             <div className="position-absolute conteudo">

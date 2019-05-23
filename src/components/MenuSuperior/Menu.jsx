@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import logoEscolaAberta from "../../img/escola_aberta.png";
 
-export default class MenuHome extends Component {
+export default class Menu extends Component {
   render() {
     return (
       <div>

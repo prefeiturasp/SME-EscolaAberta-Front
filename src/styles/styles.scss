@@ -30,6 +30,12 @@ body {
             }
         }
     }
+    .borda-busca {
+      border-color: $corAzulBordaBusca !important;
+    }
+    .busca-off {
+      border-color: $corCinzaBuscaOff !important;
+    }
 }
 
 // Filtro
@@ -54,6 +60,21 @@ body {
 
 .btn-consulte {
     @include fonte(1.2rem);
+}
+
+.busca .form-control {
+  @include fonte(16px);
+  font-style: italic;
+  text-align: center;
+}
+
+.busca .rounded-pill {
+  border-radius: 30px !important;
+}
+
+.busca .rounded-bottom-0 {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 // Escolas

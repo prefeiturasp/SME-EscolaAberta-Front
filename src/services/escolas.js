@@ -7,6 +7,13 @@ export async function listarEscolas(params) {
   );
 }
 
+export async function listarEscolasLocalizacao(params) {
+  const { lat, lon } = params;
+  return fetch(`${API_EOL}/localizador?lat=${lat}&lon=${lon}&radius=2`).then(escolas =>
+    escolas.json()
+  );
+}
+
 export async function listarBairros(params) {
   const { bairro = '' } = params;
   return fetch(`${API_EOL}/bairros/?search=${bairro}`).then(bairros =>
