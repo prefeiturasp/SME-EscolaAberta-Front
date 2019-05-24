@@ -9,9 +9,8 @@ export default class Mapa extends Component {
       escola: "",
       lat: -23.5505,
       lng: -46.6333,
-      zoom: 11,
-      height: "535px",
-      area: [],
+      zoom: 11.5,
+      height: "860px",
       marcadores: []
     };
 

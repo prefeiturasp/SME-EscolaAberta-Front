@@ -8,7 +8,7 @@ export default class Rodape extends Component {
       <div className="rodape">
         <div className="container">
           <div className="row pt-4 pb-3">
-            <div className="d-flex col-lg-6 col-xs-12 justify-content-lg-start justify-content-center mt-2">
+            <div className="d-flex col-lg-6 col-sm-12 justify-content-lg-start justify-content-center mt-2">
               <p>
                 Simply dummy text of the printing and typesetting industry.
                 Lorem Ipsum has been the industry's standard dummy text ever
@@ -17,7 +17,7 @@ export default class Rodape extends Component {
                 not only five centuries.
               </p>
             </div>
-            <div className="d-flex col-lg-6 col-xs-12 justify-content-lg-end justify-content-center">
+            <div className="d-flex col-lg-6 col-sm-12 justify-content-lg-end justify-content-center">
               <img className="img-fluid" src={logoUnesco} alt="UNESCO" />
               <img
                 className="img-fluid"

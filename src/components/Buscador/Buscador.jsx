@@ -118,6 +118,10 @@ export default class Buscador extends Component {
 
   defineLatitudeLongitude(position) {
     let ruas = [];
+    this.setState({ escolasLista: [] });
+    this.setState({ bairrosLista: [] });
+    this.setState({ distritosLista: [] });
+    this.setState({ logradourosLista: [] });
     buscaLogradouroPorLatLng({ lat: position.coords.latitude, lng: position.coords.longitude }).then(logradouro => {
       ruas.push({ value: { lat: logradouro.lat, lon: logradouro.lon }, label: logradouro.address.road });
     });
@@ -135,11 +139,11 @@ export default class Buscador extends Component {
   mostrarBusca(event) {
     if (event.type === "focus") {
       document.querySelector(".form-control-lg").classList.add("rounded-bottom-0", "border-bottom-0");
-      document.querySelector(".resultados").classList.remove("d-none");
-      document.querySelector(".resultados").classList.add("borda-busca");
+      document.querySelector(".resultados").classList.remove("d-none", "borda-off");
+      document.querySelector(".resultados").classList.add("borda-on");
     } else {
       document.querySelector(".resultados").classList.add("borda-off");
-      document.querySelector(".resultados").classList.remove("borda-busca");
+      document.querySelector(".resultados").classList.remove("borda-on");
     }
   }
 
@@ -156,9 +160,9 @@ export default class Buscador extends Component {
             onBlur={this.mostrarBusca}
           />
         </div>
-        <div className="resultados container bg-white h-100 shadow rounded-0 border border-top-0 borda-busca d-none mb-4">
+        <div className="resultados container bg-white h-100 shadow rounded-0 border border-top-0 borda-on d-none mb-4">
           <div className="row">
-            <div className="col-lg-12 col-xs-12 p-0">
+            <div className="col-lg-12 col-sm-12 p-0">
               <div className="list-group">
                 <li className="list-group-item list-group-item-action border-0 cursor-link" onClick={this.retornaLocalizacao}>
                   <svg width="26" height="25" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg" className="mr-2">
@@ -173,11 +177,9 @@ export default class Buscador extends Component {
           </div>
           <div className="row">
             {this.state.escolasLista.length > 0 ? (
-              <div className="col-lg col-xs-12 p-0">
+              <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
-                    Escolas
-                  </li>
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Escolas</li>
                   {this.state.escolasLista.map((escola, indice) => {
                     return (
                       <Link
@@ -198,11 +200,9 @@ export default class Buscador extends Component {
               </div>
             ) : (null)}
             {this.state.bairrosLista.length > 0 ? (
-              <div className="col-lg col-xs-12 p-0">
+              <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
-                    Bairros
-                </li>
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Bairros</li>
                   {this.state.bairrosLista.map((bairro, indice) => {
                     return (
                       <Link
@@ -223,11 +223,9 @@ export default class Buscador extends Component {
               </div>
             ) : (null)}
             {this.state.distritosLista.length > 0 ? (
-              <div className="col-lg col-xs-12 p-0">
+              <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
-                    Distritos
-                </li>
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Distritos</li>
                   {this.state.distritosLista.map((distrito, indice) => {
                     return (
                       <Link
@@ -248,11 +246,9 @@ export default class Buscador extends Component {
               </div>
             ) : (null)}
             {this.state.logradourosLista.length > 0 ? (
-              <div className="col-lg col-xs-12 p-0">
+              <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
-                    Logradouros
-                </li>
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Logradouros</li>
                   {this.state.logradourosLista.map((logradouro, indice) => {
                     return (
                       <Link

@@ -35,6 +35,8 @@ export default class SelectAutocomplete extends Component {
       <div className="w-100 position-relative" onBlur={this.onBlur}>
         <input
           type="text"
+          id={this.props.id}
+          name={this.props.name}
           className={this.props.className}
           placeholder={this.props.placeholder}
           value={this.props.value}
@@ -43,7 +45,7 @@ export default class SelectAutocomplete extends Component {
           onChange={this.onChange}
         />
         {this.state.toggle && (
-          <div className="card w-100 position-absolute shadow rounded-0 border border-info resultados-busca">
+          <div className="card w-100 position-absolute shadow rounded-0 border border-info resultados-autocomplete">
             {Object.entries(this.props.collection).length > 0 ? (
               <table className="table-sm table-hover table-borderless">
                 <tbody>

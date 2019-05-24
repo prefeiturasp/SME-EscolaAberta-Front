@@ -4,118 +4,123 @@ body {
     @include roboto-sans;
 }
 
-// Fonte
-
-@mixin fonte($size) {
-    font-size: $size;
-}
-
 // Home
 
-.mapa-home {
-    background: $corCinzaEscuro url('../img/mapa_home.png');
+.bg-busca {
+    background: $corCinzaClaro url('../img/bg_busca.png');
+    background-blend-mode: lighten;
+    background-size: cover;
     color: $corCinzaHome;
     height: 488px;
+
     .conteudo {
         margin: -5% auto -25%;
         top: 50%;
+
+        @media (max-width: 576px) {
+            top: 35%;
+        }
+
         h2 {
-            @include fonte(30px);
+            font-size: 30px;
             font-weight: bold;
         }
-        .m-90 {
-            width: 90%;
-            @media (max-width: 576px) {
-                width: 80%;
+
+        .busca {
+            .form-control {
+                font-size: 16px;
+                font-style: italic;
+                text-align: center;
+            }
+
+            .rounded-pill {
+                border-radius: 30px !important;
+            }
+
+            .rounded-bottom-0 {
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
             }
         }
-    }
-    .borda-busca {
-      border-color: $corAzulBordaBusca !important;
-    }
-    .busca-off {
-      border-color: $corCinzaBuscaOff !important;
+
+        .resultados {
+            &.borda-on {
+                border-color: $corAzulBuscaOn !important;
+            }
+
+            &.borda-off {
+                border-color: $corCinzaBuscaOff !important;
+            }
+
+            .cursor-link {
+                cursor: pointer;
+            }
+        }
     }
 }
 
 // Filtro
 
-.menu-busca {
+.menu-auxiliar {
     background: $corVerdeClaro;
+
+    h3 {
+        font-size: 24px;
+        line-height: 28px;
+    }
 }
 
-.cursor-padrao {
-    cursor: default;
-}
-
-.cursor-link {
-  cursor: pointer;
-}
-
-.resultados-busca {
+.resultados-autocomplete {
     max-height: 300px;
     overflow-y: auto;
     z-index: 5;
-}
 
-.btn-consulte {
-    @include fonte(1.2rem);
-}
-
-.busca .form-control {
-  @include fonte(16px);
-  font-style: italic;
-  text-align: center;
-}
-
-.busca .rounded-pill {
-  border-radius: 30px !important;
-}
-
-.busca .rounded-bottom-0 {
-  border-bottom-left-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+    .cursor-padrao {
+        cursor: default;
+    }
 }
 
 // Escolas
 
 .escolas {
-    p {
-        @include fonte(0.8rem);
+    @media (min-width: 992px) {
+        min-height: 860px;
     }
+
+    .filtro {
+        @media (max-width: 576px) {
+            left: 0;
+        }
+
+        @media (min-width: 992px) {
+            position: absolute;
+        }
+
+        background: $corAzulFiltro;
+
+        h4 {
+            font-size: 14px;
+            font-weight: bold;
+        }
+    }
+
     .overflow-auto {
-        height: 370px;
         .tabela-escolas {
-            @include fonte(0.8rem);
+            font-size: 0.8rem;
+
             tr {
                 cursor: pointer;
-                &.collapsing, &.collapse {
+
+                &.collapsing,
+                &.collapse {
                     background: $corCinzaEscuro;
                 }
             }
+
             tr[aria-expanded=true] {
                 background: $corCinzaEscuro;
             }
         }
-    }
-}
-
-.btn-mais-escolas {
-    background: $corVerdeEscuro !important;
-    border-color: $corVerdeEscuro !important;
-    color: $corBranco !important;
-    &:hover {
-        background: $corBranco !important;
-        color: $corVerdeEscuro !important;
-    }
-}
-
-.btn-estatisticas {
-    border-color: $corVerdeEscuro !important;
-    color: $corVerdeEscuro !important;
-    &:hover {
-        background: $corVerdeEscuro !important;
-        color: $corBranco !important;
     }
 }
 
@@ -128,10 +133,21 @@ body {
         right: 0;
         width: 100% !important;
     }
+
     .mapa {
         background: $corBranco;
         border: 0 none;
         box-sizing: border-box;
+    }
+}
+
+.filtro-completo {
+    @media (min-width: 992px) {
+        padding-right: 0 !important;
+        position: absolute !important;
+        left: 0;
+        z-index: 1;
+        width: 100% !important;
     }
 }
 
@@ -140,5 +156,5 @@ body {
 .rodape {
     background: $corVerdeEscuro;
     color: $corBranco;
-    @include fonte(0.8rem);
+    font-size: 0.8rem;
 }

@@ -7,15 +7,13 @@ export default class Home extends Component {
     return (
       <div>
         <Menu />
-        <div className="w-100 mapa-home">
+        <div className="w-100 bg-busca">
           <div className="container d-flex justify-content-center">
             <div className="position-absolute conteudo">
-              <div className="col-lg-7 col-xs-12 text-center m-auto">
-                <h2>
-                  Aqui você encontra todas as informações sobre sua escola
-                </h2>
+              <div className="col-lg-7 col-sm-12 text-center m-auto">
+                <h2>Aqui você encontra todas as informações sobre sua escola</h2>
               </div>
-              <div className="col-lg-12 col-xs-12">
+              <div className="col-lg-12 col-sm-12">
                 <Buscador />
               </div>
             </div>

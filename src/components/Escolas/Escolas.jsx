@@ -150,19 +150,9 @@ export default class Escolas extends Component {
         <div className="bg-light w-100 h-100">
           <div className="container">
             <div className="row">
-              <div className="col-lg-6 col-xs-12 pr-lg-0 escolas">
+              <div className="col-lg-6 col-sm-12 pr-lg-0 escolas">
                 <Filtros />
-                <div className="pt-4 pb-4">
-                  <h2>Título</h2>
-                  <p>
-                    Simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever
-                    since the 1500s, when an unknown printer took a galley of
-                    type and scrambled it to make a type specimen book. It has
-                    survived not only five centuries.
-                  </p>
-                </div>
-                <div className="overflow-auto">
+                <div className="overflow-auto pt-4 pb-4">
                   <TabelaEscolas
                     lista={this.state.escolas}
                     limparCheckboxes={this.limparCheckboxes}
@@ -170,7 +160,7 @@ export default class Escolas extends Component {
                   />
                 </div>
               </div>
-              <div className="col-lg-6 col-xs-12 mapa-completo">
+              <div className="col-lg-6 col-sm-12 mapa-completo">
                 <Mapa />
               </div>
             </div>
