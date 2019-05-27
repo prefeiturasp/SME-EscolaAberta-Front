@@ -92,7 +92,7 @@ export default class Buscador extends Component {
       buscarLatLngPorLogradouro({ logradouro: logradouro.logradouro }).then(localizacoes => {
         let ruas = [];
         localizacoes.results.forEach(function (local) {
-          if (local.type.indexOf("residential") !== -1) {
+          if (local.type.indexOf("residential") !== -1 && ruas.length < 1) {
             ruas.push({ value: { lat: local.lat, lon: local.lon }, label: local.name });
           }
         });
