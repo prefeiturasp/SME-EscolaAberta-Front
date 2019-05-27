@@ -56,6 +56,7 @@ export default class Mapa extends Component {
         marcador.longitude = escola.longitude;
         this.state.marcadores.push(marcador);
       });
+      this.setState({ lat: this.state.marcadores[0].latitude, lng: this.state.marcadores[0].longitude });
     });
   }
 
