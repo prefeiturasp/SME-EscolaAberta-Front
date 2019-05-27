@@ -5,6 +5,8 @@ import Mapa from "../Mapa/Mapa";
 import TabelaEscolas from "./Tabela";
 import Rodape from "../Rodape/Rodape";
 import { listarEscolas } from "../../services/escolas";
+import Menu from "../MenuSuperior/Menu";
+import MenuAuxiliar from "../MenuSuperior/MenuAuxiliar";
 
 export default class Escolas extends Component {
   constructor(props) {
@@ -34,7 +36,11 @@ export default class Escolas extends Component {
       } else if (this.props.location.state.distrito !== undefined) {
         PubSub.publish("distrito-filtro", this.props.location.state.distrito);
       } else if (this.props.location.state.logradouro !== undefined) {
-        PubSub.publish("logradouro-filtro", this.props.location.state.logradouro);
+        PubSub.publish("logradouro-filtro", {
+          logradouro: this.props.location.state.logradouro,
+          lat: this.props.location.state.lat,
+          lon: this.props.location.state.lon
+        });
       }
     }
 
@@ -139,22 +145,14 @@ export default class Escolas extends Component {
   render() {
     return (
       <div>
-        <Filtros />
+        <Menu />
+        <MenuAuxiliar />
         <div className="bg-light w-100 h-100">
           <div className="container">
             <div className="row">
-              <div className="col-lg-6 col-xs-12 pr-lg-0 escolas">
-                <div className="pt-4 pb-4">
-                  <h2>Título</h2>
-                  <p>
-                    Simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been the industry's standard dummy text ever
-                    since the 1500s, when an unknown printer took a galley of
-                    type and scrambled it to make a type specimen book. It has
-                    survived not only five centuries.
-                  </p>
-                </div>
-                <div className="overflow-auto">
+              <div className="col-lg-6 col-sm-12 pr-lg-0 escolas">
+                <Filtros />
+                <div className="overflow-auto pt-4 pb-4">
                   <TabelaEscolas
                     lista={this.state.escolas}
                     limparCheckboxes={this.limparCheckboxes}
@@ -162,7 +160,7 @@ export default class Escolas extends Component {
                   />
                 </div>
               </div>
-              <div className="col-lg-6 col-xs-12 mapa-completo">
+              <div className="col-lg-6 col-sm-12 mapa-completo">
                 <Mapa />
               </div>
             </div>

@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import PubSub from "pubsub-js";
-import { Link } from "react-router-dom";
 import SelectCustomizado from "../Inputs/SelectCustomizado";
 import SelectAutocomplete from "../Inputs/SelectAutocomplete";
-import { listarTiposEscola, listarDREs, listarEscolas } from "../../services/escolas";
-import logoEscolaAberta from "../../img/escola_aberta.png";
+import { listarTiposEscola, listarDREs, listarEscolas, listarEscolasLocalizacao } from "../../services/escolas";
 import InputCustomizado from "../Inputs/InputCustomizado";
+import { Link } from "react-router-dom";
+import BtnFiltro from "../../img/fechar_filtro.png";
 
 export default class Filtros extends Component {
   constructor(props) {
@@ -23,6 +23,7 @@ export default class Filtros extends Component {
     };
 
     this.filtrarListagemEscolas = this.filtrarListagemEscolas.bind(this);
+    this.filtrarListagemEscolasLocalizacao = this.filtrarListagemEscolasLocalizacao.bind(this);
     this.buscarEscolas = this.buscarEscolas.bind(this);
     this.setEscola = this.setEscola.bind(this);
     this.setBairro = this.setBairro.bind(this);
@@ -69,7 +70,7 @@ export default class Filtros extends Component {
       "logradouro-filtro",
       function (topico, filtro) {
         this.setState({ logradouroSelecionado: filtro }, () =>
-          this.filtrarListagemEscolas()
+          this.filtrarListagemEscolasLocalizacao()
         );
       }.bind(this)
     );
@@ -91,6 +92,17 @@ export default class Filtros extends Component {
     }).then(lista => {
       PubSub.publish("lista-escolas", lista.results);
       PubSub.publish("total-itens", Math.ceil(lista.count / 10));
+      document.querySelector(".overflow-auto").scrollTop = 0;
+    });
+  }
+
+  filtrarListagemEscolasLocalizacao() {
+    listarEscolasLocalizacao({
+      lat: this.state.logradouroSelecionado.lat,
+      lon: this.state.logradouroSelecionado.lon
+    }).then(lista => {
+      PubSub.publish("lista-escolas", lista.results);
+      // PubSub.publish("total-itens", Math.ceil(lista.count / 10));
       document.querySelector(".overflow-auto").scrollTop = 0;
     });
   }
@@ -143,105 +155,142 @@ export default class Filtros extends Component {
   }
 
   setLogradouro(event) {
-    this.setState({ logradouroSelecionado: event.target.value }, () => {
-      this.filtrarListagemEscolas();
+    this.setState({ logradouroSelecionado: { logradouro: event.target.value } }, () => {
+      this.filtrarListagemEscolasLocalizacao();
     });
-    PubSub.publish("logradouro-filtro", event.target.value);
+    PubSub.publish("logradouro-filtro", { logradouro: event.target.value });
   }
 
   render() {
     return (
       <div>
-        <div className="container">
-          <div className="row mt-3 mb-4">
-            <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-start justify-content-center">
-              <h1 className="m-0">
-                <Link to="/">
-                  <img
-                    className="img-fluid"
-                    src={logoEscolaAberta}
-                    alt="Escola Aberta"
-                  />
-                </Link>
-              </h1>
-            </div>
-            <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-end justify-content-center">
-              <button className="btn btn-sm btn-success btn-consulte mt-3">
-                Consulte sua posição
-              </button>
+        <div className="filtro collapse shadow w-100 h-100" id="filtro-collapse">
+          <div className="bg-white pt-2 pb-2">
+            <div className="container">
+              <div className="row">
+                <div className="col-lg-6 col-sm-6 d-flex justify-content-start align-items-center">
+                  <Link to="/escolas" data-toggle="collapse" data-target="#filtro-collapse" aria-expanded="false" aria-controls="filtro-collapse">
+                    <img src={BtnFiltro} alt="Fechar Filtros" />
+                  </Link>
+                </div>
+                <div className="col-lg-6 col-sm-6 d-flex justify-content-end align-items-center">
+                  <Link to="/escolas" className="text-primary text-uppercase limpar">Limpar Filtros</Link>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="menu-busca p-3">
-          <div className="container">
+          <div className="container pt-4 pb-4">
             <div className="row">
-              <div className="col-lg-5 col-xs-12">
-                <SelectAutocomplete
-                  value={this.state.escolaSelecionada}
-                  collection={this.state.escolasAutocomplete}
-                  className="custom-select rounded-pill"
-                  placeholder="Selecione a escola"
-                  onChange={this.setEscola}
-                  onKeyDown={this.buscarEscolas}
-                />
-              </div>
-              <div className="col-lg-2 col-xs-12">
-                <SelectCustomizado
-                  name="filtro-tipo"
-                  id="filtro-tipo"
-                  className="custom-select rounded-pill"
-                  emptyLabel="Selecione o tipo"
-                  lista={this.state.tiposEscola}
-                  value="tipoesc"
-                  label="tipoesc"
-                  onChange={this.setTipoEscola}
-                />
-              </div>
-              <div className="col-lg-5 col-xs-12">
-                <SelectCustomizado
-                  name="filtro-dre"
-                  id="filtro-dre"
-                  className="custom-select rounded-pill"
-                  emptyLabel="Selecione a DRE"
-                  lista={this.state.dres}
-                  value="dre"
-                  label="diretoria"
-                  onChange={this.setDRE}
-                />
+              <div className="col-lg-12">
+                <h4 className="border-bottom border-white pb-2 mb-4 text-uppercase text-white">Localidade</h4>
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-6 col-xs-12">
-                <InputCustomizado
-                  name="filtro-bairro"
-                  id="filtro-bairro"
-                  className="custom-select form-control rounded-pill"
-                  placeholder="Selecione o bairro"
-                  value={this.state.bairroSelecionado}
-                  onChange={this.setBairro}
-                />
-              </div>
-              <div className="col-lg-6 col-xs-12">
-                <InputCustomizado
-                  name="filtro-distrito"
-                  id="filtro-distrito"
-                  className="custom-select form-control rounded-pill"
-                  placeholder="Selecione o distrito"
-                  value={this.state.distritoSelecionado}
-                  onChange={this.setDistrito}
-                />
+              <div className="col-lg-12 col-sm-12">
+                <div className="form-group">
+                  <label htmlFor="filtro-logradouro" className="text-white">Logradouro</label>
+                  <InputCustomizado
+                    name="filtro-logradouro"
+                    id="filtro-logradouro"
+                    className="form-control rounded-pill shadow"
+                    placeholder="Digite o logradouro"
+                    value=""
+                    onChange={this.setLogradouro}
+                  />
+                </div>
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-6 col-xs-12">
-                <InputCustomizado
-                  name="filtro-logradouro"
-                  id="filtro-logradouro"
-                  className="custom-select form-control rounded-pill"
-                  placeholder="Selecione o logradouro"
-                  value={this.state.logradouroSelecionado}
-                  onChange={this.setLogradouro}
-                />
+              <div className="col-lg-12 col-sm-12">
+                <div className="form-group">
+                  <label htmlFor="filtro-bairro" className="text-white">Bairro</label>
+                  <InputCustomizado
+                    name="filtro-bairro"
+                    id="filtro-bairro"
+                    className="custom-select form-control rounded-pill shadow"
+                    placeholder="Selecione o bairro"
+                    value={this.state.bairroSelecionado}
+                    onChange={this.setBairro}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12 col-sm-12">
+                <div className="form-group">
+                  <label htmlFor="filtro-distrito" className="text-white">Distrito</label>
+                  <InputCustomizado
+                    name="filtro-distrito"
+                    id="filtro-distrito"
+                    className="custom-select form-control rounded-pill shadow"
+                    placeholder="Selecione o distrito"
+                    value={this.state.distritoSelecionado}
+                    onChange={this.setDistrito}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                <h4 className="border-bottom border-white pb-2 mt-4 mb-4 text-uppercase text-white">Unidades de Ensino</h4>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12 col-sm-12">
+                <div className="form-group">
+                  <label htmlFor="filtro-escola" className="text-white">Escola</label>
+                  <SelectAutocomplete
+                    id="filtro-escola"
+                    name="filtro-escola"
+                    value={this.state.escolaSelecionada}
+                    collection={this.state.escolasAutocomplete}
+                    className="custom-select rounded-pill shadow"
+                    placeholder="Selecione a escola"
+                    onChange={this.setEscola}
+                    onKeyDown={this.buscarEscolas}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12 col-sm-12">
+                <div className="form-group">
+                  <label htmlFor="filtro-tipo" className="text-white">Tipo de ensino</label>
+                  <SelectCustomizado
+                    name="filtro-tipo"
+                    id="filtro-tipo"
+                    className="custom-select rounded-pill shadow"
+                    emptyLabel="Selecione o tipo"
+                    lista={this.state.tiposEscola}
+                    value="tipoesc"
+                    label="tipoesc"
+                    onChange={this.setTipoEscola}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12 col-sm-12">
+                <div className="form-group">
+                  <label htmlFor="filtro-dre" className="text-white">DRE</label>
+                  <SelectCustomizado
+                    name="filtro-dre"
+                    id="filtro-dre"
+                    className="custom-select rounded-pill shadow"
+                    emptyLabel="Selecione a DRE"
+                    lista={this.state.dres}
+                    value="dre"
+                    label="diretoria"
+                    onChange={this.setDRE}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="container">
+                <div className="col-lg-12 d-flex justify-content-center align-items-center mt-4">
+                  <button className="btn btn-outline-light btn-lg" data-toggle="collapse" data-target="#filtro-collapse" aria-expanded="false" aria-controls="filtro-collapse">Aplicar</button>
+                </div>
               </div>
             </div>
           </div>

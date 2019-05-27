@@ -9,16 +9,11 @@ export default class Mapa extends Component {
       escola: "",
       lat: -23.5505,
       lng: -46.6333,
-      zoom: 11,
-      height: "535px",
-      area: [],
+      zoom: 11.5,
+      height: "860px",
       marcadores: []
     };
 
-    this.retornaLocalizacao = this.retornaLocalizacao.bind(this);
-    this.defineLatitudeLongitude = this.defineLatitudeLongitude.bind(this);
-    this.trataErros = this.trataErros.bind(this);
-    this.buscarEscolasArea = this.buscarEscolasArea.bind(this);
     this.criarMarcadores = this.criarMarcadores.bind(this);
   }
 
@@ -50,45 +45,6 @@ export default class Mapa extends Component {
         this.criarMarcadores(listaEscolas);
       }.bind(this)
     );
-
-    // this.retornaLocalizacao();
-  }
-
-  retornaLocalizacao() {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        this.defineLatitudeLongitude,
-        this.trataErros
-      );
-    } else {
-      this.trataErros("A geolocalização não está habilitada");
-    }
-  }
-
-  defineLatitudeLongitude(position) {
-    this.setState({
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-      zoom: 16
-    });
-  }
-
-  trataErros(message) {
-    console.log("Não foi possível determinar a localização", message);
-  }
-
-  buscarEscolasArea() {
-    console.log(this.refs.map.leafletElement.getBounds());
-    // this.setState({
-    //     area : this.refs.map.leafletElement.getBounds()
-    // }, () => {
-    //     listarEscolas({area : this.state.area}).then(
-    //         lista => {
-    //             PubSub.publish('lista-escolas', lista.results);
-    //             this.criarMarcadores(lista.results);
-    //         }
-    //     )
-    // });
   }
 
   criarMarcadores(escolas) {
@@ -110,7 +66,6 @@ export default class Mapa extends Component {
           ref="map"
           center={[this.state.lat, this.state.lng]}
           zoom={this.state.zoom}
-          onMoveend={this.buscarEscolasArea}
           style={{ height: this.state.height }}
         >
           <TileLayer
