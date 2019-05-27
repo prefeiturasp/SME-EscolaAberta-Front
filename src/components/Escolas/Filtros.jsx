@@ -5,6 +5,7 @@ import SelectAutocomplete from "../Inputs/SelectAutocomplete";
 import { listarTiposEscola, listarDREs, listarEscolas, listarEscolasLocalizacao } from "../../services/escolas";
 import InputCustomizado from "../Inputs/InputCustomizado";
 import { Link } from "react-router-dom";
+import BtnFiltro from "../../img/fechar_filtro.png";
 
 export default class Filtros extends Component {
   constructor(props) {
@@ -168,10 +169,12 @@ export default class Filtros extends Component {
             <div className="container">
               <div className="row">
                 <div className="col-lg-6 col-sm-6 d-flex justify-content-start align-items-center">
-                  <Link to="/escolas" data-toggle="collapse" data-target="#filtro-collapse" aria-expanded="false" aria-controls="filtro-collapse" className="text-secondary">X</Link>
+                  <Link to="/escolas" data-toggle="collapse" data-target="#filtro-collapse" aria-expanded="false" aria-controls="filtro-collapse">
+                    <img src={BtnFiltro} alt="Fechar Filtros" />
+                  </Link>
                 </div>
                 <div className="col-lg-6 col-sm-6 d-flex justify-content-end align-items-center">
-                  <Link to="/escolas" className="text-primary text-uppercase">Limpar Filtros</Link>
+                  <Link to="/escolas" className="text-primary text-uppercase limpar">Limpar Filtros</Link>
                 </div>
               </div>
             </div>

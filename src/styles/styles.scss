@@ -4,6 +4,13 @@ body {
     @include roboto-sans;
 }
 
+// Menu
+
+.pref-menu {
+    font-size: 10px;
+    line-height: 12px;
+}
+
 // Home
 
 .bg-busca {
@@ -102,6 +109,12 @@ body {
             font-size: 14px;
             font-weight: bold;
         }
+
+        .limpar {
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 16px;
+        }
     }
 
     .overflow-auto {
@@ -141,20 +154,10 @@ body {
     }
 }
 
-.filtro-completo {
-    @media (min-width: 992px) {
-        padding-right: 0 !important;
-        position: absolute !important;
-        left: 0;
-        z-index: 1;
-        width: 100% !important;
-    }
-}
-
 // Rodapé
 
-.rodape {
-    background: $corVerdeEscuro;
+.area-rodape {
+    background: $corCinzaRodape;
     color: $corBranco;
     font-size: 0.8rem;
 }
