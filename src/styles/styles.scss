@@ -11,6 +11,23 @@ body {
     line-height: 12px;
 }
 
+.links-menu {
+    border-bottom: 1px solid #DEE2E6;
+
+    @media (max-width: 576px) {
+        border-bottom: 0 none !important;
+    }
+
+    .nav-link {
+        border: 0 none !important;
+
+        &:hover {
+            border: 0 none;
+            padding: .5rem 1rem;
+        }
+    }
+}
+
 // Home
 
 .bg-busca {
@@ -23,10 +40,7 @@ body {
     .conteudo {
         margin: -5% auto -25%;
         top: 50%;
-
-        @media (max-width: 576px) {
-            top: 35%;
-        }
+        z-index: 1;
 
         h2 {
             font-size: 30px;
@@ -63,6 +77,46 @@ body {
                 cursor: pointer;
             }
         }
+    }
+}
+
+.sociedade-governo {
+    background: $corAzulPortal;
+
+    button {
+        background: $corVerdeBotaoHome;
+    }
+}
+
+.numeros {
+    background: $corAzulFiltro;
+
+    .rounded-circle {
+        color: $corAzulPortal;
+        height: 200px;
+        text-align: center;
+        vertical-align: middle;
+        width: 200px;
+
+        .valor {
+            display: block;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .texto {
+            font-size: 16px;
+        }
+    }
+}
+
+h2 {
+    font-size: 35px;
+    font-weight: bold !important;
+    line-height: 40px;
+
+    &.cor-azul {
+        color: $corAzulPortal;
     }
 }
 
