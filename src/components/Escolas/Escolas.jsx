@@ -147,7 +147,7 @@ export default class Escolas extends Component {
       <div>
         <Menu />
         <MenuAuxiliar />
-        <div className="bg-light w-100 h-100">
+        <div className="w-100 bg-light h-100">
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-sm-12 pr-lg-0 escolas">

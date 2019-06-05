@@ -168,12 +168,12 @@ export default class Filtros extends Component {
           <div className="bg-white pt-2 pb-2">
             <div className="container">
               <div className="row">
-                <div className="col-lg-6 col-sm-6 d-flex justify-content-start align-items-center">
+                <div className="col-6 col-sm-6 d-flex justify-content-start align-items-center">
                   <Link to="/escolas" data-toggle="collapse" data-target="#filtro-collapse" aria-expanded="false" aria-controls="filtro-collapse">
                     <img src={BtnFiltro} alt="Fechar Filtros" />
                   </Link>
                 </div>
-                <div className="col-lg-6 col-sm-6 d-flex justify-content-end align-items-center">
+                <div className="col-6 col-sm-6 d-flex justify-content-end align-items-center">
                   <Link to="/escolas" className="text-primary text-uppercase limpar">Limpar Filtros</Link>
                 </div>
               </div>
