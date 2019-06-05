@@ -9,7 +9,7 @@ export default class Menu extends Component {
   render() {
     return (
       <div>
-        <div className="bg-light pref-menu fonte-dez">
+        <div className="pref-menu bg-light fonte-dez">
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-start justify-content-center">
