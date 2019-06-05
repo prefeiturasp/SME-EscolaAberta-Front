@@ -289,7 +289,7 @@ export default class Filtros extends Component {
             <div className="row">
               <div className="container">
                 <div className="col-lg-12 d-flex justify-content-center align-items-center mt-4">
-                  <button className="btn btn-outline-light btn-lg" data-toggle="collapse" data-target="#filtro-collapse" aria-expanded="false" aria-controls="filtro-collapse">Aplicar</button>
+                  <button className="btn btn-lg btn-outline-light pt-3 pr-5 pb-3 pl-5" data-toggle="collapse" data-target="#filtro-collapse" aria-expanded="false" aria-controls="filtro-collapse">Aplicar</button>
                 </div>
               </div>
             </div>
