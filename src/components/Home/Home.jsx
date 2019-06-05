@@ -8,6 +8,13 @@ import imgSociedadeGoverno from "../../img/sociedade-governo.png";
 import Rodape from "../Rodape/Rodape";
 
 export default class Home extends Component {
+
+  componentDidMount() {
+    const script = document.createElement("script");
+    script.src = "//api.handtalk.me/plugin/latest/handtalk.min.js";
+    document.body.appendChild(script);
+  }
+
   render() {
     return (
       <div>
