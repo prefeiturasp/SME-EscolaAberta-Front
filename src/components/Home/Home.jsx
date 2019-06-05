@@ -8,13 +8,17 @@ import imgSociedadeGoverno from "../../img/sociedade-governo.png";
 import Rodape from "../Rodape/Rodape";
 
 export default class Home extends Component {
+  componentDidMount() {
+    document.querySelector('.conteudo').style.marginTop = (document.querySelector('.busca-escolas').clientHeight / 2) / 2 + 'px';
+  }
+
   render() {
     return (
       <div>
         <Menu />
-        <div className="w-100 bg-busca">
+        <div className="w-100 busca-escolas position-relative">
           <div className="container d-flex justify-content-center">
-            <div className="position-absolute conteudo">
+            <div className="conteudo">
               <div className="col-lg-7 col-sm-12 text-center m-auto">
                 <img src={logoEscolaAberta} alt="Escola Aberta" className="mb-5" />
                 <h2>Aqui você encontra todas as informações sobre sua escola</h2>
@@ -25,7 +29,7 @@ export default class Home extends Component {
             </div>
           </div>
         </div>
-        <div className="w-100">
+        <div className="w-100 desenvolvimento-escolar">
           <div className="container pt-5 pb-5">
             <div className="row">
               <div className="col-lg-6 mb-4 mb-lg-0">
@@ -52,7 +56,7 @@ export default class Home extends Component {
             </div>
           </div>
         </div>
-        <div className="w-100">
+        <div className="w-100 incentivo-leitura">
           <div className="container pt-5 pb-5">
             <div className="row">
               <div className="col-lg-6 mb-4 mb-lg-0">

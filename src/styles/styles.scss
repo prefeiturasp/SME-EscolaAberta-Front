@@ -30,17 +30,17 @@ body {
 
 // Home
 
-.bg-busca {
+.busca-escolas {
     background: $corCinzaClaro url('../img/bg_busca.png');
     background-blend-mode: lighten;
     background-size: cover;
     color: $corCinzaHome;
-    height: 488px;
+    height: 490px;
 
     .conteudo {
-        margin: -5% auto -25%;
-        top: 50%;
+        margin: 0 auto;
         z-index: 1;
+        width: auto;
 
         h2 {
             font-size: 30px;
