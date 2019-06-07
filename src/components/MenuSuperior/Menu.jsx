@@ -51,7 +51,7 @@ export default class Menu extends Component {
             <div className="col-lg-9 col-sm-12 d-flex links-menu align-items-end justify-content-lg-end justify-content-center pr-lg-0 mb-xs-4">
               <ul className="nav nav-tabs border-0">
                 <li className="nav-item">
-                  <Link className="nav-link text-secondary mb-1 pb-0" to="/">Consulte sua posição</Link>
+                  <Link className="nav-link text-secondary mb-1 pb-0" to="/consulta">Consulte sua posição</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link text-secondary mb-1 pb-0" to="/">Incentivo a Leitura</Link>
