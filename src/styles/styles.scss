@@ -208,6 +208,16 @@ h2 {
     }
 }
 
+// Consulta
+
+.react-datepicker-wrapper {
+    display: block !important;
+
+    .react-datepicker__input-container {
+        display: block !important;
+    }
+}
+
 // Rodapé
 
 .area-rodape {

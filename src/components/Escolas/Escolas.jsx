@@ -6,7 +6,7 @@ import TabelaEscolas from "./Tabela";
 import Rodape from "../Rodape/Rodape";
 import { listarEscolas } from "../../services/escolas";
 import Menu from "../MenuSuperior/Menu";
-import MenuAuxiliar from "../MenuSuperior/MenuAuxiliar";
+import Auxiliar from "../MenuSuperior/Auxiliar";
 
 export default class Escolas extends Component {
   constructor(props) {
@@ -146,7 +146,7 @@ export default class Escolas extends Component {
     return (
       <div>
         <Menu />
-        <MenuAuxiliar />
+        <Auxiliar texto="Encontre uma escola" filtro={true} />
         <div className="w-100 bg-light h-100">
           <div className="container">
             <div className="row">
