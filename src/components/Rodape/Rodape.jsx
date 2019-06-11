@@ -9,24 +9,27 @@ export default class Rodape extends Component {
   render() {
     return (
       <div>
-        <div className="area-rodape text-white fonte-doze p-5">
+        <div className="area-rodape text-white p-5">
           <div className="container">
             <div className="row">
-              <div className="col -lg-2 col-xs-12 mb-xs-4 d-flex align-items-end">
-                <img src={logoPrefeitura} alt="Prefeitura de SP" />
+              <div className="col-lg-2 col-xs-12 d-flex align-items-end mb-4 mb-lg-0">
+                <img src={logoPrefeitura} alt="Prefeitura de SP" className="img-fluid" />
               </div>
-              <div className="col-lg-3 col-xs-12 border-left mb-xs-4">
-                <ul className="list-unstyled mb-5 pb-5">
+              <div className="col-lg-2 col-xs-12 border-left mb-4 mb-lg-0">
+                <ul className="list-unstyled mb-0">
                   <li className="text-uppercase font-weight-bold">Governo Municipal</li>
+                  <li className="d-lg-block d-none">&nbsp;</li>
+                  <li className="d-lg-block d-none">&nbsp;</li>
+                  <li className="d-lg-block d-none">&nbsp;</li>
                 </ul>
-                <ul className="list-unstyled mb-0 mt-5">
+                <ul className="list-unstyled mb-0 mt-0 align-bottom">
                   <li>Prefeito Bruno Covas</li>
                   <li>Equipe de Governo</li>
                   <li>Agenda do Prefeito</li>
                   <li>Agenda do Secretário</li>
                 </ul>
               </div>
-              <div className="col-lg-3 col-xs-12 mb-xs-4">
+              <div className="col-lg-3 col-xs-12 mb-4 mb-lg-0">
                 <ul className="list-unstyled mb-1">
                   <li className="text-uppercase font-weight-bold">Mapa do Site</li>
                 </ul>
@@ -41,23 +44,34 @@ export default class Rodape extends Component {
                 </ul>
                 <img src={logoNCSA} alt="Copyright" />
               </div>
+              <div className="col-lg-1"></div>
               <div className="col-lg-4 col-xs-12">
-                <div className="form-group">
-                  <select className="form-control bg-secondary border-secondary text-white">
+                <div className="form-group mb-2">
+                  <select
+                    className="form-control fonte-doze rounded-pill text-secondary bg-transparent border border-secondary text-white">
                     <option>Secretarias</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <select className="form-control bg-secondary border-secondary text-white">
+                <div className="form-group mb-2">
+                  <select
+                    className="form-control fonte-doze rounded-pill text-secondary bg-transparent border border-secondary text-white">
                     <option>Prefeituras Regionais</option>
                   </select>
                 </div>
-                <div className="form-group">
-                  <select className="form-control bg-secondary border-secondary text-white">
+                <div className="form-group mb-0">
+                  <select
+                    className="form-control fonte-doze rounded-pill text-secondary bg-transparent border border-secondary text-white">
                     <option>Órgãos e Autarquias</option>
                   </select>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="endereco container">
+          <div className="row">
+            <div className="col-lg-12 col-xs-12 text-center fonte-doze mt-2 mb-2">
+              SECRETARIA MUNICIPAL DE EDUCAÇÃO — Rua Borges Lagoa, 1230 — Vila Clementino — CEP: 04038-003
             </div>
           </div>
         </div>

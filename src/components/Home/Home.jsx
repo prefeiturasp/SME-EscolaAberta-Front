@@ -37,7 +37,7 @@ export default class Home extends Component {
                 <p className="mb-0">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
               </div>
               <div className="col-lg-6">
-                <img src={imgAluno} alt="" className="img-fluid rounded" />
+                <img src={imgAluno} alt="Acompanhamento no desenvolvimento escolar" className="img-fluid rounded" />
               </div>
             </div>
           </div>
@@ -74,25 +74,25 @@ export default class Home extends Component {
               <div className="col-lg-3 col-sm-12 d-flex justify-content-center mb-4 mb-lg-0">
                 <div className="border border-white bg-white rounded-circle">
                   <span className="valor mt-5">256 mil</span>
-                  <span className="texto mt-3 pl-3 pr-3">Aenean vel eros faucibus</span>
+                  <span className="texto mt-2 w-75 d-block mx-auto">Aenean vel eros faucibus</span>
                 </div>
               </div>
               <div className="col-lg-3 col-sm-12 d-flex justify-content-center mb-4 mb-lg-0">
                 <div className="border border-white bg-white rounded-circle">
                   <span className="valor mt-5">89% </span>
-                  <span className="texto mt-3 pl-3 pr-3">Aenean vel eros faucibus</span>
+                  <span className="texto mt-2 w-75 d-block mx-auto">Aenean vel eros faucibus</span>
                 </div>
               </div>
               <div className="col-lg-3 col-sm-12 d-flex justify-content-center mb-4 mb-lg-0">
                 <div className="border border-white bg-white rounded-circle">
                   <span className="valor mt-5">Alunos </span>
-                  <span className="texto mt-3 pl-3 pr-3">Aenean vel eros faucibus</span>
+                  <span className="texto mt-2 w-75 d-block mx-auto">Aenean vel eros faucibus</span>
                 </div>
               </div>
               <div className="col-lg-3 col-sm-12 d-flex justify-content-center">
                 <div className="border border-white bg-white rounded-circle">
                   <span className="valor mt-5">1 milhão</span>
-                  <span className="texto mt-3 pl-3 pr-3">Aenean vel eros faucibus</span>
+                  <span className="texto mt-2 w-75 d-block mx-auto">Aenean vel eros faucibus</span>
                 </div>
               </div>
             </div>

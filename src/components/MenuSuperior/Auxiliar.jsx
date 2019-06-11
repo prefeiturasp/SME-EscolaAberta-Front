@@ -9,7 +9,7 @@ export default class Auxiliar extends Component {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-sm-12 d-flex justify-content-start align-items-center">
-              <h3 className="font-weight-bold m-0">{this.props.texto}</h3>
+              <h3 className="font-weight-bold m-0 mt-3 mb-3">{this.props.texto}</h3>
             </div>
             {this.props.filtro ? (
               <div className="col-lg-6 col-sm-12 d-flex justify-content-lg-end justify-content-start align-items-center">
