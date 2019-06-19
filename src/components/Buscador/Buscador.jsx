@@ -24,7 +24,12 @@ export default class Buscador extends Component {
   }
 
   componentDidMount() {
-    console.log(cookie.select(/(eaberta_)\w+/g));
+    this.setState({ historicoLista: cookie.select(/(eaberta_)\w+/g) }, () => {
+      this.state.escolasLista.map((historico) => {
+        console.log(historico);
+        return (historico);
+      })
+    });
   }
 
   buscarPorTermo = e => {
