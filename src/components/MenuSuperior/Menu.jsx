@@ -41,9 +41,9 @@ export default class Menu extends Component {
               <h1 className="m-0">
                 <Link to="/">
                   <img
-                    className="img-fluid"
                     src={logoEducacaoSP}
                     alt="Escola Aberta"
+                    className="img-fluid"
                   />
                 </Link>
               </h1>

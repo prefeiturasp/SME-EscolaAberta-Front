@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { listarEscolas, listarBairros, listarDistritos } from "../../services/escolas";
 import { buscarLogradouroPorCep, buscarLatLngPorLogradouro, buscaLogradouroPorLatLng } from "../../services/endereco";
+import cookie from 'react-cookies';
 
 export default class Buscador extends Component {
   constructor(props) {
@@ -10,7 +11,8 @@ export default class Buscador extends Component {
       escolasLista: [],
       bairrosLista: [],
       distritosLista: [],
-      logradourosLista: []
+      logradourosLista: [],
+      historicoLista: []
     };
 
     this.buscarPorTermo = this.buscarPorTermo.bind(this);
@@ -18,6 +20,11 @@ export default class Buscador extends Component {
     this.defineLatitudeLongitude = this.defineLatitudeLongitude.bind(this);
     this.trataErros = this.trataErros.bind(this);
     this.mostrarBusca = this.mostrarBusca.bind(this);
+    this.salvarHistoricoBusca = this.salvarHistoricoBusca.bind(this);
+  }
+
+  componentDidMount() {
+    console.log(cookie.select(/(eaberta_)\w+/g));
   }
 
   buscarPorTermo = e => {
@@ -147,6 +154,19 @@ export default class Buscador extends Component {
     }
   }
 
+  salvarHistoricoBusca(busca) {
+    console.log(typeof busca);
+    // const expires = new Date();
+    // expires.setDate(expires.getDate() + 7);
+    // cookie.save(
+    //   `eaberta_${Date.now()}`,
+    //   busca,
+    //   {
+    //     expires: expires
+    //   }
+    // );
+  }
+
   render() {
     return (
       <div>
@@ -190,6 +210,7 @@ export default class Buscador extends Component {
                             escola: escola.label
                           }
                         }}
+                        onClick={() => this.salvarHistoricoBusca({ escola: escola.label })}
                         className="list-group-item list-group-item-action border-0"
                       >
                         {escola.label}

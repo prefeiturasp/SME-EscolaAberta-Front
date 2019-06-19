@@ -77,6 +77,9 @@ export default class ConsultaPosicao extends Component {
                     selected={this.state.dataNascimento}
                     locale={ptBR}
                     dateFormat="dd/MM/yyyy"
+                    showMonthDropdown
+                    showYearDropdown
+                    dropdownMode="select"
                   />
                 </div>
                 <button className="btn btn-lg btn-primary w-75 mx-auto d-block">Consultar</button>
