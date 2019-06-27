@@ -24,12 +24,14 @@ export default class Buscador extends Component {
   }
 
   componentDidMount() {
-    this.setState({ historicoLista: cookie.select(/(eaberta_)\w+/g) }, () => {
-      this.state.escolasLista.map((historico) => {
-        console.log(historico);
-        return (historico);
-      })
+    const cookiesLista = cookie.select(/(historico_)\w+/g);
+    const historicoLista = [];
+    Object.entries(cookiesLista).forEach(historico => {
+      const [tipo, valor] = historico[1].split('_');
+      historicoLista.push({ tipo, valor });
     });
+
+    this.setState({ historicoLista: historicoLista });
   }
 
   buscarPorTermo = e => {
@@ -160,16 +162,15 @@ export default class Buscador extends Component {
   }
 
   salvarHistoricoBusca(busca) {
-    console.log(typeof busca);
-    // const expires = new Date();
-    // expires.setDate(expires.getDate() + 7);
-    // cookie.save(
-    //   `eaberta_${Date.now()}`,
-    //   busca,
-    //   {
-    //     expires: expires
-    //   }
-    // );
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 7);
+    cookie.save(
+      `historico_${Date.now()}`,
+      `${Object.keys(busca)[0]}_${Object.values(busca)[0]}`,
+      {
+        expires: expires
+      }
+    );
   }
 
   render() {
@@ -199,6 +200,31 @@ export default class Buscador extends Component {
                 </li>
               </div>
             </div>
+          </div>
+          <div className="row">
+            {this.state.historicoLista.length > 0 ? (
+              <div className="col-lg col-sm-12 p-0">
+                <div className="list-group">
+                  <li className="list-group-item border-0 rounded-0 mb-0">Pesquisas Recentes</li>
+                  {this.state.historicoLista.map((historico, indice) => {
+                    return (
+                      <Link
+                        key={indice}
+                        to={{
+                          pathname: "/escolas",
+                          state: {
+                            [historico.tipo]: historico.valor
+                          }
+                        }}
+                        className="list-group-item list-group-item-action border-0"
+                      >
+                        {historico.valor}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (null)}
           </div>
           <div className="row">
             {this.state.escolasLista.length > 0 ? (
@@ -239,6 +265,7 @@ export default class Buscador extends Component {
                             bairro: bairro.label
                           }
                         }}
+                        onClick={() => this.salvarHistoricoBusca({ bairro: bairro.label })}
                         className="list-group-item list-group-item-action border-0"
                       >
                         {bairro.label}
