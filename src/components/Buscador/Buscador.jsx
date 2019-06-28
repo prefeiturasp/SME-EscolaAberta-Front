@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { listarEscolas, listarBairros, listarDistritos, listarSubpref } from "../../services/escolas";
 import { buscarLogradouroPorCep, buscarLatLngPorLogradouro, buscaLogradouroPorLatLng } from "../../services/endereco";
-import cookie from 'react-cookies';
+import cookie from "react-cookies";
 
 export default class Buscador extends Component {
   constructor(props) {
@@ -51,6 +51,7 @@ export default class Buscador extends Component {
       } else {
         escolas = this.buscarEscolasPorNome(e.target.value);
         distritos = this.buscarDistritos(e.target.value);
+        // bairros = this.buscarBairros(e.target.value);
         subprefs = this.buscarSubprefs(e.target.value);
 
         buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(localizacoes => {
