@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { listarEscolas, listarBairros, listarDistritos } from "../../services/escolas";
+import { listarEscolas, listarBairros, listarDistritos, listarSubpref } from "../../services/escolas";
 import { buscarLogradouroPorCep, buscarLatLngPorLogradouro, buscaLogradouroPorLatLng } from "../../services/endereco";
-import cookie from 'react-cookies';
+import cookie from "react-cookies";
 
 export default class Buscador extends Component {
   constructor(props) {
@@ -11,6 +11,7 @@ export default class Buscador extends Component {
       escolasLista: [],
       bairrosLista: [],
       distritosLista: [],
+      subprefsLista: [],
       logradourosLista: [],
       historicoLista: []
     };
@@ -24,13 +25,21 @@ export default class Buscador extends Component {
   }
 
   componentDidMount() {
-    console.log(cookie.select(/(eaberta_)\w+/g));
+    const cookiesLista = cookie.select(/(historico_)\w+/g);
+    const historicoLista = [];
+    Object.entries(cookiesLista).forEach(historico => {
+      const [tipo, valor] = historico[1].split('_');
+      historicoLista.push({ tipo, valor });
+    });
+
+    this.setState({ historicoLista: historicoLista });
   }
 
   buscarPorTermo = e => {
     let escolas = [];
     let bairros = [];
     let distritos = [];
+    let subprefs = [];
     let ruas = [];
     if (e.target.value.length >= 3) {
       if (!isNaN(e.target.value)) {
@@ -38,10 +47,12 @@ export default class Buscador extends Component {
         this.setState({ escolasLista: [] });
         this.setState({ bairrosLista: [] });
         this.setState({ distritosLista: [] });
+        this.setState({ subprefsLista: [] });
       } else {
         escolas = this.buscarEscolasPorNome(e.target.value);
-        bairros = this.buscarBairros(e.target.value);
         distritos = this.buscarDistritos(e.target.value);
+        // bairros = this.buscarBairros(e.target.value);
+        subprefs = this.buscarSubprefs(e.target.value);
 
         buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(localizacoes => {
           localizacoes.results.forEach(function (local) {
@@ -49,7 +60,7 @@ export default class Buscador extends Component {
               ruas.push({ value: { lat: local.lat, lon: local.lon }, label: local.name });
             }
           });
-        })
+        });
 
         setTimeout(
           function () {
@@ -57,6 +68,7 @@ export default class Buscador extends Component {
             this.setState({ escolasLista: escolas });
             this.setState({ bairrosLista: bairros });
             this.setState({ distritosLista: distritos });
+            this.setState({ subprefsLista: subprefs });
           }.bind(this),
           1000
         );
@@ -92,6 +104,16 @@ export default class Buscador extends Component {
       });
     });
     return distritos;
+  }
+
+  buscarSubprefs(e) {
+    let subprefs = [];
+    listarSubpref({ subpref: e }).then(lista => {
+      lista.results.forEach(function (subpref) {
+        subprefs.push({ label: subpref.subpref });
+      });
+    });
+    return subprefs;
   }
 
   buscarLogradouroCep(e) {
@@ -155,16 +177,15 @@ export default class Buscador extends Component {
   }
 
   salvarHistoricoBusca(busca) {
-    console.log(typeof busca);
-    // const expires = new Date();
-    // expires.setDate(expires.getDate() + 7);
-    // cookie.save(
-    //   `eaberta_${Date.now()}`,
-    //   busca,
-    //   {
-    //     expires: expires
-    //   }
-    // );
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 7);
+    cookie.save(
+      `historico_${Date.now()}`,
+      `${Object.keys(busca)[0]}_${Object.values(busca)[0]}`,
+      {
+        expires: expires
+      }
+    );
   }
 
   render() {
@@ -194,6 +215,31 @@ export default class Buscador extends Component {
                 </li>
               </div>
             </div>
+          </div>
+          <div className="row">
+            {this.state.historicoLista.length > 0 ? (
+              <div className="col-lg col-sm-12 p-0">
+                <div className="list-group">
+                  <li className="list-group-item border-0 rounded-0 mb-0">Pesquisas Recentes</li>
+                  {this.state.historicoLista.map((historico, indice) => {
+                    return (
+                      <Link
+                        key={indice}
+                        to={{
+                          pathname: "/escolas",
+                          state: {
+                            [historico.tipo]: historico.valor
+                          }
+                        }}
+                        className="list-group-item list-group-item-action border-0"
+                      >
+                        {historico.valor}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (null)}
           </div>
           <div className="row">
             {this.state.escolasLista.length > 0 ? (
@@ -234,6 +280,7 @@ export default class Buscador extends Component {
                             bairro: bairro.label
                           }
                         }}
+                        onClick={() => this.salvarHistoricoBusca({ bairro: bairro.label })}
                         className="list-group-item list-group-item-action border-0"
                       >
                         {bairro.label}
@@ -260,6 +307,29 @@ export default class Buscador extends Component {
                         className="list-group-item list-group-item-action border-0"
                       >
                         {distrito.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (null)}
+            {this.state.subprefsLista.length > 0 ? (
+              <div className="col-lg col-sm-12 p-0">
+                <div className="list-group">
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Subprefeituras</li>
+                  {this.state.subprefsLista.map((subpref, indice) => {
+                    return (
+                      <Link
+                        key={indice}
+                        to={{
+                          pathname: "/escolas",
+                          state: {
+                            subpref: subpref.label
+                          }
+                        }}
+                        className="list-group-item list-group-item-action border-0"
+                      >
+                        {subpref.label}
                       </Link>
                     );
                   })}

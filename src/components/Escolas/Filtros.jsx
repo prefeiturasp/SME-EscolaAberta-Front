@@ -17,6 +17,7 @@ export default class Filtros extends Component {
       escolaSelecionada: "",
       bairroSelecionado: "",
       distritoSelecionado: "",
+      subprefSelecionada: "",
       tipoEscolaSelecionado: "",
       dreSelecionada: "",
       logradouroSelecionado: ""
@@ -28,6 +29,7 @@ export default class Filtros extends Component {
     this.setEscola = this.setEscola.bind(this);
     this.setBairro = this.setBairro.bind(this);
     this.setDistrito = this.setDistrito.bind(this);
+    this.setSubpref = this.setSubpref.bind(this);
     this.setTipoEscola = this.setTipoEscola.bind(this);
     this.setDRE = this.setDRE.bind(this);
   }
@@ -67,6 +69,15 @@ export default class Filtros extends Component {
     );
 
     PubSub.subscribe(
+      "subpref-filtro",
+      function (topico, filtro) {
+        this.setState({ subprefSelecionada: filtro }, () =>
+          this.filtrarListagemEscolas()
+        );
+      }.bind(this)
+    );
+
+    PubSub.subscribe(
       "logradouro-filtro",
       function (topico, filtro) {
         this.setState({ logradouroSelecionado: filtro }, () =>
@@ -87,6 +98,7 @@ export default class Filtros extends Component {
       escola: this.state.escolaSelecionada,
       bairro: this.state.bairroSelecionado,
       distrito: this.state.distritoSelecionado,
+      subpref: this.state.subprefSelecionada,
       tipo: this.state.tipoEscolaSelecionado,
       dre: this.state.dreSelecionada
     }).then(lista => {
@@ -102,7 +114,6 @@ export default class Filtros extends Component {
       lon: this.state.logradouroSelecionado.lon
     }).then(lista => {
       PubSub.publish("lista-escolas", lista.results);
-      // PubSub.publish("total-itens", Math.ceil(lista.count / 10));
       document.querySelector(".overflow-auto").scrollTop = 0;
     });
   }
@@ -138,6 +149,13 @@ export default class Filtros extends Component {
       this.filtrarListagemEscolas();
     });
     PubSub.publish("distrito-filtro", event.target.value);
+  }
+
+  setSubpref(event) {
+    this.setState({ subprefSelecionada: event.target.value }, () => {
+      this.filtrarListagemEscolas();
+    });
+    PubSub.publish("subpref-filtro", event.target.value);
   }
 
   setTipoEscola(event) {
@@ -200,7 +218,7 @@ export default class Filtros extends Component {
                 </div>
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-lg-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="filtro-bairro" className="text-white">Bairro</label>
@@ -214,7 +232,7 @@ export default class Filtros extends Component {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="row">
               <div className="col-lg-12 col-sm-12">
                 <div className="form-group">
@@ -226,6 +244,21 @@ export default class Filtros extends Component {
                     placeholder="Selecione o distrito"
                     value={this.state.distritoSelecionado}
                     onChange={this.setDistrito}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12 col-sm-12">
+                <div className="form-group">
+                  <label htmlFor="filtro-subpref" className="text-white">Subprefeitura</label>
+                  <InputCustomizado
+                    name="filtro-subpref"
+                    id="filtro-subpref"
+                    className="custom-select form-control rounded-pill shadow"
+                    placeholder="Selecione a subprefeitura"
+                    value={this.state.subprefSelecionada}
+                    onChange={this.setSubpref}
                   />
                 </div>
               </div>
