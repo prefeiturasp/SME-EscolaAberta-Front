@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { listarEscolas, listarBairros, listarDistritos } from "../../services/escolas";
+import { listarEscolas, listarBairros, listarDistritos, listarSubpref } from "../../services/escolas";
 import { buscarLogradouroPorCep, buscarLatLngPorLogradouro, buscaLogradouroPorLatLng } from "../../services/endereco";
 import cookie from 'react-cookies';
 
@@ -11,6 +11,7 @@ export default class Buscador extends Component {
       escolasLista: [],
       bairrosLista: [],
       distritosLista: [],
+      subprefsLista: [],
       logradourosLista: [],
       historicoLista: []
     };
@@ -38,6 +39,7 @@ export default class Buscador extends Component {
     let escolas = [];
     let bairros = [];
     let distritos = [];
+    let subprefs = [];
     let ruas = [];
     if (e.target.value.length >= 3) {
       if (!isNaN(e.target.value)) {
@@ -45,10 +47,11 @@ export default class Buscador extends Component {
         this.setState({ escolasLista: [] });
         this.setState({ bairrosLista: [] });
         this.setState({ distritosLista: [] });
+        this.setState({ subprefsLista: [] });
       } else {
         escolas = this.buscarEscolasPorNome(e.target.value);
-        bairros = this.buscarBairros(e.target.value);
         distritos = this.buscarDistritos(e.target.value);
+        subprefs = this.buscarSubprefs(e.target.value);
 
         buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(localizacoes => {
           localizacoes.results.forEach(function (local) {
@@ -56,7 +59,7 @@ export default class Buscador extends Component {
               ruas.push({ value: { lat: local.lat, lon: local.lon }, label: local.name });
             }
           });
-        })
+        });
 
         setTimeout(
           function () {
@@ -64,6 +67,7 @@ export default class Buscador extends Component {
             this.setState({ escolasLista: escolas });
             this.setState({ bairrosLista: bairros });
             this.setState({ distritosLista: distritos });
+            this.setState({ subprefsLista: subprefs });
           }.bind(this),
           1000
         );
@@ -99,6 +103,16 @@ export default class Buscador extends Component {
       });
     });
     return distritos;
+  }
+
+  buscarSubprefs(e) {
+    let subprefs = [];
+    listarSubpref({ subpref: e }).then(lista => {
+      lista.results.forEach(function (subpref) {
+        subprefs.push({ label: subpref.subpref });
+      });
+    });
+    return subprefs;
   }
 
   buscarLogradouroCep(e) {
@@ -292,6 +306,29 @@ export default class Buscador extends Component {
                         className="list-group-item list-group-item-action border-0"
                       >
                         {distrito.label}
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (null)}
+            {this.state.subprefsLista.length > 0 ? (
+              <div className="col-lg col-sm-12 p-0">
+                <div className="list-group">
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Subprefeituras</li>
+                  {this.state.subprefsLista.map((subpref, indice) => {
+                    return (
+                      <Link
+                        key={indice}
+                        to={{
+                          pathname: "/escolas",
+                          state: {
+                            subpref: subpref.label
+                          }
+                        }}
+                        className="list-group-item list-group-item-action border-0"
+                      >
+                        {subpref.label}
                       </Link>
                     );
                   })}

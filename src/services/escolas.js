@@ -28,6 +28,13 @@ export async function listarDistritos(params) {
   );
 }
 
+export async function listarSubpref(params) {
+  const { subpref = '' } = params;
+  return fetch(`${API_EOL}/subpref/?search=${subpref}`).then(subprefs =>
+    subprefs.json()
+  );
+}
+
 export async function listarTiposEscola() {
   return fetch(`${API_EOL}/tipo_escola/`).then(tipos => tipos.json());
 }
