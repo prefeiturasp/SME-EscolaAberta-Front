@@ -3,4 +3,3 @@ WORKDIR /app
 COPY . ./
 RUN yarn install --check-files
 RUN yarn build
-COPY --from=react-build /app/build /usr/share/nginx/html
