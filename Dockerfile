@@ -3,3 +3,4 @@ WORKDIR /app
 COPY . ./
 RUN yarn install --check-files
 RUN yarn build
+RUN ["cp", "/app/build", "/usr/share/nginx/html"]
