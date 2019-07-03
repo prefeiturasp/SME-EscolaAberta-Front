@@ -304,6 +304,7 @@ export default class Buscador extends Component {
                             distrito: distrito.label
                           }
                         }}
+                        onClick={() => this.salvarHistoricoBusca({ distrito: distrito.label })}
                         className="list-group-item list-group-item-action border-0"
                       >
                         {distrito.label}
@@ -327,6 +328,7 @@ export default class Buscador extends Component {
                             subpref: subpref.label
                           }
                         }}
+                        onClick={() => this.salvarHistoricoBusca({ subpref: subpref.label })}
                         className="list-group-item list-group-item-action border-0"
                       >
                         {subpref.label}
