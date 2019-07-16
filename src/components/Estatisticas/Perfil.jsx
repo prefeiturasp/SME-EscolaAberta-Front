@@ -13,7 +13,6 @@ export default class Perfil extends Component {
 
   componentDidMount() {
     listarModalidades({ codesc: '094145' }).then(lista => {
-      console.log(lista);
       this.setState({ modalidades: lista.modalidade });
     });
   }
@@ -36,9 +35,9 @@ export default class Perfil extends Component {
           {this.state.modalidades.length > 0 ? (
             this.state.modalidades.map((modalidade, indice) => {
               return (
-                <div className="card shadow-sm mb-3">
+                <div key={indice} className="card shadow-sm mb-3">
                   <div className="card-body d-flex justify-content-between align-items-center">
-                    <FontAwesomeIcon icon={faBook} className="cor-azul font-italic" />
+                    <FontAwesomeIcon icon={faBook} className="cor-azul" />
                     {modalidade}
                     <FontAwesomeIcon icon={faBars} className="cor-cinza" />
                   </div>

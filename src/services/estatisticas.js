@@ -6,3 +6,10 @@ export async function listarModalidades(params) {
     modalidades.json()
   );
 }
+
+export async function listarAmbientes(params) {
+  const { codesc = '' } = params;
+  return fetch(`${API_EOL}/ambientesbyescola/${codesc}`).then(ambientes =>
+    ambientes.json()
+  );
+}
