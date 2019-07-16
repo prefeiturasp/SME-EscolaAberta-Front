@@ -232,6 +232,37 @@ h2 {
 
 // Estatísticas
 
+.estatisticas {
+    .nav {
+        border-bottom-color: $corAzulPortal;
+        font-size: 12px;
+
+        .nav-link {
+            color: $corPretoPortal;
+
+            &.active {
+                border: 0 none;
+                border-bottom: 8px solid $corAzulPortal !important;
+                font-weight: bold;
+            }
+
+            &:hover {
+                border: 0 none;
+            }
+        }
+    }
+}
+
+.estatisticas-cabecalho {
+    h1 {
+        font-size: 30px;
+    }
+
+    .referencia {
+        font-size: 12px;
+    }
+}
+
 .modalidades {
     .cor-azul {
         color: $corAzulPortal;

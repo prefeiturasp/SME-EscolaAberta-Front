@@ -68,20 +68,24 @@ export default class Estatisticas extends Component {
         <Auxiliar texto={this.props.escola} />
         <div className="container">
           <div className="row">
-            <div className="col-lg-12 col-sm-12 menu-estatisticas">
-              <ul className="nav nav-tabs" id="myTab" role="tablist">
+            <div className="col-lg-12 col-sm-12 mt-5 mb-5 estatisticas">
+              <ul className="nav nav-tabs nav-fill" role="tablist">
                 {this.state.componentesLabels.length > 0 ? (
                   this.state.componentesLabels.map((componente, indice) => {
                     return (
-                      <a key={indice} onClick={this.selecionaComponente} data-componente={componente.nome} className={indice === 0 ? `nav-link active` : `nav-link`} id={`${componente.nome}-tab`}
-                        data-toggle="tab" href={`#${componente.nome}`} role="tab" aria-controls={componente.nome} aria-selected={indice === 0 ? `true` : `false`}>
-                        {componente.label}
-                      </a>
+                      <li key={indice} className="nav-item">
+                        <a onClick={this.selecionaComponente} data-componente={componente.nome}
+                          className={indice === 0 ? `nav-link active` : `nav-link`} id={`${componente.nome}-tab`}
+                          data-toggle="tab" href={`#${componente.nome}`} role="tab" aria-controls={componente.nome}
+                          aria-selected={indice === 0 ? `true` : `false`}>
+                          {componente.label}
+                        </a>
+                      </li>
                     );
                   })
                 ) : (null)}
               </ul>
-              <div className="tab-content">
+              <div className="tab-content mt-5">
                 {this.state.componentesLabels.map((componente, indice) => {
                   return (
                     <div key={indice} className={(indice === 0 ? `tab-pane fade show active` : `tab-pane fade`)} id={componente.nome} role="tabpanel" aria-labelledby={`${componente.nome}-tab`}>
