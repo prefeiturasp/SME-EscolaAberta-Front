@@ -176,7 +176,6 @@ h2 {
             font-size: 0.8rem;
 
             tr {
-                cursor: pointer;
 
                 &.collapsing,
                 &.collapse {
@@ -251,6 +250,14 @@ h2 {
             }
         }
     }
+
+    .cor-azul {
+        color: $corAzulPortal;
+    }
+
+    .cor-cinza {
+        color: $corCinzaHome;
+    }
 }
 
 .estatisticas-cabecalho {
@@ -260,15 +267,5 @@ h2 {
 
     .referencia {
         font-size: 12px;
-    }
-}
-
-.modalidades {
-    .cor-azul {
-        color: $corAzulPortal;
-    }
-
-    .cor-cinza {
-        color: $corCinzaHome;
     }
 }

@@ -9,7 +9,7 @@ import Rodape from "../Rodape/Rodape";
 
 export default class Home extends Component {
   componentDidMount() {
-    document.querySelector('.conteudo').style.marginTop = (document.querySelector('.busca-escolas').clientHeight / 2) / 2 + 'px';
+    document.querySelector(".conteudo").style.marginTop = (document.querySelector(".busca-escolas").clientHeight / 2) / 2 + "px";
   }
 
   render() {
@@ -34,7 +34,7 @@ export default class Home extends Component {
             <div className="row">
               <div className="col-lg-6 mb-4 mb-lg-0">
                 <h2 className="cor-azul mb-4">Acompanhamento no desenvolvimento escolar</h2>
-                <p className="mb-0">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                <p className="mb-0">Simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry"s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries.1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
               </div>
               <div className="col-lg-6">
                 <img src={imgAluno} alt="Acompanhamento no desenvolvimento escolar" className="img-fluid rounded" />

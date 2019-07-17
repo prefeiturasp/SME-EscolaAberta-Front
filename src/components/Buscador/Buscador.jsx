@@ -30,7 +30,7 @@ export default class Buscador extends Component {
     const cookiesLista = cookie.select(/(historico_)\w+/g);
     const historicoLista = [];
     Object.entries(cookiesLista).forEach(historico => {
-      const [tipo, valor] = historico[1].split('_');
+      const [tipo, valor] = historico[1].split("_");
       historicoLista.push({ tipo, valor });
     });
 
