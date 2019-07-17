@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import TabelaDetalhe from "./TabelaDetalhe";
 
 export default class TabelaEscolas extends Component {
@@ -19,8 +20,18 @@ export default class TabelaEscolas extends Component {
             return (
               <React.Fragment key={indice}>
                 <tr>
-                  <td className="text-primary">
-                    <strong>{escola.codesc}</strong>
+                  <td className="text-primary font-weight-bold">
+                    <Link
+                      to={{
+                        pathname: "/estatisticas",
+                        state: {
+                          codesc: escola.codesc,
+                          nomesc: escola.nomesc
+                        }
+                      }}
+                    >
+                      {escola.codesc}
+                    </Link>
                   </td>
                   <td>{escola.nomesc}</td>
                   <td>{escola.tipoesc}</td>

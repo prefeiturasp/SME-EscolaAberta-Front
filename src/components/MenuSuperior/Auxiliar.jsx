@@ -7,8 +7,11 @@ export default class Auxiliar extends Component {
     return (
       <div className="w-100 menu-auxiliar h-100 p-3 text-white">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-6 col-sm-12 d-flex justify-content-start align-items-center">
+          <div className="row d-flex">
+            <div className="col-lg-6 col-sm-12 justify-content-start align-items-center">
+              {this.props.estatisticas ? (
+                <div className="text-white mt-3 mb-n3">Estatísticas EOL</div>
+              ) : (null)}
               <h3 className="font-weight-bold m-0 mt-3 mb-3">{this.props.texto}</h3>
             </div>
             {this.props.filtro ? (

@@ -13,3 +13,10 @@ export async function listarAmbientes(params) {
     ambientes.json()
   );
 }
+
+export async function listarTurnos(params) {
+  const { codesc = '' } = params;
+  return fetch(`${API_EOL}/alunosserieturno/${codesc}`).then(turnos =>
+    turnos.json()
+  );
+}

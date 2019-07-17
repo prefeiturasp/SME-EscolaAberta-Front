@@ -176,7 +176,6 @@ h2 {
             font-size: 0.8rem;
 
             tr {
-                cursor: pointer;
 
                 &.collapsing,
                 &.collapse {
@@ -232,12 +231,41 @@ h2 {
 
 // Estatísticas
 
-.modalidades {
+.estatisticas {
+    .nav {
+        border-bottom-color: $corAzulPortal;
+        font-size: 12px;
+
+        .nav-link {
+            color: $corPretoPortal;
+
+            &.active {
+                border: 0 none;
+                border-bottom: 8px solid $corAzulPortal !important;
+                font-weight: bold;
+            }
+
+            &:hover {
+                border: 0 none;
+            }
+        }
+    }
+
     .cor-azul {
         color: $corAzulPortal;
     }
 
     .cor-cinza {
         color: $corCinzaHome;
+    }
+}
+
+.estatisticas-cabecalho {
+    h1 {
+        font-size: 30px;
+    }
+
+    .referencia {
+        font-size: 12px;
     }
 }

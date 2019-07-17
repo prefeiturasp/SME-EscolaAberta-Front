@@ -11,30 +11,43 @@ export default class Estatisticas extends Component {
     this.state = {
       componentesLabels: [
         {
-          nome: "Perfil", label: "Perfil da Escola"
+          nome: "SeriesEstudantes", label: "Séries e Estudantes"
         },
         {
-          nome: "Alunos", label: "Alunos"
+          nome: "Profissionais", label: "Profissionais"
         },
         {
-          nome: "Turmas", label: "Turmas"
+          nome: "VagasMatriculas", label: "Vagas e Matrículas"
         },
         {
-          nome: "EducadoresServidores", label: "Educadores e Servidores"
-        },
-        {
-          nome: "Consultas", label: "Consultas"
-        },
+          nome: "Ambientes", label: "Ambientes"
+        }
       ],
       componentesCarregados: [],
-      componentes: []
+      componentes: [],
+      codesc: "",
+      nomesc: ""
     }
+  }
+
+  componentDidMount() {
+    if (this.props.location.state !== undefined) {
+      if (this.props.location.state.codesc !== undefined) {
+        this.setState({ codesc: this.props.location.state.codesc });
+      }
+      if (this.props.location.state.nomesc !== undefined) {
+        this.setState({ nomesc: this.props.location.state.nomesc });
+      }
+    }
+    document.querySelector(".nav .active:first-child").click();
   }
 
   selecionaComponente = async event => {
     event.persist();
-    window.jQuery(".nav").find(".active").removeClass("active");
-    window.jQuery(event.target).addClass("active");
+    document.querySelectorAll(".nav .active").forEach((el) => {
+      el.classList.remove("active");
+    });
+    event.target.classList.add("active");
     await this.buscaComponente(`${event.target.dataset.componente}`);
   }
 
@@ -47,7 +60,7 @@ export default class Estatisticas extends Component {
         componentes: this.state.componentes.concat(
           <Componente.default
             key={componente}
-            data={this.props.data}
+            codesc={this.state.codesc}
           />
         )
       });
@@ -65,23 +78,27 @@ export default class Estatisticas extends Component {
     return (
       <div>
         <Menu />
-        <Auxiliar texto={this.props.escola} />
+        <Auxiliar texto={this.state.nomesc} estatisticas={true} />
         <div className="container">
           <div className="row">
-            <div className="col-lg-12 col-sm-12 menu-estatisticas">
-              <ul className="nav nav-tabs" id="myTab" role="tablist">
+            <div className="col-lg-12 col-sm-12 mt-5 mb-5 estatisticas">
+              <ul className="nav nav-tabs nav-fill" role="tablist">
                 {this.state.componentesLabels.length > 0 ? (
                   this.state.componentesLabels.map((componente, indice) => {
                     return (
-                      <a key={indice} onClick={this.selecionaComponente} data-componente={componente.nome} className={indice === 0 ? `nav-link active` : `nav-link`} id={`${componente.nome}-tab`}
-                        data-toggle="tab" href={`#${componente.nome}`} role="tab" aria-controls={componente.nome} aria-selected={indice === 0 ? `true` : `false`}>
-                        {componente.label}
-                      </a>
+                      <li key={indice} className="nav-item">
+                        <a onClick={this.selecionaComponente} data-componente={componente.nome}
+                          className={indice === 0 ? `nav-link active` : `nav-link`} id={`${componente.nome}-tab`}
+                          data-toggle="tab" href={`#${componente.nome}`} role="tab" aria-controls={componente.nome}
+                          aria-selected={indice === 0 ? `true` : `false`}>
+                          {componente.label}
+                        </a>
+                      </li>
                     );
                   })
                 ) : (null)}
               </ul>
-              <div className="tab-content">
+              <div className="tab-content mt-5" id="estatisticas-abas">
                 {this.state.componentesLabels.map((componente, indice) => {
                   return (
                     <div key={indice} className={(indice === 0 ? `tab-pane fade show active` : `tab-pane fade`)} id={componente.nome} role="tabpanel" aria-labelledby={`${componente.nome}-tab`}>
