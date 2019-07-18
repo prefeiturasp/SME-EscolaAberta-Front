@@ -4,6 +4,12 @@ body {
     @include roboto-sans;
 }
 
+// Fontes
+
+.fonte-14 {
+    font-size: 14px;
+}
+
 // Menu
 
 .pref-menu {
@@ -160,12 +166,12 @@ h2 {
         background: $corAzulFiltro;
 
         h4 {
-            font-size: 14px;
+            @extend .fonte-14;
             font-weight: bold;
         }
 
         .limpar {
-            font-size: 14px;
+            @extend .fonte-14;
             font-weight: bold;
             line-height: 16px;
         }

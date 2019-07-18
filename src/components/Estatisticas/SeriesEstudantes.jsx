@@ -31,9 +31,9 @@ export default class SeriesEstudantes extends Component {
             indice = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
             return (
               <div key={indice} className="card shadow-sm mb-3">
-                <div className="card-header d-flex align-items-center">
+                <div className="card-header bg-white d-flex align-items-center">
                   <FontAwesomeIcon icon={faBook} className="cor-azul" />
-                  <div className="ml-3">{turno.turno}</div>
+                  <div className="ml-3 fonte-14 font-weight-bold">{turno.turno}</div>
                   <a className="text-decoration-none cor-cinza ml-auto stretched-link" data-toggle="collapse"
                     data-target={`#${indice}`} aria-expanded="false" aria-controls={`${indice}`} href={`#${indice}`}>
                     <FontAwesomeIcon icon={faBars} />
@@ -41,7 +41,8 @@ export default class SeriesEstudantes extends Component {
                 </div>
                 <div className="collapse fade" id={`${indice}`}>
                   <div className="card-body">
-                    <p className="card-text">{turno.turno}</p>
+                    <p className="card-text">{turno.descserie}</p>
+                    <p className="card-text">{turno.total_alunos}</p>
                   </div>
                 </div>
               </div>
