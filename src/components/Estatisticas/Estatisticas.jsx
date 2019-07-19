@@ -66,8 +66,8 @@ export default class Estatisticas extends Component {
       });
     }).catch(error => {
       this.setState({
-        loadedComponents: this.state.loadedComponents.concat(componente),
-        components: this.state.components.concat(
+        componentesCarregados: this.state.componentesCarregados.concat(componente),
+        componentes: this.state.componentes.concat(
           <NullView key={shortid.generate()} />
         )
       });

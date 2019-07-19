@@ -11,7 +11,8 @@ export default class Profissionais extends Component {
       servidores: [],
       formacoes: [],
       servidoresFormacoes: [],
-      referencia: ""
+      referencia: "",
+      totalProfissionaisEscolaridade: []
     }
   }
 
@@ -29,9 +30,7 @@ export default class Profissionais extends Component {
       });
       this.setState({ formacoes: formacoes });
       this.setState({ servidores: servidores });
-      this.setState({ servidoresFormacoes: lista.results }, () => {
-        console.log(this.state.servidoresFormacoes);
-      });
+      this.setState({ servidoresFormacoes: lista.results });
     });
     this.setState({ referencia: new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString() });
   }
@@ -49,18 +48,18 @@ export default class Profissionais extends Component {
             <div className="ml-3 fonte-14">Formação do Profissionais </div>
           </div>
           <div className="card-body p-0">
-            <table className="table table-hover mb-0 fonte-14">
+            <table className="table table-hover table-bordered mb-0 fonte-14">
               <thead>
                 <tr>
                   <th scope="col" rowSpan="2"></th>
-                  <th colSpan={this.state.formacoes.length} className="text-center font-weight-normal align-middle text-uppercase">Grau da Formação</th>
-                  <th rowSpan="2" className="text-center font-weight-normal align-middle text-uppercase">TOTAL DE PROFISSIONAIS POR CARGO</th>
+                  <th scope="col" colSpan={this.state.formacoes.length} className="text-center font-weight-normal align-middle text-uppercase">Grau da Formação</th>
+                  <th scope="col" rowSpan="2" className="text-center font-weight-normal align-middle text-uppercase">TOTAL DE PROFISSIONAIS POR CARGO</th>
                 </tr>
                 <tr>
                   {this.state.formacoes.length > 0 ? (
                     this.state.formacoes.map((formacao, indice) => {
                       return (
-                        <th key={shortid.generate()} className="text-center">{formacao}</th>
+                        <th key={shortid.generate()} scope="col" className="text-center">{formacao}</th>
                       );
                     })
                   ) : (null)}
@@ -69,28 +68,53 @@ export default class Profissionais extends Component {
               <tbody>
                 {this.state.servidores.length > 0 ? (
                   this.state.servidores.map((servidor, indice) => {
+                    let totalProfissionaisCargo = 0;
                     return (
                       <tr key={indice}>
                         <td>{servidor}</td>
                         {this.state.formacoes.length > 0 ? (
                           this.state.formacoes.map((formacao, indice) => {
                             return (
-                              <td key={shortid.generate()}>
+                              <td key={shortid.generate()} className="text-center">
                                 {this.state.servidoresFormacoes.length > 0 ? (
-                                  this.state.servidoresFormacoes.filter((valor) => {
-                                    return (valor.titulo === servidor && valor.formacao === formacao).total;
+                                  this.state.servidoresFormacoes.filter((servidorFormacao) => {
+                                    return (servidorFormacao.titulo === servidor && servidorFormacao.formacao === formacao);
+                                  }).map((servidorFormacao) => {
+                                    totalProfissionaisCargo += servidorFormacao.total;
+                                    return servidorFormacao.total;
                                   })
                                 ) : (null)}
                               </td>
                             );
                           })
                         ) : (null)}
-                        <td></td>
+                        <td className="text-center table-secondary">{totalProfissionaisCargo}</td>
                       </tr>
                     );
                   })
                 ) : (null)}
               </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="col" className="font-weight-normal">TOTAL DE PROFISSIONAIS POR ESCOLARIDADE</th>
+                  {this.state.formacoes.length > 0 ? (
+                    this.state.formacoes.map((formacao, indice) => {
+                      return (
+                        <th key={shortid.generate()} scope="col" className="text-center table-secondary">
+                          {
+                            this.state.servidoresFormacoes.filter((servidorFormacao) => {
+                              return (servidorFormacao.formacao === formacao);
+                            }).reduce((total, servidorFormacao) => {
+                              return total + servidorFormacao.total;
+                            }, 0)
+                          }
+                        </th>
+                      );
+                    })
+                  ) : (null)}
+                  <th scope="col"></th>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>
