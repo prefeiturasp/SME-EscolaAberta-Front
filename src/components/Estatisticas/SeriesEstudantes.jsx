@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { listarTurnos } from "../../services/estatisticas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
+import shortid from "shortid";
 
 export default class SeriesEstudantes extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ export default class SeriesEstudantes extends Component {
         </div>
         {this.state.turnos.length > 0 ? (
           this.state.turnos.map((turno, indice) => {
-            indice = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+            indice = shortid.generate().replace(/[0-9]/g, '');
             return (
               <div key={indice} className="card shadow-sm mb-3">
                 <div className="card-header bg-white d-flex align-items-center">
