@@ -20,3 +20,17 @@ export async function listarTurnos(params) {
     turnos.json()
   );
 }
+
+export async function listarServidoresEscolarizacao(params) {
+  const { codesc = '' } = params;
+  return fetch(`${API_EOL}/totservescolarizacao/${codesc}`).then(servidores =>
+    servidores.json()
+  );
+}
+
+export async function listarVagasMatriculasSerie(params) {
+  const { codesc = '' } = params;
+  return fetch(`${API_EOL}/totvagmatbyserie/${codesc}`).then(vagas =>
+    vagas.json()
+  );
+}
