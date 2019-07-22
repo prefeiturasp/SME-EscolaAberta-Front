@@ -27,3 +27,10 @@ export async function listarServidoresEscolarizacao(params) {
     servidores.json()
   );
 }
+
+export async function listarVagasMatriculasSerie(params) {
+  const { codesc = '' } = params;
+  return fetch(`${API_EOL}/totvagmatbyserie/${codesc}`).then(vagas =>
+    vagas.json()
+  );
+}

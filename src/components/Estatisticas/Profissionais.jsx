@@ -11,8 +11,7 @@ export default class Profissionais extends Component {
       servidores: [],
       formacoes: [],
       servidoresFormacoes: [],
-      referencia: "",
-      totalProfissionaisEscolaridade: []
+      referencia: ""
     }
   }
 
@@ -45,7 +44,7 @@ export default class Profissionais extends Component {
         <div className="card shadow-sm mb-3">
           <div className="card-header bg-white d-flex align-items-center font-weight-bold">
             <FontAwesomeIcon icon={faUsers} className="cor-azul" />
-            <div className="ml-3 fonte-14">Formação do Profissionais </div>
+            <div className="ml-3 fonte-14">Formação do Profissionais</div>
           </div>
           <div className="card-body p-0">
             <table className="table table-hover table-bordered mb-0 fonte-14">
@@ -88,7 +87,7 @@ export default class Profissionais extends Component {
                             );
                           })
                         ) : (null)}
-                        <td className="text-center table-secondary">{totalProfissionaisCargo}</td>
+                        <td className="text-center table-secondary font-weight-bold">{totalProfissionaisCargo}</td>
                       </tr>
                     );
                   })
