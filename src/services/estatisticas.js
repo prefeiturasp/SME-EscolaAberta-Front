@@ -1,5 +1,12 @@
 const API_EOL = process.env.REACT_APP_API_EOL
 
+export async function listarSeriesEstudantes(params) {
+  const { codesc = '' } = params;
+  return fetch(`${API_EOL}/seriesestudantes/${codesc}`).then(seriesestudantes =>
+    seriesestudantes.json()
+  );
+}
+
 export async function listarModalidades(params) {
   const { codesc = '' } = params;
   return fetch(`${API_EOL}/modalidades/${codesc}`).then(modalidades =>
