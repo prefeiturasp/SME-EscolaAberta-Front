@@ -77,7 +77,7 @@ export default class Profissionais extends Component {
                               <td key={shortid.generate()} className="text-center">
                                 {this.state.servidoresFormacoes.length > 0 ? (
                                   this.state.servidoresFormacoes.filter((servidorFormacao) => {
-                                    return (servidorFormacao.titulo === servidor && servidorFormacao.formacao === formacao);
+                                    return servidorFormacao.titulo === servidor && servidorFormacao.formacao === formacao;
                                   }).map((servidorFormacao) => {
                                     totalProfissionaisCargo += servidorFormacao.total;
                                     return servidorFormacao.total;
@@ -102,7 +102,7 @@ export default class Profissionais extends Component {
                         <th key={shortid.generate()} scope="col" className="text-center table-secondary">
                           {
                             this.state.servidoresFormacoes.filter((servidorFormacao) => {
-                              return (servidorFormacao.formacao === formacao);
+                              return servidorFormacao.formacao === formacao;
                             }).reduce((total, servidorFormacao) => {
                               return total + servidorFormacao.total;
                             }, 0)

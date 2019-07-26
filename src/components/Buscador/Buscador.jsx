@@ -197,7 +197,7 @@ export default class Buscador extends Component {
           <input
             type="text"
             className="form-control form-control-lg rounded-pill shadow d-inline-block h-100 pt-3 pb-3"
-            placeholder="Encontre sua escola pelo nome ou bairro"
+            placeholder="Encontre sua escola"
             onKeyUp={this.buscarPorTermo}
             onFocus={this.mostrarBusca}
             onBlur={this.mostrarBusca}
