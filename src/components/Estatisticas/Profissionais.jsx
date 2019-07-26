@@ -102,7 +102,7 @@ export default class Profissionais extends Component {
                         <th key={shortid.generate()} scope="col" className="text-center table-secondary">
                           {
                             this.state.servidoresFormacoes.filter((servidorFormacao) => {
-                              return (servidorFormacao.formacao === formacao);
+                              return servidorFormacao.formacao === formacao;
                             }).reduce((total, servidorFormacao) => {
                               return total + servidorFormacao.total;
                             }, 0)
