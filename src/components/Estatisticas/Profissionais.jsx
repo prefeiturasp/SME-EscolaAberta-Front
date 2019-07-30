@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
-import { listarServidoresEscolarizacao } from "../../services/estatisticas";
+import { listarServidoresEscolarizacao, listarServidoresPorEscola } from "../../services/estatisticas";
 import shortid from "shortid";
 
 export default class Profissionais extends Component {
@@ -11,6 +11,8 @@ export default class Profissionais extends Component {
       servidores: [],
       formacoes: [],
       servidoresFormacoes: [],
+      cargos: [],
+      servidoresCargos: [],
       referencia: ""
     }
   }
@@ -30,6 +32,16 @@ export default class Profissionais extends Component {
       this.setState({ formacoes: formacoes });
       this.setState({ servidores: servidores });
       this.setState({ servidoresFormacoes: lista.results });
+    });
+    listarServidoresPorEscola({ codesc: this.props.codesc }).then(lista => {
+      let cargos = [];
+      lista.forEach((item) => {
+        if (!cargos.includes(item.dc_cargo_atual)) {
+          cargos.push(item.dc_cargo_atual);
+        }
+      });
+      this.setState({ cargos: cargos });
+      this.setState({ servidoresCargos: lista });
     });
     this.setState({ referencia: new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString() });
   }
@@ -114,6 +126,40 @@ export default class Profissionais extends Component {
                   <th scope="col"></th>
                 </tr>
               </tfoot>
+            </table>
+          </div>
+        </div>
+        <div className="card shadow-sm mb-3">
+          <div className="card-header bg-white d-flex align-items-center font-weight-bold">
+            <FontAwesomeIcon icon={faUsers} className="cor-azul" />
+            <div className="ml-3 fonte-14">Profissionais por Área de Atuação</div>
+          </div>
+          <div className="card-body p-0">
+            <table className="table table-hover table-bordered mb-0 fonte-14">
+              <tbody>
+                {this.state.cargos.length > 0 ? (
+                  this.state.cargos.map((cargo, indice) => {
+                    return (
+                      <React.Fragment key={shortid.generate()}>
+                        <tr>
+                          <td className="table-secondary font-weight-bold">{cargo}</td>
+                        </tr>
+                        {this.state.servidoresCargos.length > 0 ? (
+                          this.state.servidoresCargos.filter((servidorCargo) => {
+                            return servidorCargo.dc_cargo_atual === cargo;
+                          }).map((servidorCargo) => {
+                            return (
+                              <tr>
+                                <td>{servidorCargo.nm_nome}</td>
+                              </tr>
+                            );
+                          })
+                        ) : (null)}
+                      </React.Fragment>
+                    )
+                  })
+                ) : (null)}
+              </tbody>
             </table>
           </div>
         </div>

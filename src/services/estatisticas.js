@@ -35,6 +35,13 @@ export async function listarServidoresEscolarizacao(params) {
   );
 }
 
+export async function listarServidoresPorEscola(params) {
+  const { codesc = '' } = params;
+  return fetch(`${API_EOL}/servidores/${codesc}`).then(servidores =>
+    servidores.json()
+  );
+}
+
 export async function listarVagasMatriculasSerie(params) {
   const { codesc = '' } = params;
   return fetch(`${API_EOL}/totvagmatbyserie/${codesc}`).then(vagas =>
