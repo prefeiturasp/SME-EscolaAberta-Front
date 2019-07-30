@@ -149,7 +149,7 @@ export default class Profissionais extends Component {
                             return servidorCargo.dc_cargo_atual === cargo;
                           }).map((servidorCargo) => {
                             return (
-                              <tr>
+                              <tr key={shortid.generate()}>
                                 <td>{servidorCargo.nm_nome}</td>
                               </tr>
                             );

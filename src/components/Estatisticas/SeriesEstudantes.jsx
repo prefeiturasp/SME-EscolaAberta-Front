@@ -3,6 +3,7 @@ import { listarSeriesEstudantes } from "../../services/estatisticas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
 import shortid from "shortid";
+import SeriesEstudantesChart from "../Graficos/SeriesEstudantesChart";
 
 export default class SeriesEstudantes extends Component {
   constructor(props) {
@@ -61,9 +62,9 @@ export default class SeriesEstudantes extends Component {
                 <div className="card-header bg-white d-flex align-items-center">
                   <FontAwesomeIcon icon={faBook} className="cor-azul" />
                   <div className="ml-3 fonte-14 font-weight-bold">{turno}</div>
-                  <a className="text-decoration-none cor-cinza ml-auto stretched-link" data-toggle="collapse"
+                  <a className="text-decoration-none cor-cinza ml-auto" data-toggle="collapse"
                     data-target={`#${indice}`} aria-expanded="false" aria-controls={`${indice}`} href={`#${indice}`}>
-                    <FontAwesomeIcon icon={faBars} />
+                    <FontAwesomeIcon icon={faBars} className="stretched-link" />
                   </a>
                 </div>
                 <div className="collapse fade" id={`${indice}`}>
@@ -157,6 +158,10 @@ export default class SeriesEstudantes extends Component {
                         </tr>
                       </tfoot>
                     </table>
+                    <div className="my-5">
+                      {/* <SeriesEstudantesChart /> */}
+                      <SeriesEstudantesChart dados={this.state.seriesEstudantes.filter(serieEstudante => serieEstudante.desc_turno === turno)} />
+                    </div>
                   </div>
                 </div>
               </div>
