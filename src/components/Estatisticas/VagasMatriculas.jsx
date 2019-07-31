@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { listarVagasMatriculasSerie } from "../../services/estatisticas";
+import VagasMatriculasChart from "../Graficos/VagasMatriculasChart";
 
 export default class VagasMatriculas extends Component {
   constructor(props) {
@@ -85,6 +86,9 @@ export default class VagasMatriculas extends Component {
                   ) : (null)}
                 </tbody>
               </table>
+            </div>
+            <div className="my-5 d-flex justify-content-center">
+              <VagasMatriculasChart dados={this.state.vagasMatriculasSerie} />
             </div>
           </div>
         </div>
