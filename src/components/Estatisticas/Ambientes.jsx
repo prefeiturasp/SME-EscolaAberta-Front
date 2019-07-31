@@ -32,26 +32,28 @@ export default class Ambientes extends Component {
             <div className="ml-3 fonte-14">Total de Ambientes</div>
           </div>
           <div className="card-body p-0">
-            <table className="table table-hover mb-0 fonte-14">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col" className="text-center">Quantidade</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.ambientes.length > 0 ? (
-                  this.state.ambientes.map((ambiente, indice) => {
-                    return (
-                      <tr key={indice}>
-                        <td>{ambiente.ambiente}</td>
-                        <td className="text-center table-secondary">{ambiente.total}</td>
-                      </tr>
-                    );
-                  })
-                ) : (null)}
-              </tbody>
-            </table>
+            <div className="table-responsive">
+              <table className="table table-hover mb-0 fonte-14">
+                <thead>
+                  <tr>
+                    <th scope="col"></th>
+                    <th scope="col" className="text-center">Quantidade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.state.ambientes.length > 0 ? (
+                    this.state.ambientes.map((ambiente, indice) => {
+                      return (
+                        <tr key={indice}>
+                          <td>{ambiente.ambiente}</td>
+                          <td className="text-center table-secondary">{ambiente.total}</td>
+                        </tr>
+                      );
+                    })
+                  ) : (null)}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
