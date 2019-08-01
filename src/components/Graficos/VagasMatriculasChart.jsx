@@ -1,30 +1,45 @@
 import React, { Component } from "react";
-import { ResponsiveContainer, PieChart, Pie, Sector, Cell } from "recharts";
+import Chart from "react-google-charts";
 
 export default class VagasMatriculasChart extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dados: []
+    }
+  }
+
+  componentDidMount() {
+    let vagasGrafico = [];
+    this.props.dados.forEach((vaga) => {
+      let vagaGrafico = [];
+      vagaGrafico.push(["Série", "Valor"]);
+      vagaGrafico.push(["Total de Turmas", vaga.total_turmas]);
+      vagaGrafico.push(["Vagas Oferecidas", vaga.vagas_oferecidas]);
+      vagaGrafico.push(["Vagas Atendidas", vaga.atendimentos]);
+      vagaGrafico.push(["Vagas Remanescentes", vaga.vagas_remanecentes]);
+      vagaGrafico.push(["Média Atendimentos/Turma", vaga.media_atendimento]);
+      vagasGrafico[vaga.serie] = vagaGrafico;
+    });
+  }
+
   render() {
     return (
       <div>
-        {this.props.dados.lenght > 0 ? (
-          this.props.dados.map((dado) => {
+        {this.state.dados.length > 0 ? (
+          this.state.dados.map((vaga, indice) => {
             return (
-              <ResponsiveContainer width="85%" height={250}>
-                <PieChart onMouseEnter={this.onPieEnter}>
-                  <Pie
-                    data={dado}
-                    cx={300}
-                    cy={200}
-                    labelLine={false}
-                    // label={renderCustomizedLabel}
-                    outerRadius={80}
-                    fill="#8884d8"
-                  >
-                    {/* {
-                    data.map((entry, index) => <Cell fill={'#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)} />)
-                  } */}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
+              <Chart
+                key={indice}
+                width={'500px'}
+                height={'300px'}
+                chartType="PieChart"
+                loader={<div>Carregando Gráfico</div>}
+                data={vaga}
+                options={{
+                  title: { indice },
+                }}
+              />
             );
           })
         ) : (null)}

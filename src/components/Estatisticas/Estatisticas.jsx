@@ -54,7 +54,7 @@ export default class Estatisticas extends Component {
   buscaComponente = async componente => {
     if (this.state.componentesCarregados.includes(componente)) return;
 
-    import(`./${componente}.jsx`).then(Componente => {
+    await import(`./${componente}.jsx`).then(Componente => {
       this.setState({
         componentesCarregados: this.state.componentesCarregados.concat(componente),
         componentes: this.state.componentes.concat(

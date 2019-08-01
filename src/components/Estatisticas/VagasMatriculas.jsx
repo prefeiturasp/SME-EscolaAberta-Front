@@ -88,7 +88,9 @@ export default class VagasMatriculas extends Component {
               </table>
             </div>
             <div className="my-5 d-flex justify-content-center">
-              <VagasMatriculasChart dados={this.state.vagasMatriculasSerie} />
+              {this.state.vagasMatriculasSerie.length > 0 ? (
+                <VagasMatriculasChart dados={this.state.vagasMatriculasSerie} />
+              ) : (null)}
             </div>
           </div>
         </div>
