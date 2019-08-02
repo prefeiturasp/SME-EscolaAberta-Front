@@ -4,10 +4,10 @@ import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
 
-const SeriesEstudantes = lazy(() => import('./SeriesEstudantes'));
-const Profissionais = lazy(() => import('./Profissionais'));
-const VagasMatriculas = lazy(() => import('./VagasMatriculas'));
-const Ambientes = lazy(() => import('./Ambientes'));
+const SeriesEstudantes = lazy(() => import("./SeriesEstudantes"));
+const Profissionais = lazy(() => import("./Profissionais"));
+const VagasMatriculas = lazy(() => import("./VagasMatriculas"));
+const Ambientes = lazy(() => import("./Ambientes"));
 
 export default class Estatisticas extends Component {
   constructor(props) {
@@ -39,13 +39,14 @@ export default class Estatisticas extends Component {
   componentDidMount() {
     if (this.props.location.state !== undefined) {
       if (this.props.location.state.codesc !== undefined) {
-        this.setState({ codesc: this.props.location.state.codesc });
+        this.setState({ codesc: this.props.location.state.codesc }, () => {
+          document.querySelector(".nav .active:first-child").click();
+        });
       }
       if (this.props.location.state.nomesc !== undefined) {
         this.setState({ nomesc: this.props.location.state.nomesc });
       }
     }
-    document.querySelector(".nav .active:first-child").click();
   }
 
   renderizaComponente(componente) {

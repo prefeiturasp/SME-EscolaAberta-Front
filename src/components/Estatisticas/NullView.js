@@ -1,9 +1,9 @@
 import React from "react";
 
 const NullView = () => (
-  <div class="d-flex justify-content-center">
-    <div class="spinner-border" role="status">
-      <span class="sr-only">Carregando</span>
+  <div className="d-flex justify-content-center">
+    <div className="spinner-border" role="status">
+      <span className="sr-only">Carregando</span>
     </div>
   </div>
 );

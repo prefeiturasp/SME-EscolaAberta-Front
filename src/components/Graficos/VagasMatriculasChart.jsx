@@ -1,49 +1,58 @@
 import React, { Component } from "react";
-import Chart from "react-google-charts";
+import NullView from "../Estatisticas/NullView";
+import { ResponsiveContainer, PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
 export default class VagasMatriculasChart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dados: []
+      vagasMatriculas: []
     }
   }
 
   componentDidMount() {
-    let vagasGrafico = [];
+    let vagasMatriculas = [];
     this.props.dados.forEach((vaga) => {
-      let vagaGrafico = [];
-      vagaGrafico.push(["Série", "Valor"]);
-      vagaGrafico.push(["Total de Turmas", vaga.total_turmas]);
-      vagaGrafico.push(["Vagas Oferecidas", vaga.vagas_oferecidas]);
-      vagaGrafico.push(["Vagas Atendidas", vaga.atendimentos]);
-      vagaGrafico.push(["Vagas Remanescentes", vaga.vagas_remanecentes]);
-      vagaGrafico.push(["Média Atendimentos/Turma", vaga.media_atendimento]);
-      vagasGrafico[vaga.serie] = vagaGrafico;
+      let vagaMatricula = [];
+      vagaMatricula.push({ nome: "Total de Turmas", valor: vaga.total_turmas });
+      vagaMatricula.push({ nome: "Vagas Oferecidas", valor: vaga.vagas_oferecidas });
+      vagaMatricula.push({ nome: "Matrículas", valor: vaga.total_turmas });
+      vagaMatricula.push({ nome: "Vagas Remanescentes", valor: vaga.total_turmas });
+      vagaMatricula.push({ nome: "Média Atendimentos/Turma", valor: vaga.total_turmas });
+      vagasMatriculas.push(vagaMatricula);
     });
+    this.setState({ vagasMatriculas: vagasMatriculas });
   }
 
   render() {
     return (
-      <div>
-        {this.state.dados.length > 0 ? (
-          this.state.dados.map((vaga, indice) => {
+      <React.Fragment>
+        {this.state.vagasMatriculas.length > 0 ? (
+          this.state.vagasMatriculas.map((vaga, indice) => {
             return (
-              <Chart
-                key={indice}
-                width={'500px'}
-                height={'300px'}
-                chartType="PieChart"
-                loader={<div>Carregando Gráfico</div>}
-                data={vaga}
-                options={{
-                  title: { indice },
-                }}
-              />
+              <ResponsiveContainer key={indice} width="85%" height={250}>
+                <PieChart width={400} height={400}>
+                  <Pie
+                    data={vaga}
+                    cx={200}
+                    cy={200}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    nameKey="nome"
+                    dataKey="valor"
+                  >
+                    {vaga.map((entry, index) => {
+                      return <Cell key={`cell-${index}`} fill={'#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)} />
+                    })}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
             );
           })
-        ) : (null)}
-      </div>
+        ) : (<NullView />)}
+      </React.Fragment>
     );
   }
 }

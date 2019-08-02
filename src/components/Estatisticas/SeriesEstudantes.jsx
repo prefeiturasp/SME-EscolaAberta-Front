@@ -93,7 +93,7 @@ export default class SeriesEstudantes extends Component {
                                   <th key={shortid.generate()} scope="col" className="text-center">{turma}</th>
                                 );
                               })
-                            ) : (<NullView />)}
+                            ) : (null)}
                           </tr>
                         </thead>
                         <tbody>
@@ -123,16 +123,16 @@ export default class SeriesEstudantes extends Component {
                                               totalEstudantesAno += serieEstudante.matric;
                                               return serieEstudante.matric;
                                             })
-                                          ) : (<NullView />)}
+                                          ) : (null)}
                                         </td>
                                       );
                                     })
-                                  ) : (<NullView />)}
+                                  ) : (null)}
                                   <td className="text-center table-secondary font-weight-bold">{totalEstudantesAno}</td>
                                 </tr>
                               );
                             })
-                          ) : (<NullView />)}
+                          ) : (null)}
                         </tbody>
                         <tfoot>
                           <tr>
@@ -155,7 +155,7 @@ export default class SeriesEstudantes extends Component {
                                   </th>
                                 );
                               })
-                            ) : (<NullView />)}
+                            ) : (null)}
                             <th scope="col"></th>
                           </tr>
                         </tfoot>
