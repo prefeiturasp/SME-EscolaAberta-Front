@@ -88,7 +88,7 @@ export default class VagasMatriculas extends Component {
                 </tbody>
               </table>
             </div>
-            <div className="my-5 d-flex justify-content-center">
+            <div className="d-flex justify-content-center">
               {this.state.vagasMatriculasSerie.length > 0 ? (
                 <VagasMatriculasChart dados={this.state.vagasMatriculasSerie} />
               ) : (<NullView />)}
