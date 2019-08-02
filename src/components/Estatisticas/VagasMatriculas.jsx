@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { listarVagasMatriculasSerie } from "../../services/estatisticas";
 import VagasMatriculasChart from "../Graficos/VagasMatriculasChart";
+import NullView from "./NullView";
 
 export default class VagasMatriculas extends Component {
   constructor(props) {
@@ -73,7 +74,7 @@ export default class VagasMatriculas extends Component {
                         </tr>
                       );
                     })
-                  ) : (null)}
+                  ) : (<NullView />)}
                   {this.state.vagasMatriculasSerie.length > 0 ? (
                     <tr>
                       <td></td>
@@ -83,14 +84,14 @@ export default class VagasMatriculas extends Component {
                       <td className="text-center table-secondary font-weight-bold">{this.state.totaisVagasRemanecentes}</td>
                       <td className="text-center table-secondary font-weight-bold">{this.state.totaisMediaAtendimento}</td>
                     </tr>
-                  ) : (null)}
+                  ) : (<NullView />)}
                 </tbody>
               </table>
             </div>
             <div className="my-5 d-flex justify-content-center">
               {this.state.vagasMatriculasSerie.length > 0 ? (
                 <VagasMatriculasChart dados={this.state.vagasMatriculasSerie} />
-              ) : (null)}
+              ) : (<NullView />)}
             </div>
           </div>
         </div>

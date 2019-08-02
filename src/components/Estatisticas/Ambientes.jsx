@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { listarAmbientes } from "../../services/estatisticas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUniversity } from "@fortawesome/free-solid-svg-icons";
+import NullView from "./NullView";
 
 export default class Ambientes extends Component {
   constructor(props) {
@@ -50,7 +51,7 @@ export default class Ambientes extends Component {
                         </tr>
                       );
                     })
-                  ) : (null)}
+                  ) : (<NullView />)}
                 </tbody>
               </table>
             </div>

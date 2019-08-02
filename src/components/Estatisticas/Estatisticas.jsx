@@ -1,9 +1,13 @@
-import React, { Component } from "react";
-import shortid from "shortid";
+import React, { Component, lazy, Suspense } from "react";
 import Menu from "../MenuSuperior/Menu";
 import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
+
+const SeriesEstudantes = lazy(() => import('./SeriesEstudantes'));
+const Profissionais = lazy(() => import('./Profissionais'));
+const VagasMatriculas = lazy(() => import('./VagasMatriculas'));
+const Ambientes = lazy(() => import('./Ambientes'));
 
 export default class Estatisticas extends Component {
   constructor(props) {
@@ -11,20 +15,22 @@ export default class Estatisticas extends Component {
     this.state = {
       componentesLabels: [
         {
-          nome: "SeriesEstudantes", label: "Séries e Estudantes"
+          nome: "SeriesEstudantes",
+          label: "Séries e Estudantes"
         },
         {
-          nome: "Profissionais", label: "Profissionais"
+          nome: "Profissionais",
+          label: "Profissionais"
         },
         {
-          nome: "VagasMatriculas", label: "Vagas e Matrículas"
+          nome: "VagasMatriculas",
+          label: "Vagas e Matrículas"
         },
         {
-          nome: "Ambientes", label: "Ambientes"
+          nome: "Ambientes",
+          label: "Ambientes"
         }
       ],
-      componentesCarregados: [],
-      componentes: [],
       codesc: "",
       nomesc: ""
     }
@@ -42,36 +48,19 @@ export default class Estatisticas extends Component {
     document.querySelector(".nav .active:first-child").click();
   }
 
-  selecionaComponente = async event => {
-    event.persist();
-    document.querySelectorAll(".nav .active").forEach((el) => {
-      el.classList.remove("active");
-    });
-    event.target.classList.add("active");
-    await this.buscaComponente(`${event.target.dataset.componente}`);
-  }
-
-  buscaComponente = async componente => {
-    if (this.state.componentesCarregados.includes(componente)) return;
-
-    await import(`./${componente}.jsx`).then(Componente => {
-      this.setState({
-        componentesCarregados: this.state.componentesCarregados.concat(componente),
-        componentes: this.state.componentes.concat(
-          <Componente.default
-            key={componente}
-            codesc={this.state.codesc}
-          />
-        )
-      });
-    }).catch(error => {
-      this.setState({
-        componentesCarregados: this.state.componentesCarregados.concat(componente),
-        componentes: this.state.componentes.concat(
-          <NullView key={shortid.generate()} />
-        )
-      });
-    });
+  renderizaComponente(componente) {
+    switch (componente) {
+      case "SeriesEstudantes":
+        return <SeriesEstudantes codesc={this.state.codesc} />;
+      case "Profissionais":
+        return <Profissionais codesc={this.state.codesc} />;
+      case "VagasMatriculas":
+        return <VagasMatriculas codesc={this.state.codesc} />;
+      case "Ambientes":
+        return <Ambientes codesc={this.state.codesc} />;
+      default:
+        return <NullView />;
+    }
   }
 
   render() {
@@ -87,8 +76,7 @@ export default class Estatisticas extends Component {
                   this.state.componentesLabels.map((componente, indice) => {
                     return (
                       <li key={indice} className="nav-item">
-                        <a onClick={this.selecionaComponente} data-componente={componente.nome}
-                          className={indice === 0 ? `nav-link active` : `nav-link`} id={`${componente.nome}-tab`}
+                        <a className={indice === 0 ? `nav-link active` : `nav-link`} id={`${componente.nome}-tab`}
                           data-toggle="tab" href={`#${componente.nome}`} role="tab" aria-controls={componente.nome}
                           aria-selected={indice === 0 ? `true` : `false`}>
                           {componente.label}
@@ -96,18 +84,22 @@ export default class Estatisticas extends Component {
                       </li>
                     );
                   })
-                ) : (null)}
+                ) : (<NullView />)}
               </ul>
               <div className="tab-content mt-5" id="estatisticas-abas">
-                {this.state.componentesLabels.map((componente, indice) => {
-                  return (
-                    <div key={indice} className={(indice === 0 ? `tab-pane fade show active` : `tab-pane fade`)} id={componente.nome} role="tabpanel" aria-labelledby={`${componente.nome}-tab`}>
-                      {this.state.componentes.filter((c) => {
-                        return c.type.name === componente.nome;
-                      })}
-                    </div>
-                  );
-                })}
+                {this.state.componentesLabels.length > 0 ? (
+                  this.state.componentesLabels.map((componente, indice) => {
+                    return (
+                      <div key={indice} className={(indice === 0 ? `tab-pane fade show active` : `tab-pane fade`)} id={componente.nome} role="tabpanel" aria-labelledby={`${componente.nome}-tab`}>
+                        {
+                          <Suspense fallback={<NullView />}>
+                            {this.renderizaComponente(componente.nome)}
+                          </Suspense>
+                        }
+                      </div>
+                    );
+                  })
+                ) : (<NullView />)}
               </div>
             </div>
           </div>

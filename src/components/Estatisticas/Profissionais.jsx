@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { listarServidoresEscolarizacao, listarServidoresPorEscola } from "../../services/estatisticas";
 import shortid from "shortid";
+import NullView from "./NullView";
 
 export default class Profissionais extends Component {
   constructor(props) {
@@ -74,7 +75,7 @@ export default class Profissionais extends Component {
                           <th key={shortid.generate()} scope="col" className="text-center">{formacao}</th>
                         );
                       })
-                    ) : (null)}
+                    ) : (<NullView />)}
                   </tr>
                 </thead>
                 <tbody>
@@ -95,16 +96,16 @@ export default class Profissionais extends Component {
                                       totalProfissionaisCargo += servidorFormacao.total;
                                       return servidorFormacao.total;
                                     })
-                                  ) : (null)}
+                                  ) : (<NullView />)}
                                 </td>
                               );
                             })
-                          ) : (null)}
+                          ) : (<NullView />)}
                           <td className="text-center table-secondary font-weight-bold">{totalProfissionaisCargo}</td>
                         </tr>
                       );
                     })
-                  ) : (null)}
+                  ) : (<NullView />)}
                 </tbody>
                 <tfoot>
                   <tr>
@@ -123,7 +124,7 @@ export default class Profissionais extends Component {
                           </th>
                         );
                       })
-                    ) : (null)}
+                    ) : (<NullView />)}
                     <th scope="col"></th>
                   </tr>
                 </tfoot>
@@ -156,11 +157,11 @@ export default class Profissionais extends Component {
                               </tr>
                             );
                           })
-                        ) : (null)}
+                        ) : (<NullView />)}
                       </React.Fragment>
                     )
                   })
-                ) : (null)}
+                ) : (<NullView />)}
               </tbody>
             </table>
           </div>

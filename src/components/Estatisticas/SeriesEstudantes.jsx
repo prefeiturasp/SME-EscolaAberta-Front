@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
 import shortid from "shortid";
 import SeriesEstudantesChart from "../Graficos/SeriesEstudantesChart";
+import NullView from "./NullView";
 
 export default class SeriesEstudantes extends Component {
   constructor(props) {
@@ -92,7 +93,7 @@ export default class SeriesEstudantes extends Component {
                                   <th key={shortid.generate()} scope="col" className="text-center">{turma}</th>
                                 );
                               })
-                            ) : (null)}
+                            ) : (<NullView />)}
                           </tr>
                         </thead>
                         <tbody>
@@ -122,16 +123,16 @@ export default class SeriesEstudantes extends Component {
                                               totalEstudantesAno += serieEstudante.matric;
                                               return serieEstudante.matric;
                                             })
-                                          ) : (null)}
+                                          ) : (<NullView />)}
                                         </td>
                                       );
                                     })
-                                  ) : (null)}
+                                  ) : (<NullView />)}
                                   <td className="text-center table-secondary font-weight-bold">{totalEstudantesAno}</td>
                                 </tr>
                               );
                             })
-                          ) : (null)}
+                          ) : (<NullView />)}
                         </tbody>
                         <tfoot>
                           <tr>
@@ -154,7 +155,7 @@ export default class SeriesEstudantes extends Component {
                                   </th>
                                 );
                               })
-                            ) : (null)}
+                            ) : (<NullView />)}
                             <th scope="col"></th>
                           </tr>
                         </tfoot>
@@ -170,7 +171,7 @@ export default class SeriesEstudantes extends Component {
               </div>
             );
           })
-        ) : (null)}
+        ) : (<NullView />)}
       </div>
     );
   }
