@@ -3,6 +3,8 @@ import { listarSeriesEstudantes } from "../../services/estatisticas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
 import shortid from "shortid";
+import SeriesEstudantesChart from "../Graficos/SeriesEstudantesChart";
+import NullView from "./NullView";
 
 export default class SeriesEstudantes extends Component {
   constructor(props) {
@@ -61,108 +63,115 @@ export default class SeriesEstudantes extends Component {
                 <div className="card-header bg-white d-flex align-items-center">
                   <FontAwesomeIcon icon={faBook} className="cor-azul" />
                   <div className="ml-3 fonte-14 font-weight-bold">{turno}</div>
-                  <a className="text-decoration-none cor-cinza ml-auto stretched-link" data-toggle="collapse"
+                  <a className="text-decoration-none cor-cinza ml-auto" data-toggle="collapse"
                     data-target={`#${indice}`} aria-expanded="false" aria-controls={`${indice}`} href={`#${indice}`}>
-                    <FontAwesomeIcon icon={faBars} />
+                    <FontAwesomeIcon icon={faBars} className="stretched-link" />
                   </a>
                 </div>
                 <div className="collapse fade" id={`${indice}`}>
                   <div className="card-body p-0">
-                    <table className="table table-hover table-bordered mb-0 fonte-14">
-                      <thead>
-                        <tr>
-                          <th scope="col" rowSpan="2"></th>
-                          <th scope="col" colSpan={this.state.turmas.filter((turma) => {
-                            return this.state.seriesEstudantes.filter((serieEstudante) => {
-                              return serieEstudante.turma === turma && serieEstudante.desc_turno === turno;
-                            }).length > 0
-                          }).length} className="text-center font-weight-normal align-middle text-uppercase">Estudantes por série e turma</th>
-                          <th scope="col" rowSpan="2" className="text-center font-weight-normal align-middle text-uppercase">TOTAL DE ESTUDANTES POR ANO</th>
-                        </tr>
-                        <tr>
-                          {this.state.turmas.length > 0 ? (
-                            this.state.turmas.filter((turma) => {
+                    <div className="table-responsive">
+                      <table className="table table-hover table-bordered mb-0 fonte-14">
+                        <thead>
+                          <tr>
+                            <th scope="col" rowSpan="2"></th>
+                            <th scope="col" colSpan={this.state.turmas.filter((turma) => {
                               return this.state.seriesEstudantes.filter((serieEstudante) => {
                                 return serieEstudante.turma === turma && serieEstudante.desc_turno === turno;
                               }).length > 0
-                            }).map((turma, indice) => {
-                              return (
-                                <th key={shortid.generate()} scope="col" className="text-center">{turma}</th>
-                              );
-                            })
-                          ) : (null)}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {this.state.series.length > 0 ? (
-                          this.state.series.filter((serie) => {
-                            return this.state.seriesEstudantes.filter((serieEstudante) => {
-                              return serieEstudante.descserie === serie && serieEstudante.desc_turno === turno;
-                            }).length > 0
-                          }).map((serie, indice) => {
-                            let totalEstudantesAno = 0;
-                            return (
-                              <tr key={indice}>
-                                <td>{serie}</td>
-                                {this.state.turmas.length > 0 ? (
-                                  this.state.turmas.filter((turma) => {
-                                    return this.state.seriesEstudantes.filter((serieEstudante) => {
-                                      return serieEstudante.turma === turma && serieEstudante.desc_turno === turno;
-                                    }).length > 0
-                                  }).map((turma, indice) => {
-                                    return (
-                                      <td key={shortid.generate()} className="text-center">
-                                        {this.state.seriesEstudantes.length > 0 ? (
-                                          this.state.seriesEstudantes.filter((serieEstudante) => {
-                                            return serieEstudante.descserie === serie &&
-                                              serieEstudante.desc_turno === turno && serieEstudante.turma === turma;
-                                          }).map((serieEstudante) => {
-                                            totalEstudantesAno += serieEstudante.matric;
-                                            return serieEstudante.matric;
-                                          })
-                                        ) : (null)}
-                                      </td>
-                                    );
-                                  })
-                                ) : (null)}
-                                <td className="text-center table-secondary font-weight-bold">{totalEstudantesAno}</td>
-                              </tr>
-                            );
-                          })
-                        ) : (null)}
-                      </tbody>
-                      <tfoot>
-                        <tr>
-                          <th scope="col" className="font-weight-normal">TOTAL DE ESTUDANTES POR TURMA</th>
-                          {this.state.turmas.length > 0 ? (
-                            this.state.turmas.filter((turma) => {
+                            }).length} className="text-center font-weight-normal align-middle text-uppercase">Estudantes por série e turma</th>
+                            <th scope="col" rowSpan="2" className="text-center font-weight-normal align-middle text-uppercase">TOTAL DE ESTUDANTES POR ANO</th>
+                          </tr>
+                          <tr>
+                            {this.state.turmas.length > 0 ? (
+                              this.state.turmas.filter((turma) => {
+                                return this.state.seriesEstudantes.filter((serieEstudante) => {
+                                  return serieEstudante.turma === turma && serieEstudante.desc_turno === turno;
+                                }).length > 0
+                              }).map((turma, indice) => {
+                                return (
+                                  <th key={shortid.generate()} scope="col" className="text-center">{turma}</th>
+                                );
+                              })
+                            ) : (<NullView />)}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {this.state.series.length > 0 ? (
+                            this.state.series.filter((serie) => {
                               return this.state.seriesEstudantes.filter((serieEstudante) => {
-                                return serieEstudante.turma === turma && serieEstudante.desc_turno === turno;
+                                return serieEstudante.descserie === serie && serieEstudante.desc_turno === turno;
                               }).length > 0
-                            }).map((turma, indice) => {
+                            }).map((serie, indice) => {
+                              let totalEstudantesAno = 0;
                               return (
-                                <th key={shortid.generate()} scope="col" className="text-center table-secondary">
-                                  {
-                                    this.state.seriesEstudantes.filter((serieEstudante) => {
-                                      return serieEstudante.turma === turma && serieEstudante.desc_turno === turno;
-                                    }).reduce((total, serieEstudante) => {
-                                      return total + serieEstudante.matric;
-                                    }, 0)
-                                  }
-                                </th>
+                                <tr key={indice}>
+                                  <td>{serie}</td>
+                                  {this.state.turmas.length > 0 ? (
+                                    this.state.turmas.filter((turma) => {
+                                      return this.state.seriesEstudantes.filter((serieEstudante) => {
+                                        return serieEstudante.turma === turma && serieEstudante.desc_turno === turno;
+                                      }).length > 0
+                                    }).map((turma, indice) => {
+                                      return (
+                                        <td key={shortid.generate()} className="text-center">
+                                          {this.state.seriesEstudantes.length > 0 ? (
+                                            this.state.seriesEstudantes.filter((serieEstudante) => {
+                                              return serieEstudante.descserie === serie &&
+                                                serieEstudante.desc_turno === turno && serieEstudante.turma === turma;
+                                            }).map((serieEstudante) => {
+                                              totalEstudantesAno += serieEstudante.matric;
+                                              return serieEstudante.matric;
+                                            })
+                                          ) : (<NullView />)}
+                                        </td>
+                                      );
+                                    })
+                                  ) : (<NullView />)}
+                                  <td className="text-center table-secondary font-weight-bold">{totalEstudantesAno}</td>
+                                </tr>
                               );
                             })
-                          ) : (null)}
-                          <th scope="col"></th>
-                        </tr>
-                      </tfoot>
-                    </table>
+                          ) : (<NullView />)}
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th scope="col" className="font-weight-normal">TOTAL DE ESTUDANTES POR TURMA</th>
+                            {this.state.turmas.length > 0 ? (
+                              this.state.turmas.filter((turma) => {
+                                return this.state.seriesEstudantes.filter((serieEstudante) => {
+                                  return serieEstudante.turma === turma && serieEstudante.desc_turno === turno;
+                                }).length > 0
+                              }).map((turma, indice) => {
+                                return (
+                                  <th key={shortid.generate()} scope="col" className="text-center table-secondary">
+                                    {
+                                      this.state.seriesEstudantes.filter((serieEstudante) => {
+                                        return serieEstudante.turma === turma && serieEstudante.desc_turno === turno;
+                                      }).reduce((total, serieEstudante) => {
+                                        return total + serieEstudante.matric;
+                                      }, 0)
+                                    }
+                                  </th>
+                                );
+                              })
+                            ) : (<NullView />)}
+                            <th scope="col"></th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                    <div className="my-5 d-flex justify-content-center">
+                      <SeriesEstudantesChart
+                        dados={this.state.seriesEstudantes.filter(serieEstudante => serieEstudante.desc_turno === turno)}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             );
           })
-        ) : (null)}
+        ) : (<NullView />)}
       </div>
     );
   }

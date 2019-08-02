@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { listarVagasMatriculasSerie } from "../../services/estatisticas";
+import VagasMatriculasChart from "../Graficos/VagasMatriculasChart";
+import NullView from "./NullView";
 
 export default class VagasMatriculas extends Component {
   constructor(props) {
@@ -46,44 +48,51 @@ export default class VagasMatriculas extends Component {
             <div className="ml-3 fonte-14">Vagas e Matrículas</div>
           </div>
           <div className="card-body p-0">
-            <table className="table table-hover table-bordered mb-0 fonte-14">
-              <thead>
-                <tr>
-                  <th scope="col"></th>
-                  <th scope="col">Total de Turmas</th>
-                  <th scope="col">Vagas Oferecidas</th>
-                  <th scope="col">Vagas Atendidas</th>
-                  <th scope="col">Vagas Remanescentes</th>
-                  <th scope="col">Média Atendimentos/Turma</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.vagasMatriculasSerie.length > 0 ? (
-                  this.state.vagasMatriculasSerie.map((vagaMatricula, indice) => {
-                    return (
-                      <tr key={indice}>
-                        <td className="font-weight-bold">{vagaMatricula.serie}</td>
-                        <td className="text-center">{vagaMatricula.total_turmas}</td>
-                        <td className="text-center">{vagaMatricula.vagas_oferecidas}</td>
-                        <td className="text-center">{vagaMatricula.atendimentos}</td>
-                        <td className="text-center">{vagaMatricula.vagas_remanecentes}</td>
-                        <td className="text-center">{vagaMatricula.media_atendimento}</td>
-                      </tr>
-                    );
-                  })
-                ) : (null)}
-                {this.state.vagasMatriculasSerie.length > 0 ? (
+            <div className="table-responsive">
+              <table className="table table-hover table-bordered mb-0 fonte-14">
+                <thead>
                   <tr>
-                    <td></td>
-                    <td className="text-center table-secondary font-weight-bold">{this.state.totaisTurmas}</td>
-                    <td className="text-center table-secondary font-weight-bold">{this.state.totaisVagasOferecidas}</td>
-                    <td className="text-center table-secondary font-weight-bold">{this.state.totaisAtendimentos}</td>
-                    <td className="text-center table-secondary font-weight-bold">{this.state.totaisVagasRemanecentes}</td>
-                    <td className="text-center table-secondary font-weight-bold">{this.state.totaisMediaAtendimento}</td>
+                    <th scope="col"></th>
+                    <th scope="col">Total de Turmas</th>
+                    <th scope="col">Vagas Oferecidas</th>
+                    <th scope="col">Vagas Atendidas</th>
+                    <th scope="col">Vagas Remanescentes</th>
+                    <th scope="col">Média Atendimentos/Turma</th>
                   </tr>
-                ) : (null)}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {this.state.vagasMatriculasSerie.length > 0 ? (
+                    this.state.vagasMatriculasSerie.map((vagaMatricula, indice) => {
+                      return (
+                        <tr key={indice}>
+                          <td className="font-weight-bold">{vagaMatricula.serie}</td>
+                          <td className="text-center">{vagaMatricula.total_turmas}</td>
+                          <td className="text-center">{vagaMatricula.vagas_oferecidas}</td>
+                          <td className="text-center">{vagaMatricula.atendimentos}</td>
+                          <td className="text-center">{vagaMatricula.vagas_remanecentes}</td>
+                          <td className="text-center">{vagaMatricula.media_atendimento}</td>
+                        </tr>
+                      );
+                    })
+                  ) : (<NullView />)}
+                  {this.state.vagasMatriculasSerie.length > 0 ? (
+                    <tr>
+                      <td></td>
+                      <td className="text-center table-secondary font-weight-bold">{this.state.totaisTurmas}</td>
+                      <td className="text-center table-secondary font-weight-bold">{this.state.totaisVagasOferecidas}</td>
+                      <td className="text-center table-secondary font-weight-bold">{this.state.totaisAtendimentos}</td>
+                      <td className="text-center table-secondary font-weight-bold">{this.state.totaisVagasRemanecentes}</td>
+                      <td className="text-center table-secondary font-weight-bold">{this.state.totaisMediaAtendimento}</td>
+                    </tr>
+                  ) : (<NullView />)}
+                </tbody>
+              </table>
+            </div>
+            <div className="my-5 d-flex justify-content-center">
+              {this.state.vagasMatriculasSerie.length > 0 ? (
+                <VagasMatriculasChart dados={this.state.vagasMatriculasSerie} />
+              ) : (<NullView />)}
+            </div>
           </div>
         </div>
       </div>
