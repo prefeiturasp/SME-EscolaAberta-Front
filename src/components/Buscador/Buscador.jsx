@@ -27,11 +27,14 @@ export default class Buscador extends Component {
   }
 
   componentDidMount() {
-    const cookiesLista = cookie.select(/(historico_)\w+/g);
+    const cookiesLista = Object.entries(cookie.loadAll());
     const historicoLista = [];
-    Object.entries(cookiesLista).forEach(historico => {
-      const [tipo, valor] = historico[1].split("_");
-      historicoLista.push({ tipo, valor });
+    cookiesLista.forEach(historico => {
+      if (/\b(historico)\w+\b/g.test(historico[0])) {
+        const [tipo, valor] = historico[1].split("_");
+        if (historicoLista.filter((h) => { return h.valor === valor }).length === 0)
+          historicoLista.push({ tipo, valor });
+      }
     });
 
     this.setState({ historicoLista: historicoLista });
