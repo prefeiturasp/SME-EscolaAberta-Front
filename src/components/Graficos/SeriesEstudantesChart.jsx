@@ -5,7 +5,6 @@ import shortid from "shortid";
 export default class SeriesEstudantesChart extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       seriesMatriculas: [],
       turmas: []

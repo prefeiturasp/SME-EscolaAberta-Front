@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { listarVagasMatriculasSerie } from "../../services/estatisticas";
 import VagasMatriculasChart from "../Graficos/VagasMatriculasChart";
-import NullView from "./NullView";
 
 export default class VagasMatriculas extends Component {
   constructor(props) {
@@ -55,7 +54,7 @@ export default class VagasMatriculas extends Component {
                     <th scope="col"></th>
                     <th scope="col">Total de Turmas</th>
                     <th scope="col">Vagas Oferecidas</th>
-                    <th scope="col">Vagas Atendidas</th>
+                    <th scope="col">Matrículas</th>
                     <th scope="col">Vagas Remanescentes</th>
                     <th scope="col">Média Atendimentos/Turma</th>
                   </tr>
@@ -74,7 +73,7 @@ export default class VagasMatriculas extends Component {
                         </tr>
                       );
                     })
-                  ) : (<NullView />)}
+                  ) : (null)}
                   {this.state.vagasMatriculasSerie.length > 0 ? (
                     <tr>
                       <td></td>
@@ -84,14 +83,12 @@ export default class VagasMatriculas extends Component {
                       <td className="text-center table-secondary font-weight-bold">{this.state.totaisVagasRemanecentes}</td>
                       <td className="text-center table-secondary font-weight-bold">{this.state.totaisMediaAtendimento}</td>
                     </tr>
-                  ) : (<NullView />)}
+                  ) : (null)}
                 </tbody>
               </table>
             </div>
-            <div className="d-flex justify-content-center">
-              {this.state.vagasMatriculasSerie.length > 0 ? (
-                <VagasMatriculasChart dados={this.state.vagasMatriculasSerie} />
-              ) : (<NullView />)}
+            <div className="my-3 clearfix">
+              <VagasMatriculasChart dados={this.state.vagasMatriculasSerie} />
             </div>
           </div>
         </div>

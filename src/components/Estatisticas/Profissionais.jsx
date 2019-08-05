@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { listarServidoresEscolarizacao, listarServidoresPorEscola } from "../../services/estatisticas";
 import shortid from "shortid";
-import NullView from "./NullView";
 
 export default class Profissionais extends Component {
   constructor(props) {
@@ -75,7 +74,7 @@ export default class Profissionais extends Component {
                           <th key={shortid.generate()} scope="col" className="text-center">{formacao}</th>
                         );
                       })
-                    ) : (<NullView />)}
+                    ) : (null)}
                   </tr>
                 </thead>
                 <tbody>
@@ -96,16 +95,16 @@ export default class Profissionais extends Component {
                                       totalProfissionaisCargo += servidorFormacao.total;
                                       return servidorFormacao.total;
                                     })
-                                  ) : (<NullView />)}
+                                  ) : (null)}
                                 </td>
                               );
                             })
-                          ) : (<NullView />)}
+                          ) : (null)}
                           <td className="text-center table-secondary font-weight-bold">{totalProfissionaisCargo}</td>
                         </tr>
                       );
                     })
-                  ) : (<NullView />)}
+                  ) : (null)}
                 </tbody>
                 <tfoot>
                   <tr>
@@ -124,7 +123,7 @@ export default class Profissionais extends Component {
                           </th>
                         );
                       })
-                    ) : (<NullView />)}
+                    ) : (null)}
                     <th scope="col"></th>
                   </tr>
                 </tfoot>
@@ -135,7 +134,7 @@ export default class Profissionais extends Component {
         <div className="card shadow-sm mb-3">
           <div className="card-header bg-white d-flex align-items-center font-weight-bold">
             <FontAwesomeIcon icon={faUsers} className="cor-azul" />
-            <div className="ml-3 fonte-14">Profissionais por Área de Atuação</div>
+            <div className="ml-3 fonte-14">Conheça a Equipe</div>
           </div>
           <div className="card-body p-0">
             <table className="table table-hover table-bordered mb-0 fonte-14">
@@ -157,11 +156,11 @@ export default class Profissionais extends Component {
                               </tr>
                             );
                           })
-                        ) : (<NullView />)}
+                        ) : (null)}
                       </React.Fragment>
                     )
                   })
-                ) : (<NullView />)}
+                ) : (null)}
               </tbody>
             </table>
           </div>
