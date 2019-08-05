@@ -1,10 +1,8 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { listarVagasMatriculasSerie } from "../../services/estatisticas";
-import NullView from "./NullView";
-
-const VagasMatriculasChart = lazy(() => import("../Graficos/VagasMatriculasChart"));
+import VagasMatriculasChart from "../Graficos/VagasMatriculasChart";
 
 export default class VagasMatriculas extends Component {
   constructor(props) {
@@ -89,9 +87,9 @@ export default class VagasMatriculas extends Component {
                 </tbody>
               </table>
             </div>
-            <Suspense fallback={<NullView />}>
+            <div className="my-3 clearfix">
               <VagasMatriculasChart dados={this.state.vagasMatriculasSerie} />
-            </Suspense>
+            </div>
           </div>
         </div>
       </div>
