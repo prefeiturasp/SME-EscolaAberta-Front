@@ -78,7 +78,7 @@ export default class VagasMatriculasChart extends Component {
                 </div>
                 <ResponsiveContainer className="mx-auto my-2" width="75%" height={this.state.rContainerHeight}>
                   <PieChart>
-                    <Pie data={vaga} cx={150} innerRadius={40} outerRadius={100} nameKey="nome" dataKey="valor" labelLine={false} label={this.renderizaLabelPorcentagem}>
+                    <Pie data={vaga} innerRadius={40} outerRadius={100} nameKey="nome" dataKey="valor" labelLine={false} label={this.renderizaLabelPorcentagem}>
                       {
                         vaga.map((v, indice) =>
                           <Cell key={`cell-${indice}`} fill={'#' + (0x1000000 + (Math.random()) * 0xffffff).toString(16).substr(1, 6)} />
