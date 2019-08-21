@@ -1,4 +1,4 @@
-@import 'variaveis.scss';
+@import "variaveis.scss";
 
 body {
   @include roboto-sans;
@@ -26,7 +26,7 @@ body {
 }
 
 .links-menu {
-  border-bottom: 1px solid #DEE2E6;
+  border-bottom: 1px solid #dee2e6;
 
   @media (max-width: 576px) {
     border-bottom: 0 none !important;
@@ -37,7 +37,7 @@ body {
 
     &:hover {
       border: 0 none;
-      padding: .5rem 1rem;
+      padding: 0.5rem 1rem;
     }
   }
 }
@@ -45,7 +45,7 @@ body {
 // Home
 
 .busca-escolas {
-  background: $corCinzaClaro url('../img/bg_busca.png');
+  background: $corCinzaClaro url("../img/bg_busca.png");
   background-blend-mode: lighten;
   background-size: cover;
   color: $corCinzaHome;
@@ -190,14 +190,17 @@ h2 {
       font-size: 0.8rem;
 
       tr {
-
         &.collapsing,
         &.collapse {
           background: $corCinzaEscuro;
         }
       }
 
-      tr[aria-expanded=true] {
+      .fa-chevron-down[aria-expanded="true"] {
+        transform: rotate(180deg);
+      }
+
+      tr[aria-expanded="true"] {
         background: $corCinzaEscuro;
       }
     }
