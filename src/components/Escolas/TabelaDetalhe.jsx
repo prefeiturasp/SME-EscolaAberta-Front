@@ -4,7 +4,7 @@ export default class TabelaDetalhe extends Component {
   render() {
     return (
       <tr id={`escola-${this.props.escola.codesc}`} className="collapse">
-        <td />
+        <td colSpan="2" />
         <td>
           <h3>Endereço</h3>
           <div>

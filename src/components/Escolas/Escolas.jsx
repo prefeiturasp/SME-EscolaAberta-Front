@@ -49,67 +49,71 @@ export default class Escolas extends Component {
 
     PubSub.subscribe(
       "lista-escolas",
-      function (topico, listaEscolas) {
+      function(topico, listaEscolas) {
         this.setState({ escolas: listaEscolas });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "escola-filtro",
-      function (topico, filtro) {
+      function(topico, filtro) {
         this.setState({ escolaSelecionada: filtro });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "bairro-filtro",
-      function (topico, filtro) {
+      function(topico, filtro) {
         this.setState({ bairroSelecionado: filtro });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "distrito-filtro",
-      function (topico, filtro) {
+      function(topico, filtro) {
         this.setState({ distritoSelecionado: filtro });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "subpref-filtro",
-      function (topico, filtro) {
+      function(topico, filtro) {
         this.setState({ subprefSelecionada: filtro });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "tipo-escola-filtro",
-      function (topico, filtro) {
+      function(topico, filtro) {
         this.setState({ tipoEscolaSelecionado: filtro });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "dre-filtro",
-      function (topico, filtro) {
+      function(topico, filtro) {
         this.setState({ dreSelecionada: filtro });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "total-itens",
-      function (topico, total) {
-        this.setState({ pagina: 2 })
+      function(topico, total) {
+        this.setState({ pagina: 2 });
         this.setState({ totalItens: total });
       }.bind(this)
     );
 
     window.jQuery(".overflow-auto").on(
       "scroll",
-      function () {
-        if (window.jQuery(".overflow-auto").scrollTop() + window.jQuery(".overflow-auto").innerHeight() === window.jQuery(".overflow-auto")[0].scrollHeight) {
+      function() {
+        if (
+          window.jQuery(".overflow-auto").scrollTop() +
+            window.jQuery(".overflow-auto").innerHeight() ===
+          window.jQuery(".overflow-auto")[0].scrollHeight
+        ) {
           setTimeout(
-            function () {
+            function() {
               this.carregarMaisEscolas();
             }.bind(this),
             1000

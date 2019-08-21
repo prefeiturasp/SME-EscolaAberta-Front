@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import TabelaDetalhe from "./TabelaDetalhe";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faChartBar } from "@fortawesome/free-solid-svg-icons";
 
 export default class TabelaEscolas extends Component {
   render() {
@@ -8,11 +10,12 @@ export default class TabelaEscolas extends Component {
       <table className="table tabela-escolas">
         <thead>
           <tr>
+            <th />
             <th>Código</th>
             <th>Nome da escola</th>
             <th>Tipo</th>
             <th>DRE</th>
-            <th />
+            <th>Estatísticas</th>
           </tr>
         </thead>
         <tbody>
@@ -20,6 +23,24 @@ export default class TabelaEscolas extends Component {
             return (
               <React.Fragment key={indice}>
                 <tr>
+                  <td>
+                    <FontAwesomeIcon
+                      icon={faChevronDown}
+                      role="button"
+                      className="text-secondary"
+                      data-toggle="collapse"
+                      href={`#escola-${escola.codesc}`}
+                      aria-controls={`escola-${escola.codesc}`}
+                      onClick={() =>
+                        this.props.atualizarMapa(
+                          escola.nomesc,
+                          escola.latitude,
+                          escola.longitude
+                        )
+                      }
+                    />
+                  </td>
+                  <td>{escola.codesc}</td>
                   <td className="text-primary font-weight-bold">
                     <Link
                       to={{
@@ -30,27 +51,26 @@ export default class TabelaEscolas extends Component {
                         }
                       }}
                     >
-                      {escola.codesc}
+                      {escola.nomesc}
                     </Link>
                   </td>
-                  <td>{escola.nomesc}</td>
                   <td>{escola.tipoesc}</td>
                   <td>{escola.subpref}</td>
-                  <td>
-                    <input
-                      type="checkbox"
-                      data-toggle="collapse"
-                      href={`#escola-${escola.codesc}`}
-                      aria-controls={`escola-${escola.codesc}`}
-                      onChange={this.props.limparCheckboxes}
-                      onClick={() =>
-                        this.props.atualizarMapa(
-                          escola.nomesc,
-                          escola.latitude,
-                          escola.longitude
-                        )
-                      }
-                    />
+                  <td className="text-center">
+                    <Link
+                      to={{
+                        pathname: "/estatisticas",
+                        state: {
+                          codesc: escola.codesc,
+                          nomesc: escola.nomesc
+                        }
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        icon={faChartBar}
+                        className="text-secondary"
+                      />
+                    </Link>
                   </td>
                 </tr>
                 <TabelaDetalhe escola={escola} />
