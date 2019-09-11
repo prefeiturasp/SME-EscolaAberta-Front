@@ -1,0 +1,112 @@
+import React, { Component, lazy, Suspense } from "react";
+import Menu from "../MenuSuperior/Menu";
+import Auxiliar from "../MenuSuperior/Auxiliar";
+import Rodape from "../Rodape/Rodape";
+import NullView from "./NullView";
+
+const Escolas = lazy(() => import("./Escolas"));
+const Profissionais = lazy(() => import("./Profissionais"));
+const VagasMatriculas = lazy(() => import("./VagasMatriculas"));
+const Ambientes = lazy(() => import("./Ambientes"));
+
+export default class ConhecaRede extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      componentesLabels: [
+        {
+          nome: "Escolas",
+          label: "Escolas"
+        },
+        {
+          nome: "Profissionais",
+          label: "Profissionais"
+        },
+        {
+          nome: "VagasMatriculas",
+          label: "Vagas e Matrículas"
+        },
+        {
+          nome: "Ambientes",
+          label: "Ambientes"
+        }
+      ],
+      codesc: "",
+      nomesc: ""
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.location.state !== undefined) {
+      if (this.props.location.state.codesc !== undefined) {
+        this.setState({ codesc: this.props.location.state.codesc }, () => {
+          document.querySelector(".nav .active:first-child").click();
+        });
+      }
+      if (this.props.location.state.nomesc !== undefined) {
+        this.setState({ nomesc: this.props.location.state.nomesc });
+      }
+    }
+  }
+
+  renderizaComponente(componente) {
+    switch (componente) {
+      case "Escolas":
+        return <Escolas codesc={this.state.codesc} />;
+      case "Profissionais":
+        return <Profissionais codesc={this.state.codesc} />;
+      case "VagasMatriculas":
+        return <VagasMatriculas codesc={this.state.codesc} />;
+      case "Ambientes":
+        return <Ambientes codesc={this.state.codesc} />;
+      default:
+        return <NullView />;
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <Menu />
+        <Auxiliar texto={"Secretaria Municipal de Educação"} />
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-12 col-sm-12 mt-5 mb-5 estatisticas">
+              <ul className="nav nav-tabs nav-fill" role="tablist">
+                {this.state.componentesLabels.length > 0 ? (
+                  this.state.componentesLabels.map((componente, indice) => {
+                    return (
+                      <li key={indice} className="nav-item">
+                        <a className={indice === 0 ? `nav-link active` : `nav-link`} id={`${componente.nome}-tab`}
+                          data-toggle="tab" href={`#${componente.nome}`} role="tab" aria-controls={componente.nome}
+                          aria-selected={indice === 0 ? `true` : `false`}>
+                          {componente.label}
+                        </a>
+                      </li>
+                    );
+                  })
+                ) : (<NullView />)}
+              </ul>
+              <div className="tab-content mt-5" id="estatisticas-abas">
+                {this.state.componentesLabels.length > 0 ? (
+                  this.state.componentesLabels.map((componente, indice) => {
+                    return (
+                      <div key={indice} className={(indice === 0 ? `tab-pane fade show active` : `tab-pane fade`)} id={componente.nome} role="tabpanel" aria-labelledby={`${componente.nome}-tab`}>
+                        {
+                          <Suspense fallback={<NullView />}>
+                            {this.renderizaComponente(componente.nome)}
+                          </Suspense>
+                        }
+                      </div>
+                    );
+                  })
+                ) : (<NullView />)}
+              </div>
+            </div>
+          </div>
+        </div>
+        <Rodape />
+      </div>
+    );
+  }
+}

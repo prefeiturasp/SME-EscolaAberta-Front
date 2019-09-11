@@ -54,7 +54,7 @@ export default class Menu extends Component {
                   <Link className="nav-link text-secondary mb-1 pb-0" to="/">Busque uma escola</Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-secondary mb-1 pb-0" to="/">Conheça a Rede</Link>
+                  <Link className="nav-link text-secondary mb-1 pb-0" to="/conheca-a-rede">Conheça a Rede</Link>
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link text-secondary mb-1 pb-0" to="/">Consulte sua posição</Link>
