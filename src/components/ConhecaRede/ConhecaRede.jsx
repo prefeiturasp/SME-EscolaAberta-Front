@@ -5,7 +5,7 @@ import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
 
 const Escolas = lazy(() => import("./Escolas/Container"));
-const Profissionais = lazy(() => import("./Profissionais"));
+const Profissionais = lazy(() => import("./Profissionais/Container"));
 const VagasMatriculas = lazy(() => import("./VagasMatriculas"));
 const Ambientes = lazy(() => import("./Ambientes"));
 
