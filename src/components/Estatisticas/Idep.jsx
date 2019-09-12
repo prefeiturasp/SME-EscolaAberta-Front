@@ -31,7 +31,7 @@ export default class Idep extends React.Component{
                             <div className="ml-3 fonte-14 font-weight-bold">Avaliação da Escola</div>
                             <a className="text-decoration-none cor-cinza ml-auto" data-toggle="collapse"
                                data-target='#avaliacao-da-escola' aria-expanded="false" aria-controls='avaliacao-da-escola' href='#avaliacao-da-escola'>
-                                <FontAwesomeIcon icon={faBars} className="stretched-link" />
+                                <FontAwesomeIcon icon={faBars} className="stretched-link" /> 
                             </a>
                         </div>
 
