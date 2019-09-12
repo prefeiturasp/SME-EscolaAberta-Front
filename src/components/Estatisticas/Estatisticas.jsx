@@ -8,6 +8,7 @@ const SeriesEstudantes = lazy(() => import("./SeriesEstudantes"));
 const Profissionais = lazy(() => import("./Profissionais"));
 const VagasMatriculas = lazy(() => import("./VagasMatriculas"));
 const Ambientes = lazy(() => import("./Ambientes"));
+const Idep = lazy(() => import("./Idep"));
 
 export default class Estatisticas extends Component {
   constructor(props) {
@@ -29,6 +30,10 @@ export default class Estatisticas extends Component {
         {
           nome: "Ambientes",
           label: "Ambientes"
+        },
+        {
+          nome: "Idep",
+          label: "IDEP"
         }
       ],
       codesc: "",
@@ -59,6 +64,8 @@ export default class Estatisticas extends Component {
         return <VagasMatriculas codesc={this.state.codesc} />;
       case "Ambientes":
         return <Ambientes codesc={this.state.codesc} />;
+      case "Idep":
+        return <Idep codesc={this.state.codesc} />;
       default:
         return <NullView />;
     }
