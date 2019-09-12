@@ -85,12 +85,12 @@ export const inicializarTiposEscola = [
     }
   },
   {
-    "CEU AT COMPL": {
+    "CENTRO EDUCACIONAL UNIFICADO - ATENDIMENTO COMPLEMENTAR": {
       faixas: []
     }
   },
   {
-    "ESP CONV": {
+    "ESCOLAS ESPECIAIS CONVENIADAS": {
       faixas: []
     }
   }
@@ -98,6 +98,9 @@ export const inicializarTiposEscola = [
 
 export const formatarEscolas = tiposEscola => {
   let novoTiposEscola = inicializarTiposEscola;
+  novoTiposEscola.forEach(elem => {
+    elem[getKey(elem)].faixas = [];
+  });
   tiposEscola.forEach(tipoEscola => {
     tipoEscola.tipoesc = tipoEscolaLabel(tipoEscola);
     novoTiposEscola.forEach((_, indice) => {
@@ -119,7 +122,7 @@ export const tipoEscolaLabel = tipoEscola => {
     case "EMEFM       ":
       return "ESCOLA MUNICIPAL DE ENSINO FUNDAMENTAL E MEDIO";
     case "ESP CONV    ":
-      return "ESP CONV";
+      return "ESCOLAS ESPECIAIS CONVENIADAS";
     case "MOVA        ":
       return "MOVIMENTO DE ALFABETIZACAO";
     case "CIEJA       ":
@@ -147,7 +150,7 @@ export const tipoEscolaLabel = tipoEscola => {
     case "E TECNICA   ":
       return "ESCOLA TECNICA";
     case "CEU AT COMPL":
-      return "CEU AT COMPL";
+      return "CENTRO EDUCACIONAL UNIFICADO - ATENDIMENTO COMPLEMENTAR";
     case "CMCT        ":
       return "CENTRO MUNICIPAL DE CAPACITACAO E TREIN";
     case "CECI        ":
@@ -176,6 +179,53 @@ export const totalAlunosTipoEscola = tipoEscola => {
   let count = 0;
   tipoEscola[getKey(tipoEscola)].faixas.forEach(faixa => {
     count += faixa.count;
-  })
+  });
   return count;
-}
+};
+
+export const inicializaTotalPorFaixa = [
+  {
+    faixa: "Sem estudantes cadastrados",
+    total: 0
+  },
+  {
+    faixa: "1 a 250 estudantes",
+    total: 0
+  },
+  {
+    faixa: "251 a 500 estudantes",
+    total: 0
+  },
+  {
+    faixa: "501 a 1000 estudantes",
+    total: 0
+  },
+  {
+    faixa: "1001 a 1500 estudantes",
+    total: 0
+  },
+  {
+    faixa: "1501 a 2000 estudantes",
+    total: 0
+  },
+  {
+    faixa: "2001 a 2500 estudantes",
+    total: 0
+  }
+];
+
+export const totalPorFaixa = tiposEscolaFormatado => {
+  let totalPorFaixa = inicializaTotalPorFaixa;
+  totalPorFaixa.forEach(elem => {
+    elem.total = 0;
+  });
+  tiposEscolaFormatado.forEach(tipoEscola => {
+    tipoEscola[getKey(tipoEscola)].faixas.forEach(faixa => {
+      const indice = totalPorFaixa.findIndex(
+        faixa_total => faixa_total.faixa === faixa.faixa
+      );
+      totalPorFaixa[indice].total += faixa.count;
+    });
+  });
+  return totalPorFaixa;
+};

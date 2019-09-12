@@ -1,10 +1,14 @@
 import React, { Component } from "react";
-import { listarTiposEscolaPorFaixa } from "../../../services/escolas";
+import {
+  listarTiposEscolaPorFaixa,
+  listarTiposEscolaPorFaixaPorDRE
+} from "../../../services/escolas";
 import {
   formatarEscolas,
   getKey,
   quantidadeAlunos,
-  totalAlunosTipoEscola
+  totalAlunosTipoEscola,
+  totalPorFaixa
 } from "./helper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
@@ -15,14 +19,18 @@ export class Escolas extends Component {
     super(props);
     this.state = {
       tiposEscolaPorFaixa: [],
-      indice: "abc"
+      indice: "abc",
+      totalPorFaixaLista: null
     };
   }
 
   componentDidMount() {
     listarTiposEscolaPorFaixa().then(tiposEscolaPorFaixa => {
       this.setState({
-        tiposEscolaPorFaixa: formatarEscolas(tiposEscolaPorFaixa.results)
+        tiposEscolaPorFaixa: formatarEscolas(tiposEscolaPorFaixa.results),
+        totalPorFaixaLista: totalPorFaixa(
+          formatarEscolas(tiposEscolaPorFaixa.results)
+        )
       });
     });
     this.setState({
@@ -32,9 +40,24 @@ export class Escolas extends Component {
     });
   }
 
+  onSelectChanged(value) {
+    listarTiposEscolaPorFaixaPorDRE({ dre: value }).then(
+      tiposEscolaPorFaixaPorDRE => {
+        this.setState({
+          tiposEscolaPorFaixa: formatarEscolas(
+            tiposEscolaPorFaixaPorDRE.results
+          ),
+          totalPorFaixaLista: totalPorFaixa(
+            formatarEscolas(tiposEscolaPorFaixaPorDRE.results)
+          )
+        });
+      }
+    );
+  }
+
   render() {
     const { diretoriasRegionais } = this.props;
-    const { indice, tiposEscolaPorFaixa } = this.state;
+    const { indice, tiposEscolaPorFaixa, totalPorFaixaLista } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -44,7 +67,10 @@ export class Escolas extends Component {
           </div>
           <div className="row">
             <div className="col-6">
-              <select className="form-control" required>
+              <select
+                className="form-control"
+                onChange={event => this.onSelectChanged(event.target.value)}
+              >
                 {diretoriasRegionais.length &&
                   diretoriasRegionais.map((e, key) => {
                     return (
@@ -62,6 +88,32 @@ export class Escolas extends Component {
               <div className="ml-3 fonte-14 font-weight-bold">
                 Escolas por tipo
               </div>
+              <div className="checkboxes ml-auto">
+                <span>
+                  <input type="checkbox" />
+                  Ciclo I
+                </span>
+                <span>
+                  <input type="checkbox" />
+                  Ciclo II
+                </span>
+                <span>
+                  <input type="checkbox" />
+                  Ciclo III
+                </span>
+                <span>
+                  <input type="checkbox" />
+                  Sem Ciclo
+                </span>
+                <span>
+                  <input type="checkbox" />
+                  Pré
+                </span>
+                <span>
+                  <input type="checkbox" />
+                  Creche
+                </span>
+              </div>
               <a
                 className="text-decoration-none cor-cinza ml-auto"
                 data-toggle="collapse"
@@ -76,14 +128,14 @@ export class Escolas extends Component {
             <div className="collapse fade" id={`${indice}`}>
               <div className="card-body p-0">
                 <div className="table-responsive">
-                  <table className="table table-hover table-bordered mb-0 fonte-14">
+                  <table className="table text-center table-hover table-bordered mb-0 fonte-14">
                     <thead>
                       <tr>
                         <th scope="col" rowSpan="2"></th>
                         <th
                           scope="col"
                           colSpan="7"
-                          className="text-center font-weight-normal align-middle"
+                          className="fonte-16 text-center font-weight-normal align-middle"
                         >
                           Escolas por tipo e quantidade de alunos
                         </th>
@@ -92,7 +144,7 @@ export class Escolas extends Component {
                           rowSpan="2"
                           className="text-center font-weight-normal align-middle text-uppercase"
                         >
-                          Total de Estudantes por Ano
+                          Total de Unidades Escolares por tipo
                         </th>
                       </tr>
                       <tr>
@@ -111,7 +163,9 @@ export class Escolas extends Component {
                         tiposEscolaPorFaixa.map((tipoEscola, indice) => {
                           return (
                             <tr>
-                              <td>{getKey(tipoEscola)}</td>
+                              <td className="font-weight-bold">
+                                {getKey(tipoEscola)}
+                              </td>
                               <td>
                                 {quantidadeAlunos(
                                   tipoEscola,
@@ -154,11 +208,28 @@ export class Escolas extends Component {
                                   "2001 a 2500 estudantes"
                                 )}
                               </td>
-                              <td>{totalAlunosTipoEscola(tipoEscola)}</td>
+                              <td className="font-weight-bold bg-light">
+                                {totalAlunosTipoEscola(tipoEscola)}
+                              </td>
                             </tr>
                           );
                         })}
                     </tbody>
+                    <tfoot>
+                      <tr>
+                        <td>
+                          TOTAL DE UNIDADES ESCOLARES POR NÚMERO DE ESTUDANTES
+                        </td>
+                        {totalPorFaixaLista &&
+                          totalPorFaixaLista.map(faixaTotal => {
+                            return (
+                              <td className="font-weight-bold bg-light">
+                                {faixaTotal.total}
+                              </td>
+                            );
+                          })}
+                      </tr>
+                    </tfoot>
                   </table>
                 </div>
               </div>
