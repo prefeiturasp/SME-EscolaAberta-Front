@@ -4,7 +4,7 @@ import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
 
-const Escolas = lazy(() => import("./Escolas"));
+const Escolas = lazy(() => import("./Escolas/Container"));
 const Profissionais = lazy(() => import("./Profissionais"));
 const VagasMatriculas = lazy(() => import("./VagasMatriculas"));
 const Ambientes = lazy(() => import("./Ambientes"));
