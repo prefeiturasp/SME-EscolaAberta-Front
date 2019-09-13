@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faBars, faChartBar} from "@fortawesome/free-solid-svg-icons";
+import IdepAvaliacaoDaEscola from "./IdepAvaliacaoDaEscola";
 const API_IDEP_LOGIN = process.env.REACT_APP_API_IDEP_LOGIN
 const USUARIO_RF = process.env.REACT_APP_USUARIO_RF
 const USUARIO_CPF = process.env.REACT_APP_USUARIO_CPF
@@ -13,6 +14,8 @@ export default class Idep extends Component{
         this.state = {
             codesc: this.props.codesc,
             referencia: "",
+            ano_inicial:'',
+            ano_final:'',
         };
     }
 
@@ -42,6 +45,28 @@ export default class Idep extends Component{
             .catch(error =>{
                 console.log(error.message);
             });
+
+        const BASE_HEADER = {
+            method: "GET",
+            headers: {
+                Authorization: `JWT ${localStorage.getItem('auth-token')}`
+            }
+        };
+        fetch(`${API_IDEP_LOGIN}/barchart/${this.state.codesc}`,  BASE_HEADER)
+            .then(resposta => {
+                if (resposta.ok){
+                    return resposta.json();
+                }else{
+                    throw new Error('Não foi possível obter os dados desta escola');
+                }
+            })
+            .then(retorno =>{
+                this.setState({ano_inicial: retorno.result.ano_inicial})
+                this.setState({ano_final: retorno.result.ano_final})
+            })
+            .catch(error =>{
+                console.log(error.message);
+            });
     }
 
     render() {
@@ -52,6 +77,7 @@ export default class Idep extends Component{
                         <h1 className="border-bottom font-weight-light">IDEP</h1>
                         <div className="referencia mt-1 mb-5">Data de referência: {this.state.referencia}</div>
                     </div>
+
                     <div key="avaliacao-da-escola" className="card shadow-sm mb-3">
                         <div className="card-header bg-white d-flex align-items-center">
                             <FontAwesomeIcon icon={faChartBar} className="cor-azul" />
@@ -62,20 +88,14 @@ export default class Idep extends Component{
                             </a>
                         </div>
 
-                        <div className="collapse fade" id='avaliacao-da-escola'>
-                            <div className="card-body">
-                                <div className='row'>
-                                    <div className='col-12 col-md-4'>
-                                        <p className='fonte-14'>Sua escola está inserida em um grupo com os seguintes índices:</p>
-                                    </div>
-                                    <div className='col-12 col-md-8'>
-                                        Estou no Body
-                                    </div>
-                                </div>
+                        {
+                            (this.state.ano_inicial && this.state.ano_final)
+                                ? <IdepAvaliacaoDaEscola anoInicial={this.state.ano_inicial} anoFinal = {this.state.ano_final}/>
+                                : null
+                        }
 
-                            </div>
-                        </div>
                     </div>
+
                 </div>
             </div>
         );

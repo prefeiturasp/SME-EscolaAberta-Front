@@ -8,7 +8,7 @@ const SeriesEstudantes = lazy(() => import("./SeriesEstudantes"));
 const Profissionais = lazy(() => import("./Profissionais"));
 const VagasMatriculas = lazy(() => import("./VagasMatriculas"));
 const Ambientes = lazy(() => import("./Ambientes"));
-const Idep = lazy(() => import("./Idep"));
+const Idep = lazy(() => import("./Idep/Idep"));
 
 export default class Estatisticas extends Component {
   constructor(props) {
