@@ -1,20 +1,47 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faBars, faBook, faChartBar} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faChartBar} from "@fortawesome/free-solid-svg-icons";
+const API_IDEP_LOGIN = process.env.REACT_APP_API_IDEP_LOGIN
+const USUARIO_RF = process.env.REACT_APP_USUARIO_RF
+const USUARIO_CPF = process.env.REACT_APP_USUARIO_CPF
+const USUARIO_MES = process.env.REACT_APP_USUARIO_MES
+const USUARIO_ANO = process.env.REACT_APP_USUARIO_ANO
 
-export default class Idep extends React.Component{
+export default class Idep extends Component{
     constructor(props){
         super(props);
         this.state = {
             codesc: this.props.codesc,
             referencia: "",
         };
-
-        console.log('Ollyver Componente Idep | ', this.state.codesc)
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.setState({ referencia: new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString() });
+
+        // Fazendo o Login e Obtendo o Token
+        const requestInfo = {
+            method:'POST',
+            body:JSON.stringify({rf: USUARIO_RF, cpf:USUARIO_CPF, mesnasc: USUARIO_MES, anonasc:USUARIO_ANO}),
+            headers: new Headers({
+                'Content-type' : 'application/json',
+                Accept:'application/json'
+            })
+        };
+        fetch(`${API_IDEP_LOGIN}/login/`, requestInfo)
+            .then(resposta =>{
+                if (resposta.ok){
+                    return resposta.json();
+                }else {
+                    throw new Error('Não foi possível se logar!!');
+                }
+            })
+            .then(token => {
+                localStorage.setItem('auth-token',token.token);
+            })
+            .catch(error =>{
+                console.log(error.message);
+            });
     }
 
     render() {
@@ -48,7 +75,6 @@ export default class Idep extends React.Component{
 
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
