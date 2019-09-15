@@ -44,12 +44,20 @@ export const totalProfissionaisPorEscolaridade = (cargo, titulo) => {
 export const totalDoCargoPorEscolaridade = cargo => {
   let count = 0;
   cargo[getKey(cargo)].formacoes.forEach(formacao => {
-    count += formacao.total;
+    if (
+      formacao.formacao === "LICENCIATURA CURTA" ||
+      formacao.formacao === "LICENCIATURA PLENA"
+    )
+      count += formacao.total;
   });
   return count;
 };
 
 export const inicializaTotalPorFormacao = [
+  {
+    formacao: "ENSINO MEDIO/NORMAL",
+    total: 0
+  },
   {
     formacao: "LICENCIATURA CURTA",
     total: 0
@@ -57,8 +65,8 @@ export const inicializaTotalPorFormacao = [
   {
     formacao: "LICENCIATURA PLENA",
     total: 0
-  },
-  {
+  }
+  /*{
     formacao: "BACHARELADO",
     total: 0
   },
@@ -69,7 +77,7 @@ export const inicializaTotalPorFormacao = [
   {
     formacao: "OUTROS",
     total: 0
-  }
+  }*/
 ];
 
 export const totalPorFormacao = cargosProfissionaisFormatado => {
@@ -82,7 +90,9 @@ export const totalPorFormacao = cargosProfissionaisFormatado => {
       const indice = totalPorFormacao.findIndex(
         formacao_total => formacao_total.formacao === formacao.formacao
       );
-      totalPorFormacao[indice].total += formacao.total;
+      if (indice !== -1) {
+        totalPorFormacao[indice].total += formacao.total;
+      }
     });
   });
   return totalPorFormacao;

@@ -46,10 +46,10 @@ export class Profissionais extends Component {
     listarCargosProfissionaisPorDRE({ dre: value }).then(
       tiposProfissionaisPorCargoPorDRE => {
         this.setState({
-          tiposEscolaPorFaixa: formatarCargosProfissionais(
+          cargosProfissionais: formatarCargosProfissionais(
             tiposProfissionaisPorCargoPorDRE.results
           ),
-          totalPorFaixaLista: totalPorFormacao(
+          totalPorFormacaoLista: totalPorFormacao(
             formatarCargosProfissionais(
               tiposProfissionaisPorCargoPorDRE.results
             )
@@ -94,13 +94,17 @@ export class Profissionais extends Component {
               <div className="checkboxes ml-auto">
                 <span>
                   <input type="checkbox" />
+                  Ensino Médio/Normal
+                </span>
+                <span>
+                  <input type="checkbox" />
                   Licenciatura Curta
                 </span>
                 <span>
                   <input type="checkbox" />
                   Licenciatura Plena
                 </span>
-                <span>
+                {/*<span>
                   <input type="checkbox" />
                   Bacharelado
                 </span>
@@ -111,7 +115,7 @@ export class Profissionais extends Component {
                 <span>
                   <input type="checkbox" />
                   Outros
-                </span>
+                </span>*/}
               </div>
               <a
                 className="text-decoration-none cor-cinza ml-auto"
@@ -133,7 +137,7 @@ export class Profissionais extends Component {
                         <th scope="col" rowSpan="2"></th>
                         <th
                           scope="col"
-                          colSpan="5"
+                          colSpan="3"
                           className="fonte-16 text-center font-weight-normal align-middle"
                         >
                           Grau da Formação
@@ -147,11 +151,12 @@ export class Profissionais extends Component {
                         </th>
                       </tr>
                       <tr>
+                        <th>Ensino Médio/Normal</th>
                         <th>Licenciatura Curta</th>
                         <th>Licenciatura Plena</th>
-                        <th>Bacharelado</th>
+                        {/*<th>Bacharelado</th>
                         <th>Pós Graduação - Lato Sensu</th>
-                        <th>Outros</th>
+                        <th>Outros</th>*/}
                       </tr>
                     </thead>
                     <tbody>
@@ -165,6 +170,12 @@ export class Profissionais extends Component {
                               <td>
                                 {totalProfissionaisPorEscolaridade(
                                   cargoProfissional,
+                                  "ENSINO MEDIO/NORMAL"
+                                )}
+                              </td>
+                              <td>
+                                {totalProfissionaisPorEscolaridade(
+                                  cargoProfissional,
                                   "LICENCIATURA CURTA"
                                 )}
                               </td>
@@ -174,7 +185,7 @@ export class Profissionais extends Component {
                                   "LICENCIATURA PLENA"
                                 )}
                               </td>
-                              <td>
+                              {/*<td>
                                 {totalProfissionaisPorEscolaridade(
                                   cargoProfissional,
                                   "BACHARELADO"
@@ -191,7 +202,7 @@ export class Profissionais extends Component {
                                   cargoProfissional,
                                   "OUTROS"
                                 )}
-                              </td>
+                                </td>*/}
                               <td className="font-weight-bold bg-light">
                                 {totalDoCargoPorEscolaridade(cargoProfissional)}
                               </td>
