@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import IdepAvaliacaoDaEscola from "./IdepAvaliacaoDaEscola";
 import IdepCalculo from "./IdepCalculo";
+import IdepMetas from './IdepMetas';
 const API_IDEP_LOGIN = process.env.REACT_APP_API_IDEP_LOGIN
 const USUARIO_RF = process.env.REACT_APP_USUARIO_RF
 const USUARIO_CPF = process.env.REACT_APP_USUARIO_CPF
@@ -85,6 +86,12 @@ export default class Idep extends Component{
                     {
                         (this.state.ano_inicial && this.state.ano_final)
                             ? <IdepCalculo anoInicial={this.state.ano_inicial} anoFinal = {this.state.ano_final}/>
+                            : null
+                    }
+
+                    {
+                        (this.state.ano_inicial && this.state.ano_final)
+                            ? <IdepMetas anoInicial={this.state.ano_inicial} anoFinal = {this.state.ano_final}/>
                             : null
                     }
 

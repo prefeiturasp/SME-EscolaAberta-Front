@@ -72,3 +72,12 @@
     color: #4F4F4F;
 }
 
+.font-color-azul-escuro{
+    color: #196CBD;
+}
+
+.border-azul-escuro-4{
+    border: solid 4px #196CBD;
+    border-radius: 5px;
+}
+
