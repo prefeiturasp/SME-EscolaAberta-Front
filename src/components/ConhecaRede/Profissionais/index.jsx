@@ -12,7 +12,7 @@ import {
 } from "./helper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUsers } from "@fortawesome/free-solid-svg-icons";
-import "./style.scss";
+import "../style.scss";
 
 export class Profissionais extends Component {
   constructor(props) {

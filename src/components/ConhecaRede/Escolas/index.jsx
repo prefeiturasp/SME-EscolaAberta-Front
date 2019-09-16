@@ -12,7 +12,7 @@ import {
 } from "./helper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
-import "./style.scss";
+import "../style.scss";
 
 export class Escolas extends Component {
   constructor(props) {

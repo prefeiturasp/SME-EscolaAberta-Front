@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { Escolas } from ".";
+import VagasMatriculas from ".";
 
 export default class Container extends Component {
+
   render() {
-    return <Escolas {...this.props} />;
+    return <VagasMatriculas {...this.props} />;
   }
 }

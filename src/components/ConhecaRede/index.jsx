@@ -1,13 +1,15 @@
 import React, { Component, lazy, Suspense } from "react";
 import Menu from "../MenuSuperior/Menu";
+import { listarDREs } from "../../services/escolas";
 import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
+import { agregarDefaultDiretoriaRegional } from "./helper";
 
 const Escolas = lazy(() => import("./Escolas/Container"));
 const Profissionais = lazy(() => import("./Profissionais/Container"));
-const VagasMatriculas = lazy(() => import("./VagasMatriculas"));
-const Ambientes = lazy(() => import("./Ambientes"));
+const VagasMatriculas = lazy(() => import("./VagasMatriculas/Container"));
+const Ambientes = lazy(() => import("./Ambientes/Container"));
 
 export default class ConhecaRede extends Component {
   constructor(props) {
@@ -31,12 +33,18 @@ export default class ConhecaRede extends Component {
           label: "Ambientes"
         }
       ],
+      diretoriasRegionais: [],
       codesc: "",
       nomesc: ""
     }
   }
 
   componentDidMount() {
+    listarDREs().then(diretoriasRegionais => {
+      this.setState({
+        diretoriasRegionais: agregarDefaultDiretoriaRegional(diretoriasRegionais.results)
+      });
+    });
     if (this.props.location.state !== undefined) {
       if (this.props.location.state.codesc !== undefined) {
         this.setState({ codesc: this.props.location.state.codesc }, () => {
@@ -52,13 +60,13 @@ export default class ConhecaRede extends Component {
   renderizaComponente(componente) {
     switch (componente) {
       case "Escolas":
-        return <Escolas codesc={this.state.codesc} />;
+        return <Escolas {...this.state} />;
       case "Profissionais":
-        return <Profissionais codesc={this.state.codesc} />;
+        return <Profissionais {...this.state} />;
       case "VagasMatriculas":
-        return <VagasMatriculas codesc={this.state.codesc} />;
+        return <VagasMatriculas {...this.state} />;
       case "Ambientes":
-        return <Ambientes codesc={this.state.codesc} />;
+        return <Ambientes {...this.state} />;
       default:
         return <NullView />;
     }
