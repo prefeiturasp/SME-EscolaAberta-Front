@@ -9,6 +9,8 @@
     "@fortawesome/react-fontawesome": "^0.1.4",
     "bootstrap": "^4.3.1",
     "date-fns": "^2.0.0-alpha.27",
+    "echarts": "^4.3.0",
+    "echarts-for-react": "^2.0.15-beta.0",
     "i": "^0.3.6",
     "jquery": "^3.4.1",
     "leaflet": "^1.4.0",

@@ -7,18 +7,12 @@ export default class IdepCalculo extends Component {
     constructor(props) {
         super(props);
 
-        console.log('Ollyver props | ',props);
-
-        this.state= {
+        this.state = {
             indice_exibicao: this.props.anoInicial.indices.indices[0],
             fluxo_exibicao: this.props.anoInicial.parametros.fluxo,
             aprendizado_exibicao: this.props.anoInicial.indices.indices[0] / this.props.anoInicial.parametros.fluxo.replace(",", "."),
             selectedOption: 'ano_inicial'
         };
-
-        console.log('Ollyver indice_exibicao | ',this.state.indice_exibicao);
-        console.log('Ollyver fluxo_exibicao | ',this.state.fluxo_exibicao);
-        console.log('Ollyver aprendizado_exibicao | ',this.state.aprendizado_exibicao);
     }
 
     handleOptionChange(evento) {
@@ -27,42 +21,27 @@ export default class IdepCalculo extends Component {
             this.setState({indice_exibicao: this.props.anoInicial.indices.indices[0]});
             this.setState({fluxo_exibicao: this.props.anoInicial.parametros.fluxo});
             this.setState({aprendizado_exibicao: this.props.anoInicial.indices.indices[0] / this.props.anoInicial.parametros.fluxo.replace(",", ".")});
-        }else if (evento.target.value === 'ano_final') {
+        } else if (evento.target.value === 'ano_final') {
             this.setState({indice_exibicao: this.props.anoFinal.indices.indices[0]});
             this.setState({fluxo_exibicao: this.props.anoFinal.parametros.fluxo});
             this.setState({aprendizado_exibicao: this.props.anoFinal.indices.indices[0] / this.props.anoFinal.parametros.fluxo.replace(",", ".")});
         }
     }
 
-    arredondamentoDecimal(numero){
-
+    static arredondamentoDecimal(numero) {
         let numero_em_string = numero.toString();
-
-        if ( numero_em_string.includes(',') ){
-
-            console.log('Ollyver 1 | ' , numero_em_string);
-
+        if (numero_em_string.includes(',')) {
             numero_em_string.replace(',', '.');
-
-            console.log('Ollyver 2 | ' , numero_em_string);
-
-        }else if (numero_em_string.includes('.')) {
+        } else if (numero_em_string.includes('.')) {
             numero_em_string.replace(".", ",")
         }
-
-
         let n = parseFloat(numero_em_string).toFixed(2);
-
-        //let result = string.includes('texto');
-        //console.log(result);
-
         return n.replace(".", ",")
     }
 
     render() {
         return (
             <div>
-
                 <div key="calculo-idep" className="card shadow-sm mb-3">
                     <div className="card-header bg-white d-flex align-items-center">
                         <FontAwesomeIcon icon={faChartBar} className="cor-azul"/>
@@ -72,7 +51,6 @@ export default class IdepCalculo extends Component {
                             <FontAwesomeIcon icon={faBars} className="stretched-link"/>
                         </a>
                     </div>
-
                     <div className="collapse fade" id='calculo-idep'>
                         <div className="card-body">
                             <div className="d-flex justify-content-end p-2 bd-highlight">
@@ -89,10 +67,15 @@ export default class IdepCalculo extends Component {
                                 <div className='col-12 col-md-4'>
                                     <div className="pb-4 mb-4">
                                         <p className='fonte-14 mt-4 mb-4'>
-                                            <strong>O Índice de Desenvolvimento da Educação (IDEP) </strong>foi criado para medir o desempenho das escolas da Rede Municipal de Ensino, levando em conta os componentes curriculares avaliados na Prova São Paulo e o fluxo escolar.
+                                            <strong>O Índice de Desenvolvimento da Educação (IDEP) </strong>foi criado
+                                            para medir o desempenho das escolas da Rede Municipal de Ensino, levando em
+                                            conta os componentes curriculares avaliados na Prova São Paulo e o fluxo
+                                            escolar.
                                         </p>
-                                        <p>O IDEP, portanto, combina aspectos pedagógicos e sociais, permitindo que a escola seja avaliada a partir da sua realidade.</p>
-                                        <p>A combinação dessas informações traça um perfil da Rede que ajudará a identificar boas práticas e a planejar estratégias pedagógicas.</p>
+                                        <p>O IDEP, portanto, combina aspectos pedagógicos e sociais, permitindo que a
+                                            escola seja avaliada a partir da sua realidade.</p>
+                                        <p>A combinação dessas informações traça um perfil da Rede que ajudará a
+                                            identificar boas práticas e a planejar estratégias pedagógicas.</p>
                                     </div>
                                 </div>
                                 <div className='col-12 col-md-8'>
@@ -102,7 +85,7 @@ export default class IdepCalculo extends Component {
                                             <div className="col-md-3 block">
                                                 <div className="mb-1 titulo-circle">Aprendizado</div>
                                                 <div className="circle circle-azul-escuro">
-                                                    <p className='titulo-numeros'>{this.arredondamentoDecimal(this.state.aprendizado_exibicao)}</p>
+                                                    <p className='titulo-numeros'>{IdepCalculo.arredondamentoDecimal(this.state.aprendizado_exibicao)}</p>
                                                 </div>
                                                 <div className="mt-3 cor-cinza bottom-label fonte-14">
                                                     Quanto maior a nota, maior o aprendizado
@@ -124,7 +107,7 @@ export default class IdepCalculo extends Component {
                                             <div className="col-md-3 block">
                                                 <div className="mb-1 titulo-circle">IDEP</div>
                                                 <div className="circle circle-azul-claro">
-                                                    <p className='titulo-numeros'>{this.arredondamentoDecimal(this.state.indice_exibicao)}</p>
+                                                    <p className='titulo-numeros'>{IdepCalculo.arredondamentoDecimal(this.state.indice_exibicao)}</p>
                                                 </div>
                                                 <div className="mt-3 cor-cinza bottom-label fonte-14">
                                                     Meta
@@ -133,14 +116,11 @@ export default class IdepCalculo extends Component {
                                         </div>
                                     </div>
                                 </div>
-
                                 <div className="col-12">
                                     <div className="row">
-
                                         <div className="col-12 border-top border-bottom">
                                             <p className="fonte-16 pt-2 pb-2 mb-0 ">Anos Iniciais</p>
                                         </div>
-
                                         <div className="col-md-3 block">
                                             <div className="circle circle-azul-escuro mb-0">
                                                 <p className="font-size-20">
@@ -148,9 +128,8 @@ export default class IdepCalculo extends Component {
                                                     <br/> 3º ano
                                                     <br/>
                                                     <span className="fonte-14 pt-1">Prova São Paulo <br/>2017/2018</span>
-                                                    </p>
+                                                </p>
                                             </div>
-
                                             <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>DISCIPLINAS AVALIADAS:</strong>
@@ -164,7 +143,6 @@ export default class IdepCalculo extends Component {
                                                 Ciências
                                             </p>
                                         </div>
-
                                         <div className="col-md-3 block">
                                             <div className="circle circle-azul-escuro mb-0">
                                                 <p className="font-size-20">
@@ -172,9 +150,8 @@ export default class IdepCalculo extends Component {
                                                     <br/> 5º ano
                                                     <br/>
                                                     <span className="fonte-14 pt-1">Prova São Paulo <br/>2017/2018</span>
-                                                    </p>
+                                                </p>
                                             </div>
-
                                             <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>DISCIPLINAS AVALIADAS:</strong>
@@ -188,7 +165,6 @@ export default class IdepCalculo extends Component {
                                                 Ciências
                                             </p>
                                         </div>
-
                                         <div className="col-md-3 block">
                                             <div className="circle circle-azul-escuro mb-0">
                                                 <p className="font-size-20">
@@ -199,7 +175,6 @@ export default class IdepCalculo extends Component {
                                                     </strong>
                                                 </p>
                                             </div>
-
                                             <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>MP(Média Ponderada)</strong>
@@ -213,13 +188,11 @@ export default class IdepCalculo extends Component {
                                                 (número de avaliações)
                                             </p>
                                         </div>
-
-
                                         <div className="col-md-3 block">
                                             <div className="circle circle-azul-escuro mb-0">
                                                 <p className="font-size-20">
                                                     <strong>
-                                                       Fluxo
+                                                        Fluxo
                                                     </strong>
                                                     <br/>
                                                     1º ano ao
@@ -227,7 +200,6 @@ export default class IdepCalculo extends Component {
                                                     5º ano
                                                 </p>
                                             </div>
-
                                             <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>MP(Média Ponderada)</strong>
@@ -241,19 +213,13 @@ export default class IdepCalculo extends Component {
                                                 Aprovação
                                             </p>
                                         </div>
-
-
                                     </div>
                                 </div>
-
-
                                 <div className="col-12">
                                     <div className="row">
-
                                         <div className="col-12 border-top border-bottom">
                                             <p className="fonte-16 pt-2 pb-2 mb-0 ">Anos Finais</p>
                                         </div>
-
                                         <div className="col-md-3 block">
                                             <div className="circle circle-azul-escuro mb-0">
                                                 <p className="font-size-20">
@@ -263,7 +229,6 @@ export default class IdepCalculo extends Component {
                                                     <span className="fonte-14 pt-1">Prova São Paulo <br/>2017/2018</span>
                                                 </p>
                                             </div>
-
                                             <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>DISCIPLINAS AVALIADAS:</strong>
@@ -277,7 +242,6 @@ export default class IdepCalculo extends Component {
                                                 Ciências
                                             </p>
                                         </div>
-
                                         <div className="col-md-3 block">
                                             <div className="circle circle-azul-escuro mb-0">
                                                 <p className="font-size-20">
@@ -287,7 +251,6 @@ export default class IdepCalculo extends Component {
                                                     <span className="fonte-14 pt-1">Prova São Paulo <br/>2017/2018</span>
                                                 </p>
                                             </div>
-
                                             <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>DISCIPLINAS AVALIADAS:</strong>
@@ -301,7 +264,6 @@ export default class IdepCalculo extends Component {
                                                 Ciências
                                             </p>
                                         </div>
-
                                         <div className="col-md-3 block">
                                             <div className="circle circle-azul-escuro mb-0">
                                                 <p className="font-size-20">
@@ -312,7 +274,6 @@ export default class IdepCalculo extends Component {
                                                     </strong>
                                                 </p>
                                             </div>
-
                                             <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>MP (Média Ponderada)</strong>
@@ -326,8 +287,6 @@ export default class IdepCalculo extends Component {
                                                 (número de avaliações)
                                             </p>
                                         </div>
-
-
                                         <div className="col-md-3 block">
                                             <div className="circle circle-azul-escuro mb-0">
                                                 <p className="font-size-20">
@@ -340,7 +299,6 @@ export default class IdepCalculo extends Component {
                                                     9º ano
                                                 </p>
                                             </div>
-
                                             <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>MP (Média Ponderada)</strong>
@@ -354,18 +312,13 @@ export default class IdepCalculo extends Component {
                                                 Aprovação
                                             </p>
                                         </div>
-
-
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         );
     }
-
 }
