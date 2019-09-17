@@ -17,7 +17,8 @@ export class VagasMatriculas extends Component {
     this.state = {
       ambientes: [],
       referencia: "",
-      matriculas: matriculas
+      matriculas: matriculas,
+      ativo: false
     };
   }
 
@@ -46,12 +47,12 @@ export class VagasMatriculas extends Component {
     matriculas[indice][getKey(matricula)].ativo = !matriculas[indice][
       getKey(matricula)
     ].ativo;
-    this.setState({ matriculas });
+    this.setState({ matriculas, ativo: !this.state.ativo });
   }
 
   render() {
     const { diretoriasRegionais } = this.props;
-    const { referencia, matriculas } = this.state;
+    const { referencia, matriculas, ativo } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -108,7 +109,10 @@ export class VagasMatriculas extends Component {
           </div>
           <div className="card-body p-0">
             <div className="table-responsive">
-              <table className="table text-center table-hover table-bordered matricula mb-0 fonte-14">
+              <table
+                className={`table text-center table-hover table-bordered matricula mb-0 fonte-14 ${ativo &&
+                  "ativo"}`}
+              >
                 <thead>
                   <tr>
                     <th scope="col"></th>
@@ -122,8 +126,8 @@ export class VagasMatriculas extends Component {
                 </thead>
                 <tbody>
                   {matriculas.map((matricula, indice) => {
-                    return (
-                      <tr key={indice}>
+                    return [
+                      <tr className="main" key={indice}>
                         <td className="font-weight-bold">
                           {getKey(matricula)}
                         </td>
@@ -139,8 +143,25 @@ export class VagasMatriculas extends Component {
                             onClick={() => this.onMatriculaClicked(matricula)}
                           />
                         </td>
-                      </tr>
-                    );
+                      </tr>,
+                      matricula[getKey(matricula)].ativo &&
+                        matricula[getKey(matricula)].idades &&
+                        matricula[getKey(matricula)].idades.map(
+                          (idade, indice_) => {
+                            return (
+                              <tr key={indice_}>
+                                <td>{idade.idade}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                              </tr>
+                            );
+                          }
+                        )
+                    ];
                   })}
                 </tbody>
               </table>
@@ -156,3 +177,20 @@ export class VagasMatriculas extends Component {
 }
 
 export default VagasMatriculas;
+
+/*,
+                      matricula[getKey(matricula)].ativo &&
+                        matricula[getKey(matricula)].idades.map(
+                          (idade, indice_) => {
+                            return (
+                              <tr key={indice_}>
+                                <td>{idade.idade}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                              </tr>
+                            );
+                          }
+                        )*/

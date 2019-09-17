@@ -1,11 +1,13 @@
 @import "../../../styles/variaveis.scss";
 
 table.matricula {
-  border-collapse:separate;
-  border-spacing:0 15px;
+  &:not(.ativo) {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+  }
   tr {
-    background-color: $corAzulBackgroundTable;
-    padding-bottom: 10px;
+    &.main {
+      background-color: $corAzulBackgroundTable;
+    }
   }
 }
-
