@@ -122,7 +122,7 @@ export default class IdepCalculo extends Component {
                                             <p className="fonte-16 pt-2 pb-2 mb-0 ">Anos Iniciais</p>
                                         </div>
                                         <div className="col-md-3 block">
-                                            <div className="circle circle-azul-escuro mb-0">
+                                            <div className="circle circle-azul-claro mb-0">
                                                 <p className="font-size-20">
                                                     <strong>Média Ponderada </strong>
                                                     <br/> 3º ano
@@ -144,7 +144,7 @@ export default class IdepCalculo extends Component {
                                             </p>
                                         </div>
                                         <div className="col-md-3 block">
-                                            <div className="circle circle-azul-escuro mb-0">
+                                            <div className="circle circle-azul-claro mb-0">
                                                 <p className="font-size-20">
                                                     <strong>Média Ponderada </strong>
                                                     <br/> 5º ano
@@ -152,7 +152,7 @@ export default class IdepCalculo extends Component {
                                                     <span className="fonte-14 pt-1">Prova São Paulo <br/>2017/2018</span>
                                                 </p>
                                             </div>
-                                            <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
+                                            <div className="d-flex justify-content-center align-items-center pontos pontos-azul-claro">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>DISCIPLINAS AVALIADAS:</strong>
                                             </p>
@@ -166,7 +166,7 @@ export default class IdepCalculo extends Component {
                                             </p>
                                         </div>
                                         <div className="col-md-3 block">
-                                            <div className="circle circle-azul-escuro mb-0">
+                                            <div className="circle circle-azul-claro mb-0">
                                                 <p className="font-size-20">
                                                     <strong>
                                                         MP 3º ano
@@ -175,7 +175,7 @@ export default class IdepCalculo extends Component {
                                                     </strong>
                                                 </p>
                                             </div>
-                                            <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
+                                            <div className="d-flex justify-content-center align-items-center pontos pontos-azul-claro">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>MP(Média Ponderada)</strong>
                                             </p>
@@ -189,7 +189,7 @@ export default class IdepCalculo extends Component {
                                             </p>
                                         </div>
                                         <div className="col-md-3 block">
-                                            <div className="circle circle-azul-escuro mb-0">
+                                            <div className="circle circle-azul-claro mb-0">
                                                 <p className="font-size-20">
                                                     <strong>
                                                         Fluxo
@@ -200,7 +200,7 @@ export default class IdepCalculo extends Component {
                                                     5º ano
                                                 </p>
                                             </div>
-                                            <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
+                                            <div className="d-flex justify-content-center align-items-center pontos pontos-azul-claro">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>MP(Média Ponderada)</strong>
                                             </p>
@@ -229,7 +229,7 @@ export default class IdepCalculo extends Component {
                                                     <span className="fonte-14 pt-1">Prova São Paulo <br/>2017/2018</span>
                                                 </p>
                                             </div>
-                                            <div className="d-flex justify-content-center align-items-center pontos pontos-azul">.....</div>
+                                            <div className="d-flex justify-content-center align-items-center pontos pontos-azul-claro">.....</div>
                                             <p className="fonte-12 mb-0">
                                                 <strong>DISCIPLINAS AVALIADAS:</strong>
                                             </p>
