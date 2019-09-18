@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import {
-  listarAmbientesSME,
-  listarAmbientesSMEPorDRE
+  listarVagasMatriculasSME,
+  listarVagasMatriculasSMEPorDRE
 } from "../../../services/estatisticas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { ToggleExpandir } from "../../ToggleExpandir";
-import { matriculas } from "./helper";
+import { formatarVagasMatriculas } from "./helper";
 import { getKey } from "../helper";
 import { DoisNiveisChart } from "../../Graficos/DoisNiveisChart";
 import "./style.scss";
@@ -15,16 +15,17 @@ export class VagasMatriculas extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      ambientes: [],
+      vagasMatriculas: [],
       referencia: "",
-      matriculas: matriculas,
       ativo: false
     };
   }
 
   componentDidMount() {
-    listarAmbientesSME({ codesc: this.props.codesc }).then(lista => {
-      this.setState({ ambientes: lista.results });
+    listarVagasMatriculasSME({ codesc: this.props.codesc }).then(lista => {
+      this.setState({
+        vagasMatriculas: formatarVagasMatriculas(lista.results)
+      });
     });
     this.setState({
       referencia: new Date(
@@ -34,25 +35,26 @@ export class VagasMatriculas extends Component {
   }
 
   onSelectChanged(value) {
-    listarAmbientesSMEPorDRE({ dre: value }).then(lista => {
+    listarVagasMatriculasSMEPorDRE({ dre: value }).then(lista => {
       this.setState({ ambientes: lista.results });
     });
   }
 
   onMatriculaClicked(matricula) {
-    let matriculas = this.state.matriculas;
-    const indice = matriculas.findIndex(
-      matricula_ => getKey(matricula_) === getKey(matricula)
-    );
-    matriculas[indice][getKey(matricula)].ativo = !matriculas[indice][
-      getKey(matricula)
-    ].ativo;
-    this.setState({ matriculas, ativo: !this.state.ativo });
+    let vagasMatriculas = this.state.vagasMatriculas;
+    vagasMatriculas.forEach(vagaMatricula => {
+      if (getKey(vagaMatricula) === getKey(matricula)) {
+        vagaMatricula[getKey(vagaMatricula)].ativo = !vagaMatricula[
+          getKey(vagaMatricula)
+        ].ativo;
+      }
+    });
+    this.setState({ vagasMatriculas, ativo: !this.state.ativo });
   }
 
   render() {
     const { diretoriasRegionais } = this.props;
-    const { referencia, matriculas, ativo } = this.state;
+    const { referencia, ativo, vagasMatriculas } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -118,26 +120,24 @@ export class VagasMatriculas extends Component {
                     <th scope="col"></th>
                     <th scope="col">Total de turmas</th>
                     <th scope="col">Vagas oferecidas</th>
-                    <th scope="col">Matrículas</th>
-                    <th scope="col">Matrículas em processo</th>
                     <th scope="col">Vagas remanescentes</th>
                     <th scope="col">Média Atendimentos/Turma</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {matriculas.map((matricula, indice) => {
+                  {vagasMatriculas.map((matricula, indice) => {
                     return [
                       <tr className="main" key={indice}>
                         <td className="font-weight-bold">
                           {getKey(matricula)}
                         </td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
+                        <td>{matricula[getKey(matricula)].total_turmas}</td>
+                        <td>{matricula[getKey(matricula)].vagas_oferecidas}</td>
                         <td>
-                          0{" "}
+                          {matricula[getKey(matricula)].vagas_remanecentes}
+                        </td>
+                        <td>
+                          {matricula[getKey(matricula)].media_atendimento}{" "}
                           <ToggleExpandir
                             ativo={matricula[getKey(matricula)].ativo}
                             onClick={() => this.onMatriculaClicked(matricula)}
@@ -145,18 +145,17 @@ export class VagasMatriculas extends Component {
                         </td>
                       </tr>,
                       matricula[getKey(matricula)].ativo &&
-                        matricula[getKey(matricula)].idades &&
-                        matricula[getKey(matricula)].idades.map(
-                          (idade, indice_) => {
+                        matricula[getKey(matricula)].decseries.map(
+                          (decserie, indice_) => {
                             return (
                               <tr key={indice_}>
-                                <td>{idade.idade}</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
+                                <td className="font-weight-bold">
+                                  {decserie.decserie}
+                                </td>
+                                <td>{decserie.total_turmas}</td>
+                                <td>{decserie.vagas_oferecidas}</td>
+                                <td>{decserie.vagas_remanecentes}</td>
+                                <td>{decserie.media_atendimento}</td>
                               </tr>
                             );
                           }
@@ -177,20 +176,3 @@ export class VagasMatriculas extends Component {
 }
 
 export default VagasMatriculas;
-
-/*,
-                      matricula[getKey(matricula)].ativo &&
-                        matricula[getKey(matricula)].idades.map(
-                          (idade, indice_) => {
-                            return (
-                              <tr key={indice_}>
-                                <td>{idade.idade}</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                              </tr>
-                            );
-                          }
-                        )*/

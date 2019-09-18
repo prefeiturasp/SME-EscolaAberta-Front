@@ -74,3 +74,16 @@ export async function listarAmbientesSMEPorDRE(params) {
     cargosprofissionais.json()
   );
 }
+
+export async function listarVagasMatriculasSME() {
+  return await fetch(`${API_EOL}/smevagasmat/`).then(cargosprofissionais =>
+    cargosprofissionais.json()
+  );
+}
+
+export async function listarVagasMatriculasSMEPorDRE(params) {
+  const { dre = "" } = params;
+  return await fetch(`${API_EOL}/smevagasmat/${dre}`).then(cargosprofissionais =>
+    cargosprofissionais.json()
+  );
+}

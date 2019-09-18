@@ -1,93 +1,31 @@
-export const matriculas = [
-  {
-    "ED. INFANTIL": {
-      ativo: false,
-      idades: [
-        {
-          idade: "Berçário I"
-        },
-        {
-          idade: "Berçário I Esc Diferenciada"
-        },
-        {
-          idade: "Berçário II"
-        },
-        {
-          idade: "Berçário II Esc Diferenciada"
-        },
-        {
-          idade: "Infantil I"
-        },
-        {
-          idade: "Infantil I e II"
-        },
-        {
-          idade: "Infantil I Esc Diferenciada"
-        },
-        {
-          idade: "Infantil II"
-        },
-        {
-          idade: "Infantil II Esc Diferenciada"
-        },
-        {
-          idade: "Mini Grupo I"
-        },
-        {
-          idade: "Mini Grupo I Esc Diferenciada"
-        },
-        {
-          idade: "Mini Grupo II"
-        },
-        {
-          idade: "Mini Grupo II Esc Diferenciada"
-        }
-      ]
+export const formatarVagasMatriculas = vagasMatriculas => {
+  let matriculas = [];
+  let indice = 0;
+  vagasMatriculas.forEach(vagaMatricula => {
+    if (vagaMatricula.decserie === "") {
+      indice++;
+      matriculas[indice] = {};
+      matriculas[indice][vagaMatricula.modalidade] = {
+        decseries: [],
+        ativo: false
+      };
+      matriculas[indice][vagaMatricula.modalidade].media_atendimento =
+        vagaMatricula.media_atendimento;
+      matriculas[indice][vagaMatricula.modalidade].total_turmas =
+        vagaMatricula.total_turmas;
+      matriculas[indice][vagaMatricula.modalidade].vagas_oferecidas =
+        vagaMatricula.vagas_oferecidas;
+      matriculas[indice][vagaMatricula.modalidade].vagas_remanecentes =
+        vagaMatricula.vagas_remanecentes;
+    } else {
+      matriculas[indice][vagaMatricula.modalidade].decseries.push({
+        decserie: vagaMatricula.decserie,
+        media_atendimento: vagaMatricula.media_atendimento,
+        total_turmas: vagaMatricula.total_turmas,
+        vagas_oferecidas: vagaMatricula.vagas_oferecidas,
+        vagas_remanecentes: vagaMatricula.vagas_remanecentes
+      });
     }
-  },
-  {
-    "ED. INFANTIL ESP.": {
-      ativo: false
-    }
-  },
-  {
-    "EJA": {
-      ativo: false
-    }
-  },
-  {
-    "EJA CIEJA": {
-      ativo: false
-    }
-  },
-  {
-    "EJA ESP": {
-      ativo: false
-    }
-  },
-  {
-    "ENS FUND9A": {
-      ativo: false
-    }
-  },
-  {
-    "ENS MÉDIO": {
-      ativo: false
-    }
-  },
-  {
-    "ENS MÉDIO ESP": {
-      ativo: false
-    }
-  },
-  {
-    "ENS FUND9A ESP": {
-      ativo: false
-    }
-  },
-  {
-    "NORMAL": {
-      ativo: false
-    }
-  }
-];
+  });
+  return matriculas;
+};
