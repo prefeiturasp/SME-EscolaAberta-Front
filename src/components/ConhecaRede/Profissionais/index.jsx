@@ -57,6 +57,7 @@ export class Profissionais extends Component {
         });
       }
     );
+    this.props.onDRESelected(value);
   }
   render() {
     const { diretoriasRegionais } = this.props;

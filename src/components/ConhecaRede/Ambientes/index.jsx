@@ -30,6 +30,7 @@ export class Ambientes extends Component {
     listarAmbientesSMEPorDRE({ dre: value }).then(lista => {
       this.setState({ ambientes: lista.results });
     });
+    this.props.onDRESelected(value);
   }
 
   render() {

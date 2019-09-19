@@ -53,6 +53,7 @@ export class Escolas extends Component {
         });
       }
     );
+    this.props.onDRESelected(value);
   }
 
   render() {

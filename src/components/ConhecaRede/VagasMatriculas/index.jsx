@@ -51,6 +51,7 @@ export class VagasMatriculas extends Component {
         vagasMatriculas: formatarVagasMatriculas(lista.results)
       });
     });
+    this.props.onDRESelected(value);
   }
 
   onMatriculaClicked(matricula) {
