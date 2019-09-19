@@ -53,21 +53,23 @@ export default class Idep extends Component {
                 Authorization: `JWT ${localStorage.getItem('auth-token')}`
             }
         };
-        fetch(`${API_IDEP_LOGIN}/barchart/${this.state.codesc}`, BASE_HEADER)
-            .then(resposta => {
-                if (resposta.ok) {
-                    return resposta.json();
-                } else {
-                    throw new Error('Não foi possível obter os dados desta escola');
-                }
-            })
-            .then(retorno => {
-                this.setState({ano_inicial: retorno.result.ano_inicial})
-                this.setState({ano_final: retorno.result.ano_final})
-            })
-            .catch(error => {
-                console.log(error.message);
-            });
+        if (this.state.codesc) {
+            fetch(`${API_IDEP_LOGIN}/barchart/${this.state.codesc}`, BASE_HEADER)
+                .then(resposta => {
+                    if (resposta.ok) {
+                        return resposta.json();
+                    } else {
+                        throw new Error('Não foi possível obter os dados desta escola');
+                    }
+                })
+                .then(retorno => {
+                    this.setState({ano_inicial: retorno.result.ano_inicial})
+                    this.setState({ano_final: retorno.result.ano_final})
+                })
+                .catch(error => {
+                    console.log(error.message);
+                });
+        }
     }
 
     render() {

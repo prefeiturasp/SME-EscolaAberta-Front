@@ -14,7 +14,9 @@ export default class Ambientes extends Component {
 
   componentDidMount() {
     listarAmbientes({ codesc: this.props.codesc }).then(lista => {
-      this.setState({ ambientes: lista.results });
+      if (lista && lista.results.length > 0) {
+        this.setState({ambientes: lista.results});
+      }
     });
     this.setState({ referencia: new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString() });
   }

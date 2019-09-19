@@ -41,16 +41,20 @@ export default class Estatisticas extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.location.state !== undefined) {
       if (this.props.location.state.codesc !== undefined) {
-        this.setState({ codesc: this.props.location.state.codesc }, () => {
-          document.querySelector(".nav .active:first-child").click();
-        });
+        this.setState({ codesc: this.props.location.state.codesc });
       }
       if (this.props.location.state.nomesc !== undefined) {
         this.setState({ nomesc: this.props.location.state.nomesc });
       }
+    }
+  }
+
+  componentDidMount() {
+    if (this.state.codesc) {
+      document.querySelector(".nav .active:first-child").click();
     }
   }
 
