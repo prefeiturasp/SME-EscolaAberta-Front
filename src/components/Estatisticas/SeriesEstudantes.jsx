@@ -25,25 +25,27 @@ export default class SeriesEstudantes extends Component {
       let turmas = [];
       let turnos = [];
       let modalidades = [];
-      lista.results.forEach((item) => {
-        if (!series.includes(item.descserie)) {
-          series.push(item.descserie);
-        }
-        if (!turmas.includes(item.turma)) {
-          turmas.push(item.turma);
-        }
-        if (!turnos.includes(item.desc_turno)) {
-          turnos.push(item.desc_turno);
-        }
-        if (!modalidades.includes(item.modal)) {
-          modalidades.push(item.modal);
-        }
-      });
-      this.setState({ series: series });
-      this.setState({ turmas: turmas.sort() });
-      this.setState({ turnos: turnos });
-      this.setState({ modalidades: modalidades });
-      this.setState({ seriesEstudantes: lista.results });
+      if (lista && lista.results.length > 0) {
+        lista.results.forEach((item) => {
+          if (!series.includes(item.descserie)) {
+            series.push(item.descserie);
+          }
+          if (!turmas.includes(item.turma)) {
+            turmas.push(item.turma);
+          }
+          if (!turnos.includes(item.desc_turno)) {
+            turnos.push(item.desc_turno);
+          }
+          if (!modalidades.includes(item.modal)) {
+            modalidades.push(item.modal);
+          }
+        });
+        this.setState({series: series});
+        this.setState({turmas: turmas.sort()});
+        this.setState({turnos: turnos});
+        this.setState({modalidades: modalidades});
+        this.setState({seriesEstudantes: lista.results});
+      }
     });
     this.setState({ referencia: new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString() });
   }

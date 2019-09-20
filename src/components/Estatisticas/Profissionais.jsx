@@ -24,28 +24,31 @@ export default class Profissionais extends Component {
     listarServidoresEscolarizacao({ codesc: this.props.codesc }).then(lista => {
       let formacoes = [];
       let servidores = [];
-      lista.results.forEach(item => {
-        if (!formacoes.includes(item.formacao)) {
-          formacoes.push(item.formacao);
-        }
-        if (!servidores.includes(item.titulo)) {
-          servidores.push(item.titulo);
-        }
-      });
-      this.setState({ formacoes: formacoes });
-      this.setState({ servidores: servidores });
-      this.setState({ servidoresFormacoes: lista.results });
+      if (lista && lista.results.length > 0) {
+        lista.results.forEach(item => {
+          if (!formacoes.includes(item.formacao)) {
+            formacoes.push(item.formacao);
+          }
+          if (!servidores.includes(item.titulo)) {
+            servidores.push(item.titulo);
+          }
+        });
+        this.setState({ formacoes: formacoes });
+        this.setState({ servidores: servidores });
+        this.setState({ servidoresFormacoes: lista.results });
+      }
     });
     listarServidoresPorEscola({ codesc: this.props.codesc }).then(lista => {
       let cargos = [];
-      lista &&
+      if (lista && lista.length > 0) {
         lista.forEach(item => {
           if (!cargos.includes(item.dc_cargo_atual)) {
             cargos.push(item.dc_cargo_atual);
           }
         });
-      this.setState({ cargos: cargos });
-      this.setState({ servidoresCargos: lista });
+        this.setState({ cargos: cargos });
+        this.setState({ servidoresCargos: lista });
+      }
     });
     this.setState({
       referencia: new Date(

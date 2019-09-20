@@ -8,6 +8,7 @@ const SeriesEstudantes = lazy(() => import("./SeriesEstudantes"));
 const Profissionais = lazy(() => import("./Profissionais"));
 const VagasMatriculas = lazy(() => import("./VagasMatriculas"));
 const Ambientes = lazy(() => import("./Ambientes"));
+const Idep = lazy(() => import("./Idep/Idep"));
 
 export default class Estatisticas extends Component {
   constructor(props) {
@@ -29,6 +30,10 @@ export default class Estatisticas extends Component {
         {
           nome: "Ambientes",
           label: "Ambientes"
+        },
+        {
+          nome: "Idep",
+          label: "IDEP"
         }
       ],
       codesc: "",
@@ -36,16 +41,20 @@ export default class Estatisticas extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     if (this.props.location.state !== undefined) {
       if (this.props.location.state.codesc !== undefined) {
-        this.setState({ codesc: this.props.location.state.codesc }, () => {
-          document.querySelector(".nav .active:first-child").click();
-        });
+        this.setState({ codesc: this.props.location.state.codesc });
       }
       if (this.props.location.state.nomesc !== undefined) {
         this.setState({ nomesc: this.props.location.state.nomesc });
       }
+    }
+  }
+
+  componentDidMount() {
+    if (this.state.codesc) {
+      document.querySelector(".nav .active:first-child").click();
     }
   }
 
@@ -59,6 +68,8 @@ export default class Estatisticas extends Component {
         return <VagasMatriculas codesc={this.state.codesc} />;
       case "Ambientes":
         return <Ambientes codesc={this.state.codesc} />;
+      case "Idep":
+        return <Idep codesc={this.state.codesc} />;
       default:
         return <NullView />;
     }

@@ -1,0 +1,87 @@
+.container-geral-idep{
+    color: #323C47 !important;
+}
+
+.block {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.titulo-circle{
+    font-weight: 300;
+    font-size: 20px;
+}
+.circle {
+    border-radius: 160px;
+    height: 9em;
+    font-weight: bold;
+    width: 9em;
+    display: table;
+    margin: 20px auto;
+}
+.circle p {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.circle-azul-escuro{
+    border: 4px solid #196CBD;
+    color: #196CBD;
+}
+
+.circle-verde{
+    border: 4px solid #B5D248;
+    color: #B5D248;
+}
+
+.circle-azul-claro{
+    border: 4px solid #00A6E2;
+    color: #00A6E2;
+}
+
+.circle-azul-escuro-prenchido{
+    background-color: #196CBD;
+    color: #196CBD;
+}
+
+.pontos {
+    font-size: 3em;
+    -webkit-transform: rotate(90deg) translateY(-15px);
+     transform: rotate(90deg) translateY(-15px);
+}
+
+.pontos-azul{
+    color: #196CBD;
+}
+
+.pontos-azul-claro{
+    color: #00A6E2;
+}
+
+.titulo-numeros{
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.operadores {
+    color: #d3d3d3;
+    font-size: 64px;
+    font-weight: 300;
+}
+
+.font-size-20{
+    font-size: 20px;
+    font-weight: normal;
+    line-height: 20px;
+    color: #4F4F4F;
+}
+
+.font-color-azul-escuro{
+    color: #196CBD;
+}
+
+.border-azul-escuro-4{
+    border: solid 4px #196CBD;
+    border-radius: 5px;
+}
+

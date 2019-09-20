@@ -20,8 +20,8 @@ export default class VagasMatriculas extends Component {
 
   componentDidMount() {
     listarVagasMatriculasSerie({ codesc: this.props.codesc }).then(lista => {
-      this.setState({ vagasMatriculasSerie: lista.results });
-      if (lista.results.length > 0) {
+      if (lista && lista.results.length > 0) {
+        this.setState({ vagasMatriculasSerie: lista.results });
         lista.results.forEach((vaga) => {
           this.setState({ totaisTurmas: this.state.totaisTurmas + vaga.total_turmas });
           this.setState({ totaisVagasOferecidas: this.state.totaisVagasOferecidas + vaga.vagas_oferecidas });
