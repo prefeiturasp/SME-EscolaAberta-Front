@@ -1,0 +1,8 @@
+@import "../../styles/variaveis.scss";
+
+span.toggle-expandir {
+  float: right;
+  color: $corCinzaToggle;
+  cursor: pointer !important;
+  font-size: 18px;
+}

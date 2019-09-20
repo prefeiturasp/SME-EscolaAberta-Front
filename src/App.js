@@ -5,6 +5,7 @@ import Home from './components/Home/Home';
 import Escolas from './components/Escolas/Escolas';
 import ConsultaPosicao from './components/ConsultaPosicao/ConsultaPosicao';
 import Estatisticas from './components/Estatisticas/Estatisticas';
+import ConhecaRede from './components/ConhecaRede';
 
 export default class App extends Component {
 
@@ -13,6 +14,7 @@ export default class App extends Component {
       <div>
         <Switch>
           <Route path="/" exact component={Home} />
+          <Route path="/conheca-a-rede" component={ConhecaRede} />
           <Route path="/escolas" component={Escolas} />
           <Route path="/consulta" component={ConsultaPosicao} />
           <Route path="/estatisticas" component={Estatisticas} />

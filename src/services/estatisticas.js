@@ -1,4 +1,4 @@
-const API_EOL = process.env.REACT_APP_API_EOL
+const API_EOL = process.env.REACT_APP_API_EOL;
 
 export async function listarSeriesEstudantes(params) {
   const { codesc = '' } = params;
@@ -61,4 +61,43 @@ export async function listarVagasMatriculasSerie(params) {
         vagas.json()
     );
   }
+}
+
+export async function listarCargosProfissionais() {
+  return await fetch(`${API_EOL}/smeprofissionais/`).then(cargosprofissionais =>
+    cargosprofissionais.json()
+  );
+}
+
+export async function listarCargosProfissionaisPorDRE(params) {
+  const { dre = "" } = params;
+  return await fetch(`${API_EOL}/smeprofissionais/${dre}`).then(cargosprofissionais =>
+    cargosprofissionais.json()
+  );
+}
+
+export async function listarAmbientesSME() {
+  return await fetch(`${API_EOL}/smeambientes/`).then(cargosprofissionais =>
+    cargosprofissionais.json()
+  );
+}
+
+export async function listarAmbientesSMEPorDRE(params) {
+  const { dre = "" } = params;
+  return await fetch(`${API_EOL}/smeambientes/${dre}`).then(cargosprofissionais =>
+    cargosprofissionais.json()
+  );
+}
+
+export async function listarVagasMatriculasSME() {
+  return await fetch(`${API_EOL}/smevagasmat/`).then(cargosprofissionais =>
+    cargosprofissionais.json()
+  );
+}
+
+export async function listarVagasMatriculasSMEPorDRE(params) {
+  const { dre = "" } = params;
+  return await fetch(`${API_EOL}/smevagasmat/${dre}`).then(cargosprofissionais =>
+    cargosprofissionais.json()
+  );
 }
