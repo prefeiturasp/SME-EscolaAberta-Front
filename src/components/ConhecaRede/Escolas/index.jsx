@@ -8,7 +8,8 @@ import {
   getKey,
   quantidadeAlunos,
   totalAlunosTipoEscola,
-  totalPorFaixa
+  totalPorFaixa,
+  total
 } from "./helper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
@@ -229,6 +230,9 @@ export class Escolas extends Component {
                               </td>
                             );
                           })}
+                        <td className="font-weight-bold bg-light">
+                          {tiposEscolaPorFaixa && total(tiposEscolaPorFaixa)}
+                        </td>
                       </tr>
                     </tfoot>
                   </table>
