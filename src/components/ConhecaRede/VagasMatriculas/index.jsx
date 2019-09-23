@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { ToggleExpandir } from "../../ToggleExpandir";
-import { formatarVagasMatriculas } from "./helper";
+import { formatarVagasMatriculas, totalPorFaixa } from "./helper";
 import { getKey } from "../helper";
 import "./style.scss";
 
@@ -28,14 +28,16 @@ export class VagasMatriculas extends Component {
       ],
       referencia: "",
       ativo: false,
-      primeiroCheck: false
+      primeiroCheck: false,
+      totalPorFaixa: null
     };
   }
 
   componentDidMount() {
     listarVagasMatriculasSME({ codesc: this.props.codesc }).then(lista => {
       this.setState({
-        vagasMatriculas: formatarVagasMatriculas(lista.results)
+        vagasMatriculas: formatarVagasMatriculas(lista.results),
+        totalPorFaixa: totalPorFaixa(formatarVagasMatriculas(lista.results))
       });
     });
     this.setState({
@@ -48,7 +50,8 @@ export class VagasMatriculas extends Component {
   onSelectChanged(value) {
     listarVagasMatriculasSMEPorDRE({ dre: value }).then(lista => {
       this.setState({
-        vagasMatriculas: formatarVagasMatriculas(lista.results)
+        vagasMatriculas: formatarVagasMatriculas(lista.results),
+        totalPorFaixa: totalPorFaixa(formatarVagasMatriculas(lista.results))
       });
     });
     this.props.onDRESelected(value);
@@ -96,7 +99,7 @@ export class VagasMatriculas extends Component {
           "EJA ESCOLAS EDUCACAO ESPECIAL",
           "EJA ESCOLAS ENSINO FUNDAMENTAL"
         ];
-        this.setState({ primeiroCheck: false })
+        this.setState({ primeiroCheck: false });
       }
     }
     this.setState({ checks });
@@ -104,7 +107,13 @@ export class VagasMatriculas extends Component {
 
   render() {
     const { diretoriasRegionais } = this.props;
-    const { referencia, ativo, vagasMatriculas, checks } = this.state;
+    const {
+      referencia,
+      ativo,
+      vagasMatriculas,
+      checks,
+      totalPorFaixa
+    } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -147,9 +156,7 @@ export class VagasMatriculas extends Component {
               <span>
                 <input
                   onClick={() =>
-                    this.onCheckClicked([
-                      "ENSINO FUNDAMENTAL 9 ANOS"
-                    ])
+                    this.onCheckClicked(["ENSINO FUNDAMENTAL 9 ANOS"])
                   }
                   type="checkbox"
                 />
@@ -242,6 +249,25 @@ export class VagasMatriculas extends Component {
                     ];
                   })}
                 </tbody>
+                {totalPorFaixa && (
+                  <tfoot>
+                    <tr>
+                      <td>TOTAL GERAL</td>
+                      <td className="font-weight-bold bg-light">
+                        {totalPorFaixa.total_turmas}
+                      </td>
+                      <td className="font-weight-bold bg-light">
+                        {totalPorFaixa.vagas_oferecidas}
+                      </td>
+                      <td className="font-weight-bold bg-light">
+                        {totalPorFaixa.vagas_remanecentes}
+                      </td>
+                      <td className="font-weight-bold bg-light">
+                        {totalPorFaixa.media_atendimento}
+                      </td>
+                    </tr>
+                  </tfoot>
+                )}
               </table>
             </div>
           </div>

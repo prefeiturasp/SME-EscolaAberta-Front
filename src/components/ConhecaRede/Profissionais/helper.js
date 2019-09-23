@@ -97,3 +97,12 @@ export const totalPorFormacao = cargosProfissionaisFormatado => {
   });
   return totalPorFormacao;
 };
+
+export const total = cargosProfissionaisFormatado => {
+  let total = 0;
+  cargosProfissionaisFormatado = totalPorFormacao(cargosProfissionaisFormatado);
+  cargosProfissionaisFormatado.forEach(cargo => {
+    total += cargo.total;
+  });
+  return total;
+};

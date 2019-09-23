@@ -4,9 +4,9 @@ export const mediaAtendimento = matricula => {
   let media = 0;
   matricula.decseries.forEach(item => {
     media += item.media_atendimento;
-  })
+  });
   return Math.ceil(media / matricula.decseries.length);
-}
+};
 
 export const normalizar9Anos = vagasMatriculasFormatadas => {
   let matricula9anos = null;
@@ -28,8 +28,8 @@ export const normalizar9Anos = vagasMatriculasFormatadas => {
           decserie.vagas_remanecentes += decserieDe9anos.vagas_remanecentes;
           decserie.media_atendimento += decserieDe9anos.media_atendimento;
         }
-      })
-    })
+      });
+    });
     matricula9anos.total_turmas += matriculaDe9anos.total_turmas;
     matricula9anos.vagas_oferecidas += matriculaDe9anos.vagas_oferecidas;
     matricula9anos.vagas_remanecentes += matriculaDe9anos.vagas_remanecentes;
@@ -69,4 +69,26 @@ export const formatarVagasMatriculas = vagasMatriculas => {
     }
   });
   return normalizar9Anos(matriculas);
+};
+
+export const totalPorFaixa = vagasMatriculasFormatadas => {
+  let totalPorFaixa = {
+    media_atendimento: 0,
+    total_turmas: 0,
+    vagas_oferecidas: 0,
+    vagas_remanecentes: 0
+  };
+  vagasMatriculasFormatadas.forEach(matricula => {
+    totalPorFaixa.media_atendimento +=
+      matricula[getKey(matricula)].media_atendimento;
+    totalPorFaixa.total_turmas += matricula[getKey(matricula)].total_turmas;
+    totalPorFaixa.vagas_oferecidas +=
+      matricula[getKey(matricula)].vagas_oferecidas;
+    totalPorFaixa.vagas_remanecentes +=
+      matricula[getKey(matricula)].vagas_remanecentes;
+  });
+  totalPorFaixa.media_atendimento = Math.ceil(
+    totalPorFaixa.media_atendimento / vagasMatriculasFormatadas.length
+  );
+  return totalPorFaixa;
 };

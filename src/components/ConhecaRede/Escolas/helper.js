@@ -40,7 +40,7 @@ export const inicializarTiposEscola = [
     }
   },
   {
-    "CENTRO MUNICIPAL DE CAPACITACAO E TREIN": {
+    "CENTRO MUNICIPAL DE CAPACITACAO E TREINAMENTO": {
       faixas: []
     }
   },
@@ -152,7 +152,7 @@ export const tipoEscolaLabel = tipoEscola => {
     case "CEU AT COMPL":
       return "CENTRO EDUCACIONAL UNIFICADO - ATENDIMENTO COMPLEMENTAR";
     case "CMCT        ":
-      return "CENTRO MUNICIPAL DE CAPACITACAO E TREIN";
+      return "CENTRO MUNICIPAL DE CAPACITACAO E TREINAMENTO";
     case "CECI        ":
       return "CENTRO DE EDUCACAO E CULTURA INDIGENA";
     default:
@@ -228,4 +228,13 @@ export const totalPorFaixa = tiposEscolaFormatado => {
     });
   });
   return totalPorFaixa;
+};
+
+export const total = tiposEscolaFormatado => {
+  let total = 0;
+  tiposEscolaFormatado = totalPorFaixa(tiposEscolaFormatado);
+  tiposEscolaFormatado.forEach(tipoEscola => {
+    total += tipoEscola.total;
+  })
+  return total;
 };

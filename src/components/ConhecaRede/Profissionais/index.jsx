@@ -8,7 +8,8 @@ import {
   getKey,
   totalDoCargoPorEscolaridade,
   totalProfissionaisPorEscolaridade,
-  totalPorFormacao
+  totalPorFormacao,
+  total
 } from "./helper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUsers } from "@fortawesome/free-solid-svg-icons";
@@ -224,6 +225,9 @@ export class Profissionais extends Component {
                               </td>
                             );
                           })}
+                        <td className="font-weight-bold bg-light">
+                          {cargosProfissionais && total(cargosProfissionais)}
+                        </td>
                       </tr>
                     </tfoot>
                   </table>
