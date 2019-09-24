@@ -90,32 +90,6 @@ export class Escolas extends Component {
               <div className="ml-3 fonte-14 font-weight-bold">
                 Escolas por tipo
               </div>
-              <div className="checkboxes ml-auto">
-                <span>
-                  <input type="checkbox" />
-                  Ciclo I
-                </span>
-                <span>
-                  <input type="checkbox" />
-                  Ciclo II
-                </span>
-                <span>
-                  <input type="checkbox" />
-                  Ciclo III
-                </span>
-                <span>
-                  <input type="checkbox" />
-                  Sem Ciclo
-                </span>
-                <span>
-                  <input type="checkbox" />
-                  Pré
-                </span>
-                <span>
-                  <input type="checkbox" />
-                  Creche
-                </span>
-              </div>
               <a
                 className="text-decoration-none cor-cinza ml-auto"
                 data-toggle="collapse"

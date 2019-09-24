@@ -93,32 +93,6 @@ export class Profissionais extends Component {
               <div className="ml-3 fonte-14 font-weight-bold">
                 Formação de Profissionais
               </div>
-              <div className="checkboxes ml-auto">
-                <span>
-                  <input type="checkbox" />
-                  Ensino Médio/Normal
-                </span>
-                <span>
-                  <input type="checkbox" />
-                  Licenciatura Curta
-                </span>
-                <span>
-                  <input type="checkbox" />
-                  Licenciatura Plena
-                </span>
-                {/*<span>
-                  <input type="checkbox" />
-                  Bacharelado
-                </span>
-                <span>
-                  <input type="checkbox" />
-                  Pós Graduação
-                </span>
-                <span>
-                  <input type="checkbox" />
-                  Outros
-                </span>*/}
-              </div>
               <a
                 className="text-decoration-none cor-cinza ml-auto"
                 data-toggle="collapse"
@@ -214,9 +188,7 @@ export class Profissionais extends Component {
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td>
-                          TOTAL DE UNIDADES ESCOLARES POR NÚMERO DE ESTUDANTES
-                        </td>
+                        <td>TOTAL DE PROFISSIONAIS POR ESCOLARIDADE</td>
                         {totalPorFormacaoLista &&
                           totalPorFormacaoLista.map(formacaoTotal => {
                             return (
