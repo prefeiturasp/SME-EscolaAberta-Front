@@ -66,15 +66,15 @@ export default class IdepCalculo extends Component {
                             <div className='row'>
                                 <div className='col-12 col-md-4'>
                                     <div className="pb-4 mb-4">
-                                        <p className='fonte-14 mt-4 mb-4'>
+                                        <p className='fonte-14 mb-4'>
                                             <strong>O Índice de Desenvolvimento da Educação (IDEP) </strong>foi criado
                                             para medir o desempenho das escolas da Rede Municipal de Ensino, levando em
                                             conta os componentes curriculares avaliados na Prova São Paulo e o fluxo
                                             escolar.
                                         </p>
-                                        <p>O IDEP, portanto, combina aspectos pedagógicos e sociais, permitindo que a
+                                        <p className='fonte-14 mt-4 mb-4'>O IDEP, portanto, combina aspectos pedagógicos e sociais, permitindo que a
                                             escola seja avaliada a partir da sua realidade.</p>
-                                        <p>A combinação dessas informações traça um perfil da Rede que ajudará a
+                                        <p className='fonte-14 mt-4 mb-4'>A combinação dessas informações traça um perfil da Rede que ajudará a
                                             identificar boas práticas e a planejar estratégias pedagógicas.</p>
                                     </div>
                                 </div>

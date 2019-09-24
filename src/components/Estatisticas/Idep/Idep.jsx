@@ -12,15 +12,18 @@ const USUARIO_ANO = process.env.REACT_APP_USUARIO_ANO;
 export default class Idep extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             codesc: this.props.codesc,
             referencia: "",
             ano_inicial: '',
             ano_final: '',
+            msg: ''
         };
     }
 
     componentWillMount() {
+
         this.setState({referencia: new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString()});
 
         // Fazendo o Login e Obtendo o Token
@@ -54,6 +57,7 @@ export default class Idep extends Component {
             }
         };
         if (this.state.codesc) {
+
             fetch(`${API_IDEP_LOGIN}/barchart/${this.state.codesc}`, BASE_HEADER)
                 .then(resposta => {
                     if (resposta.ok) {
@@ -63,8 +67,14 @@ export default class Idep extends Component {
                     }
                 })
                 .then(retorno => {
-                    this.setState({ano_inicial: retorno.result.ano_inicial})
+                    this.setState({ano_inicial: retorno.result.ano_inicial});
                     this.setState({ano_final: retorno.result.ano_final})
+
+                    if (!this.state.ano_inicial && !this.state.ano_final){
+                        this.setState({msg: "Nenhum índice encontrado."})
+
+                    }
+
                 })
                 .catch(error => {
                     console.log(error.message);
@@ -80,6 +90,16 @@ export default class Idep extends Component {
                         <h1 className="border-bottom font-weight-light">IDEP</h1>
                         <div className="referencia mt-1 mb-5">Data de referência: {this.state.referencia}</div>
                     </div>
+
+                    {
+                        (this.state.msg !== '')
+                            ?
+                            <p className="fonte-14"><strong>{this.state.msg}</strong></p>
+                            :
+                            null
+                    }
+
+
                     {
                         (this.state.ano_inicial && this.state.ano_final)
                             ?
