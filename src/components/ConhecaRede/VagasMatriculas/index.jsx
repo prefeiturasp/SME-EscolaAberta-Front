@@ -202,6 +202,7 @@ export class VagasMatriculas extends Component {
                     <th scope="col"></th>
                     <th scope="col">Total de turmas</th>
                     <th scope="col">Vagas oferecidas</th>
+                    <th scope="col">Matrículas/Encaminhamento</th>
                     <th scope="col">Vagas remanescentes</th>
                     <th scope="col">Média Atendimentos/Turma</th>
                   </tr>
@@ -217,6 +218,10 @@ export class VagasMatriculas extends Component {
                           <td>{matricula[getKey(matricula)].total_turmas}</td>
                           <td>
                             {matricula[getKey(matricula)].vagas_oferecidas}
+                          </td>
+                          <td>
+                            {matricula[getKey(matricula)].vagas_oferecidas -
+                              matricula[getKey(matricula)].vagas_remanecentes}
                           </td>
                           <td>
                             {matricula[getKey(matricula)].vagas_remanecentes}
@@ -240,6 +245,10 @@ export class VagasMatriculas extends Component {
                                 </td>
                                 <td>{decserie.total_turmas}</td>
                                 <td>{decserie.vagas_oferecidas}</td>
+                                <td>
+                                  {decserie.vagas_oferecidas -
+                                    decserie.vagas_remanecentes}
+                                </td>
                                 <td>{decserie.vagas_remanecentes}</td>
                                 <td>{decserie.media_atendimento}</td>
                               </tr>
@@ -258,6 +267,10 @@ export class VagasMatriculas extends Component {
                       </td>
                       <td className="font-weight-bold bg-light">
                         {totalPorFaixa.vagas_oferecidas}
+                      </td>
+                      <td className="font-weight-bold bg-light">
+                        {totalPorFaixa.vagas_oferecidas -
+                          totalPorFaixa.vagas_remanecentes}
                       </td>
                       <td className="font-weight-bold bg-light">
                         {totalPorFaixa.vagas_remanecentes}
