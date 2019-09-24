@@ -1,27 +1,30 @@
 // Cores
 
-$corBranco: #FFFFFF;
+$corBranco: #ffffff;
 
-$corCinzaClaro: #F3F3F3;
-$corCinzaEscuro: #C4C4C4;
-$corCinzaHome: #5C6F78;
-$corCinzaBuscaOff: #CED4DA;
-$corCinzaRodape: #5A5A5A;
+$corCinzaClaro: #f3f3f3;
+$corCinzaClaroSelect: #a4a4a4;
+$corCinzaEscuro: #c4c4c4;
+$corCinzaHome: #5c6f78;
+$corCinzaBuscaOff: #ced4da;
+$corCinzaRodape: #5a5a5a;
+$corCinzaToggle: #565656;
 
-$corPretoPortal: #42474A;
+$corPretoPortal: #42474a;
 
-$corVerdeClaro: #AFD367;
-$corVerdeEscuro: #4E9C45;
-$corVerdeBotaoHome: #AFCE68;
+$corVerdeClaro: #afd367;
+$corVerdeEscuro: #4e9c45;
+$corVerdeBotaoHome: #afce68;
 
-$corAzulFiltro: #00A6E2;
-$corAzulBuscaOn: #80BDFF;
-$corAzulPortal: #196CBD;
+$corAzulFiltro: #00a6e2;
+$corAzulBackgroundTable: #D7F0FF;
+$corAzulBuscaOn: #80bdff;
+$corAzulPortal: #196cbd;
 
 // Fontes
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,700');
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700");
 
 @mixin roboto-sans {
-    font-family: 'Roboto', sans-serif !important;
+  font-family: "Roboto", sans-serif !important;
 }

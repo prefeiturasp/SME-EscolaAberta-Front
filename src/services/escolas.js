@@ -42,3 +42,12 @@ export async function listarTiposEscola() {
 export async function listarDREs() {
   return await fetch(`${API_EOL}/diretorias/`).then(dres => dres.json());
 }
+
+export async function listarTiposEscolaPorFaixa() {
+  return await fetch(`${API_EOL}/smeescolas/`).then(tiposescola => tiposescola.json());
+}
+
+export async function listarTiposEscolaPorFaixaPorDRE(params) {
+  const { dre = '' } = params;
+  return await fetch(`${API_EOL}/smeescolas/${dre}`).then(tiposescola => tiposescola.json());
+}
