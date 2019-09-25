@@ -17,14 +17,16 @@ export class VagasMatriculas extends Component {
       vagasMatriculas: [],
       checks: [
         "EDUCACAO INFANTIL",
-        "ENSINO FUNDAMENTAL 9 ANOS",
-        "ENSINO MEDIO",
-        "ENSINO MEDIO NORMAL/MAGISTERIO",
-        "ESPEC ENS MEDIO",
-        "TECNICO MEDIO",
+        "EDUCACAO INFANTIL ESPECIAL",
         "EJA CIEJA",
         "EJA ESCOLAS EDUCACAO ESPECIAL",
-        "EJA ESCOLAS ENSINO FUNDAMENTAL"
+        "EJA ESCOLAS ENSINO FUNDAMENTAL",
+        "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
+        "ENSINO FUNDAMENTAL DE 9 ANOS",
+        "ENSINO MEDIO",
+        "ESPEC ENS MEDIO",
+        "NORMAL",
+        "TECNICO MEDIO"
       ],
       referencia: "",
       ativo: false,
@@ -90,14 +92,16 @@ export class VagasMatriculas extends Component {
       if (checks.length === 0) {
         checks = [
           "EDUCACAO INFANTIL",
-          "ENSINO FUNDAMENTAL 9 ANOS",
-          "ENSINO MEDIO",
-          "ENSINO MEDIO NORMAL/MAGISTERIO",
-          "ESPEC ENS MEDIO",
-          "TECNICO MEDIO",
+          "EDUCACAO INFANTIL ESPECIAL",
           "EJA CIEJA",
           "EJA ESCOLAS EDUCACAO ESPECIAL",
-          "EJA ESCOLAS ENSINO FUNDAMENTAL"
+          "EJA ESCOLAS ENSINO FUNDAMENTAL",
+          "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
+          "ENSINO FUNDAMENTAL DE 9 ANOS",
+          "ENSINO MEDIO",
+          "ESPEC ENS MEDIO",
+          "NORMAL",
+          "TECNICO MEDIO"
         ];
         this.setState({ primeiroCheck: false });
       }
@@ -108,7 +112,6 @@ export class VagasMatriculas extends Component {
   render() {
     const { diretoriasRegionais } = this.props;
     const {
-      referencia,
       ativo,
       vagasMatriculas,
       checks,
@@ -121,7 +124,7 @@ export class VagasMatriculas extends Component {
             Vagas e Matrículas por Série
           </h1>
           <div className="referencia mt-1 mb-5">
-            Data de referência: {referencia}
+            Data de referência: {this.props.dataReferencia}
           </div>
         </div>
         <div className="row mb-3">
@@ -148,7 +151,12 @@ export class VagasMatriculas extends Component {
             <div className="checkboxes ml-auto">
               <span>
                 <input
-                  onClick={() => this.onCheckClicked(["EDUCACAO INFANTIL"])}
+                  onClick={() =>
+                    this.onCheckClicked([
+                      "EDUCACAO INFANTIL",
+                      "EDUCACAO INFANTIL ESPECIAL"
+                    ])
+                  }
                   type="checkbox"
                 />
                 Infantil
@@ -156,7 +164,10 @@ export class VagasMatriculas extends Component {
               <span>
                 <input
                   onClick={() =>
-                    this.onCheckClicked(["ENSINO FUNDAMENTAL 9 ANOS"])
+                    this.onCheckClicked([
+                      "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
+                      "ENSINO FUNDAMENTAL DE 9 ANOS"
+                    ])
                   }
                   type="checkbox"
                 />
@@ -167,8 +178,8 @@ export class VagasMatriculas extends Component {
                   onClick={() =>
                     this.onCheckClicked([
                       "ENSINO MEDIO",
-                      "ENSINO MEDIO NORMAL/MAGISTERIO",
                       "ESPEC ENS MEDIO",
+                      "NORMAL",
                       "TECNICO MEDIO"
                     ])
                   }

@@ -68,7 +68,7 @@ export const formatarVagasMatriculas = vagasMatriculas => {
       });
     }
   });
-  return normalizar9Anos(matriculas);
+  return matriculas;
 };
 
 export const totalPorFaixa = vagasMatriculasFormatadas => {

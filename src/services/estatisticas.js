@@ -101,3 +101,9 @@ export async function listarVagasMatriculasSMEPorDRE(params) {
     cargosprofissionais.json()
   );
 }
+
+export async function dataReferencia() {
+  return await fetch(`${API_EOL}/dtatualizacao/`).then(data =>
+    data.json()
+  );
+}
