@@ -117,43 +117,43 @@ export const formatarEscolas = tiposEscola => {
 
 export const tipoEscolaLabel = tipoEscola => {
   switch (tipoEscola.tipoesc) {
-    case "EMEF        ":
+    case "EMEF":
       return "ESCOLA MUNICIPAL DE ENSINO FUNDAMENTAL";
-    case "EMEFM       ":
+    case "EMEFM":
       return "ESCOLA MUNICIPAL DE ENSINO FUNDAMENTAL E MEDIO";
-    case "ESP CONV    ":
+    case "ESP CONV":
       return "ESCOLAS ESPECIAIS CONVENIADAS";
-    case "MOVA        ":
+    case "MOVA":
       return "MOVIMENTO DE ALFABETIZACAO";
-    case "CIEJA       ":
+    case "CIEJA":
       return "CENTRO INTEGRADO DE EDUCACAO DE JOVENS E ADULTOS";
-    case "CEI DIRET   ":
+    case "CEI DIRET":
       return "CENTRO DE EDUCACAO INFANTIL DIRETO";
-    case "CEI INDIR   ":
+    case "CEI INDIR":
       return "CENTRO DE EDUCACAO INFANTIL INDIRETO";
-    case "EMEBS       ":
+    case "EMEBS":
       return "ESCOLA MUNICIPAL DE EDUCACAO BILINGUE PARA SURDOS";
-    case "EMEI        ":
+    case "EMEI":
       return "ESCOLA MUNICIPAL DE EDUCACAO INFANTIL";
-    case "CEU EMEI    ":
+    case "CEU EMEI":
       return "CENTRO EDUCACIONAL UNIFICADO - EMEI";
-    case "CEU EMEF    ":
+    case "CEU EMEF":
       return "CENTRO EDUCACIONAL UNIFICADO - EMEF";
-    case "CEU CEI     ":
+    case "CEU CEI":
       return "CENTRO EDUCACIONAL UNIFICADO - CEI";
-    case "CCI/CIPS    ":
+    case "CCI/CIPS":
       return "CENTRO DE CONVIVENCIA INFANTIL / CENTRO INFANTIL DE PROTECAO A SAUDE";
-    case "CR.P.CONV   ":
+    case "CR.P.CONV":
       return "CRECHE PARTICULAR CONVENIADA";
-    case "CEMEI       ":
+    case "CEMEI":
       return "CENTRO MUNICIPAL DE EDUCACAO INFANTIL";
-    case "E TECNICA   ":
+    case "E TECNICA":
       return "ESCOLA TECNICA";
     case "CEU AT COMPL":
       return "CENTRO EDUCACIONAL UNIFICADO - ATENDIMENTO COMPLEMENTAR";
-    case "CMCT        ":
+    case "CMCT":
       return "CENTRO MUNICIPAL DE CAPACITACAO E TREINAMENTO";
-    case "CECI        ":
+    case "CECI":
       return "CENTRO DE EDUCACAO E CULTURA INDIGENA";
     default:
       return tipoEscola.tipoesc;
@@ -224,7 +224,7 @@ export const totalPorFaixa = tiposEscolaFormatado => {
       const indice = totalPorFaixa.findIndex(
         faixa_total => faixa_total.faixa === faixa.faixa
       );
-      totalPorFaixa[indice].total += faixa.count;
+      if (indice !== -1) totalPorFaixa[indice].total += faixa.count;
     });
   });
   return totalPorFaixa;
@@ -235,6 +235,6 @@ export const total = tiposEscolaFormatado => {
   tiposEscolaFormatado = totalPorFaixa(tiposEscolaFormatado);
   tiposEscolaFormatado.forEach(tipoEscola => {
     total += tipoEscola.total;
-  })
+  });
   return total;
 };

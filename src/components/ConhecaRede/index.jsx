@@ -4,7 +4,8 @@ import { listarDREs } from "../../services/escolas";
 import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
-import { agregarDefaultDiretoriaRegional, dreLabel } from "./helper";
+import { agregarDefaultDiretoriaRegional, dreLabel, formatarData } from "./helper";
+import { dataReferencia } from "services/estatisticas";
 
 const Escolas = lazy(() => import("./Escolas/Container"));
 const Profissionais = lazy(() => import("./Profissionais/Container"));
@@ -37,7 +38,8 @@ export default class ConhecaRede extends Component {
       codesc: "",
       nomesc: "",
       dreSelecionada: "",
-      tabAtual: "Escolas"
+      tabAtual: "Escolas",
+      dataReferencia: null
     };
     this.onDRESelected = this.onDRESelected.bind(this);
   }
@@ -47,6 +49,11 @@ export default class ConhecaRede extends Component {
   }
 
   componentDidMount() {
+    dataReferencia().then(response => {
+      this.setState({
+        dataReferencia: formatarData(response.results[0].dt_atualizacao)
+      });
+    });
     listarDREs().then(diretoriasRegionais => {
       this.setState({
         diretoriasRegionais: agregarDefaultDiretoriaRegional(
