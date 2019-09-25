@@ -20,9 +20,13 @@ export default class Idep extends Component {
             ano_final: '',
             msg: ''
         };
+
+        console.log('Construtor: ', this.state.codesc);
     }
 
     componentWillMount() {
+
+        console.log('componentWillMount: ', this.state.codesc);
 
         this.setState({referencia: new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString()});
 
@@ -46,40 +50,44 @@ export default class Idep extends Component {
             .then(token => {
                 localStorage.setItem('auth-token', token.token);
             })
+            .then(token => {
+
+                const BASE_HEADER = {
+                    method: "GET",
+                    headers: {
+                        Authorization: `JWT ${localStorage.getItem('auth-token')}`
+                    }
+                };
+
+                if (this.state.codesc && localStorage.getItem('auth-token')) {
+
+                    fetch(`${API_IDEP_LOGIN}/barchart/${this.state.codesc}`, BASE_HEADER)
+
+                    .then(resposta => {
+                        if (resposta.ok) {
+                            return resposta.json();
+                        } else {
+                            throw new Error('Não foi possível obter os dados desta escola');
+                        }
+                    })
+                    .then(retorno => {
+                        this.setState({ano_inicial: retorno.result.ano_inicial});
+                        this.setState({ano_final: retorno.result.ano_final})
+
+                        if (!this.state.ano_inicial && !this.state.ano_final) {
+                            this.setState({msg: "Nenhum índice encontrado."})
+                        }
+
+                    })
+                    .catch(error => {
+                        console.log(error.message);
+                    });
+                }
+
+            })
             .catch(error => {
                 console.log(error.message);
             });
-
-        const BASE_HEADER = {
-            method: "GET",
-            headers: {
-                Authorization: `JWT ${localStorage.getItem('auth-token')}`
-            }
-        };
-        if (this.state.codesc) {
-
-            fetch(`${API_IDEP_LOGIN}/barchart/${this.state.codesc}`, BASE_HEADER)
-                .then(resposta => {
-                    if (resposta.ok) {
-                        return resposta.json();
-                    } else {
-                        throw new Error('Não foi possível obter os dados desta escola');
-                    }
-                })
-                .then(retorno => {
-                    this.setState({ano_inicial: retorno.result.ano_inicial});
-                    this.setState({ano_final: retorno.result.ano_final})
-
-                    if (!this.state.ano_inicial && !this.state.ano_final){
-                        this.setState({msg: "Nenhum índice encontrado."})
-
-                    }
-
-                })
-                .catch(error => {
-                    console.log(error.message);
-                });
-        }
     }
 
     render() {
