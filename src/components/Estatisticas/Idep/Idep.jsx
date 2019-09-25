@@ -20,13 +20,9 @@ export default class Idep extends Component {
             ano_final: '',
             msg: ''
         };
-
-        console.log('Construtor: ', this.state.codesc);
     }
 
     componentWillMount() {
-
-        console.log('componentWillMount: ', this.state.codesc);
 
         this.setState({referencia: new Date(new Date().setDate(new Date().getDate() - 1)).toLocaleDateString()});
 
