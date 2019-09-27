@@ -92,3 +92,16 @@ export const totalPorFaixa = vagasMatriculasFormatadas => {
   );
   return totalPorFaixa;
 };
+
+export const dadosParaGraficos = totalPorFaixa => {
+  let dados = [];
+  dados.push({
+    dado: "Matrículas/Encaminhamento",
+    valor: totalPorFaixa.vagas_oferecidas - totalPorFaixa.vagas_remanecentes
+  });
+  dados.push({
+    dado: "Vagas Remanescentes",
+    valor: totalPorFaixa.vagas_remanecentes
+  });
+  return dados;
+};
