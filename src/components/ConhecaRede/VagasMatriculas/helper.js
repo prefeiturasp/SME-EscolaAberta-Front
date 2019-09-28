@@ -92,3 +92,31 @@ export const totalPorFaixa = vagasMatriculasFormatadas => {
   );
   return totalPorFaixa;
 };
+
+export const dadosParaGraficos = totalPorFaixa => {
+  let dados = [];
+  dados.push({
+    dado: "Matrículas/Encaminhamento",
+    valor: totalPorFaixa.vagas_oferecidas - totalPorFaixa.vagas_remanecentes
+  });
+  dados.push({
+    dado: "Vagas Remanescentes",
+    valor: totalPorFaixa.vagas_remanecentes
+  });
+  return dados;
+};
+
+export const dadosParaGraficosPorFaixa = matricula => {
+  let dados = [];
+  dados.push({
+    dado: "Matrículas/Encaminhamento",
+    valor:
+      matricula[getKey(matricula)].vagas_oferecidas -
+      matricula[getKey(matricula)].vagas_remanecentes
+  });
+  dados.push({
+    dado: "Vagas Remanescentes",
+    valor: matricula[getKey(matricula)].vagas_remanecentes
+  });
+  return dados;
+};
