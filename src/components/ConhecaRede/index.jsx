@@ -4,7 +4,11 @@ import { listarDREs } from "../../services/escolas";
 import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
-import { agregarDefaultDiretoriaRegional, dreLabel, formatarData } from "./helper";
+import {
+  agregarDefaultDiretoriaRegional,
+  dreLabel,
+  formatarData
+} from "./helper";
 import { dataReferencia } from "services/estatisticas";
 
 const Escolas = lazy(() => import("./Escolas/Container"));
@@ -61,7 +65,7 @@ export default class ConhecaRede extends Component {
         )
       });
     });
-    if (this.props.location.state !== undefined) {
+    if (this.props.location && this.props.location.state !== undefined) {
       if (this.props.location.state.codesc !== undefined) {
         this.setState({ codesc: this.props.location.state.codesc }, () => {
           document.querySelector(".nav .active:first-child").click();
@@ -102,7 +106,7 @@ export default class ConhecaRede extends Component {
     const { dreSelecionada, diretoriasRegionais } = this.state;
     return (
       <div>
-        <Menu />
+        <Menu {...this.props}/>
         <Auxiliar
           conhecaARede
           texto={

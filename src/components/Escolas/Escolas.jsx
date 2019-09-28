@@ -159,7 +159,7 @@ export default class Escolas extends Component {
   render() {
     return (
       <div>
-        <Menu />
+        <Menu {...this.props}/>
         <Auxiliar texto="Encontre uma escola" filtro={true} />
         <div className="w-100 bg-light h-100">
           <div className="container">

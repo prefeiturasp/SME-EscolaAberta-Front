@@ -1,5 +1,26 @@
 @import "variaveis.scss";
 
+.fonte-maior {
+  font-size: 20px !important;
+  div,
+  ul {
+    font-size: 20px !important;
+  }
+}
+
+.alto-contraste {
+  background-color: #fefefe;
+  filter: invert(100%);
+  * {
+    background-color: inherit;
+  }
+
+  img:not([src*=".svg"]),
+  video {
+    filter: invert(100%);
+  }
+}
+
 body {
   @include roboto-sans;
 }

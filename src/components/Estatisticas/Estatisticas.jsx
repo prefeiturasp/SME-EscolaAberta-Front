@@ -78,7 +78,7 @@ export default class Estatisticas extends Component {
   render() {
     return (
       <div>
-        <Menu />
+        <Menu {...this.props}/>
         <Auxiliar texto={this.state.nomesc} estatisticas={true} />
         <div className="container">
           <div className="row">

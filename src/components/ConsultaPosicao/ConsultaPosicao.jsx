@@ -39,7 +39,7 @@ export default class ConsultaPosicao extends Component {
   render() {
     return (
       <div>
-        <Menu />
+        <Menu {...this.props}/>
         <Auxiliar texto="Consulte sua posição" />
         <div className="w-100 bg-light h-100">
           <div className="container">
