@@ -8,7 +8,7 @@ import {
   Cell
 } from "recharts";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#196CBD", "#47D3CB", "#FFBB28", "#FF8042"];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -52,12 +52,12 @@ export default class GraficoVagasMatriculasSME extends PureComponent {
   }
 
   render() {
-    const { dados } = this.props;
+    const { dados, titulo } = this.props;
     return (
       <React.Fragment>
         <div className="mx-3 my-5">
           <h3 className="fonte-16 border-top border-bottom font-weight-light py-3">
-            VAGAS TOTAIS
+            {titulo || "VAGAS TOTAIS"}
           </h3>
         </div>
         <ResponsiveContainer

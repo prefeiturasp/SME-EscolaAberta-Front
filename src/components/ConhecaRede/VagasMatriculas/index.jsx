@@ -9,7 +9,8 @@ import { ToggleExpandir } from "../../ToggleExpandir";
 import {
   formatarVagasMatriculas,
   totalPorFaixa,
-  dadosParaGraficos
+  dadosParaGraficos,
+  dadosParaGraficosPorFaixa
 } from "./helper";
 import { getKey } from "../helper";
 import SeriesEstudantesChart from "./Graficos";
@@ -301,6 +302,18 @@ export class VagasMatriculas extends Component {
             <SeriesEstudantesChart dados={dadosParaGraficos(totalPorFaixa)} />
           </div>
         )}
+        {vagasMatriculas.map((matricula, indice) => {
+          return (
+            checks.includes(getKey(matricula)) && (
+              <div key={indice}>
+                <SeriesEstudantesChart
+                  titulo={getKey(matricula)}
+                  dados={dadosParaGraficosPorFaixa(matricula)}
+                />
+              </div>
+            )
+          );
+        })}
       </div>
     );
   }
