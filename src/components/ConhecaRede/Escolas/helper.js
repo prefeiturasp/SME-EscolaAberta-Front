@@ -211,6 +211,10 @@ export const inicializaTotalPorFaixa = [
   {
     faixa: "2001 a 2500 estudantes",
     total: 0
+  },
+  {
+    faixa: "Mais que 2500 estudantes",
+    total: 0
   }
 ];
 
