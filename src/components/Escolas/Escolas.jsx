@@ -29,7 +29,7 @@ export default class Escolas extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location.state !== undefined) {
+    if (this.props.location && this.props.location.state !== undefined) {
       if (this.props.location.state.escola !== undefined) {
         PubSub.publish("escola-filtro", this.props.location.state.escola);
       } else if (this.props.location.state.bairro !== undefined) {
@@ -159,14 +159,14 @@ export default class Escolas extends Component {
   render() {
     return (
       <div>
-        <Menu />
+        <Menu {...this.props} />
         <Auxiliar texto="Encontre uma escola" filtro={true} />
         <div className="w-100 bg-light h-100">
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-sm-12 pr-lg-0 escolas">
                 <Filtros />
-                <div className="overflow-auto pt-4 pb-4">
+                <div id="conteudo" className="overflow-auto pt-4 pb-4">
                   <TabelaEscolas
                     lista={this.state.escolas}
                     limparCheckboxes={this.limparCheckboxes}
