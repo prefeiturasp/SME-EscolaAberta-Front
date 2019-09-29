@@ -38,7 +38,7 @@ export default class Estatisticas extends Component {
       ],
       codesc: "",
       nomesc: ""
-    }
+    };
   }
 
   componentWillMount() {
@@ -78,7 +78,7 @@ export default class Estatisticas extends Component {
   render() {
     return (
       <div>
-        <Menu {...this.props}/>
+        <Menu {...this.props} />
         <Auxiliar texto={this.state.nomesc} estatisticas={true} />
         <div className="container">
           <div className="row">
@@ -88,30 +88,54 @@ export default class Estatisticas extends Component {
                   this.state.componentesLabels.map((componente, indice) => {
                     return (
                       <li key={indice} className="nav-item">
-                        <a className={indice === 0 ? `nav-link active` : `nav-link`} id={`${componente.nome}-tab`}
-                          data-toggle="tab" href={`#${componente.nome}`} role="tab" aria-controls={componente.nome}
-                          aria-selected={indice === 0 ? `true` : `false`}>
+                        <a
+                          className={
+                            indice === 0 ? `nav-link active` : `nav-link`
+                          }
+                          id={`${componente.nome}-tab`}
+                          data-toggle="tab"
+                          href={`#${componente.nome}`}
+                          role="tab"
+                          aria-controls={componente.nome}
+                          aria-selected={indice === 0 ? `true` : `false`}
+                        >
                           {componente.label}
                         </a>
                       </li>
                     );
                   })
-                ) : (<NullView />)}
+                ) : (
+                  <NullView />
+                )}
               </ul>
               <div className="tab-content mt-5" id="estatisticas-abas">
                 {this.state.componentesLabels.length > 0 ? (
                   this.state.componentesLabels.map((componente, indice) => {
                     return (
-                      <div key={indice} className={(indice === 0 ? `tab-pane fade show active` : `tab-pane fade`)} id={componente.nome} role="tabpanel" aria-labelledby={`${componente.nome}-tab`}>
+                      <div
+                        key={indice}
+                        className={
+                          indice === 0
+                            ? `tab-pane fade show active`
+                            : `tab-pane fade`
+                        }
+                        id={componente.nome}
+                        role="tabpanel"
+                        aria-labelledby={`${componente.nome}-tab`}
+                      >
                         {
                           <Suspense fallback={<NullView />}>
-                            {this.renderizaComponente(componente.nome)}
+                            <div id="conteudo">
+                              {this.renderizaComponente(componente.nome)}
+                            </div>
                           </Suspense>
                         }
                       </div>
                     );
                   })
-                ) : (<NullView />)}
+                ) : (
+                  <NullView />
+                )}
               </div>
             </div>
           </div>

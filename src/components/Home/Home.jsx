@@ -35,12 +35,12 @@ export default class Home extends Component {
                 </h2>
               </div>
               <div id="busca" className="col-lg-12 col-sm-12">
-                <Buscador />
+                <Buscador {...this.props}/>
               </div>
             </div>
           </div>
         </div>
-        <div className="w-100 desenvolvimento-escolar">
+        <div id="conteudo" className="w-100 desenvolvimento-escolar">
           <div className="container pt-5 pb-5">
             <div className="row">
               <div className="col-lg-6 mb-4 mb-lg-0">

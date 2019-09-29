@@ -1,7 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { listarEscolas, listarBairros, listarDistritos, listarSubpref } from "../../services/escolas";
-import { buscarLogradouroPorCep, buscarLatLngPorLogradouro, buscaLogradouroPorLatLng } from "../../services/endereco";
+import {
+  listarEscolas,
+  listarBairros,
+  listarDistritos,
+  listarSubpref
+} from "../../services/escolas";
+import {
+  buscarLogradouroPorCep,
+  buscarLatLngPorLogradouro,
+  buscaLogradouroPorLatLng
+} from "../../services/endereco";
 import cookie from "react-cookies";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow, faClock } from "@fortawesome/free-solid-svg-icons";
@@ -32,12 +41,25 @@ export default class Buscador extends Component {
     cookiesLista.forEach(historico => {
       if (/\b(historico)\w+\b/g.test(historico[0])) {
         const [tipo, valor] = historico[1].split("_");
-        if (historicoLista.filter((h) => { return h.valor === valor }).length === 0)
+        if (
+          historicoLista.filter(h => {
+            return h.valor === valor;
+          }).length === 0
+        )
           historicoLista.push({ tipo, valor });
       }
     });
 
     this.setState({ historicoLista: historicoLista });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.focusBuscaAtributo === false &&
+      this.props.focusBuscaAtributo
+    ) {
+      this.focusNoInput();
+    }
   }
 
   buscarPorTermo = e => {
@@ -59,16 +81,21 @@ export default class Buscador extends Component {
         // bairros = this.buscarBairros(e.target.value);
         subprefs = this.buscarSubprefs(e.target.value);
 
-        buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(localizacoes => {
-          localizacoes.results.forEach(function (local) {
-            if (local.type.indexOf("residential") !== -1) {
-              ruas.push({ value: { lat: local.lat, lon: local.lon }, label: local.name });
-            }
-          });
-        });
+        buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(
+          localizacoes => {
+            localizacoes.results.forEach(function(local) {
+              if (local.type.indexOf("residential") !== -1) {
+                ruas.push({
+                  value: { lat: local.lat, lon: local.lon },
+                  label: local.name
+                });
+              }
+            });
+          }
+        );
 
         setTimeout(
-          function () {
+          function() {
             this.setState({ logradourosLista: ruas });
             this.setState({ escolasLista: escolas });
             this.setState({ bairrosLista: bairros });
@@ -79,12 +106,12 @@ export default class Buscador extends Component {
         );
       }
     }
-  }
+  };
 
   buscarEscolasPorNome(e) {
     let escolas = [];
     listarEscolas({ escola: e }).then(lista => {
-      lista.results.forEach(function (escola) {
+      lista.results.forEach(function(escola) {
         escolas.push({ value: escola.codesc, label: escola.nomesc });
       });
     });
@@ -94,7 +121,7 @@ export default class Buscador extends Component {
   buscarBairros(e) {
     let bairros = [];
     listarBairros({ bairro: e }).then(lista => {
-      lista.results.forEach(function (bairro) {
+      lista.results.forEach(function(bairro) {
         bairros.push({ label: bairro.bairro });
       });
     });
@@ -104,7 +131,7 @@ export default class Buscador extends Component {
   buscarDistritos(e) {
     let distritos = [];
     listarDistritos({ distrito: e }).then(lista => {
-      lista.results.forEach(function (distrito) {
+      lista.results.forEach(function(distrito) {
         distritos.push({ label: distrito.distrito });
       });
     });
@@ -114,7 +141,7 @@ export default class Buscador extends Component {
   buscarSubprefs(e) {
     let subprefs = [];
     listarSubpref({ subpref: e }).then(lista => {
-      lista.results.forEach(function (subpref) {
+      lista.results.forEach(function(subpref) {
         subprefs.push({ label: subpref.subpref });
       });
     });
@@ -123,20 +150,26 @@ export default class Buscador extends Component {
 
   buscarLogradouroCep(e) {
     buscarLogradouroPorCep({ cep: e }).then(logradouro => {
-      buscarLatLngPorLogradouro({ logradouro: logradouro.logradouro }).then(localizacoes => {
-        let ruas = [];
-        localizacoes.results.forEach(function (local) {
-          if (local.type.indexOf("residential") !== -1 && ruas.length < 1) {
-            ruas.push({ value: { lat: local.lat, lon: local.lon }, label: local.name });
-          }
-        });
-        setTimeout(
-          function () {
-            this.setState({ logradourosLista: ruas });
-          }.bind(this), 1000
-        );
-      })
-    })
+      buscarLatLngPorLogradouro({ logradouro: logradouro.logradouro }).then(
+        localizacoes => {
+          let ruas = [];
+          localizacoes.results.forEach(function(local) {
+            if (local.type.indexOf("residential") !== -1 && ruas.length < 1) {
+              ruas.push({
+                value: { lat: local.lat, lon: local.lon },
+                label: local.name
+              });
+            }
+          });
+          setTimeout(
+            function() {
+              this.setState({ logradourosLista: ruas });
+            }.bind(this),
+            1000
+          );
+        }
+      );
+    });
   }
 
   retornaLocalizacao() {
@@ -156,13 +189,20 @@ export default class Buscador extends Component {
     this.setState({ bairrosLista: [] });
     this.setState({ distritosLista: [] });
     this.setState({ logradourosLista: [] });
-    buscaLogradouroPorLatLng({ lat: position.coords.latitude, lng: position.coords.longitude }).then(logradouro => {
-      ruas.push({ value: { lat: logradouro.lat, lon: logradouro.lon }, label: logradouro.address.road });
+    buscaLogradouroPorLatLng({
+      lat: position.coords.latitude,
+      lng: position.coords.longitude
+    }).then(logradouro => {
+      ruas.push({
+        value: { lat: logradouro.lat, lon: logradouro.lon },
+        label: logradouro.address.road
+      });
     });
     setTimeout(
-      function () {
+      function() {
         this.setState({ logradourosLista: ruas });
-      }.bind(this), 1000
+      }.bind(this),
+      1000
     );
   }
 
@@ -172,8 +212,12 @@ export default class Buscador extends Component {
 
   mostrarBusca(event) {
     if (event.type === "focus") {
-      document.querySelector(".form-control-lg").classList.add("rounded-bottom-0", "border-bottom-0");
-      document.querySelector(".resultados").classList.remove("d-none", "borda-off");
+      document
+        .querySelector(".form-control-lg")
+        .classList.add("rounded-bottom-0", "border-bottom-0");
+      document
+        .querySelector(".resultados")
+        .classList.remove("d-none", "borda-off");
       document.querySelector(".resultados").classList.add("borda-on");
     } else {
       document.querySelector(".resultados").classList.add("borda-off");
@@ -193,11 +237,18 @@ export default class Buscador extends Component {
     );
   }
 
+  focusNoInput() {
+    this.inputBusca.focus();
+  }
+
   render() {
     return (
       <div>
         <div className="form-group mt-4 mb-0 busca">
           <input
+            ref={input => {
+              this.inputBusca = input;
+            }}
             type="text"
             className="form-control form-control-lg rounded-pill shadow d-inline-block h-100 pt-3 pb-3"
             placeholder="Encontre uma escola pelo nome ou endereço"
@@ -210,7 +261,10 @@ export default class Buscador extends Component {
           <div className="row">
             <div className="col-lg-12 col-sm-12 p-0">
               <div className="list-group">
-                <li className="list-group-item list-group-item-action border-0 cursor-link" onClick={this.retornaLocalizacao}>
+                <li
+                  className="list-group-item list-group-item-action border-0 cursor-link"
+                  onClick={this.retornaLocalizacao}
+                >
                   <FontAwesomeIcon icon={faLocationArrow} className="mr-2" />
                   Usar minha localização
                 </li>
@@ -221,7 +275,9 @@ export default class Buscador extends Component {
             {this.state.historicoLista.length > 0 ? (
               <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item border-0 rounded-0 mb-0">Pesquisas Recentes</li>
+                  <li className="list-group-item border-0 rounded-0 mb-0">
+                    Pesquisas Recentes
+                  </li>
                   {this.state.historicoLista.map((historico, indice) => {
                     return (
                       <Link
@@ -241,13 +297,15 @@ export default class Buscador extends Component {
                   })}
                 </div>
               </div>
-            ) : (null)}
+            ) : null}
           </div>
           <div className="row">
             {this.state.escolasLista.length > 0 ? (
               <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Escolas</li>
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
+                    Escolas
+                  </li>
                   {this.state.escolasLista.map((escola, indice) => {
                     return (
                       <Link
@@ -258,7 +316,9 @@ export default class Buscador extends Component {
                             escola: escola.label
                           }
                         }}
-                        onClick={() => this.salvarHistoricoBusca({ escola: escola.label })}
+                        onClick={() =>
+                          this.salvarHistoricoBusca({ escola: escola.label })
+                        }
                         className="list-group-item list-group-item-action border-0"
                       >
                         {escola.label}
@@ -267,11 +327,13 @@ export default class Buscador extends Component {
                   })}
                 </div>
               </div>
-            ) : (null)}
+            ) : null}
             {this.state.bairrosLista.length > 0 ? (
               <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Bairros</li>
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
+                    Bairros
+                  </li>
                   {this.state.bairrosLista.map((bairro, indice) => {
                     return (
                       <Link
@@ -282,7 +344,9 @@ export default class Buscador extends Component {
                             bairro: bairro.label
                           }
                         }}
-                        onClick={() => this.salvarHistoricoBusca({ bairro: bairro.label })}
+                        onClick={() =>
+                          this.salvarHistoricoBusca({ bairro: bairro.label })
+                        }
                         className="list-group-item list-group-item-action border-0"
                       >
                         {bairro.label}
@@ -291,11 +355,13 @@ export default class Buscador extends Component {
                   })}
                 </div>
               </div>
-            ) : (null)}
+            ) : null}
             {this.state.distritosLista.length > 0 ? (
               <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Distritos</li>
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
+                    Distritos
+                  </li>
                   {this.state.distritosLista.map((distrito, indice) => {
                     return (
                       <Link
@@ -306,7 +372,11 @@ export default class Buscador extends Component {
                             distrito: distrito.label
                           }
                         }}
-                        onClick={() => this.salvarHistoricoBusca({ distrito: distrito.label })}
+                        onClick={() =>
+                          this.salvarHistoricoBusca({
+                            distrito: distrito.label
+                          })
+                        }
                         className="list-group-item list-group-item-action border-0"
                       >
                         {distrito.label}
@@ -315,11 +385,13 @@ export default class Buscador extends Component {
                   })}
                 </div>
               </div>
-            ) : (null)}
+            ) : null}
             {this.state.subprefsLista.length > 0 ? (
               <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Subprefeituras</li>
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
+                    Subprefeituras
+                  </li>
                   {this.state.subprefsLista.map((subpref, indice) => {
                     return (
                       <Link
@@ -330,7 +402,9 @@ export default class Buscador extends Component {
                             subpref: subpref.label
                           }
                         }}
-                        onClick={() => this.salvarHistoricoBusca({ subpref: subpref.label })}
+                        onClick={() =>
+                          this.salvarHistoricoBusca({ subpref: subpref.label })
+                        }
                         className="list-group-item list-group-item-action border-0"
                       >
                         {subpref.label}
@@ -339,11 +413,13 @@ export default class Buscador extends Component {
                   })}
                 </div>
               </div>
-            ) : (null)}
+            ) : null}
             {this.state.logradourosLista.length > 0 ? (
               <div className="col-lg col-sm-12 p-0">
                 <div className="list-group">
-                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">Logradouros</li>
+                  <li className="list-group-item list-group-item-secondary border-0 rounded-0 mb-0">
+                    Logradouros
+                  </li>
                   {this.state.logradourosLista.map((logradouro, indice) => {
                     return (
                       <Link
@@ -364,7 +440,7 @@ export default class Buscador extends Component {
                   })}
                 </div>
               </div>
-            ) : (null)}
+            ) : null}
           </div>
         </div>
       </div>

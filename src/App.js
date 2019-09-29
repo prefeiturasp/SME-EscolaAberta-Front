@@ -11,11 +11,23 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      alterarFonte: localStorage.getItem("alterarFonte") || false,
-      alterarContraste: localStorage.getItem("alterarContraste") || false
+      alterarFonte:
+        (localStorage.getItem("alterarFonte") &&
+          localStorage.getItem("alterarFonte") === "true") ||
+        false,
+      alterarContraste:
+        (localStorage.getItem("alterarContraste") &&
+          localStorage.getItem("alterarContraste") === "true") ||
+        false,
+      focusBuscaAtributo: false
     };
     this.alterarFonte = this.alterarFonte.bind(this);
     this.alterarContraste = this.alterarContraste.bind(this);
+    this.focusBusca = this.focusBusca.bind(this);
+  }
+
+  focusBusca() {
+    this.setState({ focusBuscaAtributo: true });
   }
 
   alterarFonte() {
@@ -37,7 +49,7 @@ export default class App extends Component {
   }
 
   render() {
-    const { alterarFonte, alterarContraste } = this.state;
+    const { alterarFonte, alterarContraste, focusBuscaAtributo } = this.state;
     return (
       <div
         className={`${alterarFonte && "fonte-maior"}
@@ -47,17 +59,21 @@ export default class App extends Component {
           <Route
             path="/"
             exact
-            render={() => (
+            render={props => (
               <Home
+                {...props}
                 alterarFonte={this.alterarFonte}
                 alterarContraste={this.alterarContraste}
+                focusBusca={this.focusBusca}
+                focusBuscaAtributo={focusBuscaAtributo}
               />
             )}
           />
           <Route
             path="/conheca-a-rede"
-            render={() => (
+            render={props => (
               <ConhecaRede
+                {...props}
                 alterarFonte={this.alterarFonte}
                 alterarContraste={this.alterarContraste}
               />
@@ -65,8 +81,9 @@ export default class App extends Component {
           />
           <Route
             path="/escolas"
-            render={() => (
+            render={props => (
               <Escolas
+                {...props}
                 alterarFonte={this.alterarFonte}
                 alterarContraste={this.alterarContraste}
               />
@@ -74,8 +91,9 @@ export default class App extends Component {
           />
           <Route
             path="/consulta"
-            render={() => (
+            render={props => (
               <ConsultaPosicao
+                {...props}
                 alterarFonte={this.alterarFonte}
                 alterarContraste={this.alterarContraste}
               />
@@ -83,8 +101,9 @@ export default class App extends Component {
           />
           <Route
             path="/estatisticas"
-            render={() => (
+            render={props => (
               <Estatisticas
+                {...props}
                 alterarFonte={this.alterarFonte}
                 alterarContraste={this.alterarContraste}
               />

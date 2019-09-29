@@ -13,7 +13,7 @@ import {
 export default class Rodape extends Component {
   render() {
     return (
-      <div>
+      <div id="rodape">
         <div className="area-rodape text-white p-5">
           <div className="container">
             <div className="row">

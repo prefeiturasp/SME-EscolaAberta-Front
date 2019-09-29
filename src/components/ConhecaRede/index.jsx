@@ -106,7 +106,7 @@ export default class ConhecaRede extends Component {
     const { dreSelecionada, diretoriasRegionais } = this.state;
     return (
       <div>
-        <Menu {...this.props}/>
+        <Menu {...this.props} />
         <Auxiliar
           conhecaARede
           texto={
@@ -164,7 +164,9 @@ export default class ConhecaRede extends Component {
                       >
                         {
                           <Suspense fallback={<NullView />}>
-                            {this.renderizaComponente(componente.nome)}
+                            <div id="conteudo">
+                              {this.renderizaComponente(componente.nome)}
+                            </div>
                           </Suspense>
                         }
                       </div>

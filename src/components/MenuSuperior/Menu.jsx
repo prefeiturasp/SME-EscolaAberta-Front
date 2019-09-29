@@ -17,7 +17,7 @@ import "./style.scss";
 
 export default class Menu extends Component {
   render() {
-    const { alterarFonte, alterarContraste } = this.props;
+    const { alterarFonte, alterarContraste, focusBusca } = this.props;
     return (
       <div>
         <div className="header-acessibilidade">
@@ -26,27 +26,35 @@ export default class Menu extends Component {
               <div className="col-6">
                 <ul className="list-inline mt-3">
                   <li className="list-inline-item">
-                    Ir ao Conteúdo<span className="span-accesskey">1</span>{" "}
+                    <a href="#conteudo">
+                      Ir ao Conteúdo<span className="span-accesskey">1</span>{" "}
+                    </a>
                   </li>
                   <li className="list-inline-item">
-                    Ir para menu principal
-                    <span className="span-accesskey">2</span>{" "}
+                    <a href="#menu-principal">
+                      Ir para menu principal
+                      <span className="span-accesskey">2</span>{" "}
+                    </a>
                   </li>
-                  <li className="list-inline-item">
+                  <li onClick={focusBusca} className="list-inline-item">
                     <a href="#busca">
                       Ir para a busca<span className="span-accesskey">3</span>{" "}
                     </a>
                   </li>
                   <li className="list-inline-item">
-                    Ir para o rodapé
-                    <span className="span-accesskey">4</span>{" "}
+                    <a href="#rodape">
+                      Ir para o rodapé
+                      <span className="span-accesskey">4</span>{" "}
+                    </a>
                   </li>
                 </ul>
               </div>
               <div className="col-6 text-right">
                 <ul className="list-inline mt-3">
                   <li className="list-inline-item">
-                    Acessibilidade<span className="span-accesskey">5</span>{" "}
+                    <a href="http://portal.sme.prefeitura.sp.gov.br/acessibilidade/">
+                      Acessibilidade<span className="span-accesskey">5</span>{" "}
+                    </a>
                   </li>
                   <li onClick={alterarContraste} className="list-inline-item">
                     Alternar Alto Contraste
@@ -148,7 +156,10 @@ export default class Menu extends Component {
                 </Link>
               </h1>
             </div>
-            <div className="col-lg-9 col-sm-12 d-flex links-menu align-items-end justify-content-lg-end justify-content-center pr-lg-0 mb-xs-4">
+            <div
+              id="menu-principal"
+              className="col-lg-9 col-sm-12 d-flex links-menu align-items-end justify-content-lg-end justify-content-center pr-lg-0 mb-xs-4"
+            >
               <ul className="nav nav-tabs border-0">
                 <li className="nav-item">
                   <Link className="nav-link text-secondary mb-1 pb-0" to="/">
