@@ -86,9 +86,12 @@ export default class Menu extends Component {
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
+                    <a
+                      className="text-secondary"
+                      href="http://dados.prefeitura.sp.gov.br/organization/educacao1"
+                    >
                       Portal da Transparência
-                    </Link>
+                    </a>
                   </li>
                   <li className="list-inline-item">
                     <Link className="text-secondary" to="/">
@@ -178,9 +181,12 @@ export default class Menu extends Component {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-secondary mb-1 pb-0" to="/">
+                  <a
+                    className="nav-link text-secondary mb-1 pb-0"
+                    href="http://dados.prefeitura.sp.gov.br/organization/educacao1"
+                  >
                     Portal da Transparência
-                  </Link>
+                  </a>
                 </li>
                 <li>
                   <Link
