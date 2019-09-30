@@ -176,11 +176,6 @@ export default class Menu extends Component {
                 </li>
                 <li className="nav-item">
                   <Link className="nav-link text-secondary mb-1 pb-0" to="/">
-                    Consulte sua posição
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link text-secondary mb-1 pb-0" to="/">
                     Portal da Transparência
                   </Link>
                 </li>
