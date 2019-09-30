@@ -82,6 +82,7 @@ export default class Mapa extends Component {
                 <Popup>
                   <strong>{marcador.escola.nomesc}</strong>
                   <div>{marcador.escola.endereco}, {marcador.escola.numero} -  {marcador.escola.bairro}</div>
+                  <div><a href={`tel:${marcador.escola.tel1}`}>Tel: {marcador.escola.tel1}</a> </div>
                 </Popup>
               </Marker>
             );
