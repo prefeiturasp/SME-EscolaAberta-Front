@@ -108,15 +108,22 @@ export default class Buscador extends Component {
     }
   };
 
+  removerAcentos = (string_com_acentuacao) => {
+    return string_com_acentuacao.normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
+  };
+
   buscarEscolasPorNome(e) {
-    let escolas = [];
-    listarEscolas({ escola: e }).then(lista => {
-      lista.results.forEach(function(escola) {
-        escolas.push({ value: escola.codesc, label: escola.nomesc });
+      let escolas = [];
+      const string_sem_acento = this.removerAcentos(e);
+
+      listarEscolas({escola: string_sem_acento}).then(lista => {
+          lista.results.forEach(function (escola) {
+              escolas.push({value: escola.codesc, label: escola.nomesc});
+          });
       });
-    });
-    return escolas;
+      return escolas;
   }
+
 
   buscarBairros(e) {
     let bairros = [];
