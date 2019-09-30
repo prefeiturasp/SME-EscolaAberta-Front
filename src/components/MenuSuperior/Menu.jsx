@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import logoEducacaoSP from "../../img/educacao_sp.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faSearch,
   faAdjust,
   faTextHeight
 } from "@fortawesome/free-solid-svg-icons";
@@ -184,7 +183,6 @@ export default class Menu extends Component {
                     className="nav-link text-secondary border-0 mb-1 pr-0 pb-0"
                     to="/"
                   >
-                    <FontAwesomeIcon icon={faSearch} />
                   </Link>
                 </li>
               </ul>
