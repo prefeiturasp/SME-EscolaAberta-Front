@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import logoEducacaoSP from "../../img/educacao_sp.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAdjust,
-  faTextHeight
-} from "@fortawesome/free-solid-svg-icons";
+import { faAdjust, faTextHeight } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookSquare,
   faInstagram,
@@ -16,7 +13,12 @@ import "./style.scss";
 
 export default class Menu extends Component {
   render() {
-    const { alterarFonte, alterarContraste, focusBusca } = this.props;
+    const {
+      alterarFonte,
+      alterarContraste,
+      focusBusca,
+      esconderLinkBuscaEscola
+    } = this.props;
     return (
       <div>
         <div className="header-acessibilidade">
@@ -160,11 +162,13 @@ export default class Menu extends Component {
               className="col-lg-9 col-sm-12 d-flex links-menu align-items-end justify-content-lg-end justify-content-center pr-lg-0 mb-xs-4"
             >
               <ul className="nav nav-tabs border-0">
-                <li className="nav-item">
-                  <Link className="nav-link text-secondary mb-1 pb-0" to="/">
-                    Busque uma escola
-                  </Link>
-                </li>
+                {!esconderLinkBuscaEscola && (
+                  <li className="nav-item">
+                    <Link className="nav-link text-secondary mb-1 pb-0" to="/">
+                      Busque uma escola
+                    </Link>
+                  </li>
+                )}
                 <li className="nav-item">
                   <Link
                     className="nav-link text-secondary mb-1 pb-0"
@@ -182,8 +186,7 @@ export default class Menu extends Component {
                   <Link
                     className="nav-link text-secondary border-0 mb-1 pr-0 pb-0"
                     to="/"
-                  >
-                  </Link>
+                  ></Link>
                 </li>
               </ul>
             </div>

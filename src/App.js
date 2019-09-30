@@ -65,6 +65,7 @@ export default class App extends Component {
                 alterarContraste={this.alterarContraste}
                 focusBusca={this.focusBusca}
                 focusBuscaAtributo={focusBuscaAtributo}
+                esconderLinkBuscaEscola
               />
             )}
           />
