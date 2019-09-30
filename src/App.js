@@ -3,7 +3,6 @@ import { Switch, Route } from "react-router-dom";
 import "./styles/styles.scss";
 import Home from "./components/Home/Home";
 import Escolas from "./components/Escolas/Escolas";
-import ConsultaPosicao from "./components/ConsultaPosicao/ConsultaPosicao";
 import Estatisticas from "./components/Estatisticas/Estatisticas";
 import ConhecaRede from "./components/ConhecaRede";
 
@@ -83,16 +82,6 @@ export default class App extends Component {
             path="/escolas"
             render={props => (
               <Escolas
-                {...props}
-                alterarFonte={this.alterarFonte}
-                alterarContraste={this.alterarContraste}
-              />
-            )}
-          />
-          <Route
-            path="/consulta"
-            render={props => (
-              <ConsultaPosicao
                 {...props}
                 alterarFonte={this.alterarFonte}
                 alterarContraste={this.alterarContraste}
