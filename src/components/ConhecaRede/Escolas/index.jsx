@@ -65,7 +65,7 @@ export class Escolas extends Component {
         <div className="estatisticas-cabecalho mb-5">
           <h1 className="border-bottom font-weight-light">Escolas</h1>
           <div className="referencia mt-1 mb-5">
-            Data de referência: {this.state.referencia}
+            Data de referência: {this.props.dataReferencia}
           </div>
           <div className="row">
             <div className="col-6">
@@ -110,7 +110,7 @@ export class Escolas extends Component {
                         <th scope="col" rowSpan="2"></th>
                         <th
                           scope="col"
-                          colSpan="7"
+                          colSpan="8"
                           className="fonte-16 text-center font-weight-normal align-middle"
                         >
                           Escolas por tipo e quantidade de alunos
@@ -131,6 +131,7 @@ export class Escolas extends Component {
                         <th>1001 a 1500 estudantes</th>
                         <th>1501 a 2000 estudantes</th>
                         <th>2001 a 2500 estudantes</th>
+                        <th>Mais de 2500 estudantes</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -182,6 +183,12 @@ export class Escolas extends Component {
                                 {quantidadeAlunos(
                                   tipoEscola,
                                   "2001 a 2500 estudantes"
+                                )}
+                              </td>
+                              <td>
+                                {quantidadeAlunos(
+                                  tipoEscola,
+                                  "Mais que 2500 estudantes"
                                 )}
                               </td>
                               <td className="font-weight-bold bg-light">

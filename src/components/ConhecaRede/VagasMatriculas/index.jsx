@@ -6,8 +6,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { ToggleExpandir } from "../../ToggleExpandir";
-import { formatarVagasMatriculas, totalPorFaixa } from "./helper";
+import {
+  formatarVagasMatriculas,
+  totalPorFaixa,
+  dadosParaGraficos,
+  dadosParaGraficosPorFaixa
+} from "./helper";
 import { getKey } from "../helper";
+import SeriesEstudantesChart from "./Graficos";
 import "./style.scss";
 
 export class VagasMatriculas extends Component {
@@ -17,14 +23,16 @@ export class VagasMatriculas extends Component {
       vagasMatriculas: [],
       checks: [
         "EDUCACAO INFANTIL",
-        "ENSINO FUNDAMENTAL 9 ANOS",
-        "ENSINO MEDIO",
-        "ENSINO MEDIO NORMAL/MAGISTERIO",
-        "ESPEC ENS MEDIO",
-        "TECNICO MEDIO",
+        "EDUCACAO INFANTIL ESPECIAL",
         "EJA CIEJA",
         "EJA ESCOLAS EDUCACAO ESPECIAL",
-        "EJA ESCOLAS ENSINO FUNDAMENTAL"
+        "EJA ESCOLAS ENSINO FUNDAMENTAL",
+        "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
+        "ENSINO FUNDAMENTAL DE 9 ANOS",
+        "ENSINO MEDIO",
+        "ESPEC ENS MEDIO",
+        "NORMAL",
+        "TECNICO MEDIO"
       ],
       referencia: "",
       ativo: false,
@@ -90,14 +98,16 @@ export class VagasMatriculas extends Component {
       if (checks.length === 0) {
         checks = [
           "EDUCACAO INFANTIL",
-          "ENSINO FUNDAMENTAL 9 ANOS",
-          "ENSINO MEDIO",
-          "ENSINO MEDIO NORMAL/MAGISTERIO",
-          "ESPEC ENS MEDIO",
-          "TECNICO MEDIO",
+          "EDUCACAO INFANTIL ESPECIAL",
           "EJA CIEJA",
           "EJA ESCOLAS EDUCACAO ESPECIAL",
-          "EJA ESCOLAS ENSINO FUNDAMENTAL"
+          "EJA ESCOLAS ENSINO FUNDAMENTAL",
+          "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
+          "ENSINO FUNDAMENTAL DE 9 ANOS",
+          "ENSINO MEDIO",
+          "ESPEC ENS MEDIO",
+          "NORMAL",
+          "TECNICO MEDIO"
         ];
         this.setState({ primeiroCheck: false });
       }
@@ -107,13 +117,7 @@ export class VagasMatriculas extends Component {
 
   render() {
     const { diretoriasRegionais } = this.props;
-    const {
-      referencia,
-      ativo,
-      vagasMatriculas,
-      checks,
-      totalPorFaixa
-    } = this.state;
+    const { ativo, vagasMatriculas, checks, totalPorFaixa } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -121,7 +125,7 @@ export class VagasMatriculas extends Component {
             Vagas e Matrículas por Série
           </h1>
           <div className="referencia mt-1 mb-5">
-            Data de referência: {referencia}
+            Data de referência: {this.props.dataReferencia}
           </div>
         </div>
         <div className="row mb-3">
@@ -148,7 +152,12 @@ export class VagasMatriculas extends Component {
             <div className="checkboxes ml-auto">
               <span>
                 <input
-                  onClick={() => this.onCheckClicked(["EDUCACAO INFANTIL"])}
+                  onClick={() =>
+                    this.onCheckClicked([
+                      "EDUCACAO INFANTIL",
+                      "EDUCACAO INFANTIL ESPECIAL"
+                    ])
+                  }
                   type="checkbox"
                 />
                 Infantil
@@ -156,7 +165,10 @@ export class VagasMatriculas extends Component {
               <span>
                 <input
                   onClick={() =>
-                    this.onCheckClicked(["ENSINO FUNDAMENTAL 9 ANOS"])
+                    this.onCheckClicked([
+                      "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
+                      "ENSINO FUNDAMENTAL DE 9 ANOS"
+                    ])
                   }
                   type="checkbox"
                 />
@@ -167,8 +179,8 @@ export class VagasMatriculas extends Component {
                   onClick={() =>
                     this.onCheckClicked([
                       "ENSINO MEDIO",
-                      "ENSINO MEDIO NORMAL/MAGISTERIO",
                       "ESPEC ENS MEDIO",
+                      "NORMAL",
                       "TECNICO MEDIO"
                     ])
                   }
@@ -285,6 +297,23 @@ export class VagasMatriculas extends Component {
             </div>
           </div>
         </div>
+        {totalPorFaixa && (
+          <div>
+            <SeriesEstudantesChart dados={dadosParaGraficos(totalPorFaixa)} />
+          </div>
+        )}
+        {vagasMatriculas.map((matricula, indice) => {
+          return (
+            checks.includes(getKey(matricula)) && (
+              <div key={indice}>
+                <SeriesEstudantesChart
+                  titulo={getKey(matricula)}
+                  dados={dadosParaGraficosPorFaixa(matricula)}
+                />
+              </div>
+            )
+          );
+        })}
       </div>
     );
   }

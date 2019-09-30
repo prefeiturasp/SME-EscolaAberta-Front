@@ -39,12 +39,12 @@ export default class ConsultaPosicao extends Component {
   render() {
     return (
       <div>
-        <Menu />
+        <Menu {...this.props}/>
         <Auxiliar texto="Consulte sua posição" />
         <div className="w-100 bg-light h-100">
           <div className="container">
             <div className="row">
-              <div className="col-lg-6 col-sm-12 pr-lg-0 pt-5 pb-5 consulta">
+              <div id="conteudo" className="col-lg-6 col-sm-12 pr-lg-0 pt-5 pb-5 consulta">
                 <div>
                   <InputCustomizado
                     name="numero-protocolo"

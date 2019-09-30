@@ -4,7 +4,12 @@ import { listarDREs } from "../../services/escolas";
 import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
-import { agregarDefaultDiretoriaRegional, dreLabel } from "./helper";
+import {
+  agregarDefaultDiretoriaRegional,
+  dreLabel,
+  formatarData
+} from "./helper";
+import { dataReferencia } from "services/estatisticas";
 
 const Escolas = lazy(() => import("./Escolas/Container"));
 const Profissionais = lazy(() => import("./Profissionais/Container"));
@@ -37,7 +42,8 @@ export default class ConhecaRede extends Component {
       codesc: "",
       nomesc: "",
       dreSelecionada: "",
-      tabAtual: "Escolas"
+      tabAtual: "Escolas",
+      dataReferencia: null
     };
     this.onDRESelected = this.onDRESelected.bind(this);
   }
@@ -47,6 +53,11 @@ export default class ConhecaRede extends Component {
   }
 
   componentDidMount() {
+    dataReferencia().then(response => {
+      this.setState({
+        dataReferencia: formatarData(response.results[0].dt_atualizacao)
+      });
+    });
     listarDREs().then(diretoriasRegionais => {
       this.setState({
         diretoriasRegionais: agregarDefaultDiretoriaRegional(
@@ -54,7 +65,7 @@ export default class ConhecaRede extends Component {
         )
       });
     });
-    if (this.props.location.state !== undefined) {
+    if (this.props.location && this.props.location.state !== undefined) {
       if (this.props.location.state.codesc !== undefined) {
         this.setState({ codesc: this.props.location.state.codesc }, () => {
           document.querySelector(".nav .active:first-child").click();
@@ -95,7 +106,7 @@ export default class ConhecaRede extends Component {
     const { dreSelecionada, diretoriasRegionais } = this.state;
     return (
       <div>
-        <Menu />
+        <Menu {...this.props} />
         <Auxiliar
           conhecaARede
           texto={
@@ -153,7 +164,9 @@ export default class ConhecaRede extends Component {
                       >
                         {
                           <Suspense fallback={<NullView />}>
-                            {this.renderizaComponente(componente.nome)}
+                            <div id="conteudo">
+                              {this.renderizaComponente(componente.nome)}
+                            </div>
                           </Suspense>
                         }
                       </div>
