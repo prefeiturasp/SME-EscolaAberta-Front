@@ -34,7 +34,7 @@ export default class Auxiliar extends Component {
                   aria-expanded="false"
                   aria-controls="filtro-collapse"
                 >
-                  <FontAwesomeIcon icon={faSlidersH} /> Filtrar
+                  <FontAwesomeIcon icon={faSlidersH} /> Busca Avançada
                 </button>
               </div>
             )}

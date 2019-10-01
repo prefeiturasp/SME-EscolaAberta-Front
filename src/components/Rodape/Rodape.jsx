@@ -113,14 +113,11 @@ export default class Rodape extends Component {
               <div className="col-lg-4 col-xs-12">
                 <div className="form-group mb-2">
                   <select
+                    defaultValue={{ label: "Secretarias", value: null }}
                     onChange={event => this.selectHref(event.target.value)}
                     className="form-control fonte-doze rounded-pill text-secondary bg-transparent border border-secondary text-white"
                   >
-                    <option
-                      disabled="disabled"
-                      selected="selected"
-                      value="Secretarias"
-                    >
+                    <option value="Secretarias">
                       Secretarias
                     </option>
                     <option value="http://www.prefeitura.sp.gov.br/cidade/secretarias/assistencia_social">
@@ -211,14 +208,11 @@ export default class Rodape extends Component {
                 </div>
                 <div className="form-group mb-2">
                   <select
+                    defaultValue={{ label: "Prefeituras Regionais", value: null }}
                     onChange={event => this.selectHref(event.target.value)}
                     className="form-control fonte-doze rounded-pill text-secondary bg-transparent border border-secondary text-white"
                   >
-                    <option
-                      disabled="disabled"
-                      selected="selected"
-                      value="Subprefeituras"
-                    >
+                    <option value="Subprefeituras">
                       Prefeituras Regionais
                     </option>
                     <option value="http://aricanduva.prefeitura.sp.gov.br">
@@ -319,14 +313,11 @@ export default class Rodape extends Component {
                 </div>
                 <div className="form-group mb-0">
                   <select
+                   defaultValue={{ label: "Outros órgãos", value: "" }}
                     onChange={event => this.selectHref(event.target.value)}
                     className="form-control fonte-doze rounded-pill text-secondary bg-transparent border border-secondary text-white"
                   >
-                    <option
-                      disabled="disabled"
-                      selected="selected"
-                      value="Orgaos"
-                    >
+                    <option value="Orgaos">
                       Outros órgãos
                     </option>
                     <option value="http://www.prefeitura.sp.gov.br/ahm">

@@ -43,8 +43,14 @@ body {
 // Menu
 
 .pref-menu {
-  font-size: 10px;
+  background-color: #9d9d9c;
+  font-size: 12px;
   line-height: 12px;
+  li {
+    a {
+      color: white;
+    }
+  }
 }
 
 .links-menu {

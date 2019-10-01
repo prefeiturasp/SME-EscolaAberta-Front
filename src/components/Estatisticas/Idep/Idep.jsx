@@ -92,7 +92,7 @@ export default class Idep extends Component {
                 <div className="mt-5 mb-5 container-geral-idep">
                     <div className="estatisticas-cabecalho mb-5">
                         <h1 className="border-bottom font-weight-light">IDEP</h1>
-                        <div className="referencia mt-1 mb-5">Data de referência: {this.state.referencia}</div>
+                        <div className="referencia mt-1 mb-5">Data de referência: {this.props.dataReferencia}</div>
                     </div>
 
                     {
