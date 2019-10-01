@@ -54,7 +54,7 @@ export default class VagasMatriculas extends Component {
                     <th scope="col"></th>
                     <th scope="col">Total de Turmas</th>
                     <th scope="col">Vagas Oferecidas</th>
-                    <th scope="col">Matrículas</th>
+                    <th scope="col">Matrículas/Encaminhamento</th>
                     <th scope="col">Vagas Remanescentes</th>
                     <th scope="col">Média Atendimentos/Turma</th>
                   </tr>
