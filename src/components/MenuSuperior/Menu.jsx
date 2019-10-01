@@ -70,76 +70,53 @@ export default class Menu extends Component {
             </div>
           </div>
         </div>
-        <div className="pref-menu bg-light fonte-dez">
+        <div className="pref-menu">
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-start justify-content-center">
                 <ul className="list-inline mt-3">
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      Acesso à informação
-                    </Link>
+                    <a href="http://transparencia.prefeitura.sp.gov.br/acesso-a-informacao">
+                      Acesso à informação e-sic
+                    </a>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
+                    <a href="https://www.prefeitura.sp.gov.br/cidade/secretarias/ouvidoria/fale_com_a_ouvidoria/index.php?p=464">
                       Ouvidoria
-                    </Link>
+                    </a>
                   </li>
                   <li className="list-inline-item">
-                    <a
-                      className="text-secondary"
-                      href="http://dados.prefeitura.sp.gov.br/organization/educacao1"
-                    >
+                    <a href="http://dados.prefeitura.sp.gov.br/organization/educacao1">
                       Portal da Transparência
                     </a>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
+                    <a href="https://sp156.prefeitura.sp.gov.br/portal/servicos">
                       SP 156
-                    </Link>
+                    </a>
                   </li>
                 </ul>
               </div>
               <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-end justify-content-center">
-                <ul className="list-inline mt-3">
+                <ul className="list-inline my-auto">
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      Ir ao Conteúdo
+                    <Link to="/">
+                      <FontAwesomeIcon size="2x" icon={faFacebookSquare} />
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      A+
+                    <Link to="/">
+                      <FontAwesomeIcon size="2x" icon={faInstagram} />
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      A-
+                    <Link to="/">
+                      <FontAwesomeIcon size="2x" icon={faTwitter} />
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      BR
-                    </Link>
-                  </li>
-                  <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      <FontAwesomeIcon icon={faFacebookSquare} />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      <FontAwesomeIcon icon={faInstagram} />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      <FontAwesomeIcon icon={faTwitter} />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      <FontAwesomeIcon icon={faYoutube} />
+                    <Link to="/">
+                      <FontAwesomeIcon size="2x" icon={faYoutube} />
                     </Link>
                   </li>
                 </ul>
