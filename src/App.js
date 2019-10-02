@@ -57,7 +57,7 @@ export default class App extends Component {
       >
         <Switch>
           <Route
-            path="/escolaaberta"
+            path="/"
             exact
             render={props => (
               <Home
@@ -70,7 +70,7 @@ export default class App extends Component {
             )}
           />
           <Route
-            path="/escolaaberta/conheca-a-rede"
+            path="/conheca-a-rede"
             render={props => (
               <ConhecaRede
                 {...props}
@@ -80,7 +80,7 @@ export default class App extends Component {
             )}
           />
           <Route
-            path="/escolaaberta/escolas"
+            path="/escolas"
             render={props => (
               <Escolas
                 {...props}
@@ -90,7 +90,7 @@ export default class App extends Component {
             )}
           />
           <Route
-            path="/escolaaberta/consulta"
+            path="/consulta"
             render={props => (
               <ConsultaPosicao
                 {...props}
@@ -100,7 +100,7 @@ export default class App extends Component {
             )}
           />
           <Route
-            path="/escolaaberta/estatisticas"
+            path="/estatisticas"
             render={props => (
               <Estatisticas
                 {...props}
