@@ -65,7 +65,6 @@ export default class SeriesEstudantesChart extends Component {
           <Tooltip />
           <Legend verticalAlign="top" />
           {this.state.turmas.map(turma => {
-            console.log(turma)
             return (
               <Bar
                 key={shortid.generate()}

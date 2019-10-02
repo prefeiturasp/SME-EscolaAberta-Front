@@ -20,44 +20,51 @@ export default class Mapa extends Component {
   componentDidMount() {
     PubSub.subscribe(
       "escola",
-      function (topico, escola) {
+      function(topico, escola) {
         this.setState({ escola: escola, zoom: 15 });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "latitude",
-      function (topico, latitude) {
+      function(topico, latitude) {
         this.setState({ lat: latitude });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "longitude",
-      function (topico, longitude) {
+      function(topico, longitude) {
         this.setState({ lng: longitude });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "lista-escolas",
-      function (topico, listaEscolas) {
+      function(topico, listaEscolas) {
         this.criarMarcadores(listaEscolas);
       }.bind(this)
     );
   }
 
   criarMarcadores(escolas) {
-    this.setState({ marcadores: [] }, () => {
-      escolas.forEach(escola => {
-        let marcador = [];
-        marcador.escola = escola;
-        marcador.latitude = escola.latitude;
-        marcador.longitude = escola.longitude;
-        this.state.marcadores.push(marcador);
+    if (escolas.length) {
+      this.setState({ marcadores: [] }, () => {
+        escolas.forEach(escola => {
+          let marcador = [];
+          marcador.escola = escola;
+          marcador.latitude = escola.latitude;
+          marcador.longitude = escola.longitude;
+          this.state.marcadores.push(marcador);
+        });
+        this.setState({
+          lat: this.state.marcadores[0].latitude,
+          lng: this.state.marcadores[0].longitude
+        });
       });
-      this.setState({ lat: this.state.marcadores[0].latitude, lng: this.state.marcadores[0].longitude });
-    });
+    } else {
+      this.setState({ marcadores: [] });
+    }
   }
 
   render() {
@@ -81,8 +88,15 @@ export default class Mapa extends Component {
               >
                 <Popup>
                   <strong>{marcador.escola.nomesc}</strong>
-                  <div>{marcador.escola.endereco}, {marcador.escola.numero} -  {marcador.escola.bairro}</div>
-                  <div><a href={`tel:${marcador.escola.tel1}`}>Tel: {marcador.escola.tel1}</a> </div>
+                  <div>
+                    {marcador.escola.endereco}, {marcador.escola.numero} -{" "}
+                    {marcador.escola.bairro}
+                  </div>
+                  <div>
+                    <a href={`tel:${marcador.escola.tel1}`}>
+                      Tel: {marcador.escola.tel1}
+                    </a>{" "}
+                  </div>
                 </Popup>
               </Marker>
             );
