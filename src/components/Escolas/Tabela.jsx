@@ -55,7 +55,7 @@ export default class TabelaEscolas extends Component {
                     </Link>
                   </td>
                   <td>{escola.tipoesc}</td>
-                  <td>{escola.subpref}</td>
+                  <td>{escola.diretoria.split('EDUCACAO')[1]}</td>
                   <td className="text-center">
                     <Link
                       to={{
