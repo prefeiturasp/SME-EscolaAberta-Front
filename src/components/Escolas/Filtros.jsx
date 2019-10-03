@@ -6,13 +6,13 @@ import {
   listarTiposEscola,
   listarDREs,
   listarEscolas,
-  listarEscolasLocalizacao,
-  listarDistritos,
-  listarSubpref
+  listarEscolasLocalizacao
 } from "../../services/escolas";
 import InputCustomizado from "../Inputs/InputCustomizado";
+import { DISTRITOS, SUBPREFEITURAS } from "./constants";
 import { Link } from "react-router-dom";
 import BtnFiltro from "../../img/fechar_filtro.png";
+import { listaParaSelect } from "./helper";
 
 export default class Filtros extends Component {
   constructor(props) {
@@ -21,8 +21,8 @@ export default class Filtros extends Component {
       escolasAutocomplete: [],
       tiposEscola: [],
       dres: [],
-      distritos: [],
-      subprefeituras: [],
+      distritos: listaParaSelect(DISTRITOS, "distrito"),
+      subprefeituras: listaParaSelect(SUBPREFEITURAS, "subpref"),
       escolaSelecionada: "",
       bairroSelecionado: "",
       distritoSelecionado: "",
@@ -32,6 +32,7 @@ export default class Filtros extends Component {
       logradouroSelecionado: ""
     };
 
+    this.filtrar = this.filtrar.bind(this);
     this.filtrarListagemEscolas = this.filtrarListagemEscolas.bind(this);
     this.filtrarListagemEscolasLocalizacao = this.filtrarListagemEscolasLocalizacao.bind(
       this
@@ -52,10 +53,6 @@ export default class Filtros extends Component {
     );
 
     listarDREs().then(lista => this.setState({ dres: lista.results }));
-
-    listarSubpref({subpref: ''}).then(subprefeituras => this.setState({ subprefeituras }));
-
-    listarDistritos({distrito: ''}).then(distritos => this.setState({ distritos }));
 
     PubSub.subscribe(
       "escola-filtro",
@@ -107,6 +104,28 @@ export default class Filtros extends Component {
 
   componentWillUnmount() {
     PubSub.clearAllSubscriptions();
+  }
+
+  filtrar() {
+    this.filtrarListagemEscolas();
+  }
+
+  resetarCampos() {
+    this.setState({
+      escolaSelecionada: "",
+      bairroSelecionado: "",
+      distritoSelecionado: "",
+      subprefSelecionada: "",
+      tipoEscolaSelecionado: "",
+      dreSelecionada: "",
+      logradouroSelecionado: ""
+    });
+    this.escolaRef.value = "";
+    this.distritoRef.value = "";
+    this.subprefRef.value = "";
+    this.tipoEscolaRef.value = "";
+    this.dreRef.value = "";
+    this.logradouroRef.value = "";
   }
 
   filtrarListagemEscolas() {
@@ -197,8 +216,8 @@ export default class Filtros extends Component {
                 </div>
                 <div className="col-6 col-sm-6 d-flex justify-content-end align-items-center">
                   <button
-                    type="reset"
-                    value="Reset"
+                    type="button"
+                    onClick={() => this.resetarCampos()}
                     className="btn btn-primary text-uppercase limpar"
                   >
                     Limpar Filtros
@@ -224,6 +243,7 @@ export default class Filtros extends Component {
                   <InputCustomizado
                     name="filtro-logradouro"
                     id="filtro-logradouro"
+                    ref={el => (this.logradouroRef = el)}
                     className="form-control rounded-pill shadow"
                     placeholder="Digite o logradouro"
                     value={this.state.logradouroSelecionado}
@@ -253,12 +273,15 @@ export default class Filtros extends Component {
                   <label htmlFor="filtro-distrito" className="text-white">
                     Distrito
                   </label>
-                  <InputCustomizado
+                  <SelectCustomizado
                     name="filtro-distrito"
                     id="filtro-distrito"
                     className="custom-select form-control rounded-pill shadow"
-                    placeholder="Selecione o distrito"
-                    value={this.state.distritoSelecionado}
+                    emptyLabel="Selecione o distrito"
+                    selectRef={el => (this.distritoRef = el)}
+                    lista={this.state.distritos}
+                    value="value"
+                    label="label"
                     onChange={this.setDistrito}
                   />
                 </div>
@@ -270,24 +293,17 @@ export default class Filtros extends Component {
                   <label htmlFor="filtro-subpref" className="text-white">
                     Subprefeitura
                   </label>
-                  <InputCustomizado
+                  <SelectCustomizado
                     name="filtro-subpref"
                     id="filtro-subpref"
                     className="custom-select form-control rounded-pill shadow"
-                    placeholder="Selecione a subprefeitura"
-                    value={this.state.subprefSelecionada}
+                    emptyLabel="Selecione a subprefeitura"
+                    lista={this.state.subprefeituras}
+                    selectRef={el => (this.subprefRef = el)}
+                    value="value"
+                    label="label"
                     onChange={this.setSubpref}
                   />
-                  {/* <SelectCustomizado
-                    name="filtro-tipo"
-                    id="filtro-tipo"
-                    className="custom-select rounded-pill shadow"
-                    emptyLabel="Selecione o tipo"
-                    lista={this.state.tiposEscola}
-                    value="tipoesc"
-                    label="tipoesc"
-                    onChange={this.setTipoEscola}
-                  />*/}
                 </div>
               </div>
             </div>
@@ -308,13 +324,13 @@ export default class Filtros extends Component {
                     id="filtro-escola"
                     name="filtro-escola"
                     value={this.state.escolaSelecionada}
+                    selectRef={el => (this.escolaRef = el)}
                     collection={this.state.escolasAutocomplete}
                     className="custom-select rounded-pill shadow"
                     placeholder="Selecione a escola"
                     onChange={this.setEscola}
                     onKeyDown={this.buscarEscolas}
                   />
-
                 </div>
               </div>
             </div>
@@ -329,6 +345,7 @@ export default class Filtros extends Component {
                     id="filtro-tipo"
                     className="custom-select rounded-pill shadow"
                     emptyLabel="Selecione o tipo"
+                    selectRef={el => (this.tipoEscolaRef = el)}
                     lista={this.state.tiposEscola}
                     value="tipoesc"
                     label="tipoesc"
@@ -348,6 +365,7 @@ export default class Filtros extends Component {
                     id="filtro-dre"
                     className="custom-select rounded-pill shadow"
                     emptyLabel="Selecione a DRE"
+                    selectRef={el => (this.dreRef = el)}
                     lista={this.state.dres}
                     value="dre"
                     label="diretoria"
@@ -360,7 +378,7 @@ export default class Filtros extends Component {
               <div className="container">
                 <div className="col-lg-12 d-flex justify-content-center align-items-center mt-4">
                   <button
-                    onClick={() => this.filtrarListagemEscolas()}
+                    onClick={() => this.filtrar()}
                     className="btn btn-lg btn-outline-light pt-3 pr-5 pb-3 pl-5"
                     data-toggle="collapse"
                     data-target="#filtro-collapse"

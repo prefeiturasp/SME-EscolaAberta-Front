@@ -20,7 +20,8 @@ export default class Escolas extends Component {
       distritoSelecionado: "",
       subprefSelecionada: "",
       tipoEscolaSelecionado: "",
-      dreSelecionada: ""
+      dreSelecionada: "",
+      loading: true
     };
 
     this.atualizarMapa = this.atualizarMapa.bind(this);
@@ -50,7 +51,7 @@ export default class Escolas extends Component {
     PubSub.subscribe(
       "lista-escolas",
       function(topico, listaEscolas) {
-        this.setState({ escolas: listaEscolas });
+        this.setState({ escolas: listaEscolas, loading: false });
       }.bind(this)
     );
 
@@ -146,8 +147,10 @@ export default class Escolas extends Component {
         escola: this.state.escolaSelecionada,
         tipo: this.state.tipoEscolaSelecionado,
         dre: this.state.dreSelecionada,
-        pagina: this.state.pagina
+        pagina: this.state.pagina,
+        loading: true
       }).then(lista => {
+        this.setState({ loading: false });
         let novaListaEscolas = this.state.escolas.concat(lista.results);
         this.setState({ escolas: novaListaEscolas });
         this.setState({ pagina: this.state.pagina + 1 });
@@ -168,6 +171,7 @@ export default class Escolas extends Component {
                 <Filtros />
                 <div id="conteudo" className="overflow-auto pt-4 pb-4">
                   <TabelaEscolas
+                    loading={this.state.loading}
                     lista={this.state.escolas}
                     limparCheckboxes={this.limparCheckboxes}
                     atualizarMapa={this.atualizarMapa}

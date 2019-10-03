@@ -6,7 +6,7 @@ import { faChevronDown, faChartBar } from "@fortawesome/free-solid-svg-icons";
 
 export default class TabelaEscolas extends Component {
   render() {
-    return (
+    return this.props.lista.length ? (
       <table className="table tabela-escolas">
         <thead>
           <tr>
@@ -79,6 +79,10 @@ export default class TabelaEscolas extends Component {
           })}
         </tbody>
       </table>
+    ) : this.props.loading ? (
+      <div>Carregando...</div>
+    ) : (
+      <div>Nenhum resultado encontrado</div>
     );
   }
 }

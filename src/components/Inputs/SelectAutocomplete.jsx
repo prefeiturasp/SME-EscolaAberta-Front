@@ -38,6 +38,7 @@ export default class SelectAutocomplete extends Component {
           id={this.props.id}
           name={this.props.name}
           className={this.props.className}
+          ref={this.props.selectRef}
           placeholder={this.props.placeholder}
           value={this.props.value}
           onKeyDown={this.props.onKeyDown}
