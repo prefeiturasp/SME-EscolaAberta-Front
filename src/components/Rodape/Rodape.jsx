@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import logoNCSA from "../../img/by_nc_sa.png";
 import logoPrefeitura from "../../img/logo_sp.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebookSquare,
-  faInstagram,
-  faTwitter
-} from "@fortawesome/free-brands-svg-icons";
 import "./style.scss";
 
 export default class Rodape extends Component {
@@ -20,24 +13,21 @@ export default class Rodape extends Component {
         <div className="area-rodape text-white p-5">
           <div className="container">
             <div className="row">
-              <div className="col-lg-2 col-xs-12 d-flex align-items-end mb-4 mb-lg-0">
+              <div className="logo-prefeitura col-lg-2 col-xs-12 d-flex align-items-end mb-4 mb-lg-0">
                 <img
                   src={logoPrefeitura}
                   alt="Prefeitura de SP"
                   className="img-fluid"
                 />
               </div>
-              <div className="col-lg-2 col-xs-12 border-left mb-4 mb-lg-0">
+              <div className="governo-ul col-lg-2 col-xs-12 border-left mb-4 mb-lg-0">
                 <ul className="list-unstyled mb-0">
                   <li className="text-uppercase font-weight-bold">
                     Governo Municipal
                   </li>
-                  <li className="d-lg-block d-none">&nbsp;</li>
-                  <li className="d-lg-block d-none">&nbsp;</li>
-                  <li className="d-lg-block d-none">&nbsp;</li>
                 </ul>
                 <ul className="list-unstyled mb-0 mt-0">
-                  <li>Prefeito Bruno Covas</li>
+                  <li>Prefeito Bruno Covas:</li>
                   <li>
                     <a href="https://www.prefeitura.sp.gov.br/cidade/secretarias/comunicacao/organizacao/index.php?p=192554">
                       Equipe de Governo
@@ -53,51 +43,41 @@ export default class Rodape extends Component {
                       Agenda do Secretário
                     </a>
                   </li>
-                </ul>
-              </div>
-              <div className="col-lg-3 col-xs-12 mb-4 mb-lg-0">
-                <ul className="list-unstyled mb-1">
-                  <li className="text-uppercase font-weight-bold">
-                    Mapa do Site
+                  <li className="text-uppercase font-weight-bold pt-2">
+                    Canais Oficiais <br /> da Prefeitura
                   </li>
-                </ul>
-                <ul className="list-unstyled mb-1">
-                  <li className="text-uppercase font-weight-bold">
-                    Canais Oficiais
-                  </li>
-                </ul>
-                <ul className="list-inline">
-                  <li className="list-inline-item">
-                    <a
-                      className="text-white"
-                      href="https://www.facebook.com/EducaPrefSP/"
-                    >
-                      <FontAwesomeIcon icon={faFacebookSquare} />
-                    </a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a
-                      className="text-white"
-                      href="https://www.instagram.com/educaprefsp/"
-                    >
-                      <FontAwesomeIcon icon={faInstagram} />
-                    </a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a
-                      className="text-white"
-                      href="https://twitter.com/EducaPrefSP?ref_src=twsrc%5Etfw%7Ctwcamp%5Eembeddedtimeline%7Ctwterm%5Eprofile%3AEducaPrefSP&ref_url=https%3A%2F%2Fhom-portal.sme.prefeitura.sp.gov.br%2F"
-                    >
-                      <FontAwesomeIcon icon={faTwitter} />
-                    </a>
-                  </li>
-                  {/*<li className="list-inline-item">
-                      <Link className="text-white" to="/">
-                        <FontAwesomeIcon icon={faYoutube} />
-                      </Link>
-                    </li>*/}
-                </ul>
-                <ul className="list-inline mb-3">
+                  <ul className="list-inline pt-1 mb-3">
+                    <li className="list-inline-item pr-1">
+                      <a
+                        className="text-white"
+                        href="https://www.facebook.com/EducaPrefSP/"
+                      >
+                        <img
+                          src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-facebook-topo.png"
+                          alt="Ir para Facebook da Secerataria Muncipal de Educação de São Paulo"
+                        />
+                      </a>
+                    </li>
+                    <li className="list-inline-item">
+                      <a
+                        className="text-white"
+                        href="https://twitter.com/EducaPrefSP?ref_src=twsrc%5Etfw%7Ctwcamp%5Eembeddedtimeline%7Ctwterm%5Eprofile%3AEducaPrefSP&ref_url=https%3A%2F%2Fhom-portal.sme.prefeitura.sp.gov.br%2F"
+                      >
+                        <img
+                          src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-twitter-topo.png"
+                          alt="Ir para Twitter da Secerataria Muncipal de Educação de São Paulo"
+                        />
+                      </a>
+                    </li>
+                    <li className="list-inline-item">
+                      <a className="text-white" href="https://www.youtube.com/">
+                        <img
+                          src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-youtube-topo.png"
+                          alt="Ir para YouTube da Secerataria Muncipal de Educação de São Paulo"
+                        />
+                      </a>
+                    </li>
+                  </ul>
                   <li>
                     <a href="http://www.docidadesp.imprensaoficial.com.br/">
                       <img
@@ -107,19 +87,15 @@ export default class Rodape extends Component {
                     </a>
                   </li>
                 </ul>
-                <img src={logoNCSA} alt="Copyright" />
               </div>
-              <div className="col-lg-1" />
-              <div className="col-lg-4 col-xs-12">
+              <div className="col-lg-3 col-xs-12">
                 <div className="form-group mb-2">
                   <select
                     defaultValue={{ label: "Secretarias", value: null }}
                     onChange={event => this.selectHref(event.target.value)}
                     className="form-control fonte-doze rounded-pill text-secondary bg-transparent border border-secondary text-white"
                   >
-                    <option value="Secretarias">
-                      Secretarias
-                    </option>
+                    <option value="Secretarias">Secretarias</option>
                     <option value="http://www.prefeitura.sp.gov.br/cidade/secretarias/assistencia_social">
                       Assistência Social
                     </option>
@@ -208,7 +184,10 @@ export default class Rodape extends Component {
                 </div>
                 <div className="form-group mb-2">
                   <select
-                    defaultValue={{ label: "Prefeituras Regionais", value: null }}
+                    defaultValue={{
+                      label: "Prefeituras Regionais",
+                      value: null
+                    }}
                     onChange={event => this.selectHref(event.target.value)}
                     className="form-control fonte-doze rounded-pill text-secondary bg-transparent border border-secondary text-white"
                   >
@@ -313,13 +292,11 @@ export default class Rodape extends Component {
                 </div>
                 <div className="form-group mb-0">
                   <select
-                   defaultValue={{ label: "Outros órgãos", value: "" }}
+                    defaultValue={{ label: "Outros órgãos", value: "" }}
                     onChange={event => this.selectHref(event.target.value)}
                     className="form-control fonte-doze rounded-pill text-secondary bg-transparent border border-secondary text-white"
                   >
-                    <option value="Orgaos">
-                      Outros órgãos
-                    </option>
+                    <option value="Orgaos">Outros órgãos</option>
                     <option value="http://www.prefeitura.sp.gov.br/ahm">
                       Autarquia Hospitalar do Município de São Paulo - AHMSP
                     </option>
@@ -451,12 +428,26 @@ export default class Rodape extends Component {
                   </select>
                 </div>
               </div>
+              <div className="cc col-lg-3">
+                <figure>
+                  <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt_BR">
+                    <img
+                      src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/07/by-nc-sa-2.png"
+                      alt="Copyright"
+                    />
+                  </a>
+                  <p className="mt-2">
+                    Esta obra está licenciada com uma Licença Creative Commons
+                    Atribuição-NãoComercial-CompartilhaIgual 4.0 Internacional{" "}
+                  </p>
+                </figure>
+              </div>
             </div>
           </div>
         </div>
         <div className="endereco container">
           <div className="row">
-            <div className="col-lg-12 col-xs-12 text-center fonte-doze mt-2 mb-2">
+            <div className="col-lg-12 col-xs-12 text-center mt-2">
               SECRETARIA MUNICIPAL DE EDUCAÇÃO — Rua Borges Lagoa, 1230 — Vila
               Clementino — CEP: 04038-003
             </div>
