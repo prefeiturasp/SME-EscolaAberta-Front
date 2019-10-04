@@ -1,7 +1,38 @@
-ul.list-unstyled {
-  li {
-    a {
-      color: #fff;
+#rodape {
+  height: 359px;
+  .area-rodape {
+    height: 325px;
+    .logo-prefeitura {
+      margin-top: 65px;
     }
+    .governo-ul {
+      font-size: 12px;
+      padding-left: 30px;
+    }
+  }
+  ul.list-unstyled {
+    li {
+      a {
+        color: #fff;
+      }
+    }
+  }
+  .form-control.fonte-doze.rounded-pill {
+    font-size: 12px;
+    color: white !important;
+    border-color: white !important;
+    border-radius: 10px !important;
+    padding-top: 5px;
+    line-height: 18px;
+    height: 38px;
+    option {
+      color: black;
+    }
+  }
+  .cc {
+    font-size: 12px;
+  }
+  .endereco {
+    font-size: 12px;
   }
 }
