@@ -24,7 +24,7 @@ export default class Filtros extends Component {
       subprefeituras: listaParaSelect(SUBPREFEITURAS, "subpref"),
       escolaSelecionada: "",
       bairroSelecionado: "",
-      distritoSelecionado: "",
+      distritoSelecionado: this.props.distritoSelecionado || "",
       subprefSelecionada: "",
       tipoEscolaSelecionado: "",
       dreSelecionada: "",
@@ -105,6 +105,23 @@ export default class Filtros extends Component {
     PubSub.clearAllSubscriptions();
   }
 
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.distritoSelecionado === "" &&
+      this.props.distritoSelecionado !== ""
+    ) {
+      this.setState({ distritoSelecionado: this.state.distritoSelecionado });
+      this.distritoRef.value = this.props.distritoSelecionado;
+    }
+    if (
+      prevProps.subprefSelecionada === "" &&
+      this.props.subprefSelecionada !== ""
+    ) {
+      this.setState({ subprefSelecionada: this.state.subprefSelecionada });
+      this.subprefRef.value = this.props.subprefSelecionada;
+    }
+  }
+
   filtrar() {
     this.filtrarListagemEscolas();
   }
@@ -124,52 +141,61 @@ export default class Filtros extends Component {
     this.subprefRef.value = "";
     this.tipoEscolaRef.value = "";
     this.dreRef.value = "";
-    this.logradouroRef.value = "";
   }
 
   filtrarListagemEscolas() {
     let listaResponse = {};
     let pagina = 1;
-    listarEscolas({
-      escola: this.state.escolaSelecionada,
-      bairro: this.state.bairroSelecionado,
-      distrito: this.state.distritoSelecionado,
-      subpref: this.state.subprefSelecionada,
-      tipo: this.state.tipoEscolaSelecionado,
-      dre: this.state.dreSelecionada,
-      pagina: pagina
-    }).then(lista => {
-      listaResponse.results = lista.results;
-      listaResponse.count = lista.count;
-      if (lista.next) {
-        let paginas = Math.ceil(lista.count / 10);
-        let i = 2;
-        for (i; i <= paginas; i++) {
-          listarEscolas({
-            escola: this.state.escolaSelecionada,
-            bairro: this.state.bairroSelecionado,
-            distrito: this.state.distritoSelecionado,
-            subpref: this.state.subprefSelecionada,
-            tipo: this.state.tipoEscolaSelecionado,
-            dre: this.state.dreSelecionada,
-            pagina: i
-          }).then(lista_inner => {
-            listaResponse.results = listaResponse.results.concat(
-              lista_inner.results
-            );
-            if (!lista_inner.next) {
-              PubSub.publish("lista-escolas", listaResponse.results);
-              PubSub.publish("total-itens", Math.ceil(20));
-              document.querySelector(".overflow-auto").scrollTop = 0;
-            }
-          });
+    if (
+      this.state.escolaSelecionada === "" &&
+      this.state.distritoSelecionado === "" &&
+      this.state.subprefSelecionada === "" &&
+      this.state.dreSelecionada === "" &&
+      this.state.tipoEscolaSelecionado === ""
+    ) {
+      alert("Preencha ao menos uma opção da busca avançada");
+    } else {
+      listarEscolas({
+        escola: this.state.escolaSelecionada,
+        bairro: this.state.bairroSelecionado,
+        distrito: this.state.distritoSelecionado,
+        subpref: this.state.subprefSelecionada,
+        tipo: this.state.tipoEscolaSelecionado,
+        dre: this.state.dreSelecionada,
+        pagina: pagina
+      }).then(lista => {
+        listaResponse.results = lista.results;
+        listaResponse.count = lista.count;
+        if (lista.next) {
+          let paginas = Math.ceil(lista.count / 10);
+          let i = 2;
+          for (i; i <= paginas; i++) {
+            listarEscolas({
+              escola: this.state.escolaSelecionada,
+              bairro: this.state.bairroSelecionado,
+              distrito: this.state.distritoSelecionado,
+              subpref: this.state.subprefSelecionada,
+              tipo: this.state.tipoEscolaSelecionado,
+              dre: this.state.dreSelecionada,
+              pagina: i
+            }).then(lista_inner => {
+              listaResponse.results = listaResponse.results.concat(
+                lista_inner.results
+              );
+              if (!lista_inner.next) {
+                PubSub.publish("lista-escolas", listaResponse.results);
+                PubSub.publish("total-itens", Math.ceil(20));
+                document.querySelector(".overflow-auto").scrollTop = 0;
+              }
+            });
+          }
+        } else {
+          PubSub.publish("lista-escolas", listaResponse.results);
+          PubSub.publish("total-itens", Math.ceil(lista.count / 10));
+          document.querySelector(".overflow-auto").scrollTop = 0;
         }
-      } else {
-        PubSub.publish("lista-escolas", listaResponse.results);
-        PubSub.publish("total-itens", Math.ceil(lista.count / 10));
-        document.querySelector(".overflow-auto").scrollTop = 0;
-      }
-    });
+      });
+    }
   }
 
   filtrarListagemEscolasLocalizacao() {

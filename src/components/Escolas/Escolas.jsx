@@ -37,8 +37,14 @@ export default class Escolas extends Component {
       } else if (this.props.location.state.bairro !== undefined) {
         PubSub.publish("bairro-filtro", this.props.location.state.bairro);
       } else if (this.props.location.state.distrito !== undefined) {
+        this.setState({
+          distritoSelecionado: this.props.location.state.distrito
+        });
         PubSub.publish("distrito-filtro", this.props.location.state.distrito);
       } else if (this.props.location.state.subpref !== undefined) {
+        this.setState({
+          subprefSelecionada: this.props.location.state.subpref
+        });
         PubSub.publish("subpref-filtro", this.props.location.state.subpref);
       } else if (this.props.location.state.logradouro !== undefined) {
         PubSub.publish("logradouro-filtro", {
@@ -169,7 +175,7 @@ export default class Escolas extends Component {
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-sm-12 pr-lg-0 escolas">
-                <Filtros />
+                <Filtros {...this.state} />
                 <div
                   id="conteudo"
                   className={`tabela-escolas-div overflow-auto pt-4 pb-4`}
