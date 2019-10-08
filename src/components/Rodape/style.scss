@@ -1,9 +1,17 @@
 #rodape {
-  height: 359px;
+  @media only screen and (min-width: 992px) {
+    height: 359px;
+  }
   .area-rodape {
-    height: 325px;
+    @media only screen and (min-width: 992px) {
+      height: 325px;
+    }
     .logo-prefeitura {
       margin-top: 65px;
+      img {
+        height: 147.6px;
+        width: 160px;
+      }
     }
     .governo-ul {
       font-size: 12px;
@@ -31,6 +39,9 @@
   }
   .cc {
     font-size: 12px;
+    @media only screen and (max-width: 992px) {
+      padding-top: 20px;
+    }
   }
   .endereco {
     font-size: 12px;
