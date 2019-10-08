@@ -10,7 +10,6 @@ export default class Mapa extends Component {
       lat: -23.5505,
       lng: -46.6333,
       zoom: 12,
-      height: "860px",
       marcadores: []
     };
 
@@ -69,12 +68,11 @@ export default class Mapa extends Component {
 
   render() {
     return (
-      <div className="mapa h-100 w-100">
+      <div className="mapa h-80 w-80">
         <Map
           ref="map"
           center={[this.state.lat, this.state.lng]}
           zoom={this.state.zoom}
-          style={{ height: this.state.height }}
         >
           <TileLayer
             attribution=""
