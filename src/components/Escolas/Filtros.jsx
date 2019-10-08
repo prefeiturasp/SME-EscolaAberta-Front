@@ -8,7 +8,6 @@ import {
   listarEscolas,
   listarEscolasLocalizacao
 } from "../../services/escolas";
-import InputCustomizado from "../Inputs/InputCustomizado";
 import { DISTRITOS, SUBPREFEITURAS } from "./constants";
 import { Link } from "react-router-dom";
 import BtnFiltro from "../../img/fechar_filtro.png";
@@ -129,17 +128,47 @@ export default class Filtros extends Component {
   }
 
   filtrarListagemEscolas() {
+    let listaResponse = {};
+    let pagina = 1;
     listarEscolas({
       escola: this.state.escolaSelecionada,
       bairro: this.state.bairroSelecionado,
       distrito: this.state.distritoSelecionado,
       subpref: this.state.subprefSelecionada,
       tipo: this.state.tipoEscolaSelecionado,
-      dre: this.state.dreSelecionada
+      dre: this.state.dreSelecionada,
+      pagina: pagina
     }).then(lista => {
-      PubSub.publish("lista-escolas", lista.results);
-      PubSub.publish("total-itens", Math.ceil(lista.count / 10));
-      document.querySelector(".overflow-auto").scrollTop = 0;
+      listaResponse.results = lista.results;
+      listaResponse.count = lista.count;
+      if (lista.next) {
+        let paginas = Math.ceil(lista.count / 10);
+        let i = 2;
+        for (i; i <= paginas; i++) {
+          listarEscolas({
+            escola: this.state.escolaSelecionada,
+            bairro: this.state.bairroSelecionado,
+            distrito: this.state.distritoSelecionado,
+            subpref: this.state.subprefSelecionada,
+            tipo: this.state.tipoEscolaSelecionado,
+            dre: this.state.dreSelecionada,
+            pagina: i
+          }).then(lista_inner => {
+            listaResponse.results = listaResponse.results.concat(
+              lista_inner.results
+            );
+            if (!lista_inner.next) {
+              PubSub.publish("lista-escolas", listaResponse.results);
+              PubSub.publish("total-itens", Math.ceil(20));
+              document.querySelector(".overflow-auto").scrollTop = 0;
+            }
+          });
+        }
+      } else {
+        PubSub.publish("lista-escolas", listaResponse.results);
+        PubSub.publish("total-itens", Math.ceil(lista.count / 10));
+        document.querySelector(".overflow-auto").scrollTop = 0;
+      }
     });
   }
 
@@ -234,7 +263,7 @@ export default class Filtros extends Component {
                 </h4>
               </div>
             </div>
-            <div className="row">
+            {/*<div className="row">
               <div className="col-lg-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="filtro-logradouro" className="text-white">
@@ -251,7 +280,7 @@ export default class Filtros extends Component {
                   />
                 </div>
               </div>
-            </div>
+            </div>*/}
             {/* <div className="row">
               <div className="col-lg-12 col-sm-12">
                 <div className="form-group">

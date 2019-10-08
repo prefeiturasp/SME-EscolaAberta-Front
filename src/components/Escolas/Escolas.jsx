@@ -7,6 +7,7 @@ import Rodape from "../Rodape/Rodape";
 import { listarEscolas } from "../../services/escolas";
 import Menu from "../MenuSuperior/Menu";
 import Auxiliar from "../MenuSuperior/Auxiliar";
+import "./style.scss";
 
 export default class Escolas extends Component {
   constructor(props) {
@@ -169,7 +170,10 @@ export default class Escolas extends Component {
             <div className="row">
               <div className="col-lg-6 col-sm-12 pr-lg-0 escolas">
                 <Filtros />
-                <div id="conteudo" className="overflow-auto pt-4 pb-4">
+                <div
+                  id="conteudo"
+                  className={`tabela-escolas-div overflow-auto pt-4 pb-4`}
+                >
                   <TabelaEscolas
                     loading={this.state.loading}
                     lista={this.state.escolas}
