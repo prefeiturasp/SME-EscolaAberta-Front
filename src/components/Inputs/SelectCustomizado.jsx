@@ -7,6 +7,7 @@ export default class SelectCustomizado extends Component {
         name={this.props.name}
         id={this.props.id}
         className={this.props.className}
+        ref={this.props.selectRef}
         onChange={this.props.onChange}
       >
         <option value="">{this.props.emptyLabel}</option>
