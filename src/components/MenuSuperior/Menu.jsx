@@ -53,7 +53,7 @@ export default class Menu extends Component {
               <div className="col-6 text-right">
                 <ul className="list-inline mt-3">
                   <li className="list-inline-item">
-                    <a href="http://portal.sme.prefeitura.sp.gov.br/acessibilidade/">
+                    <a href="https://educacao.sme.prefeitura.sp.gov.br/acessibilidade/">
                       Acessibilidade<span className="span-accesskey">5</span>{" "}
                     </a>
                   </li>
@@ -128,7 +128,7 @@ export default class Menu extends Component {
           <div className="row mt-4 mb-4">
             <div className="col-lg-3 col-sm-12 d-flex justify-content-lg-start justify-content-center align-items-end mb-4 mb-lg-0">
               <h1 className="m-0">
-                <a href="http://portal.sme.prefeitura.sp.gov.br/">
+                <a href="https://educacao.sme.prefeitura.sp.gov.br/">
                   <img
                     src={logoEducacaoSP}
                     alt="Escola Aberta"
