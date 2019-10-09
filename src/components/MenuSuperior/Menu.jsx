@@ -2,11 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import logoEducacaoSP from "../../img/educacao_sp.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSearch,
-  faAdjust,
-  faTextHeight
-} from "@fortawesome/free-solid-svg-icons";
+import { faAdjust, faTextHeight } from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebookSquare,
   faInstagram,
@@ -17,7 +13,12 @@ import "./style.scss";
 
 export default class Menu extends Component {
   render() {
-    const { alterarFonte, alterarContraste, focusBusca } = this.props;
+    const {
+      alterarFonte,
+      alterarContraste,
+      focusBusca,
+      esconderLinkBuscaEscola
+    } = this.props;
     return (
       <div>
         <div className="header-acessibilidade">
@@ -69,73 +70,53 @@ export default class Menu extends Component {
             </div>
           </div>
         </div>
-        <div className="pref-menu bg-light fonte-dez">
+        <div className="pref-menu">
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-start justify-content-center">
                 <ul className="list-inline mt-3">
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      Acesso à informação
-                    </Link>
+                    <a href="http://transparencia.prefeitura.sp.gov.br/acesso-a-informacao">
+                      Acesso à informação e-sic
+                    </a>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
+                    <a href="https://www.prefeitura.sp.gov.br/cidade/secretarias/ouvidoria/fale_com_a_ouvidoria/index.php?p=464">
                       Ouvidoria
-                    </Link>
+                    </a>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
+                    <a href="http://dados.prefeitura.sp.gov.br/organization/educacao1">
                       Portal da Transparência
-                    </Link>
+                    </a>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
+                    <a href="https://sp156.prefeitura.sp.gov.br/portal/servicos">
                       SP 156
-                    </Link>
+                    </a>
                   </li>
                 </ul>
               </div>
               <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-end justify-content-center">
-                <ul className="list-inline mt-3">
+                <ul className="list-inline my-auto">
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      Ir ao Conteúdo
+                    <Link to="/">
+                      <FontAwesomeIcon size="2x" icon={faFacebookSquare} />
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      A+
+                    <Link to="/">
+                      <FontAwesomeIcon size="2x" icon={faInstagram} />
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      A-
+                    <Link to="/">
+                      <FontAwesomeIcon size="2x" icon={faTwitter} />
                     </Link>
                   </li>
                   <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      BR
-                    </Link>
-                  </li>
-                  <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      <FontAwesomeIcon icon={faFacebookSquare} />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      <FontAwesomeIcon icon={faInstagram} />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      <FontAwesomeIcon icon={faTwitter} />
-                    </Link>
-                  </li>
-                  <li className="list-inline-item">
-                    <Link className="text-secondary" to="/">
-                      <FontAwesomeIcon icon={faYoutube} />
+                    <Link to="/">
+                      <FontAwesomeIcon size="2x" icon={faYoutube} />
                     </Link>
                   </li>
                 </ul>
@@ -147,13 +128,13 @@ export default class Menu extends Component {
           <div className="row mt-4 mb-4">
             <div className="col-lg-3 col-sm-12 d-flex justify-content-lg-start justify-content-center align-items-end mb-4 mb-lg-0">
               <h1 className="m-0">
-                <Link to="/">
+                <a href="http://portal.sme.prefeitura.sp.gov.br/">
                   <img
                     src={logoEducacaoSP}
                     alt="Escola Aberta"
                     className="img-fluid"
                   />
-                </Link>
+                </a>
               </h1>
             </div>
             <div
@@ -161,11 +142,13 @@ export default class Menu extends Component {
               className="col-lg-9 col-sm-12 d-flex links-menu align-items-end justify-content-lg-end justify-content-center pr-lg-0 mb-xs-4"
             >
               <ul className="nav nav-tabs border-0">
-                <li className="nav-item">
-                  <Link className="nav-link text-secondary mb-1 pb-0" to="/">
-                    Busque uma escola
-                  </Link>
-                </li>
+                {!esconderLinkBuscaEscola && (
+                  <li className="nav-item">
+                    <Link className="nav-link text-secondary mb-1 pb-0" to="/">
+                      Busque uma escola
+                    </Link>
+                  </li>
+                )}
                 <li className="nav-item">
                   <Link
                     className="nav-link text-secondary mb-1 pb-0"
@@ -175,22 +158,18 @@ export default class Menu extends Component {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link className="nav-link text-secondary mb-1 pb-0" to="/">
-                    Consulte sua posição
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link className="nav-link text-secondary mb-1 pb-0" to="/">
+                  <a
+                    className="nav-link text-secondary mb-1 pb-0"
+                    href="http://dados.prefeitura.sp.gov.br/organization/educacao1"
+                  >
                     Portal da Transparência
-                  </Link>
+                  </a>
                 </li>
                 <li>
                   <Link
                     className="nav-link text-secondary border-0 mb-1 pr-0 pb-0"
                     to="/"
-                  >
-                    <FontAwesomeIcon icon={faSearch} />
-                  </Link>
+                  ></Link>
                 </li>
               </ul>
             </div>

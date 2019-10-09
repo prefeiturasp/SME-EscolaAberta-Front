@@ -26,7 +26,7 @@ export default class Ambientes extends Component {
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
           <h1 className="border-bottom font-weight-light">Ambientes</h1>
-          <div className="referencia mt-1 mb-5">Data de referência: {this.state.referencia}</div>
+          <div className="referencia mt-1 mb-5">Data de referência: {this.props.dataReferencia}</div>
         </div>
         <div className="card shadow-sm mb-3">
           <div className="card-header bg-white d-flex align-items-center font-weight-bold">

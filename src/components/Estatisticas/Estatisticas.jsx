@@ -4,6 +4,9 @@ import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
 
+import { dataReferencia } from "../../services/estatisticas";
+import { formatarData } from "components/ConhecaRede/helper";
+
 const SeriesEstudantes = lazy(() => import("./SeriesEstudantes"));
 const Profissionais = lazy(() => import("./Profissionais"));
 const VagasMatriculas = lazy(() => import("./VagasMatriculas"));
@@ -37,7 +40,8 @@ export default class Estatisticas extends Component {
         }
       ],
       codesc: "",
-      nomesc: ""
+      nomesc: "",
+      dataReferencia: null
     };
   }
 
@@ -53,23 +57,35 @@ export default class Estatisticas extends Component {
   }
 
   componentDidMount() {
+    dataReferencia().then(response => {
+      this.setState({
+        dataReferencia: formatarData(response.results[0].dt_atualizacao)
+      });
+    });
     if (this.state.codesc) {
       document.querySelector(".nav .active:first-child").click();
     }
   }
 
   renderizaComponente(componente) {
+    const { dataReferencia, codesc } = this.state;
     switch (componente) {
       case "SeriesEstudantes":
-        return <SeriesEstudantes codesc={this.state.codesc} />;
+        return (
+          <SeriesEstudantes codesc={codesc} dataReferencia={dataReferencia} />
+        );
       case "Profissionais":
-        return <Profissionais codesc={this.state.codesc} />;
+        return (
+          <Profissionais codesc={codesc} dataReferencia={dataReferencia} />
+        );
       case "VagasMatriculas":
-        return <VagasMatriculas codesc={this.state.codesc} />;
+        return (
+          <VagasMatriculas codesc={codesc} dataReferencia={dataReferencia} />
+        );
       case "Ambientes":
-        return <Ambientes codesc={this.state.codesc} />;
+        return <Ambientes codesc={codesc} dataReferencia={dataReferencia} />;
       case "Idep":
-        return <Idep codesc={this.state.codesc} />;
+        return <Idep codesc={codesc} dataReferencia={dataReferencia} />;
       default:
         return <NullView />;
     }

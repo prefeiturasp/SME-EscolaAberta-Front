@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faUsers, faBars } from "@fortawesome/free-solid-svg-icons";
 import {
   listarServidoresEscolarizacao,
   listarServidoresPorEscola
@@ -63,7 +63,7 @@ export default class Profissionais extends Component {
         <div className="estatisticas-cabecalho mb-5">
           <h1 className="border-bottom font-weight-light">Profissionais</h1>
           <div className="referencia mt-1 mb-5">
-            Data de referência: {this.state.referencia}
+            Data de referência: {this.props.dataReferencia}
           </div>
         </div>
         <div className="card shadow-sm mb-3">
@@ -185,38 +185,52 @@ export default class Profissionais extends Component {
           <div className="card-header bg-white d-flex align-items-center font-weight-bold">
             <FontAwesomeIcon icon={faUsers} className="cor-azul" />
             <div className="ml-3 fonte-14">Conheça a Equipe</div>
+            <a
+              className="text-decoration-none cor-cinza ml-auto"
+              data-toggle="collapse"
+              data-target={`#conheca-a-equipe`}
+              aria-expanded="false"
+              aria-controls={`conheca-a-equipe`}
+              href={`#conheca-a-equipe`}
+            >
+              <FontAwesomeIcon icon={faBars} className="stretched-link" />
+            </a>
           </div>
-          <div className="card-body p-0">
-            <table className="table table-hover table-bordered mb-0 fonte-14">
-              <tbody>
-                {this.state.cargos.length > 0
-                  ? this.state.cargos.map((cargo, indice) => {
-                      return (
-                        <React.Fragment key={shortid.generate()}>
-                          <tr>
-                            <td className="table-secondary font-weight-bold">
-                              {cargo}
-                            </td>
-                          </tr>
-                          {this.state.servidoresCargos.length > 0
-                            ? this.state.servidoresCargos
-                                .filter(servidorCargo => {
-                                  return servidorCargo.dc_cargo_atual === cargo;
-                                })
-                                .map(servidorCargo => {
-                                  return (
-                                    <tr key={shortid.generate()}>
-                                      <td>{servidorCargo.nm_nome}</td>
-                                    </tr>
-                                  );
-                                })
-                            : null}
-                        </React.Fragment>
-                      );
-                    })
-                  : null}
-              </tbody>
-            </table>
+          <div className="collapse fade" id={`conheca-a-equipe`}>
+            <div className="card-body p-0">
+              <table className="table table-hover table-bordered mb-0 fonte-14">
+                <tbody>
+                  {this.state.cargos.length > 0
+                    ? this.state.cargos.map((cargo, indice) => {
+                        return (
+                          <React.Fragment key={shortid.generate()}>
+                            <tr>
+                              <td className="table-secondary font-weight-bold">
+                                {cargo}
+                              </td>
+                            </tr>
+                            {this.state.servidoresCargos.length > 0
+                              ? this.state.servidoresCargos
+                                  .filter(servidorCargo => {
+                                    return (
+                                      servidorCargo.dc_cargo_atual === cargo
+                                    );
+                                  })
+                                  .map(servidorCargo => {
+                                    return (
+                                      <tr key={shortid.generate()}>
+                                        <td>{servidorCargo.nm_nome}</td>
+                                      </tr>
+                                    );
+                                  })
+                              : null}
+                          </React.Fragment>
+                        );
+                      })
+                    : null}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

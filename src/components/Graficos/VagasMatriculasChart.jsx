@@ -32,17 +32,12 @@ export default class VagasMatriculasChart extends Component {
       nextProps.dados.forEach(vaga => {
         let vagaMatricula = [];
         vagaMatricula.push({
-          nome: "Vagas Oferecidas",
-          valor: vaga.vagas_oferecidas
+          nome: "Matrículas/Encaminhamento",
+          valor: vaga.atendimentos
         });
-        vagaMatricula.push({ nome: "Matrículas", valor: vaga.atendimentos });
         vagaMatricula.push({
           nome: "Vagas Remanescentes",
           valor: vaga.vagas_remanecentes
-        });
-        vagaMatricula.push({
-          nome: "Média Atendimentos/Turma",
-          valor: vaga.media_atendimento
         });
         vagasMatriculas.push(vagaMatricula);
         vagasLabels.push(vaga.serie);

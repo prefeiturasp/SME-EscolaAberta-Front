@@ -7,6 +7,7 @@ import Rodape from "../Rodape/Rodape";
 import { listarEscolas } from "../../services/escolas";
 import Menu from "../MenuSuperior/Menu";
 import Auxiliar from "../MenuSuperior/Auxiliar";
+import "./style.scss";
 
 export default class Escolas extends Component {
   constructor(props) {
@@ -20,7 +21,8 @@ export default class Escolas extends Component {
       distritoSelecionado: "",
       subprefSelecionada: "",
       tipoEscolaSelecionado: "",
-      dreSelecionada: ""
+      dreSelecionada: "",
+      loading: true
     };
 
     this.atualizarMapa = this.atualizarMapa.bind(this);
@@ -35,8 +37,14 @@ export default class Escolas extends Component {
       } else if (this.props.location.state.bairro !== undefined) {
         PubSub.publish("bairro-filtro", this.props.location.state.bairro);
       } else if (this.props.location.state.distrito !== undefined) {
+        this.setState({
+          distritoSelecionado: this.props.location.state.distrito
+        });
         PubSub.publish("distrito-filtro", this.props.location.state.distrito);
       } else if (this.props.location.state.subpref !== undefined) {
+        this.setState({
+          subprefSelecionada: this.props.location.state.subpref
+        });
         PubSub.publish("subpref-filtro", this.props.location.state.subpref);
       } else if (this.props.location.state.logradouro !== undefined) {
         PubSub.publish("logradouro-filtro", {
@@ -50,7 +58,7 @@ export default class Escolas extends Component {
     PubSub.subscribe(
       "lista-escolas",
       function(topico, listaEscolas) {
-        this.setState({ escolas: listaEscolas });
+        this.setState({ escolas: listaEscolas, loading: false });
       }.bind(this)
     );
 
@@ -146,8 +154,10 @@ export default class Escolas extends Component {
         escola: this.state.escolaSelecionada,
         tipo: this.state.tipoEscolaSelecionado,
         dre: this.state.dreSelecionada,
-        pagina: this.state.pagina
+        pagina: this.state.pagina,
+        loading: true
       }).then(lista => {
+        this.setState({ loading: false });
         let novaListaEscolas = this.state.escolas.concat(lista.results);
         this.setState({ escolas: novaListaEscolas });
         this.setState({ pagina: this.state.pagina + 1 });
@@ -165,9 +175,13 @@ export default class Escolas extends Component {
           <div className="container">
             <div className="row">
               <div className="col-lg-6 col-sm-12 pr-lg-0 escolas">
-                <Filtros />
-                <div id="conteudo" className="overflow-auto pt-4 pb-4">
+                <Filtros {...this.state} />
+                <div
+                  id="conteudo"
+                  className={`tabela-escolas-div overflow-auto pt-4 pb-4`}
+                >
                   <TabelaEscolas
+                    loading={this.state.loading}
                     lista={this.state.escolas}
                     limparCheckboxes={this.limparCheckboxes}
                     atualizarMapa={this.atualizarMapa}
