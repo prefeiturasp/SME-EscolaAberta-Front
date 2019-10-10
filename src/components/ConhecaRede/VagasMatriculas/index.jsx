@@ -9,11 +9,8 @@ import { ToggleExpandir } from "../../ToggleExpandir";
 import {
   formatarVagasMatriculas,
   totalPorFaixa,
-  dadosParaGraficos,
-  dadosParaGraficosPorFaixa
 } from "./helper";
 import { getKey } from "../helper";
-import SeriesEstudantesChart from "./Graficos";
 import "./style.scss";
 
 export class VagasMatriculas extends Component {
@@ -297,23 +294,6 @@ export class VagasMatriculas extends Component {
             </div>
           </div>
         </div>
-        {totalPorFaixa && (
-          <div>
-            <SeriesEstudantesChart dados={dadosParaGraficos(totalPorFaixa)} />
-          </div>
-        )}
-        {vagasMatriculas.map((matricula, indice) => {
-          return (
-            checks.includes(getKey(matricula)) && (
-              <div key={indice}>
-                <SeriesEstudantesChart
-                  titulo={getKey(matricula)}
-                  dados={dadosParaGraficosPorFaixa(matricula)}
-                />
-              </div>
-            )
-          );
-        })}
       </div>
     );
   }
