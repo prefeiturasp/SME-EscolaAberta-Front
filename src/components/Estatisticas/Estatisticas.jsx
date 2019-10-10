@@ -4,7 +4,11 @@ import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
 
-import { dataReferencia } from "../../services/estatisticas";
+import {
+  dataReferencia,
+  listarServidoresEscolarizacao,
+  listarServidoresPorEscola
+} from "../../services/estatisticas";
 import { formatarData } from "components/ConhecaRede/helper";
 
 const SeriesEstudantes = lazy(() => import("./SeriesEstudantes"));
@@ -41,7 +45,8 @@ export default class Estatisticas extends Component {
       ],
       codesc: "",
       nomesc: "",
-      dataReferencia: null
+      dataReferencia: null,
+      loading: true
     };
   }
 
@@ -57,12 +62,44 @@ export default class Estatisticas extends Component {
   }
 
   componentDidMount() {
+    listarServidoresEscolarizacao({ codesc: this.state.codesc }).then(
+      lista1 => {
+        listarServidoresPorEscola({ codesc: this.state.codesc }).then(
+          lista2 => {
+            if (lista1.results.length === 0 && lista2.length === 0) {
+              this.setState({
+                componentesLabels: [
+                  {
+                    nome: "SeriesEstudantes",
+                    label: "Séries e Estudantes"
+                  },
+                  {
+                    nome: "VagasMatriculas",
+                    label: "Vagas e Matrículas"
+                  },
+                  {
+                    nome: "Ambientes",
+                    label: "Ambientes"
+                  },
+                  {
+                    nome: "Idep",
+                    label: "IDEP"
+                  }
+                ]
+              });
+            }
+            this.setState({ loading: false });
+          }
+        );
+      }
+    );
+
     dataReferencia().then(response => {
       this.setState({
         dataReferencia: formatarData(response.results[0].dt_atualizacao)
       });
     });
-    if (this.state.codesc) {
+    if (this.state.codesc && document.querySelector(".nav .active:first-child")) {
       document.querySelector(".nav .active:first-child").click();
     }
   }
@@ -92,6 +129,7 @@ export default class Estatisticas extends Component {
   }
 
   render() {
+    const { loading } = this.state;
     return (
       <div>
         <Menu {...this.props} />
@@ -99,31 +137,35 @@ export default class Estatisticas extends Component {
         <div className="container">
           <div className="row">
             <div className="col-lg-12 col-sm-12 mt-5 mb-5 estatisticas">
-              <ul className="nav nav-tabs nav-fill" role="tablist">
-                {this.state.componentesLabels.length > 0 ? (
-                  this.state.componentesLabels.map((componente, indice) => {
-                    return (
-                      <li key={indice} className="nav-item">
-                        <a
-                          className={
-                            indice === 0 ? `nav-link active` : `nav-link`
-                          }
-                          id={`${componente.nome}-tab`}
-                          data-toggle="tab"
-                          href={`#${componente.nome}`}
-                          role="tab"
-                          aria-controls={componente.nome}
-                          aria-selected={indice === 0 ? `true` : `false`}
-                        >
-                          {componente.label}
-                        </a>
-                      </li>
-                    );
-                  })
-                ) : (
-                  <NullView />
-                )}
-              </ul>
+              {loading ? (
+                <div>Carregando...</div>
+              ) : (
+                <ul className="nav nav-tabs nav-fill" role="tablist">
+                  {this.state.componentesLabels.length > 0 ? (
+                    this.state.componentesLabels.map((componente, indice) => {
+                      return (
+                        <li key={indice} className="nav-item">
+                          <a
+                            className={
+                              indice === 0 ? `nav-link active` : `nav-link`
+                            }
+                            id={`${componente.nome}-tab`}
+                            data-toggle="tab"
+                            href={`#${componente.nome}`}
+                            role="tab"
+                            aria-controls={componente.nome}
+                            aria-selected={indice === 0 ? `true` : `false`}
+                          >
+                            {componente.label}
+                          </a>
+                        </li>
+                      );
+                    })
+                  ) : (
+                    <NullView />
+                  )}
+                </ul>
+              )}
               <div className="tab-content mt-5" id="estatisticas-abas">
                 {this.state.componentesLabels.length > 0 ? (
                   this.state.componentesLabels.map((componente, indice) => {
