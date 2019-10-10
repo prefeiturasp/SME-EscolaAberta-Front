@@ -4,7 +4,11 @@ import Auxiliar from "../MenuSuperior/Auxiliar";
 import Rodape from "../Rodape/Rodape";
 import NullView from "./NullView";
 
-import { dataReferencia } from "../../services/estatisticas";
+import {
+  dataReferencia,
+  listarServidoresEscolarizacao,
+  listarServidoresPorEscola
+} from "../../services/estatisticas";
 import { formatarData } from "components/ConhecaRede/helper";
 
 const SeriesEstudantes = lazy(() => import("./SeriesEstudantes"));
@@ -57,6 +61,37 @@ export default class Estatisticas extends Component {
   }
 
   componentDidMount() {
+    listarServidoresEscolarizacao({ codesc: this.state.codesc }).then(
+      lista1 => {
+        listarServidoresPorEscola({ codesc: this.state.codesc }).then(
+          lista2 => {
+            if (lista1.results.length === 0 && lista2.length === 0) {
+              this.setState({
+                componentesLabels: [
+                  {
+                    nome: "SeriesEstudantes",
+                    label: "Séries e Estudantes"
+                  },
+                  {
+                    nome: "VagasMatriculas",
+                    label: "Vagas e Matrículas"
+                  },
+                  {
+                    nome: "Ambientes",
+                    label: "Ambientes"
+                  },
+                  {
+                    nome: "Idep",
+                    label: "IDEP"
+                  }
+                ]
+              });
+            }
+          }
+        );
+      }
+    );
+
     dataReferencia().then(response => {
       this.setState({
         dataReferencia: formatarData(response.results[0].dt_atualizacao)
