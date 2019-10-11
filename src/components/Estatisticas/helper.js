@@ -7,3 +7,11 @@ export const totalEstudantes = (lista, turno) => {
   })
   return totalEstudantes;
 };
+
+export const totalDeProfissionais = lista => {
+  let total = 0;
+  lista.forEach(elem => {
+    total += elem.total;
+  })
+  return total;
+}
