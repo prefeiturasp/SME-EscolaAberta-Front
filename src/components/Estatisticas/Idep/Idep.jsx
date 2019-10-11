@@ -3,6 +3,7 @@ import IdepAvaliacaoDaEscola from "./IdepAvaliacaoDaEscola";
 import IdepCalculo from "./IdepCalculo";
 import IdepMetas from "./IdepMetas";
 import { dadosIdep, loginIdep } from "../../../services/idep";
+import { formatarDados } from "./helper";
 export default class Idep extends Component {
   constructor(props) {
     super(props);
@@ -58,8 +59,8 @@ export default class Idep extends Component {
 
           {this.state.ano_inicial && this.state.ano_final ? (
             <IdepAvaliacaoDaEscola
-              anoInicial={this.state.ano_inicial}
-              anoFinal={this.state.ano_final}
+              anoInicial={formatarDados(this.state.ano_inicial)}
+              anoFinal={formatarDados(this.state.ano_final)}
             />
           ) : null}
 
