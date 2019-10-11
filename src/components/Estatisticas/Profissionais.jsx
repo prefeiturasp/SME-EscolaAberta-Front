@@ -6,6 +6,7 @@ import {
   listarServidoresPorEscola
 } from "../../services/estatisticas";
 import shortid from "shortid";
+import { totalDeProfissionais } from "./helper";
 
 export default class Profissionais extends Component {
   constructor(props) {
@@ -174,7 +175,12 @@ export default class Profissionais extends Component {
                           );
                         })
                       : null}
-                    <th scope="col" />
+                    <th
+                      className="text-center table-secondary font-weight-bold"
+                      scope="col"
+                    >
+                      {totalDeProfissionais(this.state.servidoresFormacoes)}
+                    </th>
                   </tr>
                 </tfoot>
               </table>
