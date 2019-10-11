@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PubSub from "pubsub-js";
 import SelectCustomizado from "../Inputs/SelectCustomizado";
-import SelectAutocomplete from "../Inputs/SelectAutocomplete";
 import {
   listarTiposEscola,
   listarDREs,
@@ -57,7 +56,7 @@ export default class Filtros extends Component {
       "escola-filtro",
       function(topico, filtro) {
         this.setState({ escolaSelecionada: filtro }, () =>
-          this.filtrarListagemEscolas()
+          this.filtrarListagemEscolas(filtro)
         );
       }.bind(this)
     );
@@ -66,7 +65,7 @@ export default class Filtros extends Component {
       "bairro-filtro",
       function(topico, filtro) {
         this.setState({ bairroSelecionado: filtro }, () =>
-          this.filtrarListagemEscolas()
+          this.filtrarListagemEscolas(this.state.escolaSelecionada)
         );
       }.bind(this)
     );
@@ -75,7 +74,7 @@ export default class Filtros extends Component {
       "distrito-filtro",
       function(topico, filtro) {
         this.setState({ distritoSelecionado: filtro }, () =>
-          this.filtrarListagemEscolas()
+          this.filtrarListagemEscolas(this.state.escolaSelecionada)
         );
       }.bind(this)
     );
@@ -84,7 +83,7 @@ export default class Filtros extends Component {
       "subpref-filtro",
       function(topico, filtro) {
         this.setState({ subprefSelecionada: filtro }, () =>
-          this.filtrarListagemEscolas()
+          this.filtrarListagemEscolas(this.state.escolaSelecionada)
         );
       }.bind(this)
     );
@@ -123,7 +122,7 @@ export default class Filtros extends Component {
   }
 
   filtrar() {
-    this.filtrarListagemEscolas();
+    this.filtrarListagemEscolas("");
   }
 
   resetarCampos() {
@@ -143,7 +142,7 @@ export default class Filtros extends Component {
     this.dreRef.value = "";
   }
 
-  filtrarListagemEscolas() {
+  filtrarListagemEscolas(escolaSelecionada) {
     let listaResponse = {};
     let pagina = 1;
     if (
@@ -156,7 +155,7 @@ export default class Filtros extends Component {
       alert("Preencha ao menos uma opção da busca avançada");
     } else {
       listarEscolas({
-        escola: this.state.escolaSelecionada,
+        escola: escolaSelecionada,
         bairro: this.state.bairroSelecionado,
         distrito: this.state.distritoSelecionado,
         subpref: this.state.subprefSelecionada,
@@ -171,7 +170,7 @@ export default class Filtros extends Component {
           let i = 2;
           for (i; i <= paginas; i++) {
             listarEscolas({
-              escola: this.state.escolaSelecionada,
+              escola: escolaSelecionada,
               bairro: this.state.bairroSelecionado,
               distrito: this.state.distritoSelecionado,
               subpref: this.state.subprefSelecionada,
@@ -367,26 +366,6 @@ export default class Filtros extends Component {
                 <h4 className="border-bottom border-white pb-2 mt-4 mb-4 text-uppercase text-white">
                   Unidades de Ensino
                 </h4>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12 col-sm-12">
-                <div className="form-group">
-                  <label htmlFor="filtro-escola" className="text-white">
-                    Escola
-                  </label>
-                  <SelectAutocomplete
-                    id="filtro-escola"
-                    name="filtro-escola"
-                    value={this.state.escolaSelecionada}
-                    selectRef={el => (this.escolaRef = el)}
-                    collection={this.state.escolasAutocomplete}
-                    className="custom-select rounded-pill shadow"
-                    placeholder="Selecione a escola"
-                    onChange={this.setEscola}
-                    onKeyDown={this.buscarEscolas}
-                  />
-                </div>
               </div>
             </div>
             <div className="row">
