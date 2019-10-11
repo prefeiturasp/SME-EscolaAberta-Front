@@ -175,7 +175,12 @@ export default class Profissionais extends Component {
                           );
                         })
                       : null}
-                    <th className="text-center table-secondary font-weight-bold" scope="col">{totalDeProfissionais(this.state.servidoresFormacoes)}</th>
+                    <th
+                      className="text-center table-secondary font-weight-bold"
+                      scope="col"
+                    >
+                      {totalDeProfissionais(this.state.servidoresFormacoes)}
+                    </th>
                   </tr>
                 </tfoot>
               </table>

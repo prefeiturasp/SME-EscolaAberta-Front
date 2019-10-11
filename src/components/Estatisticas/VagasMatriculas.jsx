@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { listarVagasMatriculasSerie } from "../../services/estatisticas";
+import "./style.scss";
 
 export default class VagasMatriculas extends Component {
   constructor(props) {
@@ -69,7 +70,7 @@ export default class VagasMatriculas extends Component {
           </div>
           <div className="card-body p-0">
             <div className="table-responsive">
-              <table className="table table-hover table-bordered mb-0 fonte-14">
+              <table className="table table-vagas-matriculas table-hover table-bordered mb-0 fonte-14">
                 <thead>
                   <tr>
                     <th scope="col"></th>
@@ -109,7 +110,7 @@ export default class VagasMatriculas extends Component {
                         }
                       )
                     : null}
-                  {this.state.vagasMatriculasSerie.length > 0 ? (
+                  {/*this.state.vagasMatriculasSerie.length > 0 ? (
                     <tr>
                       <td></td>
                       <td className="text-center table-secondary font-weight-bold">
@@ -128,7 +129,7 @@ export default class VagasMatriculas extends Component {
                         {this.state.totaisMediaAtendimento}
                       </td>
                     </tr>
-                  ) : null}
+                  ) : null*/}
                 </tbody>
               </table>
             </div>
