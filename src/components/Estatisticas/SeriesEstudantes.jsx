@@ -5,6 +5,7 @@ import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
 import shortid from "shortid";
 import SeriesEstudantesChart from "../Graficos/SeriesEstudantesChart";
 import NullView from "./NullView";
+import { totalEstudantes } from "./helper";
 
 export default class SeriesEstudantes extends Component {
   constructor(props) {
@@ -266,7 +267,15 @@ export default class SeriesEstudantes extends Component {
                                     );
                                   })
                               : null}
-                            <th scope="col"></th>
+                            <th
+                              className="text-center table-secondary"
+                              scope="col"
+                            >
+                              {totalEstudantes(
+                                this.state.seriesEstudantes,
+                                turno
+                              )}
+                            </th>
                           </tr>
                         </tfoot>
                       </table>
