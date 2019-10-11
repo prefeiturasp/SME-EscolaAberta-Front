@@ -10,6 +10,7 @@ import {
   listarServidoresPorEscola
 } from "../../services/estatisticas";
 import { formatarData } from "components/ConhecaRede/helper";
+import { loginIdep, dadosIdep } from "services/idep";
 
 const SeriesEstudantes = lazy(() => import("./SeriesEstudantes"));
 const Profissionais = lazy(() => import("./Profissionais"));
@@ -66,28 +67,85 @@ export default class Estatisticas extends Component {
       lista1 => {
         listarServidoresPorEscola({ codesc: this.state.codesc }).then(
           lista2 => {
-            if (lista1.results.length === 0 && lista2.length === 0) {
-              this.setState({
-                componentesLabels: [
-                  {
-                    nome: "SeriesEstudantes",
-                    label: "Séries e Estudantes"
-                  },
-                  {
-                    nome: "VagasMatriculas",
-                    label: "Vagas e Matrículas"
-                  },
-                  {
-                    nome: "Ambientes",
-                    label: "Ambientes"
-                  },
-                  {
-                    nome: "Idep",
-                    label: "IDEP"
-                  }
-                ]
+            loginIdep().then(_ => {
+              dadosIdep(this.state.codesc).then(retorno => {
+                if (
+                  lista1.results.length === 0 &&
+                  lista2.length === 0 &&
+                  retorno.result.ano_inicial &&
+                  retorno.result.ano_final
+                ) {
+                  this.setState({
+                    componentesLabels: [
+                      {
+                        nome: "SeriesEstudantes",
+                        label: "Séries e Estudantes"
+                      },
+                      {
+                        nome: "VagasMatriculas",
+                        label: "Vagas e Matrículas"
+                      },
+                      {
+                        nome: "Ambientes",
+                        label: "Ambientes"
+                      },
+                      {
+                        nome: "Idep",
+                        label: "IDEP"
+                      }
+                    ]
+                  });
+                } else if (
+                  lista1.results.length === 0 &&
+                  lista2.length === 0 &&
+                  !retorno.result.ano_inicial &&
+                  !retorno.result.ano_final
+                ) {
+                  this.setState({
+                    componentesLabels: [
+                      {
+                        nome: "SeriesEstudantes",
+                        label: "Séries e Estudantes"
+                      },
+                      {
+                        nome: "VagasMatriculas",
+                        label: "Vagas e Matrículas"
+                      },
+                      {
+                        nome: "Ambientes",
+                        label: "Ambientes"
+                      }
+                    ]
+                  });
+                } else if (
+                  lista1.results.length === 0 &&
+                  lista2.length === 0 &&
+                  retorno.result.ano_inicial &&
+                  retorno.result.ano_final
+                ) {
+                  this.setState({
+                    componentesLabels: [
+                      {
+                        nome: "SeriesEstudantes",
+                        label: "Séries e Estudantes"
+                      },
+                      {
+                        nome: "Profissionais",
+                        label: "Profissionais"
+                      },
+                      {
+                        nome: "VagasMatriculas",
+                        label: "Vagas e Matrículas"
+                      },
+                      {
+                        nome: "Ambientes",
+                        label: "Ambientes"
+                      }
+                    ]
+                  });
+                }
               });
-            }
+            });
             this.setState({ loading: false });
           }
         );
@@ -99,7 +157,10 @@ export default class Estatisticas extends Component {
         dataReferencia: formatarData(response.results[0].dt_atualizacao)
       });
     });
-    if (this.state.codesc && document.querySelector(".nav .active:first-child")) {
+    if (
+      this.state.codesc &&
+      document.querySelector(".nav .active:first-child")
+    ) {
       document.querySelector(".nav .active:first-child").click();
     }
   }
