@@ -11,6 +11,7 @@ import {
   totalPorFormacao,
   total
 } from "./helper";
+import { pontuarValor } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUsers } from "@fortawesome/free-solid-svg-icons";
 import "../style.scss";
@@ -130,9 +131,6 @@ export class Profissionais extends Component {
                         <th>Ensino Médio/Normal</th>
                         <th>Licenciatura Curta</th>
                         <th>Licenciatura Plena</th>
-                        {/*<th>Bacharelado</th>
-                        <th>Pós Graduação - Lato Sensu</th>
-                        <th>Outros</th>*/}
                       </tr>
                     </thead>
                     <tbody>
@@ -161,24 +159,6 @@ export class Profissionais extends Component {
                                   "LICENCIATURA PLENA"
                                 )}
                               </td>
-                              {/*<td>
-                                {totalProfissionaisPorEscolaridade(
-                                  cargoProfissional,
-                                  "BACHARELADO"
-                                )}
-                              </td>
-                              <td>
-                                {totalProfissionaisPorEscolaridade(
-                                  cargoProfissional,
-                                  "POS GRADUACAO LATO SENSU"
-                                )}
-                              </td>
-                              <td>
-                                {totalProfissionaisPorEscolaridade(
-                                  cargoProfissional,
-                                  "OUTROS"
-                                )}
-                                </td>*/}
                               <td className="font-weight-bold bg-light">
                                 {totalDoCargoPorEscolaridade(cargoProfissional)}
                               </td>
@@ -193,7 +173,7 @@ export class Profissionais extends Component {
                           totalPorFormacaoLista.map(formacaoTotal => {
                             return (
                               <td className="font-weight-bold bg-light">
-                                {formacaoTotal.total}
+                                {pontuarValor(formacaoTotal.total)}
                               </td>
                             );
                           })}

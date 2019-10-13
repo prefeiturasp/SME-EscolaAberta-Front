@@ -1,3 +1,5 @@
+import { pontuarValor } from "components/utils";
+
 export const inicializarTiposEscola = [
   {
     "CENTRO DE CONVIVENCIA INFANTIL / CENTRO INFANTIL DE PROTECAO A SAUDE": {
@@ -359,7 +361,7 @@ export const totalAlunosTipoEscolaGrupo = tipoEscola => {
   tipoEscola.faixas.forEach(faixa => {
     count += faixa.count;
   });
-  return count;
+  return pontuarValor(count);
 };
 
 export const inicializaTotalPorFaixa = [
@@ -419,5 +421,5 @@ export const total = tiposEscolaFormatado => {
   tiposEscolaFormatado.forEach(tipoEscola => {
     total += tipoEscola.total;
   });
-  return total;
+  return pontuarValor(total);
 };
