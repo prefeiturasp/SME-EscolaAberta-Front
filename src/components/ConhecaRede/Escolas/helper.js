@@ -20,21 +20,6 @@ export const inicializarTiposEscola = [
     }
   },
   {
-    "CENTRO EDUCACIONAL UNIFICADO - CEI": {
-      faixas: []
-    }
-  },
-  {
-    "CENTRO EDUCACIONAL UNIFICADO - EMEF": {
-      faixas: []
-    }
-  },
-  {
-    "CENTRO EDUCACIONAL UNIFICADO - EMEI": {
-      faixas: []
-    }
-  },
-  {
     "CENTRO INTEGRADO DE EDUCACAO DE JOVENS E ADULTOS": {
       faixas: []
     }
@@ -50,7 +35,7 @@ export const inicializarTiposEscola = [
     }
   },
   {
-    "CRECHE PARTICULAR CONVENIADA": {
+    "CENTRO DE EDUCACAO INFANTIL PARCEIRO": {
       faixas: []
     }
   },
@@ -85,13 +70,146 @@ export const inicializarTiposEscola = [
     }
   },
   {
-    "CENTRO EDUCACIONAL UNIFICADO - ATENDIMENTO COMPLEMENTAR": {
+    "CENTRO EDUCACIONAL UNIFICADO": {
       faixas: []
     }
   },
   {
     "ESCOLAS ESPECIAIS CONVENIADAS": {
       faixas: []
+    }
+  }
+];
+
+export const inicializarGruposEscolas = [
+  {
+    "EDUCAÇÃO INFANTIL": {
+      ativo: false,
+      escolas: [
+        {
+          tipo_escola: "CENTRO DE EDUCACAO INFANTIL DIRETO",
+          faixas: [],
+          sigla: "CEI DIRETO"
+        },
+        {
+          tipo_escola: "CENTRO DE EDUCACAO INFANTIL INDIRETO",
+          faixas: [],
+          sigla: "CEI INDIRETO"
+        },
+        {
+          tipo_escola: "CENTRO DE EDUCACAO INFANTIL PARCEIRO",
+          faixas: [],
+          sigla: "CEI PARCEIRO"
+        },
+        {
+          tipo_escola: "CENTRO MUNICIPAL DE EDUCACAO INFANTIL",
+          faixas: [],
+          sigla: "CEMEI"
+        },
+        {
+          tipo_escola: "ESCOLA MUNICIPAL DE EDUCACAO INFANTIL",
+          faixas: [],
+          sigla: "EMEI"
+        },
+        {
+          tipo_escola:
+            "CENTRO DE CONVIVENCIA INFANTIL / CENTRO INFANTIL DE PROTECAO A SAUDE",
+          faixas: [],
+          sigla: "CCI"
+        }
+      ]
+    }
+  },
+  {
+    "ENSINO FUNDAMENTAL E MÉDIO": {
+      ativo: false,
+      escolas: [
+        {
+          tipo_escola: "ESCOLA MUNICIPAL DE ENSINO FUNDAMENTAL",
+          faixas: [],
+          sigla: "EMEF"
+        },
+        {
+          tipo_escola: "ESCOLA MUNICIPAL DE ENSINO FUNDAMENTAL E MEDIO",
+          faixas: [],
+          sigla: "EMEFM"
+        }
+      ]
+    }
+  },
+  {
+    "EDUCAÇÃO DE JOVENS E ADULTOS": {
+      ativo: false,
+      escolas: [
+        {
+          tipo_escola: "CENTRO INTEGRADO DE EDUCACAO DE JOVENS E ADULTOS",
+          faixas: [],
+          sigla: "CIEJA"
+        },
+        {
+          tipo_escola: "MOVIMENTO DE ALFABETIZACAO",
+          faixas: [],
+          sigla: "MOVA"
+        }
+      ]
+    }
+  },
+  {
+    "CURSOS TÉCNICOS E PROFISSIONALIZANTES": {
+      ativo: false,
+      escolas: [
+        {
+          tipo_escola: "CENTRO MUNICIPAL DE CAPACITACAO E TREINAMENTO",
+          faixas: [],
+          sigla: "CMCT"
+        },
+        {
+          tipo_escola: "ESCOLA TECNICA",
+          faixas: [],
+          sigla: "ESCOLA TECNICA"
+        }
+      ]
+    }
+  },
+  {
+    "EDUCAÇÃO ESCOLAR INDÍGENA": {
+      ativo: false,
+      escolas: [
+        {
+          tipo_escola: "CENTRO DE EDUCACAO E CULTURA INDIGENA",
+          faixas: [],
+          sigla: "CECI"
+        }
+      ]
+    }
+  },
+  {
+    "EDUCAÇÃO ESPECIAL": {
+      ativo: false,
+      escolas: [
+        {
+          tipo_escola: "ESCOLA MUNICIPAL DE EDUCACAO BILINGUE PARA SURDOS",
+          faixas: [],
+          sigla: "EMEBS"
+        },
+        {
+          tipo_escola: "ESCOLAS ESPECIAIS CONVENIADAS",
+          faixas: [],
+          sigla: "ESPECIAIS"
+        }
+      ]
+    }
+  },
+  {
+    "CEUs": {
+      ativo: false,
+      escolas: [
+        {
+          tipo_escola: "CENTRO EDUCACIONAL UNIFICADO",
+          faixas: [],
+          sigla: "CEU"
+        }
+      ]
     }
   }
 ];
@@ -105,18 +223,94 @@ export const formatarEscolas = tiposEscola => {
     tipoEscola.tipoesc = tipoEscolaLabel(tipoEscola);
     novoTiposEscola.forEach((_, indice) => {
       if (novoTiposEscola[indice][tipoEscola.tipoesc] !== undefined) {
-        novoTiposEscola[indice][tipoEscola.tipoesc].faixas.push({
-          faixa: tipoEscola.faixa,
-          count: tipoEscola.count
-        });
+        let faixaExiste = false;
+        if (novoTiposEscola[indice][tipoEscola.tipoesc].faixas.length) {
+          novoTiposEscola[indice][tipoEscola.tipoesc].faixas.forEach(faixa => {
+            if (faixa.faixa === tipoEscola.faixa) {
+              faixa.count += tipoEscola.count;
+              faixaExiste = true;
+            }
+          });
+        }
+        if (!faixaExiste) {
+          novoTiposEscola[indice][tipoEscola.tipoesc].faixas.push({
+            faixa: tipoEscola.faixa,
+            count: tipoEscola.count
+          });
+        }
       }
     });
   });
   return novoTiposEscola;
 };
 
+export const formatarEscolasPorGrupo = novoTiposEscola => {
+  let gruposEscolas = inicializarGruposEscolas;
+  gruposEscolas.forEach(grupoEscola => {
+    grupoEscola[getKey(grupoEscola)].escolas.forEach(escola => {
+      escola.faixas = [];
+    });
+  });
+  gruposEscolas.forEach(grupoEscola => {
+    grupoEscola[getKey(grupoEscola)].escolas.forEach(escola => {
+      novoTiposEscola.forEach(novoTipoEscola => {
+        if (escola.tipo_escola === getKey(novoTipoEscola)) {
+          escola.faixas = novoTipoEscola[getKey(novoTipoEscola)].faixas;
+        }
+      });
+    });
+  });
+  gruposEscolas = acrescentarTotalPorFaixa(gruposEscolas);
+  gruposEscolas = acrescentarTotal(gruposEscolas);
+  return gruposEscolas;
+};
+
+export const acrescentarTotalPorFaixa = grupoEscolas => {
+  inicializaTotalPorFaixa.forEach(faixaLabel => {
+    grupoEscolas.forEach(grupo => {
+      let totalPorFaixa = 0;
+      grupo[getKey(grupo)].escolas.forEach(escola => {
+        escola.faixas.forEach(faixa => {
+          if (faixaLabel.faixa === faixa.faixa) {
+            totalPorFaixa += faixa.count;
+          }
+        });
+      });
+      grupo[getKey(grupo)][faixaLabel.faixa] = totalPorFaixa;
+    });
+  });
+  return grupoEscolas;
+};
+
+export const acrescentarTotal = grupoEscolas => {
+  grupoEscolas.forEach(grupo => {
+    let total = 0;
+    grupo[getKey(grupo)].escolas.forEach(escola => {
+      inicializaTotalPorFaixa.forEach(faixaLabel => {
+        escola.faixas.forEach(faixa => {
+          if (faixaLabel.faixa === faixa.faixa) {
+            total += faixa.count;
+          }
+        });
+      });
+    });
+    grupo[getKey(grupo)].total = total;
+  });
+  return grupoEscolas;
+};
+
+export const quantidadeAlunosGrupo = (escola, faixa) => {
+  const indice = escola.faixas.findIndex(item => item.faixa === faixa);
+  if (indice !== -1) {
+    return escola.faixas[indice].count;
+  } else {
+    return 0;
+  }
+};
+
 export const tipoEscolaLabel = tipoEscola => {
   switch (tipoEscola.tipoesc) {
+    case "CEU EMEF":
     case "EMEF":
       return "ESCOLA MUNICIPAL DE ENSINO FUNDAMENTAL";
     case "EMEFM":
@@ -133,24 +327,20 @@ export const tipoEscolaLabel = tipoEscola => {
       return "CENTRO DE EDUCACAO INFANTIL INDIRETO";
     case "EMEBS":
       return "ESCOLA MUNICIPAL DE EDUCACAO BILINGUE PARA SURDOS";
+    case "CEU EMEI":
     case "EMEI":
       return "ESCOLA MUNICIPAL DE EDUCACAO INFANTIL";
-    case "CEU EMEI":
-      return "CENTRO EDUCACIONAL UNIFICADO - EMEI";
-    case "CEU EMEF":
-      return "CENTRO EDUCACIONAL UNIFICADO - EMEF";
-    case "CEU CEI":
-      return "CENTRO EDUCACIONAL UNIFICADO - CEI";
     case "CCI/CIPS":
       return "CENTRO DE CONVIVENCIA INFANTIL / CENTRO INFANTIL DE PROTECAO A SAUDE";
     case "CR.P.CONV":
-      return "CRECHE PARTICULAR CONVENIADA";
+      return "CENTRO DE EDUCACAO INFANTIL PARCEIRO";
+    case "CEU CEI":
     case "CEMEI":
       return "CENTRO MUNICIPAL DE EDUCACAO INFANTIL";
     case "E TECNICA":
       return "ESCOLA TECNICA";
     case "CEU AT COMPL":
-      return "CENTRO EDUCACIONAL UNIFICADO - ATENDIMENTO COMPLEMENTAR";
+      return "CENTRO EDUCACIONAL UNIFICADO";
     case "CMCT":
       return "CENTRO MUNICIPAL DE CAPACITACAO E TREINAMENTO";
     case "CECI":
@@ -164,20 +354,9 @@ export const getKey = obj => {
   return Object.keys(obj)[0];
 };
 
-export const quantidadeAlunos = (tipoEscola, faixa) => {
-  const indice = tipoEscola[getKey(tipoEscola)].faixas.findIndex(
-    item => item.faixa === faixa
-  );
-  if (indice !== -1) {
-    return tipoEscola[getKey(tipoEscola)].faixas[indice].count;
-  } else {
-    return 0;
-  }
-};
-
-export const totalAlunosTipoEscola = tipoEscola => {
+export const totalAlunosTipoEscolaGrupo = tipoEscola => {
   let count = 0;
-  tipoEscola[getKey(tipoEscola)].faixas.forEach(faixa => {
+  tipoEscola.faixas.forEach(faixa => {
     count += faixa.count;
   });
   return count;

@@ -6,20 +6,24 @@ import {
 import {
   formatarEscolas,
   getKey,
-  quantidadeAlunos,
-  totalAlunosTipoEscola,
   totalPorFaixa,
-  total
+  formatarEscolasPorGrupo,
+  total,
+  quantidadeAlunosGrupo,
+  totalAlunosTipoEscolaGrupo
 } from "./helper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
+import "./style.scss";
 import "../style.scss";
+import ToggleExpandir from "components/ToggleExpandir";
 
 export class Escolas extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tiposEscolaPorFaixa: [],
+      tiposEscolaPorGrupo: [],
       indice: "abc",
       totalPorFaixaLista: null
     };
@@ -30,6 +34,9 @@ export class Escolas extends Component {
       this.setState({
         tiposEscolaPorFaixa: formatarEscolas(tiposEscolaPorFaixa.results),
         totalPorFaixaLista: totalPorFaixa(
+          formatarEscolas(tiposEscolaPorFaixa.results)
+        ),
+        tiposEscolaPorGrupo: formatarEscolasPorGrupo(
           formatarEscolas(tiposEscolaPorFaixa.results)
         )
       });
@@ -57,9 +64,26 @@ export class Escolas extends Component {
     this.props.onDRESelected(value);
   }
 
+  onGrupoEscolaClicked(grupo) {
+    let tiposEscolaPorGrupo = this.state.tiposEscolaPorGrupo;
+    tiposEscolaPorGrupo.forEach(grupoEscola => {
+      if (getKey(grupoEscola) === getKey(grupo)) {
+        grupoEscola[getKey(grupoEscola)].ativo = !grupoEscola[
+          getKey(grupoEscola)
+        ].ativo;
+      }
+    });
+    this.setState({ tiposEscolaPorGrupo });
+  }
+
   render() {
     const { diretoriasRegionais } = this.props;
-    const { indice, tiposEscolaPorFaixa, totalPorFaixaLista } = this.state;
+    const {
+      indice,
+      tiposEscolaPorFaixa,
+      totalPorFaixaLista,
+      tiposEscolaPorGrupo
+    } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -104,10 +128,10 @@ export class Escolas extends Component {
             <div className="collapse fade" id={`${indice}`}>
               <div className="card-body p-0">
                 <div className="table-responsive">
-                  <table className="table text-center table-hover table-bordered mb-0 fonte-14">
+                  <table className="grupo-escolas table text-center table-hover table-bordered mb-0 fonte-14">
                     <thead>
                       <tr>
-                        <th scope="col" rowSpan="2"></th>
+                        <th colSpan="2" scope="col" rowSpan="2"></th>
                         <th
                           scope="col"
                           colSpan="8"
@@ -135,72 +159,148 @@ export class Escolas extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {tiposEscolaPorFaixa &&
-                        tiposEscolaPorFaixa.length &&
-                        tiposEscolaPorFaixa.map((tipoEscola, indice) => {
-                          return (
-                            <tr>
+                      {tiposEscolaPorGrupo &&
+                        tiposEscolaPorGrupo.length &&
+                        tiposEscolaPorGrupo.map((grupoEscola, indice) => {
+                          return [
+                            <tr className="main" key={indice}>
+                              <td colSpan="2" className="font-weight-bold">
+                                {getKey(grupoEscola)}
+                              </td>
                               <td className="font-weight-bold">
-                                {getKey(tipoEscola)}
+                                {
+                                  grupoEscola[getKey(grupoEscola)][
+                                    "Sem estudantes cadastrados"
+                                  ]
+                                }
                               </td>
-                              <td>
-                                {quantidadeAlunos(
-                                  tipoEscola,
-                                  "Sem estudantes cadastrados"
-                                )}
+                              <td className="font-weight-bold">
+                                {
+                                  grupoEscola[getKey(grupoEscola)][
+                                    "1 a 250 estudantes"
+                                  ]
+                                }
                               </td>
-                              <td>
-                                {quantidadeAlunos(
-                                  tipoEscola,
-                                  "1 a 250 estudantes"
-                                )}
+                              <td className="font-weight-bold">
+                                {
+                                  grupoEscola[getKey(grupoEscola)][
+                                    "251 a 500 estudantes"
+                                  ]
+                                }
                               </td>
-                              <td>
-                                {quantidadeAlunos(
-                                  tipoEscola,
-                                  "251 a 500 estudantes"
-                                )}
+                              <td className="font-weight-bold">
+                                {
+                                  grupoEscola[getKey(grupoEscola)][
+                                    "501 a 1000 estudantes"
+                                  ]
+                                }
                               </td>
-                              <td>
-                                {quantidadeAlunos(
-                                  tipoEscola,
-                                  "501 a 1000 estudantes"
-                                )}
+                              <td className="font-weight-bold">
+                                {
+                                  grupoEscola[getKey(grupoEscola)][
+                                    "1001 a 1500 estudantes"
+                                  ]
+                                }
                               </td>
-                              <td>
-                                {quantidadeAlunos(
-                                  tipoEscola,
-                                  "1001 a 1500 estudantes"
-                                )}
+                              <td className="font-weight-bold">
+                                {
+                                  grupoEscola[getKey(grupoEscola)][
+                                    "1501 a 2000 estudantes"
+                                  ]
+                                }
                               </td>
-                              <td>
-                                {quantidadeAlunos(
-                                  tipoEscola,
-                                  "1501 a 2000 estudantes"
-                                )}
+                              <td className="font-weight-bold">
+                                {
+                                  grupoEscola[getKey(grupoEscola)][
+                                    "2001 a 2500 estudantes"
+                                  ]
+                                }
                               </td>
-                              <td>
-                                {quantidadeAlunos(
-                                  tipoEscola,
-                                  "2001 a 2500 estudantes"
-                                )}
+                              <td className="font-weight-bold">
+                                {
+                                  grupoEscola[getKey(grupoEscola)][
+                                    "Mais que 2500 estudantes"
+                                  ]
+                                }
                               </td>
-                              <td>
-                                {quantidadeAlunos(
-                                  tipoEscola,
-                                  "Mais que 2500 estudantes"
-                                )}
+                              <td className="font-weight-bold">
+                                {grupoEscola[getKey(grupoEscola)]["total"]}
+                                <ToggleExpandir
+                                  ativo={grupoEscola[getKey(grupoEscola)].ativo}
+                                  onClick={() =>
+                                    this.onGrupoEscolaClicked(grupoEscola)
+                                  }
+                                />
                               </td>
-                              <td className="font-weight-bold bg-light">
-                                {totalAlunosTipoEscola(tipoEscola)}
-                              </td>
-                            </tr>
-                          );
+                            </tr>,
+                            grupoEscola[getKey(grupoEscola)].ativo &&
+                              grupoEscola[getKey(grupoEscola)].escolas.map(
+                                (escola, indice_) => {
+                                  return (
+                                    <tr>
+                                      <td className="font-weight-bold">{escola.sigla}</td>
+                                      <td className="font-weight-bold">{escola.tipo_escola}</td>
+                                      <td>
+                                        {quantidadeAlunosGrupo(
+                                          escola,
+                                          "Sem estudantes cadastrados"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {quantidadeAlunosGrupo(
+                                          escola,
+                                          "1 a 250 estudantes"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {quantidadeAlunosGrupo(
+                                          escola,
+                                          "251 a 500 estudantes"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {quantidadeAlunosGrupo(
+                                          escola,
+                                          "501 a 1000 estudantes"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {quantidadeAlunosGrupo(
+                                          escola,
+                                          "1001 a 1500 estudantes"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {quantidadeAlunosGrupo(
+                                          escola,
+                                          "1501 a 2000 estudantes"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {quantidadeAlunosGrupo(
+                                          escola,
+                                          "2001 a 2500 estudantes"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {quantidadeAlunosGrupo(
+                                          escola,
+                                          "Mais que 2500 estudantes"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {totalAlunosTipoEscolaGrupo(escola)}
+                                      </td>
+                                    </tr>
+                                  );
+                                }
+                              )
+                          ];
                         })}
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td>
+                        <td colSpan="2">
                           TOTAL DE UNIDADES ESCOLARES POR NÚMERO DE ESTUDANTES
                         </td>
                         {totalPorFaixaLista &&
