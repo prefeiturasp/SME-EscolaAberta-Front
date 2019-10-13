@@ -31,9 +31,9 @@ export const formatarVagasMatriculas = vagasMatriculas => {
       matriculas[indice][vagaMatricula.modalidade].decseries.push({
         decserie: vagaMatricula.decserie,
         media_atendimento: vagaMatricula.media_atendimento,
-        total_turmas: vagaMatricula.total_turmas,
-        vagas_oferecidas: vagaMatricula.vagas_oferecidas,
-        vagas_remanecentes: vagaMatricula.vagas_remanecentes
+        total_turmas: vagaMatricula.total_turmas || 0,
+        vagas_oferecidas: vagaMatricula.vagas_oferecidas || 0,
+        vagas_remanecentes: vagaMatricula.vagas_remanecentes || 0
       });
     }
   });
