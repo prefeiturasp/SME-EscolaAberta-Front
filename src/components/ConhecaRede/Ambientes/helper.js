@@ -57,5 +57,5 @@ export const ambientesFormatados = ambientes => {
     }
   });
   ambientesPermitidos = incluirAmbientesNaoContemplados(ambientesPermitidos);
-  return ambientesPermitidos.sort((a, b) => (a.ambiente > b.ambiente ? 1 : -1));;
+  return ambientesPermitidos.sort((a, b) => (a.ambiente > b.ambiente ? 1 : -1));
 };

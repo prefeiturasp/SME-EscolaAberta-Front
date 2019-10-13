@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { listarVagasMatriculasSerie } from "../../services/estatisticas";
 import "./style.scss";
+import { formatarVagasMatriculas } from "./helper";
 
 export default class VagasMatriculas extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class VagasMatriculas extends Component {
   componentDidMount() {
     listarVagasMatriculasSerie({ codesc: this.props.codesc }).then(lista => {
       if (lista && lista.results.length > 0) {
-        this.setState({ vagasMatriculasSerie: lista.results });
+        this.setState({ vagasMatriculasSerie: formatarVagasMatriculas(lista.results) });
         lista.results.forEach(vaga => {
           this.setState({
             totaisTurmas: this.state.totaisTurmas + vaga.total_turmas
@@ -86,7 +87,7 @@ export default class VagasMatriculas extends Component {
                     ? this.state.vagasMatriculasSerie.map(
                         (vagaMatricula, indice) => {
                           return (
-                            <tr key={indice}>
+                            <tr className={`${vagaMatricula.titulo && "titulo"}`} key={indice}>
                               <td className="font-weight-bold">
                                 {vagaMatricula.serie}
                               </td>
