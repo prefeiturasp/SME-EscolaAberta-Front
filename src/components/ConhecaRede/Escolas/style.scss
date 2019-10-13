@@ -1,0 +1,9 @@
+@import "../../../styles/variaveis.scss";
+
+table.grupo-escolas {
+  tr {
+    &.main {
+      background-color: $corAzulBackgroundTable;
+    }
+  }
+}
