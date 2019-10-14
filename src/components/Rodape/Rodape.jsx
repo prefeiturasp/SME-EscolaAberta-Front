@@ -72,7 +72,7 @@ export default class Rodape extends Component {
                     <li className="list-inline-item">
                       <a
                         className="text-white"
-                        href="https://www.youtube.com/user/educacaosp"
+                        href="https://www.youtube.com/c/EducaPrefSP"
                       >
                         <img
                           src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-youtube-topo.png"

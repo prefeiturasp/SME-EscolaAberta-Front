@@ -122,7 +122,7 @@ export default class Menu extends Component {
                   </li>
                   <li className="list-inline-item">
                     <a
-                      href="https://www.youtube.com/user/educacaosp"
+                      href="https://www.youtube.com/c/EducaPrefSP"
                     >
                       <FontAwesomeIcon size="2x" icon={faYoutube} />
                     </a>
