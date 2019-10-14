@@ -46,11 +46,19 @@ export default class Filtros extends Component {
   }
 
   componentDidMount() {
-    listarTiposEscola().then(lista =>
-      this.setState({ tiposEscola: lista.results })
-    );
+    listarTiposEscola().then(lista => {
+      this.setState({
+        tiposEscola: lista.results.sort((a, b) =>
+          a.tipoesc > b.tipoesc ? 1 : -1
+        )
+      });
+    });
 
-    listarDREs().then(lista => this.setState({ dres: lista.results }));
+    listarDREs().then(lista => {
+      this.setState({
+        dres: lista.results.sort((a, b) => (a.diretoria > b.diretoria ? 1 : -1))
+      });
+    });
 
     PubSub.subscribe(
       "escola-filtro",

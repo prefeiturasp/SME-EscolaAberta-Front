@@ -50,7 +50,7 @@ export default class Rodape extends Component {
                     <li className="list-inline-item pr-1">
                       <a
                         className="text-white"
-                        href="https://pt-br.facebook.com/EducaPrefSP/"
+                        href="https://www.facebook.com/PrefSP/"
                       >
                         <img
                           src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-facebook-topo.png"
@@ -61,7 +61,7 @@ export default class Rodape extends Component {
                     <li className="list-inline-item">
                       <a
                         className="text-white"
-                        href="https://twitter.com/EducaPrefSP"
+                        href="https://twitter.com/prefsp"
                       >
                         <img
                           src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-twitter-topo.png"
@@ -72,7 +72,7 @@ export default class Rodape extends Component {
                     <li className="list-inline-item">
                       <a
                         className="text-white"
-                        href="https://www.youtube.com/user/educacaosp"
+                        href="https://www.youtube.com/user/prefeiturasaopaulo"
                       >
                         <img
                           src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-youtube-topo.png"
