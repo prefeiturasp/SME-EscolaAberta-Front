@@ -5,6 +5,9 @@ import Home from "./components/Home/Home";
 import Escolas from "./components/Escolas/Escolas";
 import Estatisticas from "./components/Estatisticas/Estatisticas";
 import ConhecaRede from "./components/ConhecaRede";
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-149756375-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 export default class App extends Component {
   constructor(props) {
