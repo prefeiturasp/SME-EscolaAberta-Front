@@ -1,3 +1,5 @@
+import { pontuarValor } from "components/utils";
+
 export const formatarCargosProfissionais = cargosProfessores => {
   let novoCargosProfessores = [];
   let indice = 0;
@@ -37,7 +39,7 @@ export const totalProfissionaisPorEscolaridade = (cargo, titulo) => {
   const indice = cargo[getKey(cargo)].formacoes.findIndex(
     formacao => formacao.formacao === titulo
   );
-  if (indice !== -1) return cargo[getKey(cargo)].formacoes[indice].total;
+  if (indice !== -1) return pontuarValor(cargo[getKey(cargo)].formacoes[indice].total);
   else return 0;
 };
 
@@ -50,7 +52,7 @@ export const totalDoCargoPorEscolaridade = cargo => {
     )
       count += formacao.total;
   });
-  return count;
+  return pontuarValor(count);
 };
 
 export const inicializaTotalPorFormacao = [
@@ -66,18 +68,6 @@ export const inicializaTotalPorFormacao = [
     formacao: "LICENCIATURA PLENA",
     total: 0
   }
-  /*{
-    formacao: "BACHARELADO",
-    total: 0
-  },
-  {
-    formacao: "POS GRADUACAO LATO SENSU",
-    total: 0
-  },
-  {
-    formacao: "OUTROS",
-    total: 0
-  }*/
 ];
 
 export const totalPorFormacao = cargosProfissionaisFormatado => {
@@ -104,5 +94,5 @@ export const total = cargosProfissionaisFormatado => {
   cargosProfissionaisFormatado.forEach(cargo => {
     total += cargo.total;
   });
-  return total;
+  return pontuarValor(total);
 };

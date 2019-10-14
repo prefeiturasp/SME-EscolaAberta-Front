@@ -100,24 +100,32 @@ export default class Menu extends Component {
               <div className="col-lg-6 col-xs-12 d-flex justify-content-lg-end justify-content-center">
                 <ul className="list-inline my-auto">
                   <li className="list-inline-item">
-                    <Link to="/">
+                    <a
+                      href="https://pt-br.facebook.com/EducaPrefSP/"
+                    >
                       <FontAwesomeIcon size="2x" icon={faFacebookSquare} />
-                    </Link>
+                    </a>
                   </li>
                   <li className="list-inline-item">
-                    <Link to="/">
+                    <a
+                      href="https://www.instagram.com/educaprefsp/"
+                    >
                       <FontAwesomeIcon size="2x" icon={faInstagram} />
-                    </Link>
+                    </a>
                   </li>
                   <li className="list-inline-item">
-                    <Link to="/">
+                    <a
+                      href="https://twitter.com/EducaPrefSP"
+                    >
                       <FontAwesomeIcon size="2x" icon={faTwitter} />
-                    </Link>
+                    </a>
                   </li>
                   <li className="list-inline-item">
-                    <Link to="/">
+                    <a
+                      href="https://www.youtube.com/user/educacaosp"
+                    >
                       <FontAwesomeIcon size="2x" icon={faYoutube} />
-                    </Link>
+                    </a>
                   </li>
                 </ul>
               </div>

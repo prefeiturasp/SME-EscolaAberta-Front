@@ -17,6 +17,7 @@ import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
 import "./style.scss";
 import "../style.scss";
 import ToggleExpandir from "components/ToggleExpandir";
+import { pontuarValor } from "components/utils";
 
 export class Escolas extends Component {
   constructor(props) {
@@ -56,6 +57,9 @@ export class Escolas extends Component {
             tiposEscolaPorFaixaPorDRE.results
           ),
           totalPorFaixaLista: totalPorFaixa(
+            formatarEscolas(tiposEscolaPorFaixaPorDRE.results)
+          ),
+          tiposEscolaPorGrupo: formatarEscolasPorGrupo(
             formatarEscolas(tiposEscolaPorFaixaPorDRE.results)
           )
         });
@@ -168,63 +172,65 @@ export class Escolas extends Component {
                                 {getKey(grupoEscola)}
                               </td>
                               <td className="font-weight-bold">
-                                {
+                                {pontuarValor(
                                   grupoEscola[getKey(grupoEscola)][
                                     "Sem estudantes cadastrados"
                                   ]
-                                }
+                                )}
                               </td>
                               <td className="font-weight-bold">
-                                {
+                                {pontuarValor(
                                   grupoEscola[getKey(grupoEscola)][
                                     "1 a 250 estudantes"
                                   ]
-                                }
+                                )}
                               </td>
                               <td className="font-weight-bold">
-                                {
+                                {pontuarValor(
                                   grupoEscola[getKey(grupoEscola)][
                                     "251 a 500 estudantes"
                                   ]
-                                }
+                                )}
                               </td>
                               <td className="font-weight-bold">
-                                {
+                                {pontuarValor(
                                   grupoEscola[getKey(grupoEscola)][
                                     "501 a 1000 estudantes"
                                   ]
-                                }
+                                )}
                               </td>
                               <td className="font-weight-bold">
-                                {
+                                {pontuarValor(
                                   grupoEscola[getKey(grupoEscola)][
                                     "1001 a 1500 estudantes"
                                   ]
-                                }
+                                )}
                               </td>
                               <td className="font-weight-bold">
-                                {
+                                {pontuarValor(
                                   grupoEscola[getKey(grupoEscola)][
                                     "1501 a 2000 estudantes"
                                   ]
-                                }
+                                )}
                               </td>
                               <td className="font-weight-bold">
-                                {
+                                {pontuarValor(
                                   grupoEscola[getKey(grupoEscola)][
                                     "2001 a 2500 estudantes"
                                   ]
-                                }
+                                )}
                               </td>
                               <td className="font-weight-bold">
-                                {
+                                {pontuarValor(
                                   grupoEscola[getKey(grupoEscola)][
                                     "Mais que 2500 estudantes"
                                   ]
-                                }
+                                )}
                               </td>
                               <td className="font-weight-bold">
-                                {grupoEscola[getKey(grupoEscola)]["total"]}
+                                {pontuarValor(
+                                  grupoEscola[getKey(grupoEscola)]["total"]
+                                )}
                                 <ToggleExpandir
                                   ativo={grupoEscola[getKey(grupoEscola)].ativo}
                                   onClick={() =>
@@ -238,54 +244,74 @@ export class Escolas extends Component {
                                 (escola, indice_) => {
                                   return (
                                     <tr>
-                                      <td className="font-weight-bold">{escola.sigla}</td>
-                                      <td className="font-weight-bold">{escola.tipo_escola}</td>
+                                      <td className="font-weight-bold">
+                                        {escola.sigla}
+                                      </td>
+                                      <td className="font-weight-bold">
+                                        {escola.tipo_escola}
+                                      </td>
                                       <td>
-                                        {quantidadeAlunosGrupo(
-                                          escola,
-                                          "Sem estudantes cadastrados"
+                                        {pontuarValor(
+                                          quantidadeAlunosGrupo(
+                                            escola,
+                                            "Sem estudantes cadastrados"
+                                          )
                                         )}
                                       </td>
                                       <td>
-                                        {quantidadeAlunosGrupo(
-                                          escola,
-                                          "1 a 250 estudantes"
+                                        {pontuarValor(
+                                          quantidadeAlunosGrupo(
+                                            escola,
+                                            "1 a 250 estudantes"
+                                          )
                                         )}
                                       </td>
                                       <td>
-                                        {quantidadeAlunosGrupo(
-                                          escola,
-                                          "251 a 500 estudantes"
+                                        {pontuarValor(
+                                          quantidadeAlunosGrupo(
+                                            escola,
+                                            "251 a 500 estudantes"
+                                          )
                                         )}
                                       </td>
                                       <td>
-                                        {quantidadeAlunosGrupo(
-                                          escola,
-                                          "501 a 1000 estudantes"
+                                        {pontuarValor(
+                                          quantidadeAlunosGrupo(
+                                            escola,
+                                            "501 a 1000 estudantes"
+                                          )
                                         )}
                                       </td>
                                       <td>
-                                        {quantidadeAlunosGrupo(
-                                          escola,
-                                          "1001 a 1500 estudantes"
+                                        {pontuarValor(
+                                          quantidadeAlunosGrupo(
+                                            escola,
+                                            "1001 a 1500 estudantes"
+                                          )
                                         )}
                                       </td>
                                       <td>
-                                        {quantidadeAlunosGrupo(
-                                          escola,
-                                          "1501 a 2000 estudantes"
+                                        {pontuarValor(
+                                          quantidadeAlunosGrupo(
+                                            escola,
+                                            "1501 a 2000 estudantes"
+                                          )
                                         )}
                                       </td>
                                       <td>
-                                        {quantidadeAlunosGrupo(
-                                          escola,
-                                          "2001 a 2500 estudantes"
+                                        {pontuarValor(
+                                          quantidadeAlunosGrupo(
+                                            escola,
+                                            "2001 a 2500 estudantes"
+                                          )
                                         )}
                                       </td>
                                       <td>
-                                        {quantidadeAlunosGrupo(
-                                          escola,
-                                          "Mais que 2500 estudantes"
+                                        {pontuarValor(
+                                          quantidadeAlunosGrupo(
+                                            escola,
+                                            "Mais que 2500 estudantes"
+                                          )
                                         )}
                                       </td>
                                       <td>
@@ -307,7 +333,7 @@ export class Escolas extends Component {
                           totalPorFaixaLista.map(faixaTotal => {
                             return (
                               <td className="font-weight-bold bg-light">
-                                {faixaTotal.total}
+                                {pontuarValor(faixaTotal.total)}
                               </td>
                             );
                           })}

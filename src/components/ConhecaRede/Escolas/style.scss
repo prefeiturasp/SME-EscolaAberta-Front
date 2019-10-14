@@ -5,5 +5,15 @@ table.grupo-escolas {
     &.main {
       background-color: $corAzulBackgroundTable;
     }
+    td {
+      vertical-align: middle;
+    }
+  }
+  tfoot {
+    tr {
+      td {
+        vertical-align: middle;
+      }
+    }
   }
 }

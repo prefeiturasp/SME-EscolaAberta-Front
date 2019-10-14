@@ -6,6 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUniversity } from "@fortawesome/free-solid-svg-icons";
 import { ambientesFormatados } from "./helper";
+import { pontuarValor } from "components/utils";
 
 export class Ambientes extends Component {
   constructor(props) {
@@ -179,7 +180,7 @@ export class Ambientes extends Component {
                           <tr key={indice}>
                             <td>{ambiente.ambiente}</td>
                             <td className="text-center table-secondary">
-                              {ambiente.total}
+                              {pontuarValor(ambiente.total)}
                             </td>
                           </tr>
                         )

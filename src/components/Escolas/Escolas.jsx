@@ -24,7 +24,7 @@ export default class Escolas extends Component {
       dreSelecionada: "",
       loading: true
     };
-
+    this.conteudo = React.createRef();
     this.atualizarMapa = this.atualizarMapa.bind(this);
     this.carregarMaisEscolas = this.carregarMaisEscolas.bind(this);
     this.limparCheckboxes = this.limparCheckboxes.bind(this);
@@ -53,6 +53,7 @@ export default class Escolas extends Component {
           lon: this.props.location.state.lon
         });
       }
+      window.scrollTo(0, this.conteudo.current.offsetTop + 350);
     }
 
     PubSub.subscribe(
@@ -178,6 +179,7 @@ export default class Escolas extends Component {
                 <Filtros {...this.state} />
                 <div
                   id="conteudo"
+                  ref={this.conteudo}
                   className={`tabela-escolas-div overflow-auto pt-4 pb-4`}
                 >
                   <TabelaEscolas

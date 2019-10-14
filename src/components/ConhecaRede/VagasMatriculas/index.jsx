@@ -6,12 +6,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard } from "@fortawesome/free-solid-svg-icons";
 import { ToggleExpandir } from "../../ToggleExpandir";
-import {
-  formatarVagasMatriculas,
-  totalPorFaixa,
-} from "./helper";
+import { formatarVagasMatriculas, totalPorFaixa } from "./helper";
 import { getKey } from "../helper";
 import "./style.scss";
+import { pontuarValor } from "components/utils";
 
 export class VagasMatriculas extends Component {
   constructor(props) {
@@ -224,16 +222,26 @@ export class VagasMatriculas extends Component {
                           <td className="font-weight-bold">
                             {getKey(matricula)}
                           </td>
-                          <td>{matricula[getKey(matricula)].total_turmas}</td>
                           <td>
-                            {matricula[getKey(matricula)].vagas_oferecidas}
+                            {pontuarValor(
+                              matricula[getKey(matricula)].total_turmas
+                            )}
                           </td>
                           <td>
-                            {matricula[getKey(matricula)].vagas_oferecidas -
-                              matricula[getKey(matricula)].vagas_remanecentes}
+                            {pontuarValor(
+                              matricula[getKey(matricula)].vagas_oferecidas
+                            )}
                           </td>
                           <td>
-                            {matricula[getKey(matricula)].vagas_remanecentes}
+                            {pontuarValor(
+                              matricula[getKey(matricula)].vagas_oferecidas -
+                                matricula[getKey(matricula)].vagas_remanecentes
+                            )}
+                          </td>
+                          <td>
+                            {pontuarValor(
+                              matricula[getKey(matricula)].vagas_remanecentes
+                            )}
                           </td>
                           <td>
                             {matricula[getKey(matricula)].media_atendimento}{" "}
@@ -252,13 +260,19 @@ export class VagasMatriculas extends Component {
                                 <td className="font-weight-bold">
                                   {decserie.decserie}
                                 </td>
-                                <td>{decserie.total_turmas}</td>
-                                <td>{decserie.vagas_oferecidas}</td>
+                                <td>{pontuarValor(decserie.total_turmas)}</td>
                                 <td>
-                                  {decserie.vagas_oferecidas -
-                                    decserie.vagas_remanecentes}
+                                  {pontuarValor(decserie.vagas_oferecidas)}
                                 </td>
-                                <td>{decserie.vagas_remanecentes}</td>
+                                <td>
+                                  {pontuarValor(
+                                    decserie.vagas_oferecidas -
+                                      decserie.vagas_remanecentes
+                                  )}
+                                </td>
+                                <td>
+                                  {pontuarValor(decserie.vagas_remanecentes)}
+                                </td>
                                 <td>{decserie.media_atendimento}</td>
                               </tr>
                             );
@@ -272,17 +286,19 @@ export class VagasMatriculas extends Component {
                     <tr>
                       <td>TOTAL GERAL</td>
                       <td className="font-weight-bold bg-light">
-                        {totalPorFaixa.total_turmas}
+                        {pontuarValor(totalPorFaixa.total_turmas)}
                       </td>
                       <td className="font-weight-bold bg-light">
-                        {totalPorFaixa.vagas_oferecidas}
+                        {pontuarValor(totalPorFaixa.vagas_oferecidas)}
                       </td>
                       <td className="font-weight-bold bg-light">
-                        {totalPorFaixa.vagas_oferecidas -
-                          totalPorFaixa.vagas_remanecentes}
+                        {pontuarValor(
+                          totalPorFaixa.vagas_oferecidas -
+                            totalPorFaixa.vagas_remanecentes
+                        )}
                       </td>
                       <td className="font-weight-bold bg-light">
-                        {totalPorFaixa.vagas_remanecentes}
+                        {pontuarValor(totalPorFaixa.vagas_remanecentes)}
                       </td>
                       <td className="font-weight-bold bg-light">
                         {totalPorFaixa.media_atendimento}

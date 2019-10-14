@@ -50,7 +50,7 @@ export default class Rodape extends Component {
                     <li className="list-inline-item pr-1">
                       <a
                         className="text-white"
-                        href="https://www.facebook.com/EducaPrefSP/"
+                        href="https://pt-br.facebook.com/EducaPrefSP/"
                       >
                         <img
                           src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-facebook-topo.png"
@@ -61,7 +61,7 @@ export default class Rodape extends Component {
                     <li className="list-inline-item">
                       <a
                         className="text-white"
-                        href="https://twitter.com/EducaPrefSP?ref_src=twsrc%5Etfw%7Ctwcamp%5Eembeddedtimeline%7Ctwterm%5Eprofile%3AEducaPrefSP&ref_url=https%3A%2F%2Fhom-portal.sme.prefeitura.sp.gov.br%2F"
+                        href="https://twitter.com/EducaPrefSP"
                       >
                         <img
                           src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-twitter-topo.png"
@@ -70,7 +70,10 @@ export default class Rodape extends Component {
                       </a>
                     </li>
                     <li className="list-inline-item">
-                      <a className="text-white" href="https://www.youtube.com/">
+                      <a
+                        className="text-white"
+                        href="https://www.youtube.com/user/educacaosp"
+                      >
                         <img
                           src="https://hom-portal.sme.prefeitura.sp.gov.br/wp-content/uploads/2019/09/icone-youtube-topo.png"
                           alt="Ir para YouTube da Secerataria Muncipal de Educação de São Paulo"

@@ -36,6 +36,10 @@ export default class Buscador extends Component {
   }
 
   componentDidMount() {
+    this.carregarHistorico();
+  }
+
+  carregarHistorico() {
     const cookiesLista = Object.entries(cookie.loadAll());
     const historicoLista = [];
     cookiesLista.forEach(historico => {
@@ -108,22 +112,23 @@ export default class Buscador extends Component {
     }
   };
 
-  removerAcentos = (string_com_acentuacao) => {
-    return string_com_acentuacao.normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Remove acentos
+  removerAcentos = string_com_acentuacao => {
+    return string_com_acentuacao
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, ""); // Remove acentos
   };
 
   buscarEscolasPorNome(e) {
-      let escolas = [];
-      const string_sem_acento = this.removerAcentos(e);
+    let escolas = [];
+    const string_sem_acento = this.removerAcentos(e);
 
-      listarEscolas({escola: string_sem_acento}).then(lista => {
-          lista.results.forEach(function (escola) {
-              escolas.push({value: escola.codesc, label: escola.nomesc});
-          });
+    listarEscolas({ escola: string_sem_acento }).then(lista => {
+      lista.results.forEach(function(escola) {
+        escolas.push({ value: escola.codesc, label: escola.nomesc });
       });
-      return escolas;
+    });
+    return escolas;
   }
-
 
   buscarBairros(e) {
     let bairros = [];
@@ -219,6 +224,7 @@ export default class Buscador extends Component {
 
   mostrarBusca(event) {
     if (event.type === "focus") {
+      this.carregarHistorico();
       document
         .querySelector(".form-control-lg")
         .classList.add("rounded-bottom-0", "border-bottom-0");
@@ -226,6 +232,13 @@ export default class Buscador extends Component {
         .querySelector(".resultados")
         .classList.remove("d-none", "borda-off");
       document.querySelector(".resultados").classList.add("borda-on");
+    } else if (event.type === "blur") {
+      setTimeout(
+        function() {
+          this.setState({ historicoLista: [] });
+        }.bind(this),
+        250
+      );
     } else {
       document.querySelector(".resultados").classList.add("borda-off");
       document.querySelector(".resultados").classList.remove("borda-on");

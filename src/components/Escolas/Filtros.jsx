@@ -184,14 +184,12 @@ export default class Filtros extends Component {
               if (!lista_inner.next) {
                 PubSub.publish("lista-escolas", listaResponse.results);
                 PubSub.publish("total-itens", Math.ceil(20));
-                document.querySelector(".overflow-auto").scrollTop = 0;
               }
             });
           }
         } else {
           PubSub.publish("lista-escolas", listaResponse.results);
           PubSub.publish("total-itens", Math.ceil(lista.count / 10));
-          document.querySelector(".overflow-auto").scrollTop = 0;
         }
       });
     }
@@ -203,7 +201,6 @@ export default class Filtros extends Component {
       lon: this.state.logradouroSelecionado.lon
     }).then(lista => {
       PubSub.publish("lista-escolas", lista.results);
-      document.querySelector(".overflow-auto").scrollTop = 0;
     });
   }
 
