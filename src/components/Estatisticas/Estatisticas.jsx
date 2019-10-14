@@ -118,10 +118,10 @@ export default class Estatisticas extends Component {
                     ]
                   });
                 } else if (
-                  lista1.results.length === 0 &&
-                  lista2.length === 0 &&
-                  retorno.result.ano_inicial &&
-                  retorno.result.ano_final
+                  lista1.results.length > 0 &&
+                  lista2.length > 0 &&
+                  !retorno.result.ano_inicial &&
+                  !retorno.result.ano_final
                 ) {
                   this.setState({
                     componentesLabels: [
