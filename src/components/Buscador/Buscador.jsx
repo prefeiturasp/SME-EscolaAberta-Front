@@ -237,7 +237,7 @@ export default class Buscador extends Component {
         function() {
           this.setState({ historicoLista: [] });
         }.bind(this),
-        100
+        250
       );
     } else {
       document.querySelector(".resultados").classList.add("borda-off");
