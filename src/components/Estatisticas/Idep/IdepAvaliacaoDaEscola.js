@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faChartBar} from "@fortawesome/free-solid-svg-icons";
 import IdepAvaliacaoDaEscolaChart from './IdepAvaliacaoDaEscolaChart';
+import NotaTecnicaCalculoMetasIDEP from './assets/files/Nota_Tecnica_Calculo_IDEP.pdf';
 
 class IdepAvaliacaoDaEscola extends Component {
 
@@ -79,7 +80,7 @@ class IdepAvaliacaoDaEscola extends Component {
                                             notas da Prova São Paulo — edições 2017 e 2018. As metas foram definidas
                                             para os próximos 5 anos, a partir do ano de 2019.
                                         </p>
-                                        <button type="button" className="btn btn-outline-primary">NOTA TÉCNICA</button>
+                                        <a href={NotaTecnicaCalculoMetasIDEP} className="btn btn-outline-primary" download>NOTA TÉCNICA</a>
                                     </div>
                                 </div>
                                 <div className='col-12 col-md-8'>
