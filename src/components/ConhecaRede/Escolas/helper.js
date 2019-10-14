@@ -77,7 +77,7 @@ export const inicializarTiposEscola = [
     }
   },
   {
-    "ESCOLAS ESPECIAIS CONVENIADAS": {
+    "ESCOLAS ESPECIAS PARCEIRAS": {
       faixas: []
     }
   }
@@ -195,7 +195,7 @@ export const inicializarGruposEscolas = [
           sigla: "EMEBS"
         },
         {
-          tipo_escola: "ESCOLAS ESPECIAIS CONVENIADAS",
+          tipo_escola: "ESCOLAS ESPECIAS PARCEIRAS",
           faixas: [],
           sigla: "ESPECIAIS"
         }
@@ -318,7 +318,7 @@ export const tipoEscolaLabel = tipoEscola => {
     case "EMEFM":
       return "ESCOLA MUNICIPAL DE ENSINO FUNDAMENTAL E MEDIO";
     case "ESP CONV":
-      return "ESCOLAS ESPECIAIS CONVENIADAS";
+      return "ESCOLAS ESPECIAS PARCEIRAS";
     case "MOVA":
       return "MOVIMENTO DE ALFABETIZACAO";
     case "CIEJA":
