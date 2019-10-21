@@ -7,7 +7,6 @@ import { formatarDados } from "./helper";
 export default class Idep extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       codesc: this.props.codesc,
       referencia: "",
@@ -25,8 +24,10 @@ export default class Idep extends Component {
     });
 
     loginIdep().then(_ => {
+
       dadosIdep(this.state.codesc)
         .then(retorno => {
+
           this.setState({ ano_inicial: retorno.result.ano_inicial });
           this.setState({ ano_final: retorno.result.ano_final });
 
@@ -37,6 +38,7 @@ export default class Idep extends Component {
         .catch(error => {
           console.log(error.message);
         });
+
     });
   }
 

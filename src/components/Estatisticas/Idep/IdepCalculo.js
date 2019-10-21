@@ -11,7 +11,8 @@ export default class IdepCalculo extends Component {
             indice_exibicao: this.props.anoInicial.indices.indices[0],
             fluxo_exibicao: this.props.anoInicial.parametros.fluxo,
             aprendizado_exibicao: this.props.anoInicial.indices.indices[0] / this.props.anoInicial.parametros.fluxo.replace(",", "."),
-            selectedOption: 'ano_inicial'
+            selectedOption: 'ano_inicial',
+            verifica_anos_finais: this.props.anoFinal.indices.indices,
         };
     }
 
@@ -58,10 +59,14 @@ export default class IdepCalculo extends Component {
                                     <input onChange={this.handleOptionChange.bind(this)} className="form-check-input" type="radio" name="escolhaAno" id="nse" value="ano_inicial" checked={this.state.selectedOption === 'ano_inicial'}/>
                                     <label className="form-check-label fonte-12" htmlFor="nse">Anos Iniciais</label>
                                 </div>
-                                <div className="form-check form-check-inline">
-                                    <input onChange={this.handleOptionChange.bind(this)} className="form-check-input" type="radio" name="escolhaAno" id="icg" value="ano_final" checked={this.state.selectedOption === 'ano_final'}/>
-                                    <label className="form-check-label fonte-12" htmlFor="icg">Anos Finais</label>
-                                </div>
+                                {
+                                    this.state.verifica_anos_finais != "Não há metas para essa escola" ? (
+                                        <div className="form-check form-check-inline">
+                                            <input onChange={this.handleOptionChange.bind(this)} className="form-check-input" type="radio" name="escolhaAno" id="icg" value="ano_final" checked={this.state.selectedOption === 'ano_final'}/>
+                                            <label className="form-check-label fonte-12" htmlFor="icg">Anos Finais</label>
+                                        </div>
+                                    ): null
+                                }
                             </div>
                             <div className='row'>
                                 <div className='col-12 col-md-4'>

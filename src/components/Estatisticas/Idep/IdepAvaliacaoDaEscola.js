@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faChartBar} from "@fortawesome/free-solid-svg-icons";
 import IdepAvaliacaoDaEscolaChart from './IdepAvaliacaoDaEscolaChart';
 import NotaTecnicaCalculoMetasIDEP from './assets/files/Nota_Tecnica_Calculo_IDEP.pdf';
+import IdepCalculo from "./Idep";
 
 class IdepAvaliacaoDaEscola extends Component {
 
@@ -17,7 +18,9 @@ class IdepAvaliacaoDaEscola extends Component {
             todos_indices_exibicao: [this.props.anoInicial.indices.indices[0]].concat(this.props.anoInicial.metas.metas),
             indice_atual_exibicao: this.props.anoInicial.indices.indices[0],
             selectedOption: 'ano_inicial',
+            verifica_anos_finais: this.props.anoFinal.indices.indices,
         };
+
     }
 
     handleOptionChange(evento) {
@@ -54,14 +57,19 @@ class IdepAvaliacaoDaEscola extends Component {
                             <div className="d-flex justify-content-end p-2 bd-highlight">
                                 <div className="form-check form-check-inline">
                                     <input onChange={this.handleOptionChange.bind(this)} className="form-check-input" type="radio" name="escolhaAnoAvaliacao" id="nseAvaliacao" value="ano_inicial" checked={this.state.selectedOption === 'ano_inicial'}/>
-                                    <label className="form-check-label fonte-12" htmlFor="nseAvaliacao">Anos
-                                        Iniciais</label>
+                                    <label className="form-check-label fonte-12" htmlFor="nseAvaliacao">Anos Iniciais</label>
                                 </div>
-                                <div className="form-check form-check-inline">
-                                    <input onChange={this.handleOptionChange.bind(this)} className="form-check-input" type="radio" name="escolhaAnoAvaliacao" id="icgAvaliacao" value="ano_final" checked={this.state.selectedOption === 'ano_final'}/>
-                                    <label className="form-check-label fonte-12" htmlFor="icgAvaliacao">Anos
-                                        Finais</label>
-                                </div>
+
+                                {
+                                    this.state.verifica_anos_finais != "Não há metas para essa escola" ? (
+                                        <div className="form-check form-check-inline">
+                                            <input onChange={this.handleOptionChange.bind(this)} className="form-check-input" type="radio" name="escolhaAnoAvaliacao" id="icgAvaliacao" value="ano_final" checked={this.state.selectedOption === 'ano_final'}/>
+                                            <label className="form-check-label fonte-12" htmlFor="icgAvaliacao">Anos Finais</label>
+                                        </div>
+                                    ): null
+                                }
+
+
                             </div>
                             <div className='row'>
                                 <div className='col-12 col-md-4'>
