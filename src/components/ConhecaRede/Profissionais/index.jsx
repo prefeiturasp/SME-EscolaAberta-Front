@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ToggleExpandir from "components/ToggleExpandir";
 import {
   listarCargosProfissionais,
   listarCargosProfissionaisPorDRE
@@ -9,18 +10,21 @@ import {
   totalDoCargoPorEscolaridade,
   totalProfissionaisPorEscolaridade,
   totalPorFormacao,
-  total
+  total,
+  cargosPorGrupo
 } from "./helper";
 import { pontuarValor } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faUsers } from "@fortawesome/free-solid-svg-icons";
 import "../style.scss";
+import "./style.scss";
 
 export class Profissionais extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cargosProfissionais: null,
+      cargosPorGrupo: null,
       indice: "abc",
       totalPorFormacaoLista: null
     };
@@ -32,6 +36,9 @@ export class Profissionais extends Component {
         cargosProfissionais: formatarCargosProfissionais(
           cargosProfissionais.results
         ),
+        cargosPorGrupo: cargosPorGrupo(formatarCargosProfissionais(
+          cargosProfissionais.results
+        )),
         totalPorFormacaoLista: totalPorFormacao(
           formatarCargosProfissionais(cargosProfissionais.results)
         )
@@ -61,9 +68,23 @@ export class Profissionais extends Component {
     );
     this.props.onDRESelected(value);
   }
+
+  onGrupoCargoClicked(grupo) {
+    let cargosPorGrupo = this.state.cargosPorGrupo;
+    cargosPorGrupo.forEach(grupoCargo => {
+      if (getKey(grupoCargo) === getKey(grupo)) {
+        grupoCargo[getKey(grupoCargo)].ativo = !grupoCargo[
+          getKey(grupoCargo)
+        ].ativo;
+      }
+    });
+    this.setState({ cargosPorGrupo });
+  }
+
+
   render() {
     const { diretoriasRegionais } = this.props;
-    const { indice, cargosProfissionais, totalPorFormacaoLista } = this.state;
+    const { indice, cargosPorGrupo, cargosProfissionais, totalPorFormacaoLista } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -108,7 +129,7 @@ export class Profissionais extends Component {
             <div className="collapse fade" id={`${indice}`}>
               <div className="card-body p-0">
                 <div className="table-responsive">
-                  <table className="table text-center table-hover table-bordered mb-0 fonte-14">
+                  <table className="table grupo-profissionais text-center table-hover table-bordered mb-0 fonte-14">
                     <thead>
                       <tr>
                         <th scope="col" rowSpan="2"></th>
@@ -134,36 +155,49 @@ export class Profissionais extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {cargosProfissionais &&
-                        cargosProfissionais.map(cargoProfissional => {
-                          return (
-                            <tr>
+                      {cargosPorGrupo &&
+                        cargosPorGrupo.map(grupoCargo => {
+                          return [
+                            <tr className="main">
                               <td className="font-weight-bold">
-                                {getKey(cargoProfissional)}
+                                {getKey(grupoCargo)}
                               </td>
-                              <td>
-                                {totalProfissionaisPorEscolaridade(
-                                  cargoProfissional,
+                              <td className="font-weight-bold">0</td>
+                              <td className="font-weight-bold">{grupoCargo[getKey(grupoCargo)].licenciatura_curta}</td>
+                              <td className="font-weight-bold">{grupoCargo[getKey(grupoCargo)].licenciatura_plena}</td>
+                              <td className="font-weight-bold">{grupoCargo[getKey(grupoCargo)].total}<ToggleExpandir
+                                ativo={grupoCargo[getKey(grupoCargo)].ativo}
+                                onClick={() =>
+                                  this.onGrupoCargoClicked(grupoCargo)
+                                }
+                              /></td>
+                            </tr>,
+                            grupoCargo[getKey(grupoCargo)].ativo &&
+                            grupoCargo[getKey(grupoCargo)].cargos.map(
+                              (cargo, indice_) => {
+                                return (
+                                  <tr key={indice}>
+                                    <td className="font-weight-bold">
+                                      {cargo.tipo_cargo}
+                                    </td>
+                                    <td>{totalProfissionaisPorEscolaridade(
+                                  cargo,
                                   "ENSINO MEDIO/NORMAL"
-                                )}
-                              </td>
-                              <td>
-                                {totalProfissionaisPorEscolaridade(
-                                  cargoProfissional,
+                                )}</td>
+                                    <td>{totalProfissionaisPorEscolaridade(
+                                  cargo,
                                   "LICENCIATURA CURTA"
-                                )}
-                              </td>
-                              <td>
-                                {totalProfissionaisPorEscolaridade(
-                                  cargoProfissional,
+                                )}</td>
+                                    <td>{totalProfissionaisPorEscolaridade(
+                                  cargo,
                                   "LICENCIATURA PLENA"
-                                )}
-                              </td>
-                              <td className="font-weight-bold bg-light">
-                                {totalDoCargoPorEscolaridade(cargoProfissional)}
-                              </td>
-                            </tr>
-                          );
+                                )}</td>
+                                    <td>0</td>
+                                  </tr>
+                                )
+                              }
+                            )
+                          ];
                         })}
                     </tbody>
                     <tfoot>

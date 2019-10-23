@@ -4,6 +4,7 @@ export const formatarCargosProfissionais = cargosProfessores => {
   let novoCargosProfessores = [];
   let indice = 0;
   cargosProfessores.forEach(elem => {
+    elem.titulo = cargoLabel(elem.titulo);
     let i;
     let achou = false;
     for (i = 0; i < indice + 1; i++) {
@@ -28,18 +29,41 @@ export const formatarCargosProfissionais = cargosProfessores => {
       indice = indice + 1;
     }
   });
-  return novoCargosProfessores.sort((a, b) => (getKey(a) > getKey(b) ? 1 : -1));
+  novoCargosProfessores = novoCargosProfessores.sort((a, b) => (getKey(a) > getKey(b) ? 1 : -1));
+  return novoCargosProfessores;
 };
+
+export const cargosPorGrupo = novoCargosProfessores => {
+  let grupos = inicializarGruposCargos;
+  grupos.forEach(grupo => {
+    grupo[getKey(grupo)].cargos.forEach(cargo => {
+      const indice = novoCargosProfessores.findIndex(cargoFormatado => getKey(cargoFormatado) === cargo.tipo_cargo);
+      if (indice !== -1) {
+        cargo.formacoes = novoCargosProfessores[indice][cargo.tipo_cargo].formacoes;
+        cargo.formacoes.forEach(formacao => {
+          if (formacao.formacao === 'LICENCIATURA CURTA') {
+            grupo[getKey(grupo)].licenciatura_curta += formacao.total;
+            grupo[getKey(grupo)].total += formacao.total;
+          } else  if (formacao.formacao === 'LICENCIATURA PLENA') {
+            grupo[getKey(grupo)].licenciatura_plena += formacao.total;
+            grupo[getKey(grupo)].total += formacao.total;
+          }
+        })
+      }
+    })
+  })
+  return grupos
+}
 
 export const getKey = obj => {
   return Object.keys(obj)[0];
 };
 
 export const totalProfissionaisPorEscolaridade = (cargo, titulo) => {
-  const indice = cargo[getKey(cargo)].formacoes.findIndex(
+  const indice = cargo.formacoes.findIndex(
     formacao => formacao.formacao === titulo
   );
-  if (indice !== -1) return pontuarValor(cargo[getKey(cargo)].formacoes[indice].total);
+  if (indice !== -1) return pontuarValor(cargo.formacoes[indice].total);
   else return 0;
 };
 
@@ -143,7 +167,7 @@ export const cargoLabel = cargo => {
     case "COORDENADOR PEDAGOGICO":
       return "COORDENADOR PEDAGÓGICO";
     case "DIRETOR DE DIVISAO TECNICA":
-      return "DIRETOR DE DIVISAO TÉCNICA";
+      return "DIRETOR DE DIVISÃO TÉCNICA";
     case "DIRETOR DE NUCLEO TECNICO":
       return "DIRETOR DE NÚCLEO TÉCNICO";
     case "ESP.INF.TEC.CULT.DESP.-BIBLIOTECA":
@@ -229,21 +253,126 @@ export const inicializarGruposCargos = [
   {
     "GESTÃO DA REDE MUNICIPAL DE EDUCAÇÃO": {
       ativo: false,
+      licenciatura_curta: 0,
+      licenciatura_plena: 0,
+      total: 0,
       cargos: [
         {
-          tipo_escola: "CENTRO DE EDUCACAO INFANTIL DIRETO",
-          faixas: [],
-          sigla: "CEI DIRETO"
+          tipo_cargo: "DIRETOR REGIONAL DE EDUCAÇÃO",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "GESTOR DE CENTRO EDUCACIONAL UNIFICADO",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "COORDENADOR IV",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "COORDENADOR V",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "COORDENADOR DE ESPORTES E LAZER",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "COORDENADOR DE AÇÃO CULTURAL",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "COORDENADOR DE PROJETOS",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "DIRETOR DE DIVISÃO TÉCNICA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "DIRETOR DE NÚCLEO TÉCNICO",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "SUPERVISOR ESCOLAR",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ANALISTA ASSISTENTE DE DESENVOLVIMENTO SOCIAL - NÍVEIS I E IV",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ANALISTA DE INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - BIBLIOTECA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ANALISTA DE INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - EDUCAÇÃO FÍSICA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ANALISTA DE SAÚDE - NÍVEIS I, II, III E IV",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ANALISTA DE PLANEJAMENTO E DESENVOLVIMENTO ORGANIZACIONAL – II E IV",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSESSOR I",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSESSOR II",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSESSOR TÉCNICO I",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSESSOR TÉCNICO II",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSESSOR TÉCNICO III",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSISTENTE DE ATIVIDADES ARTÍSTICAS",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "ASSISTENTE DE SUPORTE TÉCNICO - NÍVEL I",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "ASSISTENTE TÉCNICO EDUCACIONAL",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "ESPECIALISTA EM INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - BIBLIOTECA",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "ESPECIALISTA EM INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - EDUCAÇÃO FÍSICA",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "PROFISSIONAL DE ENGENHARIA, ARQUITETURA, AGRONOMIA E GEOLOGIA I",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "SUPERVISOR TÉCNICO II",
+          formacoes: []
         }
       ]
     },
-    "GESTÃO ESCOLAR": {
+    /*"GESTÃO ESCOLAR": {
       ativo: false,
       cargos: [
         {
-          tipo_escola: "CENTRO DE EDUCACAO INFANTIL DIRETO",
-          faixas: [],
-          sigla: "CEI DIRETO"
+          tipo_cargo: "CENTRO DE EDUCACAO INFANTIL DIRETO",
+          formacoes: [],
         }
       ]
     },
@@ -251,11 +380,10 @@ export const inicializarGruposCargos = [
       ativo: false,
       cargos: [
         {
-          tipo_escola: "CENTRO DE EDUCACAO INFANTIL DIRETO",
-          faixas: [],
-          sigla: "CEI DIRETO"
+          tipo_cargo: "CENTRO DE EDUCACAO INFANTIL DIRETO",
+          formacoes: [],
         }
       ]
-    }
+    }*/
   }
 ]
