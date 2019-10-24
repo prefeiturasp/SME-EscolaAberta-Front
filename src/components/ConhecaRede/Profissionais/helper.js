@@ -12,10 +12,19 @@ export const formatarCargosProfissionais = cargosProfessores => {
         novoCargosProfessores[i] &&
         novoCargosProfessores[i][elem.titulo] !== undefined
       ) {
-        novoCargosProfessores[i][elem.titulo].formacoes.push({
-          formacao: elem.formacao,
-          total: elem.total
-        });
+        let jaTemEssaFormacao = false;
+        novoCargosProfessores[i][elem.titulo].formacoes.forEach(formacao => {
+          if (formacao.formacao === elem.formacao) {
+            formacao.total += elem.total;
+            jaTemEssaFormacao = true;
+          }
+        })
+        if (!jaTemEssaFormacao) {
+          novoCargosProfessores[i][elem.titulo].formacoes.push({
+            formacao: elem.formacao,
+            total: elem.total
+          });
+        }
         achou = true;
       }
     }
@@ -35,6 +44,14 @@ export const formatarCargosProfissionais = cargosProfessores => {
 
 export const cargosPorGrupo = novoCargosProfessores => {
   let grupos = inicializarGruposCargos;
+  grupos.forEach(grupo => {
+    grupo[getKey(grupo)].licenciatura_curta = 0;
+    grupo[getKey(grupo)].licenciatura_plena = 0;
+    grupo[getKey(grupo)].total = 0;
+    grupo[getKey(grupo)].cargos.forEach(cargo => {
+      cargo.formacoes = [];
+    })
+  })
   grupos.forEach(grupo => {
     grupo[getKey(grupo)].cargos.forEach(cargo => {
       const indice = novoCargosProfessores.findIndex(cargoFormatado => getKey(cargoFormatado) === cargo.tipo_cargo);
@@ -69,7 +86,7 @@ export const totalProfissionaisPorEscolaridade = (cargo, titulo) => {
 
 export const totalDoCargoPorEscolaridade = cargo => {
   let count = 0;
-  cargo[getKey(cargo)].formacoes.forEach(formacao => {
+  cargo.formacoes.forEach(formacao => {
     if (
       formacao.formacao === "LICENCIATURA CURTA" ||
       formacao.formacao === "LICENCIATURA PLENA"
@@ -151,7 +168,7 @@ export const cargoLabel = cargo => {
       return "ASSISTENTE DE SUPORTE TÉCNICO - NÍVEL I";
     case "ASSIST.GESTAO POLITICAS PUBLICAS-N.I":
     case "ASSIST.GESTAO POLITICAS PUBLICAS-N.II":
-      return "ASSISTENTE DE GESTÃO E POLÍTICAS PÚBLICAS- NÍVEIS I E II";
+      return "ASSISTENTE DE GESTÃO E POLÍTICAS PÚBLICAS - NÍVEIS I E II";
     case "ASSISTENTE DE SAUDE - NIVEL I":
     case "ASSISTENTE DE SAUDE - NIVEL II":
     case "ASSISTENTE DE SAUDE - NIVEL III":
@@ -164,6 +181,8 @@ export const cargoLabel = cargo => {
       return "AUXILIAR TÉCNICO DE EDUCAÇÃO";
     case "COORDENADOR DE ACAO CULTURAL":
       return "COORDENADOR DE AÇÃO CULTURAL";
+    case "COORDENADOR DE ACAO EDUCACIONAL":
+      return "COORDENADOR DE AÇÃO EDUCACIONAL";
     case "COORDENADOR PEDAGOGICO":
       return "COORDENADOR PEDAGÓGICO";
     case "DIRETOR DE DIVISAO TECNICA":
@@ -244,6 +263,12 @@ export const cargoLabel = cargo => {
       return "SECRETÁRIO DE ESCOLA";
     case "SUPERVISOR TECNICO II":
       return "SUPERVISOR TÉCNICO II";
+    case "ASSISTENTE TECNICO DE EDUCACAO I":
+      return "ASSISTENTE TÉCNICO DE EDUCAÇÃO";
+    case "ASSISTENTE TECNICO I":
+      return "ASSISTENTE TÉCNICO I";
+    case "COORDENADOR":
+      return "COORDENADOR GERAL";
     default:
       return cargo;
   }
@@ -266,6 +291,14 @@ export const inicializarGruposCargos = [
           formacoes: [],
         },
         {
+          tipo_cargo: "COORDENADOR GERAL",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "COORDENADOR II",
+          formacoes: [],
+        },
+        {
           tipo_cargo: "COORDENADOR IV",
           formacoes: [],
         },
@@ -279,6 +312,10 @@ export const inicializarGruposCargos = [
         },
         {
           tipo_cargo: "COORDENADOR DE AÇÃO CULTURAL",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "COORDENADOR DE AÇÃO EDUCACIONAL",
           formacoes: [],
         },
         {
@@ -338,6 +375,10 @@ export const inicializarGruposCargos = [
           formacoes: [],
         },
         {
+          tipo_cargo: "ASSISTENTE TÉCNICO I",
+          formacoes: []
+        },
+        {
           tipo_cargo: "ASSISTENTE DE ATIVIDADES ARTÍSTICAS",
           formacoes: []
         },
@@ -366,24 +407,222 @@ export const inicializarGruposCargos = [
           formacoes: []
         }
       ]
-    },
-    /*"GESTÃO ESCOLAR": {
+    }
+  },
+  {
+    "GESTÃO ESCOLAR": {
       ativo: false,
+      licenciatura_curta: 0,
+      licenciatura_plena: 0,
+      total: 0,
       cargos: [
         {
-          tipo_cargo: "CENTRO DE EDUCACAO INFANTIL DIRETO",
+          tipo_cargo: "DIRETOR DE ESCOLA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "COORDENADOR PEDAGÓGICO",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSISTENTE DE DIRETOR DE ESCOLA",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "AUXILIAR DE DESENVOLVIMENTO INFANTIL",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR TITULAR DE EDUCAÇÃO INFANTIL",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE EDUCAÇÃO INFANTIL",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR SUBSTITUTO DE EDUCAÇÃO INFANTIL",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL I",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR 1º GRAU NÍVEL II",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR SUBSTITUTO DE 1º GRAU NÍVEL I",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "PROFESSOR TITULAR DE ENSINO FUNDAMENTAL I",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL I",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE 2º GRAU",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL II - CIÊNCIAS",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL II - GEOGRAFIA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL II - MATEMÁTICA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ARTES",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - BIOLOGIA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - CIENCIAS",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - CONTROLE DE CUSTOS",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ECONOMIA DE MERCADO",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - EDUCAÇÃO FÍSICA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ESPANHOL",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - FILOSOGIA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - FÍSICA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - GEOGRAFIA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - HISTÓRIA E FILOSOFIA DA EDUCAÇÃO",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - HISTÓRIA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - INGLÊS",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - MATEMÁTICA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - PORTUGUÊS",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - PSICOLOGIA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - QUÍMICA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - SOCIOLIGIA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - OUTROS COMPONENTES",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ADMINISTRAÇÃO E CONTROLE",
           formacoes: [],
         }
       ]
-    },
+    }
+  },
+  {
     "QUADRO DE APOIO": {
       ativo: false,
+      licenciatura_curta: 0,
+      licenciatura_plena: 0,
+      total: 0,
       cargos: [
         {
-          tipo_cargo: "CENTRO DE EDUCACAO INFANTIL DIRETO",
+          tipo_cargo: "AGENTE DE APOIO - NÍVEIS I E II",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "AGENTE ESCOLAR",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "AUXILIAR ADMINISTRATIVO DE ENSINO",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "AUXILIAR TÉCNICO DE EDUCAÇÃO",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "AUXILIAR DE SECRETARIA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSISTENTE TÉCNICO DE EDUCAÇÃO",
+          formacoes: []
+        },
+        {
+          tipo_cargo: "INSPETOR DE ALUNOS",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "SECRETÁRIO DE ESCOLA",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ENCARREGADO DE EQUIPE",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ENCARREGADO DE EQUIPE I",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ENCARREGADO DE EQUIPE II",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSISTENTE DE SAÚDE – NÍVEIS I, II E III",
+          formacoes: [],
+        },
+        {
+          tipo_cargo: "ASSISTENTE DE GESTÃO E POLÍTICAS PÚBLICAS - NÍVEIS I E II",
           formacoes: [],
         }
       ]
-    }*/
+    }
   }
 ]

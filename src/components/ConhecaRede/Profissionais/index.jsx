@@ -58,6 +58,9 @@ export class Profissionais extends Component {
           cargosProfissionais: formatarCargosProfissionais(
             tiposProfissionaisPorCargoPorDRE.results
           ),
+          cargosPorGrupo: cargosPorGrupo(formatarCargosProfissionais(
+            tiposProfissionaisPorCargoPorDRE.results
+          )),
           totalPorFormacaoLista: totalPorFormacao(
             formatarCargosProfissionais(
               tiposProfissionaisPorCargoPorDRE.results
@@ -163,9 +166,9 @@ export class Profissionais extends Component {
                                 {getKey(grupoCargo)}
                               </td>
                               <td className="font-weight-bold">0</td>
-                              <td className="font-weight-bold">{grupoCargo[getKey(grupoCargo)].licenciatura_curta}</td>
-                              <td className="font-weight-bold">{grupoCargo[getKey(grupoCargo)].licenciatura_plena}</td>
-                              <td className="font-weight-bold">{grupoCargo[getKey(grupoCargo)].total}<ToggleExpandir
+                              <td className="font-weight-bold">{pontuarValor(grupoCargo[getKey(grupoCargo)].licenciatura_curta)}</td>
+                              <td className="font-weight-bold">{pontuarValor(grupoCargo[getKey(grupoCargo)].licenciatura_plena)}</td>
+                              <td className="font-weight-bold">{pontuarValor(grupoCargo[getKey(grupoCargo)].total)}<ToggleExpandir
                                 ativo={grupoCargo[getKey(grupoCargo)].ativo}
                                 onClick={() =>
                                   this.onGrupoCargoClicked(grupoCargo)
@@ -192,7 +195,7 @@ export class Profissionais extends Component {
                                   cargo,
                                   "LICENCIATURA PLENA"
                                 )}</td>
-                                    <td>0</td>
+                                    <td>{totalDoCargoPorEscolaridade(cargo)}</td>
                                   </tr>
                                 )
                               }
