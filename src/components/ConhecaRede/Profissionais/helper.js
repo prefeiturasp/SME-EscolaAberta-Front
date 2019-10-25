@@ -18,7 +18,7 @@ export const formatarCargosProfissionais = cargosProfessores => {
             formacao.total += elem.total;
             jaTemEssaFormacao = true;
           }
-        })
+        });
         if (!jaTemEssaFormacao) {
           novoCargosProfessores[i][elem.titulo].formacoes.push({
             formacao: elem.formacao,
@@ -38,7 +38,9 @@ export const formatarCargosProfissionais = cargosProfessores => {
       indice = indice + 1;
     }
   });
-  novoCargosProfessores = novoCargosProfessores.sort((a, b) => (getKey(a) > getKey(b) ? 1 : -1));
+  novoCargosProfessores = novoCargosProfessores.sort((a, b) =>
+    getKey(a) > getKey(b) ? 1 : -1
+  );
   return novoCargosProfessores;
 };
 
@@ -50,27 +52,30 @@ export const cargosPorGrupo = novoCargosProfessores => {
     grupo[getKey(grupo)].total = 0;
     grupo[getKey(grupo)].cargos.forEach(cargo => {
       cargo.formacoes = [];
-    })
-  })
+    });
+  });
   grupos.forEach(grupo => {
     grupo[getKey(grupo)].cargos.forEach(cargo => {
-      const indice = novoCargosProfessores.findIndex(cargoFormatado => getKey(cargoFormatado) === cargo.tipo_cargo);
+      const indice = novoCargosProfessores.findIndex(
+        cargoFormatado => getKey(cargoFormatado) === cargo.tipo_cargo
+      );
       if (indice !== -1) {
-        cargo.formacoes = novoCargosProfessores[indice][cargo.tipo_cargo].formacoes;
+        cargo.formacoes =
+          novoCargosProfessores[indice][cargo.tipo_cargo].formacoes;
         cargo.formacoes.forEach(formacao => {
-          if (formacao.formacao === 'LICENCIATURA CURTA') {
+          if (formacao.formacao === "LICENCIATURA CURTA") {
             grupo[getKey(grupo)].licenciatura_curta += formacao.total;
             grupo[getKey(grupo)].total += formacao.total;
-          } else  if (formacao.formacao === 'LICENCIATURA PLENA') {
+          } else if (formacao.formacao === "LICENCIATURA PLENA") {
             grupo[getKey(grupo)].licenciatura_plena += formacao.total;
             grupo[getKey(grupo)].total += formacao.total;
           }
-        })
+        });
       }
-    })
-  })
-  return grupos
-}
+    });
+  });
+  return grupos;
+};
 
 export const getKey = obj => {
   return Object.keys(obj)[0];
@@ -163,7 +168,7 @@ export const cargoLabel = cargo => {
     case "ASSESSOR TECNICO II":
       return "ASSESSOR TÉCNICO II";
     case "ASSIST. DE ATIVIDADES ARTISTICAS":
-      return "ASSISTENTE DE ATIVIDADES ARTÍSTICAS"
+      return "ASSISTENTE DE ATIVIDADES ARTÍSTICAS";
     case "ASSIST.DE SUPORTE TECNICO-N.I":
       return "ASSISTENTE DE SUPORTE TÉCNICO - NÍVEL I";
     case "ASSIST.GESTAO POLITICAS PUBLICAS-N.I":
@@ -254,7 +259,7 @@ export const cargoLabel = cargo => {
     case "PROF.TITULAR DE EDUCACAO INFANTIL":
       return "PROFESSOR TITULAR DE EDUCAÇÃO INFANTIL";
     case "PROF.TITULAR DE ENS.FUND.I":
-      return "PROFESSOR TITULAR DE ENSINO FUNDAMENTAL I"
+      return "PROFESSOR TITULAR DE ENSINO FUNDAMENTAL I";
     case "PROFESSOR DE 2.GRAU":
       return "PROFESSOR DE 2º GRAU";
     case "PROFISSIONAL DE ENG. ARQ. AGR. GEO. I":
@@ -272,7 +277,7 @@ export const cargoLabel = cargo => {
     default:
       return cargo;
   }
-}
+};
 
 export const inicializarGruposCargos = [
   {
@@ -284,95 +289,103 @@ export const inicializarGruposCargos = [
       cargos: [
         {
           tipo_cargo: "DIRETOR REGIONAL DE EDUCAÇÃO",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "GESTOR DE CENTRO EDUCACIONAL UNIFICADO",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "COORDENADOR GERAL",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "COORDENADOR II",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "COORDENADOR IV",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "COORDENADOR V",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "COORDENADOR DE ESPORTES E LAZER",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "COORDENADOR DE AÇÃO CULTURAL",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "COORDENADOR DE AÇÃO EDUCACIONAL",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "COORDENADOR DE PROJETOS",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "DIRETOR DE DIVISÃO TÉCNICA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "DIRETOR DE NÚCLEO TÉCNICO",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "SUPERVISOR ESCOLAR",
-          formacoes: [],
+          formacoes: []
         },
         {
-          tipo_cargo: "ANALISTA ASSISTENTE DE DESENVOLVIMENTO SOCIAL - NÍVEIS I E IV",
-          formacoes: [],
+          tipo_cargo: "OFICIAL DE GABINETE",
+          formacoes: []
         },
         {
-          tipo_cargo: "ANALISTA DE INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - BIBLIOTECA",
-          formacoes: [],
+          tipo_cargo:
+            "ANALISTA ASSISTENTE DE DESENVOLVIMENTO SOCIAL - NÍVEIS I E IV",
+          formacoes: []
         },
         {
-          tipo_cargo: "ANALISTA DE INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - EDUCAÇÃO FÍSICA",
-          formacoes: [],
+          tipo_cargo:
+            "ANALISTA DE INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - BIBLIOTECA",
+          formacoes: []
+        },
+        {
+          tipo_cargo:
+            "ANALISTA DE INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - EDUCAÇÃO FÍSICA",
+          formacoes: []
         },
         {
           tipo_cargo: "ANALISTA DE SAÚDE - NÍVEIS I, II, III E IV",
-          formacoes: [],
+          formacoes: []
         },
         {
-          tipo_cargo: "ANALISTA DE PLANEJAMENTO E DESENVOLVIMENTO ORGANIZACIONAL – II E IV",
-          formacoes: [],
+          tipo_cargo:
+            "ANALISTA DE PLANEJAMENTO E DESENVOLVIMENTO ORGANIZACIONAL – II E IV",
+          formacoes: []
         },
         {
           tipo_cargo: "ASSESSOR I",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ASSESSOR II",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ASSESSOR TÉCNICO I",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ASSESSOR TÉCNICO II",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ASSESSOR TÉCNICO III",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ASSISTENTE TÉCNICO I",
@@ -391,15 +404,18 @@ export const inicializarGruposCargos = [
           formacoes: []
         },
         {
-          tipo_cargo: "ESPECIALISTA EM INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - BIBLIOTECA",
+          tipo_cargo:
+            "ESPECIALISTA EM INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - BIBLIOTECA",
           formacoes: []
         },
         {
-          tipo_cargo: "ESPECIALISTA EM INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - EDUCAÇÃO FÍSICA",
+          tipo_cargo:
+            "ESPECIALISTA EM INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - EDUCAÇÃO FÍSICA",
           formacoes: []
         },
         {
-          tipo_cargo: "PROFISSIONAL DE ENGENHARIA, ARQUITETURA, AGRONOMIA E GEOLOGIA I",
+          tipo_cargo:
+            "PROFISSIONAL DE ENGENHARIA, ARQUITETURA, AGRONOMIA E GEOLOGIA I",
           formacoes: []
         },
         {
@@ -418,11 +434,11 @@ export const inicializarGruposCargos = [
       cargos: [
         {
           tipo_cargo: "DIRETOR DE ESCOLA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "COORDENADOR PEDAGÓGICO",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ASSISTENTE DE DIRETOR DE ESCOLA",
@@ -430,27 +446,27 @@ export const inicializarGruposCargos = [
         },
         {
           tipo_cargo: "AUXILIAR DE DESENVOLVIMENTO INFANTIL",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR TITULAR DE EDUCAÇÃO INFANTIL",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE EDUCAÇÃO INFANTIL",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR SUBSTITUTO DE EDUCAÇÃO INFANTIL",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL I",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR 1º GRAU NÍVEL II",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR SUBSTITUTO DE 1º GRAU NÍVEL I",
@@ -458,11 +474,11 @@ export const inicializarGruposCargos = [
         },
         {
           tipo_cargo: "PROFESSOR TITULAR DE ENSINO FUNDAMENTAL I",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL I",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE 2º GRAU",
@@ -470,95 +486,101 @@ export const inicializarGruposCargos = [
         },
         {
           tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL II - CIÊNCIAS",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL II - GEOGRAFIA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL II - MATEMÁTICA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ARTES",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - BIOLOGIA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - CIENCIAS",
-          formacoes: [],
+          formacoes: []
         },
         {
-          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - CONTROLE DE CUSTOS",
-          formacoes: [],
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - CONTROLE DE CUSTOS",
+          formacoes: []
         },
         {
-          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ECONOMIA DE MERCADO",
-          formacoes: [],
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ECONOMIA DE MERCADO",
+          formacoes: []
         },
         {
-          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - EDUCAÇÃO FÍSICA",
-          formacoes: [],
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - EDUCAÇÃO FÍSICA",
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ESPANHOL",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - FILOSOGIA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - FÍSICA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - GEOGRAFIA",
-          formacoes: [],
+          formacoes: []
         },
         {
-          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - HISTÓRIA E FILOSOFIA DA EDUCAÇÃO",
-          formacoes: [],
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - HISTÓRIA E FILOSOFIA DA EDUCAÇÃO",
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - HISTÓRIA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - INGLÊS",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - MATEMÁTICA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - PORTUGUÊS",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - PSICOLOGIA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - QUÍMICA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - SOCIOLIGIA",
-          formacoes: [],
+          formacoes: []
         },
         {
-          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - OUTROS COMPONENTES",
-          formacoes: [],
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - OUTROS COMPONENTES",
+          formacoes: []
         },
         {
-          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ADMINISTRAÇÃO E CONTROLE",
-          formacoes: [],
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ADMINISTRAÇÃO E CONTROLE",
+          formacoes: []
         }
       ]
     }
@@ -572,23 +594,23 @@ export const inicializarGruposCargos = [
       cargos: [
         {
           tipo_cargo: "AGENTE DE APOIO - NÍVEIS I E II",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "AGENTE ESCOLAR",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "AUXILIAR ADMINISTRATIVO DE ENSINO",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "AUXILIAR TÉCNICO DE EDUCAÇÃO",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "AUXILIAR DE SECRETARIA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ASSISTENTE TÉCNICO DE EDUCAÇÃO",
@@ -596,33 +618,34 @@ export const inicializarGruposCargos = [
         },
         {
           tipo_cargo: "INSPETOR DE ALUNOS",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "SECRETÁRIO DE ESCOLA",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ENCARREGADO DE EQUIPE",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ENCARREGADO DE EQUIPE I",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ENCARREGADO DE EQUIPE II",
-          formacoes: [],
+          formacoes: []
         },
         {
           tipo_cargo: "ASSISTENTE DE SAÚDE – NÍVEIS I, II E III",
-          formacoes: [],
+          formacoes: []
         },
         {
-          tipo_cargo: "ASSISTENTE DE GESTÃO E POLÍTICAS PÚBLICAS - NÍVEIS I E II",
-          formacoes: [],
+          tipo_cargo:
+            "ASSISTENTE DE GESTÃO E POLÍTICAS PÚBLICAS - NÍVEIS I E II",
+          formacoes: []
         }
       ]
     }
   }
-]
+];
