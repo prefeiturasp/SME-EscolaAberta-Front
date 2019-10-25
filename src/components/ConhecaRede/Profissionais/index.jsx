@@ -36,9 +36,9 @@ export class Profissionais extends Component {
         cargosProfissionais: formatarCargosProfissionais(
           cargosProfissionais.results
         ),
-        cargosPorGrupo: cargosPorGrupo(formatarCargosProfissionais(
-          cargosProfissionais.results
-        )),
+        cargosPorGrupo: cargosPorGrupo(
+          formatarCargosProfissionais(cargosProfissionais.results)
+        ),
         totalPorFormacaoLista: totalPorFormacao(
           formatarCargosProfissionais(cargosProfissionais.results)
         )
@@ -58,9 +58,11 @@ export class Profissionais extends Component {
           cargosProfissionais: formatarCargosProfissionais(
             tiposProfissionaisPorCargoPorDRE.results
           ),
-          cargosPorGrupo: cargosPorGrupo(formatarCargosProfissionais(
-            tiposProfissionaisPorCargoPorDRE.results
-          )),
+          cargosPorGrupo: cargosPorGrupo(
+            formatarCargosProfissionais(
+              tiposProfissionaisPorCargoPorDRE.results
+            )
+          ),
           totalPorFormacaoLista: totalPorFormacao(
             formatarCargosProfissionais(
               tiposProfissionaisPorCargoPorDRE.results
@@ -76,18 +78,21 @@ export class Profissionais extends Component {
     let cargosPorGrupo = this.state.cargosPorGrupo;
     cargosPorGrupo.forEach(grupoCargo => {
       if (getKey(grupoCargo) === getKey(grupo)) {
-        grupoCargo[getKey(grupoCargo)].ativo = !grupoCargo[
-          getKey(grupoCargo)
-        ].ativo;
+        grupoCargo[getKey(grupoCargo)].ativo = !grupoCargo[getKey(grupoCargo)]
+          .ativo;
       }
     });
     this.setState({ cargosPorGrupo });
   }
 
-
   render() {
     const { diretoriasRegionais } = this.props;
-    const { indice, cargosPorGrupo, cargosProfissionais, totalPorFormacaoLista } = this.state;
+    const {
+      indice,
+      cargosPorGrupo,
+      cargosProfissionais,
+      totalPorFormacaoLista
+    } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -166,40 +171,63 @@ export class Profissionais extends Component {
                                 {getKey(grupoCargo)}
                               </td>
                               <td className="font-weight-bold">0</td>
-                              <td className="font-weight-bold">{pontuarValor(grupoCargo[getKey(grupoCargo)].licenciatura_curta)}</td>
-                              <td className="font-weight-bold">{pontuarValor(grupoCargo[getKey(grupoCargo)].licenciatura_plena)}</td>
-                              <td className="font-weight-bold">{pontuarValor(grupoCargo[getKey(grupoCargo)].total)}<ToggleExpandir
-                                ativo={grupoCargo[getKey(grupoCargo)].ativo}
-                                onClick={() =>
-                                  this.onGrupoCargoClicked(grupoCargo)
-                                }
-                              /></td>
+                              <td className="font-weight-bold">
+                                {pontuarValor(
+                                  grupoCargo[getKey(grupoCargo)]
+                                    .licenciatura_curta
+                                )}
+                              </td>
+                              <td className="font-weight-bold">
+                                {pontuarValor(
+                                  grupoCargo[getKey(grupoCargo)]
+                                    .licenciatura_plena
+                                )}
+                              </td>
+                              <td className="font-weight-bold">
+                                {pontuarValor(
+                                  grupoCargo[getKey(grupoCargo)].total
+                                )}
+                                <ToggleExpandir
+                                  ativo={grupoCargo[getKey(grupoCargo)].ativo}
+                                  onClick={() =>
+                                    this.onGrupoCargoClicked(grupoCargo)
+                                  }
+                                />
+                              </td>
                             </tr>,
                             grupoCargo[getKey(grupoCargo)].ativo &&
-                            grupoCargo[getKey(grupoCargo)].cargos.map(
-                              (cargo, indice_) => {
-                                return (
-                                  <tr key={indice}>
-                                    <td className="font-weight-bold">
-                                      {cargo.tipo_cargo}
-                                    </td>
-                                    <td>{totalProfissionaisPorEscolaridade(
-                                  cargo,
-                                  "ENSINO MEDIO/NORMAL"
-                                )}</td>
-                                    <td>{totalProfissionaisPorEscolaridade(
-                                  cargo,
-                                  "LICENCIATURA CURTA"
-                                )}</td>
-                                    <td>{totalProfissionaisPorEscolaridade(
-                                  cargo,
-                                  "LICENCIATURA PLENA"
-                                )}</td>
-                                    <td>{totalDoCargoPorEscolaridade(cargo)}</td>
-                                  </tr>
-                                )
-                              }
-                            )
+                              grupoCargo[getKey(grupoCargo)].cargos.map(
+                                (cargo, indice_) => {
+                                  return (
+                                    <tr key={indice}>
+                                      <td className="font-weight-bold">
+                                        {cargo.tipo_cargo}
+                                      </td>
+                                      <td>
+                                        {totalProfissionaisPorEscolaridade(
+                                          cargo,
+                                          "ENSINO MEDIO/NORMAL"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {totalProfissionaisPorEscolaridade(
+                                          cargo,
+                                          "LICENCIATURA CURTA"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {totalProfissionaisPorEscolaridade(
+                                          cargo,
+                                          "LICENCIATURA PLENA"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {totalDoCargoPorEscolaridade(cargo)}
+                                      </td>
+                                    </tr>
+                                  );
+                                }
+                              )
                           ];
                         })}
                     </tbody>

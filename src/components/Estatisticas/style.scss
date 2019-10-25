@@ -1,9 +1,29 @@
+@import "../../styles/variaveis.scss";
+
 table.table-vagas-matriculas {
   tbody {
     tr.titulo {
       td {
         background-color: #dee2e6;
         font-weight: bold;
+      }
+    }
+  }
+}
+
+table.grupo-profissionais {
+  tr {
+    &.main {
+      background-color: $corAzulBackgroundTable;
+    }
+    td {
+      vertical-align: middle;
+    }
+  }
+  tfoot {
+    tr {
+      td {
+        vertical-align: middle;
       }
     }
   }

@@ -6,38 +6,41 @@ import {
   listarServidoresPorEscola
 } from "../../services/estatisticas";
 import shortid from "shortid";
-import { totalDeProfissionais } from "./helper";
+import {
+  cargosPorGrupo,
+  formatarCargosProfissionais,
+  totalProfissionaisPorEscolaridade,
+  totalDoCargoPorEscolaridade,
+  totalPorFormacao,
+  total
+} from "components/ConhecaRede/Profissionais/helper";
+import ToggleExpandir from "components/ToggleExpandir";
+import { getKey } from "components/ConhecaRede/Escolas/helper";
+import { pontuarValor } from "components/utils";
 
 export default class Profissionais extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      servidores: [],
-      formacoes: [],
-      servidoresFormacoes: [],
       cargos: [],
       servidoresCargos: [],
-      referencia: ""
+      referencia: "",
+      cargosPorGrupo: null,
+      totalPorFormacaoLista: null
     };
   }
 
   componentDidMount() {
     listarServidoresEscolarizacao({ codesc: this.props.codesc }).then(lista => {
-      let formacoes = [];
-      let servidores = [];
-      if (lista && lista.results.length > 0) {
-        lista.results.forEach(item => {
-          if (!formacoes.includes(item.formacao)) {
-            formacoes.push(item.formacao);
-          }
-          if (!servidores.includes(item.titulo)) {
-            servidores.push(item.titulo);
-          }
-        });
-        this.setState({ formacoes: formacoes });
-        this.setState({ servidores: servidores });
-        this.setState({ servidoresFormacoes: lista.results });
-      }
+      this.setState({
+        cargosPorGrupo: cargosPorGrupo(
+          formatarCargosProfissionais(lista.results)
+        ),
+        totalPorFormacaoLista: totalPorFormacao(
+          formatarCargosProfissionais(lista.results)
+        ),
+        cargosProfissionais: formatarCargosProfissionais(lista.results)
+      });
     });
     listarServidoresPorEscola({ codesc: this.props.codesc }).then(lista => {
       let cargos = [];
@@ -58,7 +61,24 @@ export default class Profissionais extends Component {
     });
   }
 
+  onGrupoCargoClicked(grupo) {
+    let cargosPorGrupo = this.state.cargosPorGrupo;
+    cargosPorGrupo.forEach(grupoCargo => {
+      if (getKey(grupoCargo) === getKey(grupo)) {
+        grupoCargo[getKey(grupoCargo)].ativo = !grupoCargo[getKey(grupoCargo)]
+          .ativo;
+      }
+    });
+    this.setState({ cargosPorGrupo });
+  }
+
   render() {
+    const indice = "abc";
+    const {
+      cargosPorGrupo,
+      totalPorFormacaoLista,
+      cargosProfissionais
+    } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -67,123 +87,142 @@ export default class Profissionais extends Component {
             Data de referência: {this.props.dataReferencia}
           </div>
         </div>
-        <div className="card shadow-sm mb-3">
-          <div className="card-header bg-white d-flex align-items-center font-weight-bold">
+        <div key={indice} className="card shadow-sm mt-3 mb-3">
+          <div className="card-header bg-white d-flex align-items-center">
             <FontAwesomeIcon icon={faUsers} className="cor-azul" />
-            <div className="ml-3 fonte-14">Formação do Profissionais</div>
+            <div className="ml-3 fonte-14 font-weight-bold">
+              Formação de Profissionais
+            </div>
+            <a
+              className="text-decoration-none cor-cinza ml-auto"
+              data-toggle="collapse"
+              data-target={`#${indice}`}
+              aria-expanded="false"
+              aria-controls={`${indice}`}
+              href={`#${indice}`}
+            >
+              <FontAwesomeIcon icon={faBars} className="stretched-link" />
+            </a>
           </div>
-          <div className="card-body p-0">
-            <div className="table-responsive">
-              <table className="table table-hover table-bordered mb-0 fonte-14">
-                <thead>
-                  <tr>
-                    <th scope="col" rowSpan="2" />
-                    <th
-                      scope="col"
-                      colSpan={this.state.formacoes.length}
-                      className="text-center font-weight-normal align-middle text-uppercase"
-                    >
-                      Grau da Formação
-                    </th>
-                    <th
-                      scope="col"
-                      rowSpan="2"
-                      className="text-center font-weight-normal align-middle text-uppercase"
-                    >
-                      TOTAL DE PROFISSIONAIS POR CARGO
-                    </th>
-                  </tr>
-                  <tr>
-                    {this.state.formacoes.length > 0
-                      ? this.state.formacoes.map((formacao, indice) => {
+          <div className="collapse fade" id={`${indice}`}>
+            <div className="card-body p-0">
+              <div className="table-responsive">
+                <table className="table grupo-profissionais text-center table-hover table-bordered mb-0 fonte-14">
+                  <thead>
+                    <tr>
+                      <th scope="col" rowSpan="2"></th>
+                      <th
+                        scope="col"
+                        colSpan="3"
+                        className="fonte-16 text-center font-weight-normal align-middle"
+                      >
+                        Grau da Formação
+                      </th>
+                      <th
+                        scope="col"
+                        rowSpan="2"
+                        className="text-center font-weight-normal align-middle text-uppercase"
+                      >
+                        TOTAL DE PROFISSIONAIS POR CARGO
+                      </th>
+                    </tr>
+                    <tr>
+                      <th>Ensino Médio/Normal</th>
+                      <th>Licenciatura Curta</th>
+                      <th>Licenciatura Plena</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cargosPorGrupo &&
+                      cargosPorGrupo.map((grupoCargo, key) => {
+                        return [
+                          key > 0 && (
+                            <tr className="main">
+                              <td className="font-weight-bold">
+                                {getKey(grupoCargo)}
+                              </td>
+                              <td className="font-weight-bold">0</td>
+                              <td className="font-weight-bold">
+                                {pontuarValor(
+                                  grupoCargo[getKey(grupoCargo)]
+                                    .licenciatura_curta
+                                )}
+                              </td>
+                              <td className="font-weight-bold">
+                                {pontuarValor(
+                                  grupoCargo[getKey(grupoCargo)]
+                                    .licenciatura_plena
+                                )}
+                              </td>
+                              <td className="font-weight-bold">
+                                {pontuarValor(
+                                  grupoCargo[getKey(grupoCargo)].total
+                                )}
+                                <ToggleExpandir
+                                  ativo={grupoCargo[getKey(grupoCargo)].ativo}
+                                  onClick={() =>
+                                    this.onGrupoCargoClicked(grupoCargo)
+                                  }
+                                />
+                              </td>
+                            </tr>
+                          ),
+                          grupoCargo[getKey(grupoCargo)].ativo &&
+                            grupoCargo[getKey(grupoCargo)].cargos.map(
+                              (cargo, indice_) => {
+                                return (
+                                  cargo.formacoes.length > 0 && (
+                                    <tr key={indice}>
+                                      <td className="font-weight-bold">
+                                        {cargo.tipo_cargo}
+                                      </td>
+                                      <td>
+                                        {totalProfissionaisPorEscolaridade(
+                                          cargo,
+                                          "ENSINO MEDIO/NORMAL"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {totalProfissionaisPorEscolaridade(
+                                          cargo,
+                                          "LICENCIATURA CURTA"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {totalProfissionaisPorEscolaridade(
+                                          cargo,
+                                          "LICENCIATURA PLENA"
+                                        )}
+                                      </td>
+                                      <td>
+                                        {totalDoCargoPorEscolaridade(cargo)}
+                                      </td>
+                                    </tr>
+                                  )
+                                );
+                              }
+                            )
+                        ];
+                      })}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>TOTAL DE PROFISSIONAIS POR ESCOLARIDADE</td>
+                      {totalPorFormacaoLista &&
+                        totalPorFormacaoLista.map(formacaoTotal => {
                           return (
-                            <th
-                              key={shortid.generate()}
-                              scope="col"
-                              className="text-center"
-                            >
-                              {formacao}
-                            </th>
-                          );
-                        })
-                      : null}
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.servidores.length > 0
-                    ? this.state.servidores.map((servidor, indice) => {
-                        let totalProfissionaisCargo = 0;
-                        return (
-                          <tr key={indice}>
-                            <td>{servidor}</td>
-                            {this.state.formacoes.length > 0
-                              ? this.state.formacoes.map((formacao, indice) => {
-                                  return (
-                                    <td
-                                      key={shortid.generate()}
-                                      className="text-center"
-                                    >
-                                      {this.state.servidoresFormacoes.length > 0
-                                        ? this.state.servidoresFormacoes
-                                            .filter(servidorFormacao => {
-                                              return (
-                                                servidorFormacao.titulo ===
-                                                  servidor &&
-                                                servidorFormacao.formacao ===
-                                                  formacao
-                                              );
-                                            })
-                                            .map(servidorFormacao => {
-                                              totalProfissionaisCargo +=
-                                                servidorFormacao.total;
-                                              return servidorFormacao.total;
-                                            })
-                                        : null}
-                                    </td>
-                                  );
-                                })
-                              : null}
-                            <td className="text-center table-secondary font-weight-bold">
-                              {totalProfissionaisCargo}
+                            <td className="font-weight-bold bg-light">
+                              {pontuarValor(formacaoTotal.total)}
                             </td>
-                          </tr>
-                        );
-                      })
-                    : null}
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th scope="col" className="font-weight-normal">
-                      TOTAL DE PROFISSIONAIS POR ESCOLARIDADE
-                    </th>
-                    {this.state.formacoes.length > 0
-                      ? this.state.formacoes.map((formacao, indice) => {
-                          return (
-                            <th
-                              key={shortid.generate()}
-                              scope="col"
-                              className="text-center table-secondary"
-                            >
-                              {this.state.servidoresFormacoes
-                                .filter(servidorFormacao => {
-                                  return servidorFormacao.formacao === formacao;
-                                })
-                                .reduce((total, servidorFormacao) => {
-                                  return total + servidorFormacao.total;
-                                }, 0)}
-                            </th>
                           );
-                        })
-                      : null}
-                    <th
-                      className="text-center table-secondary font-weight-bold"
-                      scope="col"
-                    >
-                      {totalDeProfissionais(this.state.servidoresFormacoes)}
-                    </th>
-                  </tr>
-                </tfoot>
-              </table>
+                        })}
+                      <td className="font-weight-bold bg-light">
+                        {cargosProfissionais && total(cargosProfissionais)}
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </div>
           </div>
         </div>
