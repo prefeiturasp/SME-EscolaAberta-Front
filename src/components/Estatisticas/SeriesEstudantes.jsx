@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
 import shortid from "shortid";
 import SeriesEstudantesChart from "../Graficos/SeriesEstudantesChart";
-import NullView from "./NullView";
 import { totalEstudantes } from "./helper";
 
 export default class SeriesEstudantes extends Component {
@@ -293,7 +292,12 @@ export default class SeriesEstudantes extends Component {
             );
           })
         ) : (
-          <NullView />
+          <div>
+            A publicação destes dados é trimestral e esta escola foi criada após
+            a data de referência vigente. Por isso, as informações relativas a
+            esta unidade começarão a ser exibidas a partir da próxima
+            atualização.
+          </div>
         )}
       </div>
     );
