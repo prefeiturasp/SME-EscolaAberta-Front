@@ -1,4 +1,8 @@
 import { getKey } from "components/ConhecaRede/Profissionais/helper";
+import {
+  labelDecserie,
+  labelModalidade
+} from "components/ConhecaRede/VagasMatriculas/helper";
 
 export const totalEstudantes = (lista, turno) => {
   let totalEstudantes = 0;
@@ -145,5 +149,43 @@ export const formatarVagasMatriculas = vagasMatriculas => {
       });
     }
   });
-  return vagasMatriculas.sort((a, b) => (a.posicao > b.posicao ? 1 : -1));
+  vagasMatriculas.forEach(vagaMatricula => {
+    vagaMatricula.serie = labelDecserie(labelModalidade(vagaMatricula.serie));
+  });
+  vagasMatriculas = vagasMatriculas.sort((a, b) => (a.posicao > b.posicao ? 1 : -1));
+  vagasMatriculas = normalizarDecserieAnos(vagasMatriculas);
+  return vagasMatriculas;
+};
+
+export const normalizarDecserieAnos = matriculas => {
+  let tipoMatricula = "";
+  matriculas.forEach(matricula => {
+    if (
+      matricula.serie === "ENSINO FUNDAMENTAL" ||
+      matricula.serie === "ENSINO MÉDIO" ||
+      matricula.serie === "EDUCAÇÃO PROFISSIONAL" ||
+      matricula.serie === "EDUCAÇÃO INFANTIL" ||
+      matricula.serie === "EDUCAÇÃO ESPECIAL" ||
+      matricula.serie === "EDUCAÇÃO EJA JOVENS E ADULTOS"
+    ) {
+      tipoMatricula = matricula.serie;
+    }
+    if (matricula.serie.includes("ANO")) {
+      if (tipoMatricula === "EDUCAÇÃO ESPECIAL") {
+        if (!matricula.serie.includes("MÉDIO")) {
+          matricula.serie += " FUNDAMENTAL ESPECIAL";
+        } else {
+          matricula.serie = "1º ANO ESPECIAL MÉDIO";
+        }
+      } else if (tipoMatricula === "ENSINO FUNDAMENTAL") {
+        matricula.serie += " FUNDAMENTAL";
+      } else if (
+        tipoMatricula === "ENSINO MÉDIO" &&
+        !matricula.serie.includes("MÉDIO")
+      ) {
+        matricula.serie += " NORMAL";
+      }
+    }
+  });
+  return matriculas;
 };
