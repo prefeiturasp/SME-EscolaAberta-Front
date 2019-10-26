@@ -141,6 +141,13 @@ export default class VagasMatriculas extends Component {
             </div>
           </div>
         </div>
+        <div>
+          Entenda o significado de cada modalidade, etapa e turmas da Rede
+          Municipal de Ensino: acesse o{" "}
+          <a href="https://educacao.sme.prefeitura.sp.gov.br/glossario-do-escola-aberta/">
+            Glossário do Escola Aberta
+          </a>
+        </div>
       </div>
     );
   }

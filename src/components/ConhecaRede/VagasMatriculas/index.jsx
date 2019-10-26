@@ -137,22 +137,14 @@ export class VagasMatriculas extends Component {
             <div className="checkboxes ml-auto">
               <span>
                 <input
-                  onClick={() =>
-                    this.onCheckClicked([
-                      "EDUCAÇÃO INFANTIL"
-                    ])
-                  }
+                  onClick={() => this.onCheckClicked(["EDUCAÇÃO INFANTIL"])}
                   type="checkbox"
                 />
                 Infantil
               </span>
               <span>
                 <input
-                  onClick={() =>
-                    this.onCheckClicked([
-                      "ENSINO FUNDAMENTAL"
-                    ])
-                  }
+                  onClick={() => this.onCheckClicked(["ENSINO FUNDAMENTAL"])}
                   type="checkbox"
                 />
                 Fundamental
@@ -172,9 +164,7 @@ export class VagasMatriculas extends Component {
               <span>
                 <input
                   onClick={() =>
-                    this.onCheckClicked([
-                      "EDUCAÇÃO DE JOVENS E ADULTOS"
-                    ])
+                    this.onCheckClicked(["EDUCAÇÃO DE JOVENS E ADULTOS"])
                   }
                   type="checkbox"
                 />
@@ -293,6 +283,13 @@ export class VagasMatriculas extends Component {
               </table>
             </div>
           </div>
+        </div>
+        <div>
+          Entenda o significado de cada modalidade, etapa e turmas da Rede
+          Municipal de Ensino: acesse o{" "}
+          <a href="https://educacao.sme.prefeitura.sp.gov.br/glossario-do-escola-aberta/">
+            Glossário do Escola Aberta
+          </a>
         </div>
       </div>
     );
