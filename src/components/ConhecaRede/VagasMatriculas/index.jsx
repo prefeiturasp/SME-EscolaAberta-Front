@@ -139,8 +139,7 @@ export class VagasMatriculas extends Component {
                 <input
                   onClick={() =>
                     this.onCheckClicked([
-                      "EDUCAÇÃO INFANTIL",
-                      "EDUCAÇÃO INFANTIL ESPECIAL"
+                      "EDUCAÇÃO INFANTIL"
                     ])
                   }
                   type="checkbox"
@@ -151,8 +150,7 @@ export class VagasMatriculas extends Component {
                 <input
                   onClick={() =>
                     this.onCheckClicked([
-                      "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
-                      "ENSINO FUNDAMENTAL DE 9 ANOS"
+                      "ENSINO FUNDAMENTAL"
                     ])
                   }
                   type="checkbox"
@@ -163,10 +161,8 @@ export class VagasMatriculas extends Component {
                 <input
                   onClick={() =>
                     this.onCheckClicked([
-                      "ENSINO MEDIO",
-                      "ESPEC ENS MEDIO",
-                      "NORMAL",
-                      "TECNICO MEDIO"
+                      "ENSINO MÉDIO",
+                      "EDUCAÇÃO PROFISSIONAL"
                     ])
                   }
                   type="checkbox"
@@ -177,9 +173,7 @@ export class VagasMatriculas extends Component {
                 <input
                   onClick={() =>
                     this.onCheckClicked([
-                      "EJA CIEJA",
-                      "EJA ESCOLAS EDUCACAO ESPECIAL",
-                      "EJA ESCOLAS ENSINO FUNDAMENTAL"
+                      "EDUCAÇÃO DE JOVENS E ADULTOS"
                     ])
                   }
                   type="checkbox"

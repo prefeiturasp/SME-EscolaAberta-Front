@@ -62,16 +62,21 @@ export const formatarVagasMatriculas = vagasMatriculas => {
     }
     indiceJaExisteMatricula = null;
   });
-  return ordenarMatriculas(matriculas);
+  matriculas = normalizarDecserieAnos(matriculas);
+  matriculas = ordenarMatriculas(matriculas);
+  matriculas = normalizarEnsinoProfissional(matriculas);
+  return matriculas;
 };
 
 export const ordenarMatriculas = matriculas => {
+  let novoMatriculas = [];
   matriculas.forEach(matricula => {
     matricula[getKey(matricula)].decseries = matricula[
       getKey(matricula)
     ].decseries.sort((a, b) => (a.posicao > b.posicao ? 1 : -1));
+    novoMatriculas[ORDENACAO_MATRICULA[getKey(matricula)]] = matricula;
   });
-  return matriculas;
+  return novoMatriculas;
 };
 
 export const labelModalidade = modalidade => {
@@ -116,10 +121,136 @@ export const labelDecserie = decserie => {
       return "MINI GRUPO I ESCOLA DIFERENCIADA";
     case "MINI GRUPO II ESC DIFERENCIADA":
       return "MINI GRUPO II ESCOLA DIFERENCIADA";
+    case "1. ANO":
+      return "1º ANO";
+    case "2. ANO":
+      return "2º ANO";
+    case "3. ANO":
+      return "3º ANO";
+    case "4. ANO":
+      return "4º ANO";
+    case "5. ANO":
+      return "5º ANO";
+    case "6. ANO":
+      return "6º ANO";
+    case "7. ANO":
+      return "7º ANO";
+    case "8. ANO":
+      return "8º ANO";
+    case "9. ANO":
+      return "9º ANO";
+    case "1. SERIE":
+      return "1º ANO MÉDIO";
+    case "2. SERIE":
+      return "2º ANO MÉDIO";
+    case "3. SERIE":
+      return "3º ANO MÉDIO";
+    case "M I":
+      return "MÓDULO I EJA CIEJA";
+    case "M II":
+      return "MÓDULO II EJA CIEJA";
+    case "M III":
+      return "MÓDULO III EJA CIEJA";
+    case "M IV":
+      return "MÓDULO IV EJA CIEJA";
+    case "EJA ALFABETIZACAO I":
+      return "EJA ALFABETIZAÇÃO I";
+    case "EJA ALFABETIZACAO II":
+      return "EJA ALFABETIZAÇÃO II";
+    case "EJA BASICA I":
+      return "EJA BÁSICA I";
+    case "EJA BASICA II":
+      return "EJA BÁSICA II";
+    case "INFANTIL I FI":
+      return "INFANTIL I";
+    case "INFANTIL II FI":
+      return "INFANTIL II";
+    case "EJA COMPLEMENTAR II EE":
+      return "EJA COMPLEMENTAR II ESPECIAL";
+    case "EJA FINAL I EE":
+      return "EJA FINAL I ESPECIAL";
+    case "EJA FINAL II EE":
+      return "EJA FINAL II ESPECIAL";
+    case "1. MODULO":
+    case "1. MODULO NAO SME":
+      return "1. MÓDULO TÉCNICO MÉDIO";
+    case "2. MODULO":
+    case "2. MODULO NAO SME":
+      return "2. MÓDULO TÉCNICO MÉDIO";
+    case "3. MODULO":
+    case "3. MODULO NAO SME":
+      return "3. MÓDULO TÉCNICO MÉDIO";
+    case "4. MODULO":
+    case "4. MODULO NAO SME":
+      return "4. MÓDULO TÉCNICO MÉDIO";
     default:
       return decserie;
   }
 };
+
+export const normalizarDecserieAnos = matriculas => {
+  matriculas.forEach(matricula => {
+    matricula[getKey(matricula)].decseries.forEach(decserie => {
+      if (decserie.decserie.includes("ANO")) {
+        if (getKey(matricula) === "EDUCAÇÃO ESPECIAL") {
+          if (!decserie.decserie.includes("MÉDIO")) {
+            decserie.decserie += " FUNDAMENTAL ESPECIAL";
+          } else {
+            decserie.decserie = "1º ANO ESPECIAL MÉDIO";
+          }
+        } else if (getKey(matricula) === "ENSINO FUNDAMENTAL") {
+          decserie.decserie += " FUNDAMENTAL";
+        } else if (
+          getKey(matricula) === "ENSINO MÉDIO" &&
+          !decserie.decserie.includes("MÉDIO")
+        ) {
+          decserie.decserie += " NORMAL";
+        }
+      }
+    });
+  });
+  return matriculas;
+};
+
+export const normalizarEnsinoProfissional = matriculas => {
+  let indice = 0;
+  let novoDecSeries = [];
+  for (indice; indice < 6; indice += 2) {
+    matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice].media_atendimento =
+      (matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice]
+        .media_atendimento +
+        matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice + 1]
+          .media_atendimento) /
+      2;
+    matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice].total_turmas +=
+      matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice + 1].total_turmas;
+    matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice].vagas_oferecidas +=
+      matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[
+        indice + 1
+      ].vagas_oferecidas;
+    matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[
+      indice
+    ].vagas_remanecentes +=
+      matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[
+        indice + 1
+      ].vagas_remanecentes;
+    novoDecSeries.push(
+      matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice]
+    );
+  }
+  novoDecSeries.push(matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[6]);
+  matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries = novoDecSeries;
+  return matriculas;
+};
+
+export const ORDENACAO_MATRICULA = {
+  "EDUCAÇÃO INFANTIL": 0,
+  "ENSINO FUNDAMENTAL": 1,
+  "ENSINO MÉDIO": 2,
+  "EDUCAÇÃO DE JOVENS E ADULTOS": 3,
+  "EDUCAÇÃO ESPECIAL": 4,
+  "EDUCAÇÃO PROFISSIONAL": 5
+}
 
 export const ORDENACAO_DECSERIE = {
   "EDUCAÇÃO INFANTIL": {
@@ -136,6 +267,69 @@ export const ORDENACAO_DECSERIE = {
     "INFANTIL II ESCOLA DIFERENCIADA": 10,
     "MINI GRUPO I ESCOLA DIFERENCIADA": 11,
     "MINI GRUPO II ESCOLA DIFERENCIADA": 12
+  },
+  "ENSINO FUNDAMENTAL": {
+    "1º ANO": 0,
+    "2º ANO": 1,
+    "3º ANO": 2,
+    "4º ANO": 3,
+    "5º ANO": 4,
+    "6º ANO": 5,
+    "7º ANO": 6,
+    "8º ANO": 7,
+    "9º ANO": 8
+  },
+  "ENSINO MÉDIO": {
+    "1º ANO MÉDIO": 0,
+    "2º ANO MÉDIO": 1,
+    "3º ANO MÉDIO": 2,
+    "1º ANO": 3,
+    "2º ANO": 4,
+    "3º ANO": 5,
+    "4º ANO": 6
+  },
+  "EDUCAÇÃO DE JOVENS E ADULTOS": {
+    "MÓDULO I EJA CIEJA": 0,
+    "MÓDULO II EJA CIEJA": 1,
+    "MÓDULO III EJA CIEJA": 2,
+    "MÓDULO IV EJA CIEJA": 3,
+    "1. EJA MODULAR": 4,
+    "2. EJA MODULAR": 5,
+    "3. EJA MODULAR": 6,
+    "4. EJA MODULAR": 7,
+    "EJA ALFABETIZAÇÃO I": 8,
+    "EJA ALFABETIZAÇÃO II": 9,
+    "EJA BÁSICA I": 10,
+    "EJA BÁSICA II": 11,
+    "EJA COMPLEMENTAR I": 12,
+    "EJA COMPLEMENTAR II": 13,
+    "EJA FINAL I": 14,
+    "EJA FINAL II": 15
+  },
+  "EDUCAÇÃO ESPECIAL": {
+    "INFANTIL I": 0,
+    "INFANTIL II": 1,
+    "INFANTIL LIBRAS EMEI": 2,
+    "EJA COMPLEMENTAR II ESPECIAL": 3,
+    "EJA FINAL I ESPECIAL": 4,
+    "EJA FINAL II ESPECIAL": 5,
+    "1º ANO": 6,
+    "2º ANO": 7,
+    "3º ANO": 8,
+    "4º ANO": 9,
+    "5º ANO": 10,
+    "6º ANO": 11,
+    "7º ANO": 12,
+    "8º ANO": 13,
+    "9º ANO": 14,
+    "1º ANO MÉDIO": 15,
+    "CLASSE BILINGUE I": 16
+  },
+  "EDUCAÇÃO PROFISSIONAL": {
+    "1. MÓDULO TÉCNICO MÉDIO": 0,
+    "2. MÓDULO TÉCNICO MÉDIO": 1,
+    "3. MÓDULO TÉCNICO MÉDIO": 2,
+    "4. MÓDULO TÉCNICO MÉDIO": 3
   }
 };
 
