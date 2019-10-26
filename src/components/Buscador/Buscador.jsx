@@ -88,12 +88,11 @@ export default class Buscador extends Component {
         buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(
           localizacoes => {
             localizacoes.results.forEach(function(local) {
-              if (local.type.indexOf("residential") !== -1) {
+              let nome = local.display_name.split(', ')[0] + ', ' + local.display_name.split(', ')[1];
                 ruas.push({
                   value: { lat: local.lat, lon: local.lon },
-                  label: local.name
+                  label: nome
                 });
-              }
             });
           }
         );
