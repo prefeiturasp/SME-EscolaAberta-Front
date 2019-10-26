@@ -214,32 +214,57 @@ export const normalizarDecserieAnos = matriculas => {
 
 export const normalizarEnsinoProfissional = matriculas => {
   let indice = 0;
+  let indiceEducacaoProfissional = null;
+  matriculas.forEach((matricula, key) => {
+    if (matricula["EDUCAÇÃO PROFISSIONAL"] !== undefined) {
+      indiceEducacaoProfissional = key;
+    }
+  });
   let novoDecSeries = [];
-  for (indice; indice < 6; indice += 2) {
-    matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice].media_atendimento =
-      (matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice]
-        .media_atendimento +
-        matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice + 1]
-          .media_atendimento) /
-      2;
-    matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice].total_turmas +=
-      matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice + 1].total_turmas;
-    matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice].vagas_oferecidas +=
-      matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[
-        indice + 1
-      ].vagas_oferecidas;
-    matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[
-      indice
-    ].vagas_remanecentes +=
-      matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[
-        indice + 1
-      ].vagas_remanecentes;
+  if (
+    indiceEducacaoProfissional && matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"].decseries
+      .length == 7
+  ) {
+    for (indice; indice < 6; indice += 2) {
+      matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"].decseries[
+        indice
+      ].media_atendimento =
+        (matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"]
+          .decseries[indice].media_atendimento +
+          matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"]
+            .decseries[indice + 1].media_atendimento) /
+        2;
+      matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"].decseries[
+        indice
+      ].total_turmas +=
+        matriculas[indiceEducacaoProfissional][
+          "EDUCAÇÃO PROFISSIONAL"
+        ].decseries[indice + 1].total_turmas;
+      matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"].decseries[
+        indice
+      ].vagas_oferecidas +=
+        matriculas[indiceEducacaoProfissional][
+          "EDUCAÇÃO PROFISSIONAL"
+        ].decseries[indice + 1].vagas_oferecidas;
+      matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"].decseries[
+        indice
+      ].vagas_remanecentes +=
+        matriculas[indiceEducacaoProfissional][
+          "EDUCAÇÃO PROFISSIONAL"
+        ].decseries[indice + 1].vagas_remanecentes;
+      novoDecSeries.push(
+        matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"]
+          .decseries[indice]
+      );
+    }
     novoDecSeries.push(
-      matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[indice]
+      matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"]
+        .decseries[6]
     );
+    matriculas[indiceEducacaoProfissional][
+      "EDUCAÇÃO PROFISSIONAL"
+    ].decseries = novoDecSeries;
   }
-  novoDecSeries.push(matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries[6]);
-  matriculas[5]["EDUCAÇÃO PROFISSIONAL"].decseries = novoDecSeries;
   return matriculas;
 };
 
@@ -250,7 +275,7 @@ export const ORDENACAO_MATRICULA = {
   "EDUCAÇÃO DE JOVENS E ADULTOS": 3,
   "EDUCAÇÃO ESPECIAL": 4,
   "EDUCAÇÃO PROFISSIONAL": 5
-}
+};
 
 export const ORDENACAO_DECSERIE = {
   "EDUCAÇÃO INFANTIL": {
