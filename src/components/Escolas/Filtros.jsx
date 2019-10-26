@@ -10,7 +10,7 @@ import {
 import { DISTRITOS, SUBPREFEITURAS } from "./constants";
 import { Link } from "react-router-dom";
 import BtnFiltro from "../../img/fechar_filtro.png";
-import { listaParaSelect } from "./helper";
+import { listaParaSelect, formatarListaTiposescola } from "./helper";
 
 export default class Filtros extends Component {
   constructor(props) {
@@ -48,8 +48,8 @@ export default class Filtros extends Component {
   componentDidMount() {
     listarTiposEscola().then(lista => {
       this.setState({
-        tiposEscola: lista.results.sort((a, b) =>
-          a.tipoesc > b.tipoesc ? 1 : -1
+        tiposEscola: formatarListaTiposescola(
+          lista.results.sort((a, b) => (a.tipoesc > b.tipoesc ? 1 : -1))
         )
       });
     });
