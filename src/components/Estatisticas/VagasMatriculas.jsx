@@ -66,57 +66,56 @@ export default class VagasMatriculas extends Component {
             Data de referência: {this.props.dataReferencia}
           </div>
         </div>
-        <div className="card shadow-sm mb-3">
-          <div className="card-header bg-white d-flex align-items-center font-weight-bold">
-            <FontAwesomeIcon icon={faIdCard} className="cor-azul" />
-            <div className="ml-3 fonte-14">Vagas e Matrículas</div>
-          </div>
-          <div className="card-body p-0">
-            <div className="table-responsive">
-              <table className="table table-vagas-matriculas table-hover table-bordered mb-0 fonte-14">
-                <thead>
-                  <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Total de Turmas</th>
-                    <th scope="col">Vagas Oferecidas</th>
-                    <th scope="col">Matrículas/Encaminhamento</th>
-                    <th scope="col">Vagas Remanescentes</th>
-                    <th scope="col">Média Atendimentos/Turma</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.vagasMatriculasSerie.length > 0
-                    ? this.state.vagasMatriculasSerie.map(
-                        (vagaMatricula, indice) => {
-                          return (
-                            <tr
-                              className={`${vagaMatricula.titulo && "titulo"}`}
-                              key={indice}
-                            >
-                              <td className="font-weight-bold">
-                                {vagaMatricula.serie}
-                              </td>
-                              <td className="text-center">
-                                {vagaMatricula.total_turmas}
-                              </td>
-                              <td className="text-center">
-                                {vagaMatricula.vagas_oferecidas}
-                              </td>
-                              <td className="text-center">
-                                {vagaMatricula.atendimentos}
-                              </td>
-                              <td className="text-center">
-                                {vagaMatricula.vagas_remanecentes}
-                              </td>
-                              <td className="text-center">
-                                {vagaMatricula.media_atendimento}
-                              </td>
-                            </tr>
-                          );
-                        }
-                      )
-                    : null}
-                  {/*this.state.vagasMatriculasSerie.length > 0 ? (
+        {this.state.vagasMatriculasSerie.length > 0 ? (
+          <div className="card shadow-sm mb-3">
+            <div className="card-header bg-white d-flex align-items-center font-weight-bold">
+              <FontAwesomeIcon icon={faIdCard} className="cor-azul" />
+              <div className="ml-3 fonte-14">Vagas e Matrículas</div>
+            </div>
+            <div className="card-body p-0">
+              <div className="table-responsive">
+                <table className="table table-vagas-matriculas table-hover table-bordered mb-0 fonte-14">
+                  <thead>
+                    <tr>
+                      <th scope="col"></th>
+                      <th scope="col">Total de Turmas</th>
+                      <th scope="col">Vagas Oferecidas</th>
+                      <th scope="col">Matrículas/Encaminhamento</th>
+                      <th scope="col">Vagas Remanescentes</th>
+                      <th scope="col">Média Atendimentos/Turma</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.vagasMatriculasSerie.map(
+                      (vagaMatricula, indice) => {
+                        return (
+                          <tr
+                            className={`${vagaMatricula.titulo && "titulo"}`}
+                            key={indice}
+                          >
+                            <td className="font-weight-bold">
+                              {vagaMatricula.serie}
+                            </td>
+                            <td className="text-center">
+                              {vagaMatricula.total_turmas}
+                            </td>
+                            <td className="text-center">
+                              {vagaMatricula.vagas_oferecidas}
+                            </td>
+                            <td className="text-center">
+                              {vagaMatricula.atendimentos}
+                            </td>
+                            <td className="text-center">
+                              {vagaMatricula.vagas_remanecentes}
+                            </td>
+                            <td className="text-center">
+                              {vagaMatricula.media_atendimento}
+                            </td>
+                          </tr>
+                        );
+                      }
+                    )}
+                    {/*this.state.vagasMatriculasSerie.length > 0 ? (
                     <tr>
                       <td></td>
                       <td className="text-center table-secondary font-weight-bold">
@@ -136,18 +135,28 @@ export default class VagasMatriculas extends Component {
                       </td>
                     </tr>
                   ) : null*/}
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
-        <div>
-          Entenda o significado de cada modalidade, etapa e turmas da Rede
-          Municipal de Ensino: acesse o{" "}
-          <a href="https://educacao.sme.prefeitura.sp.gov.br/glossario-do-escola-aberta/">
-            Glossário do Escola Aberta
-          </a>
-        </div>
+        ) : (
+          <div>
+            A publicação destes dados é trimestral e esta escola foi criada após
+            a data de referência vigente. Por isso, as informações relativas a
+            esta unidade começarão a ser exibidas a partir da próxima
+            atualização.
+          </div>
+        )}
+        {this.state.vagasMatriculasSerie.length > 0 && (
+          <div>
+            Entenda o significado de cada modalidade, etapa e turmas da Rede
+            Municipal de Ensino: acesse o{" "}
+            <a href="https://educacao.sme.prefeitura.sp.gov.br/glossario-do-escola-aberta/">
+              Glossário do Escola Aberta
+            </a>
+          </div>
+        )}
       </div>
     );
   }
