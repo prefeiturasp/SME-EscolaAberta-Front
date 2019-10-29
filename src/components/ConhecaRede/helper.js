@@ -1,5 +1,5 @@
 export const agregarDefaultDiretoriaRegional = lista => {
-  return [{ diretoria: "Selecione uma DRE", dre: "" }].concat(lista);
+  return [{ diretoria: "Todas as Diretorias Regionais de Educação (DRE's)", dre: ""}].concat(lista);
 };
 
 export const getKey = obj => {
