@@ -248,7 +248,7 @@ export class VagasMatriculas extends Component {
                                 <td>
                                   {pontuarValor(decserie.vagas_remanecentes)}
                                 </td>
-                                <td>{decserie.media_atendimento}</td>
+                                <td>{decserie.media_atendimento || 0}</td>
                               </tr>
                             );
                           }

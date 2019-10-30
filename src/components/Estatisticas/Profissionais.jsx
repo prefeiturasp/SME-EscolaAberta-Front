@@ -136,7 +136,7 @@ export default class Profissionais extends Component {
                     {cargosPorGrupo &&
                       cargosPorGrupo.map((grupoCargo, key) => {
                         return [
-                          key > 0 && (
+                          grupoCargo[getKey(grupoCargo)].total > 0 && (
                             <tr className="main">
                               <td className="font-weight-bold">
                                 {getKey(grupoCargo)}
@@ -171,7 +171,8 @@ export default class Profissionais extends Component {
                             grupoCargo[getKey(grupoCargo)].cargos.map(
                               (cargo, indice_) => {
                                 return (
-                                  cargo.formacoes.length > 0 && (
+                                  cargo.formacoes.length > 0 &&
+                                  grupoCargo[getKey(grupoCargo)].total > 0 && (
                                     <tr key={indice}>
                                       <td className="font-weight-bold">
                                         {cargo.tipo_cargo}
