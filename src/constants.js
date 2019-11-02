@@ -1,15 +1,19 @@
 export const STOP_WORDS = [
-  "CIEJA",
-  "CEU",
-  "MOVA",
+  "CEI",
   "CEMEI",
+  "CMEI",
+  "EMEI",
+  "CCI",
   "EMEF",
   "EMEFM",
-  "CCI",
-  "CIPS",
-  "EMEI",
+  "CIEJA",
   "CMCT",
-  "CRP",
+  "CECI",
+  "EMEB",
   "EMEBS",
-  "CEI"
+  "CEU",
+  "CEEI",
+  "CEU CEI",
+  "CEU EMEI",
+  "CEU EMEF"
 ];

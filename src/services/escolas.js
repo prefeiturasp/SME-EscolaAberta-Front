@@ -2,7 +2,6 @@ import { STOP_WORDS } from "../constants";
 
 const API_EOL = process.env.REACT_APP_API_EOL;
 
-
 export async function listarEscolas(params) {
   let {
     escola = "",
@@ -13,7 +12,15 @@ export async function listarEscolas(params) {
     subpref = "",
     pagina = 1
   } = params;
-  if (STOP_WORDS.includes(escola.split(" ")[0].toUpperCase())) {
+  if (
+    STOP_WORDS.includes(
+      (escola.split(" ")[0] + " " + escola.split(" ")[1]).toUpperCase()
+    )
+  ) {
+    escola = escola
+      .substr(escola.indexOf(" ") + 1)
+      .substr(escola.indexOf(" ") + 1);
+  } else if (STOP_WORDS.includes(escola.split(" ")[0].toUpperCase())) {
     escola = escola.substr(escola.indexOf(" ") + 1);
   }
   return await fetch(
