@@ -101,6 +101,7 @@ export class Escolas extends Component {
                 className="form-control"
                 onChange={event => this.onSelectChanged(event.target.value)}
               >
+                <option value="" disabled selected>Selecione uma DRE</option>
                 {diretoriasRegionais.length &&
                   diretoriasRegionais.map((e, key) => {
                     return (

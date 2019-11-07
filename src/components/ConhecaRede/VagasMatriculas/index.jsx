@@ -16,22 +16,8 @@ export class VagasMatriculas extends Component {
     super(props);
     this.state = {
       vagasMatriculas: [],
-      checks: [
-        "EDUCACAO INFANTIL",
-        "EDUCACAO INFANTIL ESPECIAL",
-        "EJA CIEJA",
-        "EJA ESCOLAS EDUCACAO ESPECIAL",
-        "EJA ESCOLAS ENSINO FUNDAMENTAL",
-        "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
-        "ENSINO FUNDAMENTAL DE 9 ANOS",
-        "ENSINO MEDIO",
-        "ESPEC ENS MEDIO",
-        "NORMAL",
-        "TECNICO MEDIO"
-      ],
       referencia: "",
       ativo: false,
-      primeiroCheck: false,
       totalPorFaixa: null
     };
   }
@@ -72,47 +58,9 @@ export class VagasMatriculas extends Component {
     this.setState({ vagasMatriculas, ativo: !this.state.ativo });
   }
 
-  onCheckClicked(labels) {
-    let checks = this.state.checks;
-    if (!this.state.primeiroCheck) {
-      checks = [];
-      this.setState({ primeiroCheck: true });
-    }
-    if (!checks.includes(labels[0])) {
-      labels.forEach(label => {
-        checks.push(label);
-      });
-    } else {
-      labels.forEach(label => {
-        checks.forEach((check, index) => {
-          if (check === label) {
-            checks.splice(index, 1);
-          }
-        });
-      });
-      if (checks.length === 0) {
-        checks = [
-          "EDUCACAO INFANTIL",
-          "EDUCACAO INFANTIL ESPECIAL",
-          "EJA CIEJA",
-          "EJA ESCOLAS EDUCACAO ESPECIAL",
-          "EJA ESCOLAS ENSINO FUNDAMENTAL",
-          "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
-          "ENSINO FUNDAMENTAL DE 9 ANOS",
-          "ENSINO MEDIO",
-          "ESPEC ENS MEDIO",
-          "NORMAL",
-          "TECNICO MEDIO"
-        ];
-        this.setState({ primeiroCheck: false });
-      }
-    }
-    this.setState({ checks });
-  }
-
   render() {
     const { diretoriasRegionais } = this.props;
-    const { ativo, vagasMatriculas, checks, totalPorFaixa } = this.state;
+    const { ativo, vagasMatriculas, totalPorFaixa } = this.state;
     return (
       <div className="mt-5 mb-5">
         <div className="estatisticas-cabecalho mb-5">
@@ -129,6 +77,9 @@ export class VagasMatriculas extends Component {
               className="form-control"
               onChange={event => this.onSelectChanged(event.target.value)}
             >
+              <option value="" disabled selected>
+                Selecione uma DRE
+              </option>
               {diretoriasRegionais.length &&
                 diretoriasRegionais.map((e, key) => {
                   return (
@@ -144,59 +95,6 @@ export class VagasMatriculas extends Component {
           <div className="card-header bg-white d-flex align-items-center font-weight-bold">
             <FontAwesomeIcon icon={faIdCard} className="cor-azul" />
             <div className="ml-3 fonte-14">Vagas e Matrículas</div>
-            <div className="checkboxes ml-auto">
-              <span>
-                <input
-                  onClick={() =>
-                    this.onCheckClicked([
-                      "EDUCACAO INFANTIL",
-                      "EDUCACAO INFANTIL ESPECIAL"
-                    ])
-                  }
-                  type="checkbox"
-                />
-                Infantil
-              </span>
-              <span>
-                <input
-                  onClick={() =>
-                    this.onCheckClicked([
-                      "ENSINO FUNDAMENTAL 9 ANOS ESPECIAL",
-                      "ENSINO FUNDAMENTAL DE 9 ANOS"
-                    ])
-                  }
-                  type="checkbox"
-                />
-                Fundamental
-              </span>
-              <span>
-                <input
-                  onClick={() =>
-                    this.onCheckClicked([
-                      "ENSINO MEDIO",
-                      "ESPEC ENS MEDIO",
-                      "NORMAL",
-                      "TECNICO MEDIO"
-                    ])
-                  }
-                  type="checkbox"
-                />
-                Médio
-              </span>
-              <span>
-                <input
-                  onClick={() =>
-                    this.onCheckClicked([
-                      "EJA CIEJA",
-                      "EJA ESCOLAS EDUCACAO ESPECIAL",
-                      "EJA ESCOLAS ENSINO FUNDAMENTAL"
-                    ])
-                  }
-                  type="checkbox"
-                />
-                EJA
-              </span>
-            </div>
           </div>
           <div className="card-body p-0">
             <div className="table-responsive">
@@ -217,41 +115,39 @@ export class VagasMatriculas extends Component {
                 <tbody>
                   {vagasMatriculas.map((matricula, indice) => {
                     return [
-                      checks.includes(getKey(matricula)) && (
-                        <tr className="main" key={indice}>
-                          <td className="font-weight-bold">
-                            {getKey(matricula)}
-                          </td>
-                          <td>
-                            {pontuarValor(
-                              matricula[getKey(matricula)].total_turmas
-                            )}
-                          </td>
-                          <td>
-                            {pontuarValor(
-                              matricula[getKey(matricula)].vagas_oferecidas
-                            )}
-                          </td>
-                          <td>
-                            {pontuarValor(
-                              matricula[getKey(matricula)].vagas_oferecidas -
-                                matricula[getKey(matricula)].vagas_remanecentes
-                            )}
-                          </td>
-                          <td>
-                            {pontuarValor(
+                      <tr className="main" key={indice}>
+                        <td className="font-weight-bold">
+                          {getKey(matricula)}
+                        </td>
+                        <td>
+                          {pontuarValor(
+                            matricula[getKey(matricula)].total_turmas
+                          )}
+                        </td>
+                        <td>
+                          {pontuarValor(
+                            matricula[getKey(matricula)].vagas_oferecidas
+                          )}
+                        </td>
+                        <td>
+                          {pontuarValor(
+                            matricula[getKey(matricula)].vagas_oferecidas -
                               matricula[getKey(matricula)].vagas_remanecentes
-                            )}
-                          </td>
-                          <td>
-                            {matricula[getKey(matricula)].media_atendimento}{" "}
-                            <ToggleExpandir
-                              ativo={matricula[getKey(matricula)].ativo}
-                              onClick={() => this.onMatriculaClicked(matricula)}
-                            />
-                          </td>
-                        </tr>
-                      ),
+                          )}
+                        </td>
+                        <td>
+                          {pontuarValor(
+                            matricula[getKey(matricula)].vagas_remanecentes
+                          )}
+                        </td>
+                        <td>
+                          {matricula[getKey(matricula)].media_atendimento}{" "}
+                          <ToggleExpandir
+                            ativo={matricula[getKey(matricula)].ativo}
+                            onClick={() => this.onMatriculaClicked(matricula)}
+                          />
+                        </td>
+                      </tr>,
                       matricula[getKey(matricula)].ativo &&
                         matricula[getKey(matricula)].decseries.map(
                           (decserie, indice_) => {
@@ -273,7 +169,7 @@ export class VagasMatriculas extends Component {
                                 <td>
                                   {pontuarValor(decserie.vagas_remanecentes)}
                                 </td>
-                                <td>{decserie.media_atendimento}</td>
+                                <td>{decserie.media_atendimento || 0}</td>
                               </tr>
                             );
                           }
@@ -309,6 +205,13 @@ export class VagasMatriculas extends Component {
               </table>
             </div>
           </div>
+        </div>
+        <div>
+          Entenda o significado de cada modalidade, etapa e turmas da Rede
+          Municipal de Ensino: acesse o{" "}
+          <a href="https://educacao.sme.prefeitura.sp.gov.br/glossario-do-escola-aberta/">
+            Glossário do Escola Aberta
+          </a>
         </div>
       </div>
     );

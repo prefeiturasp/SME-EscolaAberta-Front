@@ -5,3 +5,12 @@ export const listaParaSelect = (lista, parametro) => {
   });
   return novaLista;
 };
+
+export const formatarListaTiposescola = lista => {
+  for (let i = 0; i < lista.length; i++) {
+    if (lista[i].tipoesc === "MOVA") {
+      lista.splice(i, 1);
+    }
+  }
+  return lista;
+};

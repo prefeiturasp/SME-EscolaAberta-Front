@@ -147,11 +147,6 @@ export const inicializarGruposEscolas = [
           tipo_escola: "CENTRO INTEGRADO DE EDUCACAO DE JOVENS E ADULTOS",
           faixas: [],
           sigla: "CIEJA"
-        },
-        {
-          tipo_escola: "MOVIMENTO DE ALFABETIZACAO",
-          faixas: [],
-          sigla: "MOVA"
         }
       ]
     }
@@ -203,7 +198,7 @@ export const inicializarGruposEscolas = [
     }
   },
   {
-    "CEUs": {
+    CEUs: {
       ativo: false,
       escolas: [
         {
@@ -405,12 +400,14 @@ export const totalPorFaixa = tiposEscolaFormatado => {
     elem.total = 0;
   });
   tiposEscolaFormatado.forEach(tipoEscola => {
-    tipoEscola[getKey(tipoEscola)].faixas.forEach(faixa => {
-      const indice = totalPorFaixa.findIndex(
-        faixa_total => faixa_total.faixa === faixa.faixa
-      );
-      if (indice !== -1) totalPorFaixa[indice].total += faixa.count;
-    });
+    if (getKey(tipoEscola) !== "MOVIMENTO DE ALFABETIZACAO") {
+      tipoEscola[getKey(tipoEscola)].faixas.forEach(faixa => {
+        const indice = totalPorFaixa.findIndex(
+          faixa_total => faixa_total.faixa === faixa.faixa
+        );
+        if (indice !== -1) totalPorFaixa[indice].total += faixa.count;
+      });
+    }
   });
   return totalPorFaixa;
 };
