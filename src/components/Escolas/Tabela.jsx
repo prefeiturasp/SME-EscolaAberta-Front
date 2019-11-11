@@ -47,22 +47,22 @@ export default class TabelaEscolas extends Component {
                         pathname: "/estatisticas",
                         state: {
                           codesc: escola.codesc,
-                          nomesc: escola.nomesc
+                          nomesc: escola.tipoesc + " " + escola.nomesc
                         }
                       }}
                     >
-                      {escola.nomesc}
+                      {escola.tipoesc + " " + escola.nomesc}
                     </Link>
                   </td>
                   <td>{escola.tipoesc}</td>
-                  <td>{escola.diretoria.split('EDUCACAO')[1]}</td>
+                  <td>{escola.diretoria.split("EDUCACAO")[1]}</td>
                   <td className="text-center">
                     <Link
                       to={{
                         pathname: "/estatisticas",
                         state: {
                           codesc: escola.codesc,
-                          nomesc: escola.nomesc
+                          nomesc: escola.tipoesc + " " + escola.nomesc
                         }
                       }}
                     >
