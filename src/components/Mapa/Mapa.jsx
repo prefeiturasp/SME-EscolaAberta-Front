@@ -85,7 +85,9 @@ export default class Mapa extends Component {
                 position={[marcador.latitude, marcador.longitude]}
               >
                 <Popup>
-                  <strong>{marcador.escola.nomesc}</strong>
+                  <strong>
+                    {marcador.escola.tipoesc + " " + marcador.escola.nomesc}
+                  </strong>
                   <div>
                     {marcador.escola.endereco}, {marcador.escola.numero} -{" "}
                     {marcador.escola.bairro}
