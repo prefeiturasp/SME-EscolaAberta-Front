@@ -143,7 +143,6 @@ export default class Filtros extends Component {
       dreSelecionada: "",
       logradouroSelecionado: ""
     });
-    this.escolaRef.value = "";
     this.distritoRef.value = "";
     this.subprefRef.value = "";
     this.tipoEscolaRef.value = "";
