@@ -14,6 +14,7 @@ import {
 import cookie from "react-cookies";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow, faClock } from "@fortawesome/free-solid-svg-icons";
+import { tipoEscolaFormatar } from "components/utils";
 
 export default class Buscador extends Component {
   constructor(props) {
@@ -128,7 +129,7 @@ export default class Buscador extends Component {
       lista.results.forEach(function(escola) {
         escolas.push({
           value: escola.codesc,
-          label: escola.tipoesc + " " + escola.nomesc
+          label: tipoEscolaFormatar(escola.tipoesc) + " " + escola.nomesc
         });
       });
     });

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import TabelaDetalhe from "./TabelaDetalhe";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChartBar } from "@fortawesome/free-solid-svg-icons";
+import { tipoEscolaFormatar } from "components/utils";
 
 export default class TabelaEscolas extends Component {
   render() {
@@ -47,11 +48,14 @@ export default class TabelaEscolas extends Component {
                         pathname: "/estatisticas",
                         state: {
                           codesc: escola.codesc,
-                          nomesc: escola.tipoesc + " " + escola.nomesc
+                          nomesc:
+                            tipoEscolaFormatar(escola.tipoesc) +
+                            " " +
+                            escola.nomesc
                         }
                       }}
                     >
-                      {escola.tipoesc + " " + escola.nomesc}
+                      {tipoEscolaFormatar(escola.tipoesc) + " " + escola.nomesc}
                     </Link>
                   </td>
                   <td>{escola.tipoesc}</td>
@@ -62,7 +66,10 @@ export default class TabelaEscolas extends Component {
                         pathname: "/estatisticas",
                         state: {
                           codesc: escola.codesc,
-                          nomesc: escola.tipoesc + " " + escola.nomesc
+                          nomesc:
+                            tipoEscolaFormatar(escola.tipoesc) +
+                            " " +
+                            escola.nomesc
                         }
                       }}
                     >
