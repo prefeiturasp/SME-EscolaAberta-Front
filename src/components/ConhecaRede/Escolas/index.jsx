@@ -101,7 +101,9 @@ export class Escolas extends Component {
                 className="form-control"
                 onChange={event => this.onSelectChanged(event.target.value)}
               >
-                <option value="" disabled selected>Selecione uma DRE</option>
+                <option value="" disabled selected>
+                  Selecione uma DRE
+                </option>
                 {diretoriasRegionais.length &&
                   diretoriasRegionais.map((e, key) => {
                     return (
@@ -136,7 +138,7 @@ export class Escolas extends Component {
                   <table className="grupo-escolas table text-center table-hover table-bordered mb-0 fonte-14">
                     <thead>
                       <tr>
-                        <th colSpan="2" scope="col" rowSpan="2"></th>
+                        <th scope="col" rowSpan="2"></th>
                         <th
                           scope="col"
                           colSpan="8"
@@ -169,7 +171,7 @@ export class Escolas extends Component {
                         tiposEscolaPorGrupo.map((grupoEscola, indice) => {
                           return [
                             <tr className="main" key={indice}>
-                              <td colSpan="2" className="font-weight-bold">
+                              <td className="font-weight-bold">
                                 {getKey(grupoEscola)}
                               </td>
                               <td className="font-weight-bold">
@@ -246,10 +248,10 @@ export class Escolas extends Component {
                                   return (
                                     <tr>
                                       <td className="font-weight-bold">
-                                        {escola.sigla}
-                                      </td>
-                                      <td className="font-weight-bold">
-                                        {escola.tipo_escola}
+                                        {escola.sigla} -{" "}
+                                        <span className="font-weight-normal">
+                                          {escola.tipo_escola}
+                                        </span>
                                       </td>
                                       <td>
                                         {pontuarValor(
@@ -327,7 +329,7 @@ export class Escolas extends Component {
                     </tbody>
                     <tfoot>
                       <tr>
-                        <td colSpan="2">
+                        <td>
                           TOTAL DE UNIDADES ESCOLARES POR NÚMERO DE ESTUDANTES
                         </td>
                         {totalPorFaixaLista &&
