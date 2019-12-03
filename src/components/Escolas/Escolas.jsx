@@ -22,7 +22,8 @@ export default class Escolas extends Component {
       subprefSelecionada: "",
       tipoEscolaSelecionado: "",
       dreSelecionada: "",
-      loading: true
+      loading: true,
+      buscaAvancada: false
     };
     this.conteudo = React.createRef();
     this.atualizarMapa = this.atualizarMapa.bind(this);
@@ -31,6 +32,9 @@ export default class Escolas extends Component {
   }
 
   componentDidMount() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const buscaAvancada = urlParams.get("buscaAvancada") === "true";
+    this.setState({ buscaAvancada });
     if (this.props.location && this.props.location.state !== undefined) {
       if (this.props.location.state.escola !== undefined) {
         PubSub.publish("escola-filtro", this.props.location.state.escola);
@@ -131,6 +135,15 @@ export default class Escolas extends Component {
       }.bind(this)
     );
   }
+
+  componentDidUpdate() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const buscaAvancada = urlParams.get("buscaAvancada") === "true";
+    if(!this.state.buscaAvancada && buscaAvancada) {
+      this.setState({ buscaAvancada });
+    }
+  }
+
 
   atualizarMapa(escola, latitude, longitude) {
     PubSub.publish("escola", escola);

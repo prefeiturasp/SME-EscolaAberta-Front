@@ -160,6 +160,14 @@ export default class Menu extends Component {
                 <li className="nav-item">
                   <Link
                     className="nav-link text-secondary mb-1 pb-0"
+                    to="/escolas?buscaAvancada=true"
+                  >
+                    Busca por Filtro
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className="nav-link text-secondary mb-1 pb-0"
                     to="/conheca-a-rede"
                   >
                     Conheça a Rede
