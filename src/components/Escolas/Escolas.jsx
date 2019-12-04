@@ -31,7 +31,15 @@ export default class Escolas extends Component {
   }
 
   componentDidMount() {
-    if (this.props.location && this.props.location.state !== undefined) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const buscaAvancada = urlParams.get("buscaAvancada") === "true";
+    const dre = urlParams.get("diretoriaRegional");
+    this.setState({ buscaAvancada });
+    if (dre) {
+      this.setState({ dreSelecionada: dre });
+      PubSub.publish("dre-filtro", dre);
+    }
+    else if (this.props.location && this.props.location.state !== undefined) {
       if (this.props.location.state.escola !== undefined) {
         PubSub.publish("escola-filtro", this.props.location.state.escola);
       } else if (this.props.location.state.bairro !== undefined) {
@@ -130,6 +138,14 @@ export default class Escolas extends Component {
         }
       }.bind(this)
     );
+  }
+
+  componentDidUpdate() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const buscaAvancada = urlParams.get("buscaAvancada") === "true";
+    if (!this.state.buscaAvancada && buscaAvancada) {
+      this.setState({ buscaAvancada });
+    }
   }
 
   atualizarMapa(escola, latitude, longitude) {

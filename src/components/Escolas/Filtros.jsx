@@ -120,6 +120,14 @@ export default class Filtros extends Component {
       this.setState({ distritoSelecionado: this.state.distritoSelecionado });
       this.distritoRef.value = this.props.distritoSelecionado;
     }
+
+    if (prevProps.dreSelecionada === "" && this.props.dreSelecionada !== "") {
+      this.setState({ dreSelecionada: this.props.dreSelecionada }, () => {
+        this.dreRef.value = this.props.dreSelecionada;
+        this.forceUpdate();
+        this.filtrar();
+      });
+    }
     if (
       prevProps.subprefSelecionada === "" &&
       this.props.subprefSelecionada !== ""
@@ -255,7 +263,8 @@ export default class Filtros extends Component {
     return (
       <div>
         <div
-          className="filtro collapse shadow w-100 h-100"
+          className={`filtro collapse ${buscaAvancada &&
+            "show"} shadow w-100 h-100`}
           id="filtro-collapse"
         >
           <div className="bg-white pt-2 pb-2">
@@ -403,6 +412,7 @@ export default class Filtros extends Component {
                     id="filtro-dre"
                     className="custom-select rounded-pill shadow"
                     emptyLabel="Selecione a DRE"
+                    selected={this.state.dreSelecionada}
                     selectRef={el => (this.dreRef = el)}
                     lista={this.state.dres}
                     value="dre"
