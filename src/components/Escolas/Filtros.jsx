@@ -260,6 +260,7 @@ export default class Filtros extends Component {
   }
 
   render() {
+    const { buscaAvancada } = this.props;
     return (
       <div>
         <div
@@ -405,7 +406,7 @@ export default class Filtros extends Component {
               <div className="col-lg-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="filtro-dre" className="text-white">
-                    DRE
+                    Diretoria Regional de Educação (DRE)
                   </label>
                   <SelectCustomizado
                     name="filtro-dre"
@@ -433,7 +434,7 @@ export default class Filtros extends Component {
                     aria-expanded="false"
                     aria-controls="filtro-collapse"
                   >
-                    Aplicar
+                    Consultar
                   </button>
                 </div>
               </div>

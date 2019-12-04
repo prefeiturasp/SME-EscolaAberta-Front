@@ -22,7 +22,8 @@ export default class Escolas extends Component {
       subprefSelecionada: "",
       tipoEscolaSelecionado: "",
       dreSelecionada: "",
-      loading: true
+      loading: true,
+      buscaAvancada: false
     };
     this.conteudo = React.createRef();
     this.atualizarMapa = this.atualizarMapa.bind(this);
@@ -40,6 +41,7 @@ export default class Escolas extends Component {
       PubSub.publish("dre-filtro", dre);
     }
     else if (this.props.location && this.props.location.state !== undefined) {
+    if (this.props.location && this.props.location.state !== undefined) {
       if (this.props.location.state.escola !== undefined) {
         PubSub.publish("escola-filtro", this.props.location.state.escola);
       } else if (this.props.location.state.bairro !== undefined) {
