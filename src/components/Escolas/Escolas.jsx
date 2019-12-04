@@ -39,9 +39,7 @@ export default class Escolas extends Component {
     if (dre) {
       this.setState({ dreSelecionada: dre });
       PubSub.publish("dre-filtro", dre);
-    }
-    else if (this.props.location && this.props.location.state !== undefined) {
-    if (this.props.location && this.props.location.state !== undefined) {
+    } else if (this.props.location && this.props.location.state !== undefined) {
       if (this.props.location.state.escola !== undefined) {
         PubSub.publish("escola-filtro", this.props.location.state.escola);
       } else if (this.props.location.state.bairro !== undefined) {
