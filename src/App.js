@@ -6,7 +6,16 @@ import Escolas from "./components/Escolas/Escolas";
 import Estatisticas from "./components/Estatisticas/Estatisticas";
 import ConhecaRede from "./components/ConhecaRede";
 import ReactGA from 'react-ga';
-ReactGA.initialize('UA-149756375-1');
+//ReactGA.initialize('UA-149756375-1');
+
+ReactGA.initialize([{
+  // https://educacao.sme.prefeitura.sp.gov.br/escolaaberta/
+  trackingId: 'UA-149756375-1',
+}, {
+  // https://escolaaberta.sme.prefeitura.sp.gov.br/
+  trackingId: 'UA-156348483-1',
+}]);
+
 ReactGA.pageview(window.location.pathname + window.location.search);
 
 export default class App extends Component {
