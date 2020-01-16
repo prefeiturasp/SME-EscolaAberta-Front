@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PubSub from "pubsub-js";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
+import { tipoEscolaFormatar } from "components/utils";
 
 export default class Mapa extends Component {
   constructor(props) {
@@ -85,7 +86,11 @@ export default class Mapa extends Component {
                 position={[marcador.latitude, marcador.longitude]}
               >
                 <Popup>
-                  <strong>{marcador.escola.nomesc}</strong>
+                  <strong>
+                    {tipoEscolaFormatar(marcador.escola.tipoesc) +
+                    " " +
+                    marcador.escola.nomesc}
+                  </strong>
                   <div>
                     {marcador.escola.endereco}, {marcador.escola.numero} -{" "}
                     {marcador.escola.bairro}

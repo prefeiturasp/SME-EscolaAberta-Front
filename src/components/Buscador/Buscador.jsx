@@ -14,6 +14,7 @@ import {
 import cookie from "react-cookies";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow, faClock } from "@fortawesome/free-solid-svg-icons";
+import { tipoEscolaFormatar } from "components/utils";
 
 export default class Buscador extends Component {
   constructor(props) {
@@ -88,11 +89,14 @@ export default class Buscador extends Component {
         buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(
           localizacoes => {
             localizacoes.results.forEach(function(local) {
-              let nome = local.display_name.split(', ')[0] + ', ' + local.display_name.split(', ')[1];
-                ruas.push({
-                  value: { lat: local.lat, lon: local.lon },
-                  label: nome
-                });
+              let nome =
+                local.display_name.split(", ")[0] +
+                ", " +
+                local.display_name.split(", ")[1];
+              ruas.push({
+                value: { lat: local.lat, lon: local.lon },
+                label: nome
+              });
             });
           }
         );
@@ -123,7 +127,10 @@ export default class Buscador extends Component {
 
     listarEscolas({ escola: string_sem_acento }).then(lista => {
       lista.results.forEach(function(escola) {
-        escolas.push({ value: escola.codesc, label: escola.nomesc });
+        escolas.push({
+          value: escola.codesc,
+          label: tipoEscolaFormatar(escola.tipoesc) + " " + escola.nomesc
+        });
       });
     });
     return escolas;
