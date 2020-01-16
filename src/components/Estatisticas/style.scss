@@ -16,6 +16,12 @@ table.grupo-profissionais {
     &.main {
       background-color: $corAzulBackgroundTable;
     }
+    &.titulo {
+      td {
+        background-color: #dee2e6;
+        font-weight: bold;
+      }
+    }
     td {
       vertical-align: middle;
     }

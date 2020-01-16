@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import TabelaDetalhe from "./TabelaDetalhe";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChartBar } from "@fortawesome/free-solid-svg-icons";
+import { tipoEscolaFormatar } from "components/utils";
 
 export default class TabelaEscolas extends Component {
   render() {
@@ -47,22 +48,28 @@ export default class TabelaEscolas extends Component {
                         pathname: "/estatisticas",
                         state: {
                           codesc: escola.codesc,
-                          nomesc: escola.nomesc
+                          nomesc:
+                            tipoEscolaFormatar(escola.tipoesc) +
+                            " " +
+                            escola.nomesc
                         }
                       }}
                     >
-                      {escola.nomesc}
+                      {tipoEscolaFormatar(escola.tipoesc) + " " + escola.nomesc}
                     </Link>
                   </td>
                   <td>{escola.tipoesc}</td>
-                  <td>{escola.diretoria.split('EDUCACAO')[1]}</td>
+                  <td>{escola.diretoria.split("EDUCACAO")[1]}</td>
                   <td className="text-center">
                     <Link
                       to={{
                         pathname: "/estatisticas",
                         state: {
                           codesc: escola.codesc,
-                          nomesc: escola.nomesc
+                          nomesc:
+                            tipoEscolaFormatar(escola.tipoesc) +
+                            " " +
+                            escola.nomesc
                         }
                       }}
                     >

@@ -306,7 +306,7 @@ export const quantidadeAlunosGrupo = (escola, faixa) => {
 };
 
 export const tipoEscolaLabel = tipoEscola => {
-  switch (tipoEscola.tipoesc) {
+  switch (tipoEscola.tipoesc.trim()) {
     case "CEU EMEF":
     case "EMEF":
       return "ESCOLA MUNICIPAL DE ENSINO FUNDAMENTAL";

@@ -17,6 +17,7 @@ import {
 import ToggleExpandir from "components/ToggleExpandir";
 import { getKey } from "components/ConhecaRede/Escolas/helper";
 import { pontuarValor } from "components/utils";
+import { formatarConhecaservidores } from "./helper";
 
 export default class Profissionais extends Component {
   constructor(props) {
@@ -51,7 +52,7 @@ export default class Profissionais extends Component {
           }
         });
         this.setState({ cargos: cargos });
-        this.setState({ servidoresCargos: lista });
+        this.setState({ servidoresCargos: formatarConhecaservidores(lista) });
       }
     });
     this.setState({
@@ -72,12 +73,25 @@ export default class Profissionais extends Component {
     this.setState({ cargosPorGrupo });
   }
 
+  onGrupoServidoresClicked(grupo) {
+    let servidoresCargos = this.state.servidoresCargos;
+    servidoresCargos.forEach(grupoServidores => {
+      if (getKey(grupoServidores) === getKey(grupo)) {
+        grupoServidores[getKey(grupoServidores)].ativo = !grupoServidores[
+          getKey(grupoServidores)
+        ].ativo;
+      }
+    });
+    this.setState({ servidoresCargos });
+  }
+
   render() {
     const indice = "abc";
     const {
       cargosPorGrupo,
       totalPorFormacaoLista,
-      cargosProfissionais
+      cargosProfissionais,
+      servidoresCargos
     } = this.state;
     return (
       <div className="mt-5 mb-5">
@@ -244,36 +258,46 @@ export default class Profissionais extends Component {
           </div>
           <div className="collapse fade" id={`conheca-a-equipe`}>
             <div className="card-body p-0">
-              <table className="table table-hover table-bordered mb-0 fonte-14">
+              <table className="table grupo-profissionais table-hover table-bordered mb-0 fonte-14">
                 <tbody>
-                  {this.state.cargos.length > 0
-                    ? this.state.cargos.map((cargo, indice) => {
-                        return (
-                          <React.Fragment key={shortid.generate()}>
-                            <tr>
-                              <td className="table-secondary font-weight-bold">
-                                {cargo}
-                              </td>
-                            </tr>
-                            {this.state.servidoresCargos.length > 0
-                              ? this.state.servidoresCargos
-                                  .filter(servidorCargo => {
-                                    return (
-                                      servidorCargo.dc_cargo_atual === cargo
-                                    );
-                                  })
-                                  .map(servidorCargo => {
-                                    return (
-                                      <tr key={shortid.generate()}>
-                                        <td>{servidorCargo.nm_nome}</td>
-                                      </tr>
-                                    );
-                                  })
-                              : null}
-                          </React.Fragment>
-                        );
-                      })
-                    : null}
+                  {servidoresCargos &&
+                    servidoresCargos.map((grupo, key) => {
+                      return [
+                        grupo[getKey(grupo)].total > 0 && (
+                          <tr className="main">
+                            <td className="font-weight-bold">
+                              {getKey(grupo)}
+                              <ToggleExpandir
+                                ativo={grupo[getKey(grupo)].ativo}
+                                onClick={() =>
+                                  this.onGrupoServidoresClicked(grupo)
+                                }
+                              />
+                            </td>
+                          </tr>
+                        ),
+                        grupo[getKey(grupo)].ativo &&
+                          grupo[getKey(grupo)].cargos.map((cargo, indice_) => {
+                            return (
+                              cargo.servidores.length > 0 &&
+                              grupo[getKey(grupo)].total > 0 && [
+                                <tr className="titulo" key={indice}>
+                                  <td className="font-weight-bold">
+                                    {cargo.tipo_cargo}
+                                  </td>
+                                </tr>,
+                                cargo.servidores.map((servidor, key) => {
+                                  return (
+                                    <tr>
+                                      <td>{servidor.nm_nome}</td>
+                                    </tr>
+                                  );
+                                })
+                              ]
+                            );
+                          })
+                      ];
+                    })}
                 </tbody>
               </table>
             </div>

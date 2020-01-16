@@ -1,4 +1,7 @@
-import { getKey } from "components/ConhecaRede/Profissionais/helper";
+import {
+  getKey,
+  cargoLabel
+} from "components/ConhecaRede/Profissionais/helper";
 import {
   labelDecserie,
   labelModalidade
@@ -152,7 +155,9 @@ export const formatarVagasMatriculas = vagasMatriculas => {
   vagasMatriculas.forEach(vagaMatricula => {
     vagaMatricula.serie = labelDecserie(labelModalidade(vagaMatricula.serie));
   });
-  vagasMatriculas = vagasMatriculas.sort((a, b) => (a.posicao > b.posicao ? 1 : -1));
+  vagasMatriculas = vagasMatriculas.sort((a, b) =>
+    a.posicao > b.posicao ? 1 : -1
+  );
   vagasMatriculas = normalizarDecserieAnos(vagasMatriculas);
   return vagasMatriculas;
 };
@@ -189,3 +194,391 @@ export const normalizarDecserieAnos = matriculas => {
   });
   return matriculas;
 };
+
+export const formatarConhecaservidores = servidoresCargos => {
+  let servidoresPorGrupo = inicializarGruposConhecaEquipe;
+  servidoresPorGrupo.forEach(grupo => {
+    grupo[getKey(grupo)].licenciatura_curta = 0;
+    grupo[getKey(grupo)].licenciatura_plena = 0;
+    grupo[getKey(grupo)].total = 0;
+    grupo[getKey(grupo)].cargos.forEach(cargo => {
+      cargo.servidores = [];
+    });
+  });
+  servidoresCargos.forEach(servidor => {
+    servidoresPorGrupo.forEach(grupo => {
+      grupo[getKey(grupo)].cargos.forEach(cargo => {
+        if (cargo.tipo_cargo === cargoLabel(servidor.dc_cargo_atual.trim())) {
+          cargo.servidores.push(servidor);
+          grupo[getKey(grupo)].total += 1;
+        }
+      });
+    });
+  });
+  return servidoresPorGrupo;
+};
+
+export const inicializarGruposConhecaEquipe = [
+  {
+    "GESTÃO DA REDE MUNICIPAL DE EDUCAÇÃO": {
+      ativo: false,
+      total: 0,
+      cargos: [
+        {
+          tipo_cargo: "DIRETOR REGIONAL DE EDUCAÇÃO",
+          servidores: []
+        },
+        {
+          tipo_cargo: "GESTOR DE CENTRO EDUCACIONAL UNIFICADO",
+          servidores: []
+        },
+        {
+          tipo_cargo: "COORDENADOR GERAL",
+          servidores: []
+        },
+        {
+          tipo_cargo: "COORDENADOR II",
+          servidores: []
+        },
+        {
+          tipo_cargo: "COORDENADOR IV",
+          servidores: []
+        },
+        {
+          tipo_cargo: "COORDENADOR V",
+          servidores: []
+        },
+        {
+          tipo_cargo: "COORDENADOR DE ESPORTES E LAZER",
+          servidores: []
+        },
+        {
+          tipo_cargo: "COORDENADOR DE AÇÃO CULTURAL",
+          servidores: []
+        },
+        {
+          tipo_cargo: "COORDENADOR DE AÇÃO EDUCACIONAL",
+          servidores: []
+        },
+        {
+          tipo_cargo: "COORDENADOR DE PROJETOS",
+          servidores: []
+        },
+        {
+          tipo_cargo: "DIRETOR DE DIVISÃO TÉCNICA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "DIRETOR DE NÚCLEO TÉCNICO",
+          servidores: []
+        },
+        {
+          tipo_cargo: "SUPERVISOR ESCOLAR",
+          servidores: []
+        },
+        {
+          tipo_cargo: "OFICIAL DE GABINETE",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "ANALISTA ASSISTENTE DE DESENVOLVIMENTO SOCIAL - NÍVEIS I E IV",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "ANALISTA DE INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - BIBLIOTECA",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "ANALISTA DE INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - EDUCAÇÃO FÍSICA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ANALISTA DE SAÚDE - NÍVEIS I, II, III E IV",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "ANALISTA DE PLANEJAMENTO E DESENVOLVIMENTO ORGANIZACIONAL – II E IV",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSESSOR I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSESSOR II",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSESSOR TÉCNICO I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSESSOR TÉCNICO II",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSESSOR TÉCNICO III",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSISTENTE TÉCNICO I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSISTENTE DE ATIVIDADES ARTÍSTICAS",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSISTENTE DE SUPORTE TÉCNICO - NÍVEL I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSISTENTE TÉCNICO EDUCACIONAL",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "ESPECIALISTA EM INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - BIBLIOTECA",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "ESPECIALISTA EM INFORMAÇÕES TÉCNICAS, CULTURAIS E DESPORTO - EDUCAÇÃO FÍSICA",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "PROFISSIONAL DE ENGENHARIA, ARQUITETURA, AGRONOMIA E GEOLOGIA I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "SUPERVISOR TÉCNICO II",
+          servidores: []
+        }
+      ]
+    }
+  },
+  {
+    "GESTÃO ESCOLAR": {
+      ativo: false,
+      total: 0,
+      cargos: [
+        {
+          tipo_cargo: "DIRETOR DE ESCOLA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "COORDENADOR PEDAGÓGICO",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSISTENTE DE DIRETOR DE ESCOLA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "AUXILIAR DE DESENVOLVIMENTO INFANTIL",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR TITULAR DE EDUCAÇÃO INFANTIL",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE EDUCAÇÃO INFANTIL",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR SUBSTITUTO DE EDUCAÇÃO INFANTIL",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE EDUCAÇÃO INFANTIL E ENSINO FUNDAMENTAL I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR 1º GRAU NÍVEL II",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR SUBSTITUTO DE 1º GRAU NÍVEL I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR TITULAR DE ENSINO FUNDAMENTAL I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE 2º GRAU",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL II - CIÊNCIAS",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL II - GEOGRAFIA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR ADJUNTO DE ENSINO FUNDAMENTAL II - MATEMÁTICA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ARTES",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - BIOLOGIA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - CIENCIAS",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - CONTROLE DE CUSTOS",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ECONOMIA DE MERCADO",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - EDUCAÇÃO FÍSICA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ESPANHOL",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - FILOSOGIA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - FÍSICA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - GEOGRAFIA",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - HISTÓRIA E FILOSOFIA DA EDUCAÇÃO",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - HISTÓRIA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - INGLÊS",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - MATEMÁTICA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - PORTUGUÊS",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - PSICOLOGIA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - QUÍMICA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - SOCIOLIGIA",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - OUTROS COMPONENTES",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "PROFESSOR DE ENSINO FUNDAMENTAL II E MÉDIO - ADMINISTRAÇÃO E CONTROLE",
+          servidores: []
+        }
+      ]
+    }
+  },
+  {
+    "QUADRO DE APOIO": {
+      ativo: false,
+      total: 0,
+      cargos: [
+        {
+          tipo_cargo: "AGENTE DE APOIO - NÍVEIS I E II",
+          servidores: []
+        },
+        {
+          tipo_cargo: "AGENTE ESCOLAR",
+          servidores: []
+        },
+        {
+          tipo_cargo: "AUXILIAR ADMINISTRATIVO DE ENSINO",
+          servidores: []
+        },
+        {
+          tipo_cargo: "AUXILIAR TÉCNICO DE EDUCAÇÃO",
+          servidores: []
+        },
+        {
+          tipo_cargo: "AUXILIAR DE SECRETARIA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSISTENTE TÉCNICO DE EDUCAÇÃO",
+          servidores: []
+        },
+        {
+          tipo_cargo: "INSPETOR DE ALUNOS",
+          servidores: []
+        },
+        {
+          tipo_cargo: "SECRETÁRIO DE ESCOLA",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ENCARREGADO DE servidores",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ENCARREGADO DE servidores I",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ENCARREGADO DE servidores II",
+          servidores: []
+        },
+        {
+          tipo_cargo: "ASSISTENTE DE SAÚDE – NÍVEIS I, II E III",
+          servidores: []
+        },
+        {
+          tipo_cargo:
+            "ASSISTENTE DE GESTÃO E POLÍTICAS PÚBLICAS - NÍVEIS I E II",
+          servidores: []
+        }
+      ]
+    }
+  }
+];

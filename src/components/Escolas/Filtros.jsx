@@ -120,6 +120,14 @@ export default class Filtros extends Component {
       this.setState({ distritoSelecionado: this.state.distritoSelecionado });
       this.distritoRef.value = this.props.distritoSelecionado;
     }
+
+    if (prevProps.dreSelecionada === "" && this.props.dreSelecionada !== "") {
+      this.setState({ dreSelecionada: this.props.dreSelecionada }, () => {
+        this.dreRef.value = this.props.dreSelecionada;
+        this.forceUpdate();
+        this.filtrar();
+      });
+    }
     if (
       prevProps.subprefSelecionada === "" &&
       this.props.subprefSelecionada !== ""
@@ -143,7 +151,6 @@ export default class Filtros extends Component {
       dreSelecionada: "",
       logradouroSelecionado: ""
     });
-    this.escolaRef.value = "";
     this.distritoRef.value = "";
     this.subprefRef.value = "";
     this.tipoEscolaRef.value = "";
@@ -253,10 +260,12 @@ export default class Filtros extends Component {
   }
 
   render() {
+    const { buscaAvancada } = this.props;
     return (
       <div>
         <div
-          className="filtro collapse shadow w-100 h-100"
+          className={`filtro collapse ${buscaAvancada &&
+            "show"} shadow w-100 h-100`}
           id="filtro-collapse"
         >
           <div className="bg-white pt-2 pb-2">
@@ -397,13 +406,14 @@ export default class Filtros extends Component {
               <div className="col-lg-12 col-sm-12">
                 <div className="form-group">
                   <label htmlFor="filtro-dre" className="text-white">
-                    DRE
+                    Diretoria Regional de Educação (DRE)
                   </label>
                   <SelectCustomizado
                     name="filtro-dre"
                     id="filtro-dre"
                     className="custom-select rounded-pill shadow"
                     emptyLabel="Selecione a DRE"
+                    selected={this.state.dreSelecionada}
                     selectRef={el => (this.dreRef = el)}
                     lista={this.state.dres}
                     value="dre"
@@ -424,7 +434,7 @@ export default class Filtros extends Component {
                     aria-expanded="false"
                     aria-controls="filtro-collapse"
                   >
-                    Aplicar
+                    Consultar
                   </button>
                 </div>
               </div>
