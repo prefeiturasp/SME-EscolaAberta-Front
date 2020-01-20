@@ -4,23 +4,18 @@ import TabelaDetalhe from "./TabelaDetalhe";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChartBar } from "@fortawesome/free-solid-svg-icons";
 import { tipoEscolaFormatar } from "components/utils";
+import ConsultarNovamente from "../ConsultarNovamente/ConsultarNovamente";
 
 
 export default class TabelaEscolas extends Component {
 
   render() {
 
+    console.log("Render ", this.props)
+
     return (
       <Fragment>
-
         {
-          this.props.loading && this.props.lista.length ? (
-            <div>Carregando...</div>
-          ) : null
-        }
-
-        {
-
           this.props.lista.length ? (
             <table className="table tabela-escolas">
               <thead>
@@ -101,7 +96,20 @@ export default class TabelaEscolas extends Component {
               </tbody>
             </table>
           ):
-            <div>Nenhum resultado encontrado</div>
+
+            this.props.loading && this.props.length ? (
+                <div>Carregando...</div>
+              ) :
+
+            <div className="col-12 mt-5 mb-5">
+
+              <ConsultarNovamente
+                texto="Não foi encontrado nenhum resultado. Por favor tente uma nova pesquisa"
+                link_to="/"
+                classe_css_btn='btn btn-outline-primary rounded-pill'
+                texto_btn="Consultar novamente"
+              />
+            </div>
 
         }
 
