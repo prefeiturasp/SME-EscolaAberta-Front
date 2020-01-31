@@ -195,11 +195,12 @@ h2 {
       left: 0;
     }
 
-    @media (min-width: 992px) {
+/*    @media (min-width: 992px) {
       position: absolute;
-    }
+    }*/
 
     background: $corAzulFiltro;
+    position: absolute;
 
     h4 {
       @extend .fonte-14;

@@ -264,8 +264,7 @@ export default class Filtros extends Component {
     return (
       <div>
         <div
-          className={`filtro collapse ${buscaAvancada &&
-            "show"} shadow w-100 h-100`}
+          className={`filtro collapse ${buscaAvancada && "show"} shadow w-100 h-100`}
           id="filtro-collapse"
         >
           <div className="bg-white pt-2 pb-2">
