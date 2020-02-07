@@ -20,7 +20,12 @@ export const formatarVagasMatriculas = vagasMatriculas => {
       }
     });
     if (indiceJaExisteMatricula) {
-      if (vagaMatricula.decserie !== "") {
+      if (
+        vagaMatricula.decserie !== "" &&
+        ORDENACAO_DECSERIE[vagaMatricula.modalidade][
+          labelDecserie(vagaMatricula.decserie)
+        ] !== undefined
+      ) {
         matriculas[indiceJaExisteMatricula][
           vagaMatricula.modalidade
         ].decseries.push({
@@ -222,8 +227,9 @@ export const normalizarEnsinoProfissional = matriculas => {
   });
   let novoDecSeries = [];
   if (
-    indiceEducacaoProfissional && matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"].decseries
-      .length == 7
+    indiceEducacaoProfissional &&
+    matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"].decseries
+      .length === 7
   ) {
     for (indice; indice < 6; indice += 2) {
       matriculas[indiceEducacaoProfissional]["EDUCAÇÃO PROFISSIONAL"].decseries[
