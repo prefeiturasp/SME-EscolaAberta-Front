@@ -13,7 +13,6 @@ export default class VagasMatriculas extends Component {
       totaisTurmas: 0,
       totaisVagasOferecidas: 0,
       totaisAtendimentos: 0,
-      totaisVagasRemanecentes: 0,
       totaisMediaAtendimento: 0,
       referencia: ""
     };
@@ -36,10 +35,6 @@ export default class VagasMatriculas extends Component {
           this.setState({
             totaisAtendimentos:
               this.state.totaisAtendimentos + vaga.atendimentos
-          });
-          this.setState({
-            totaisVagasRemanecentes:
-              this.state.totaisVagasRemanecentes + vaga.vagas_remanecentes
           });
           this.setState({
             totaisMediaAtendimento:
@@ -76,12 +71,11 @@ export default class VagasMatriculas extends Component {
               <div className="table-responsive">
                 <table className="table table-vagas-matriculas table-hover table-bordered mb-0 fonte-14">
                   <thead>
-                    <tr>
+                    <tr className="text-center">
                       <th scope="col"></th>
                       <th scope="col">Total de Turmas</th>
                       <th scope="col">Vagas Oferecidas</th>
                       <th scope="col">Matrículas/Encaminhamento</th>
-                      <th scope="col">Vagas Remanescentes</th>
                       <th scope="col">Média Atendimentos/Turma</th>
                     </tr>
                   </thead>
@@ -106,9 +100,6 @@ export default class VagasMatriculas extends Component {
                               {vagaMatricula.atendimentos}
                             </td>
                             <td className="text-center">
-                              {vagaMatricula.vagas_remanecentes}
-                            </td>
-                            <td className="text-center">
                               {vagaMatricula.media_atendimento}
                             </td>
                           </tr>
@@ -126,9 +117,6 @@ export default class VagasMatriculas extends Component {
                       </td>
                       <td className="text-center table-secondary font-weight-bold">
                         {this.state.totaisAtendimentos}
-                      </td>
-                      <td className="text-center table-secondary font-weight-bold">
-                        {this.state.totaisVagasRemanecentes}
                       </td>
                       <td className="text-center table-secondary font-weight-bold">
                         {this.state.totaisMediaAtendimento}
