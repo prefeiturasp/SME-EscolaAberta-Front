@@ -108,7 +108,6 @@ export class VagasMatriculas extends Component {
                     <th scope="col">Total de turmas</th>
                     <th scope="col">Vagas oferecidas</th>
                     <th scope="col">Matrículas/Encaminhamento</th>
-                    <th scope="col">Vagas remanescentes</th>
                     <th scope="col">Média Atendimentos/Turma</th>
                   </tr>
                 </thead>
@@ -133,11 +132,6 @@ export class VagasMatriculas extends Component {
                           {pontuarValor(
                             matricula[getKey(matricula)].vagas_oferecidas -
                               matricula[getKey(matricula)].vagas_remanecentes
-                          )}
-                        </td>
-                        <td>
-                          {pontuarValor(
-                            matricula[getKey(matricula)].vagas_remanecentes
                           )}
                         </td>
                         <td>
@@ -166,9 +160,6 @@ export class VagasMatriculas extends Component {
                                       decserie.vagas_remanecentes
                                   )}
                                 </td>
-                                <td>
-                                  {pontuarValor(decserie.vagas_remanecentes)}
-                                </td>
                                 <td>{decserie.media_atendimento || 0}</td>
                               </tr>
                             );
@@ -192,9 +183,6 @@ export class VagasMatriculas extends Component {
                           totalPorFaixa.vagas_oferecidas -
                             totalPorFaixa.vagas_remanecentes
                         )}
-                      </td>
-                      <td className="font-weight-bold bg-light">
-                        {pontuarValor(totalPorFaixa.vagas_remanecentes)}
                       </td>
                       <td className="font-weight-bold bg-light">
                         {totalPorFaixa.media_atendimento}
