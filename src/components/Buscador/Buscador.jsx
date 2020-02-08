@@ -9,7 +9,8 @@ import {
 import {
   buscarLogradouroPorCep,
   buscarLatLngPorLogradouro,
-  buscaLogradouroPorLatLng
+  buscaLogradouroPorLatLng,
+  buscarLatLngPorLogradouroV2
 } from "../../services/endereco";
 import cookie from "react-cookies";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -86,18 +87,24 @@ export default class Buscador extends Component {
         // bairros = this.buscarBairros(e.target.value);
         subprefs = this.buscarSubprefs(e.target.value);
 
-        buscarLatLngPorLogradouro({ logradouro: e.target.value }).then(
+        buscarLatLngPorLogradouroV2({ logradouro: e.target.value }).then(
           localizacoes => {
-            localizacoes.results.forEach(function(local) {
-              let nome =
-                local.display_name.split(", ")[0] +
-                ", " +
-                local.display_name.split(", ")[1];
-              ruas.push({
-                value: { lat: local.lat, lon: local.lon },
-                label: nome
+            localizacoes.features
+              .filter(local => local.properties.street !== undefined)
+              .forEach(function(local) {
+                let nome =
+                  local.properties.street +
+                  ", " +
+                  (local.properties.neighbourhood ||
+                    local.properties.localadmin);
+                ruas.push({
+                  value: {
+                    lat: local.geometry.coordinates[1],
+                    lon: local.geometry.coordinates[0]
+                  },
+                  label: nome
+                });
               });
-            });
           }
         );
 
