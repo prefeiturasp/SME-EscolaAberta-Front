@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import {
   listarTiposEscolaPorFaixa,
-  listarTiposEscolaPorFaixaPorDRE
+  listarTiposEscolaPorFaixaPorDRE,
+  listarCEUs,
 } from "../../../services/escolas";
 import {
   formatarEscolas,
@@ -11,7 +12,7 @@ import {
   total,
   quantidadeAlunosGrupo,
   totalAlunosTipoEscolaGrupo,
-  unificaTipoEscola
+  unificaTipoEscola,
 } from "./helper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
@@ -27,42 +28,42 @@ export class Escolas extends Component {
       tiposEscolaPorFaixa: [],
       tiposEscolaPorGrupo: [],
       indice: "abc",
-      totalPorFaixaLista: null
+      totalPorFaixaLista: null,
     };
   }
 
   componentDidMount() {
-    listarTiposEscolaPorFaixa().then(tiposEscolaPorFaixa => {
-      const escolaPorFaixa = unificaTipoEscola(tiposEscolaPorFaixa.results)
-      this.setState({
-        tiposEscolaPorFaixa: formatarEscolas(escolaPorFaixa),
-        totalPorFaixaLista: totalPorFaixa(
-          formatarEscolas(escolaPorFaixa)
-        ),
-        tiposEscolaPorGrupo: formatarEscolasPorGrupo(
-          formatarEscolas(escolaPorFaixa)
-        )
+    listarCEUs().then((ceus) => {
+      listarTiposEscolaPorFaixa().then((tiposEscolaPorFaixa) => {
+        let escolaPorFaixa = unificaTipoEscola(tiposEscolaPorFaixa.results, ceus);
+        this.setState({
+          tiposEscolaPorFaixa: formatarEscolas(escolaPorFaixa),
+          totalPorFaixaLista: totalPorFaixa(formatarEscolas(escolaPorFaixa)),
+          tiposEscolaPorGrupo: formatarEscolasPorGrupo(
+            formatarEscolas(escolaPorFaixa)
+          ),
+        });
       });
-    });
-    this.setState({
-      referencia: new Date(
-        new Date().setDate(new Date().getDate() - 1)
-      ).toLocaleDateString()
+      this.setState({
+        referencia: new Date(
+          new Date().setDate(new Date().getDate() - 1)
+        ).toLocaleDateString(),
+      });
     });
   }
 
   onSelectChanged(value) {
     listarTiposEscolaPorFaixaPorDRE({ dre: value }).then(
-      tiposEscolaPorFaixaPorDRE => {
-        const escolaPorFaixaDre = unificaTipoEscola(tiposEscolaPorFaixaPorDRE.results)
+      (tiposEscolaPorFaixaPorDRE) => {
+        const escolaPorFaixaDre = unificaTipoEscola(
+          tiposEscolaPorFaixaPorDRE.results
+        );
         this.setState({
           tiposEscolaPorFaixa: formatarEscolas(escolaPorFaixaDre),
-          totalPorFaixaLista: totalPorFaixa(
-            formatarEscolas(escolaPorFaixaDre)
-          ),
+          totalPorFaixaLista: totalPorFaixa(formatarEscolas(escolaPorFaixaDre)),
           tiposEscolaPorGrupo: formatarEscolasPorGrupo(
             formatarEscolas(escolaPorFaixaDre)
-          )
+          ),
         });
       }
     );
@@ -71,7 +72,7 @@ export class Escolas extends Component {
 
   onGrupoEscolaClicked(grupo) {
     let tiposEscolaPorGrupo = this.state.tiposEscolaPorGrupo;
-    tiposEscolaPorGrupo.forEach(grupoEscola => {
+    tiposEscolaPorGrupo.forEach((grupoEscola) => {
       if (getKey(grupoEscola) === getKey(grupo)) {
         grupoEscola[getKey(grupoEscola)].ativo = !grupoEscola[
           getKey(grupoEscola)
@@ -87,7 +88,7 @@ export class Escolas extends Component {
       indice,
       tiposEscolaPorFaixa,
       totalPorFaixaLista,
-      tiposEscolaPorGrupo
+      tiposEscolaPorGrupo,
     } = this.state;
     return (
       <div className="mt-5 mb-5">
@@ -100,7 +101,7 @@ export class Escolas extends Component {
             <div className="col-6">
               <select
                 className="form-control"
-                onChange={event => this.onSelectChanged(event.target.value)}
+                onChange={(event) => this.onSelectChanged(event.target.value)}
               >
                 <option value="" disabled selected>
                   Selecione uma DRE
@@ -324,7 +325,7 @@ export class Escolas extends Component {
                                     </tr>
                                   );
                                 }
-                              )
+                              ),
                           ];
                         })}
                     </tbody>
@@ -334,7 +335,7 @@ export class Escolas extends Component {
                           TOTAL DE UNIDADES ESCOLARES POR NÚMERO DE ESTUDANTES
                         </td>
                         {totalPorFaixaLista &&
-                          totalPorFaixaLista.map(faixaTotal => {
+                          totalPorFaixaLista.map((faixaTotal) => {
                             return (
                               <td className="font-weight-bold bg-light">
                                 {pontuarValor(faixaTotal.total)}
