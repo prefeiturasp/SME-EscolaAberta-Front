@@ -80,3 +80,8 @@ export async function listarTiposEscolaPorFaixaPorDRE(params) {
 export async function listarCEUs() {
   return await fetch(`${API_EOL}/ceus/`).then((ceus) => ceus.json());
 }
+
+export async function listarCEUsPorDRE(params) {
+  const { dre = "" } = params;
+  return await fetch(`${API_EOL}/ceus/?dre=${dre}`).then((ceus) => ceus.json());
+}

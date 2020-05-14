@@ -3,6 +3,7 @@ import {
   listarTiposEscolaPorFaixa,
   listarTiposEscolaPorFaixaPorDRE,
   listarCEUs,
+  listarCEUsPorDRE,
 } from "../../../services/escolas";
 import {
   formatarEscolas,
@@ -35,7 +36,10 @@ export class Escolas extends Component {
   componentDidMount() {
     listarCEUs().then((ceus) => {
       listarTiposEscolaPorFaixa().then((tiposEscolaPorFaixa) => {
-        let escolaPorFaixa = unificaTipoEscola(tiposEscolaPorFaixa.results, ceus);
+        let escolaPorFaixa = unificaTipoEscola(
+          tiposEscolaPorFaixa.results,
+          ceus
+        );
         this.setState({
           tiposEscolaPorFaixa: formatarEscolas(escolaPorFaixa),
           totalPorFaixaLista: totalPorFaixa(formatarEscolas(escolaPorFaixa)),
@@ -53,19 +57,24 @@ export class Escolas extends Component {
   }
 
   onSelectChanged(value) {
-    listarTiposEscolaPorFaixaPorDRE({ dre: value }).then(
-      (tiposEscolaPorFaixaPorDRE) => {
-        const escolaPorFaixaDre = unificaTipoEscola(
-          tiposEscolaPorFaixaPorDRE.results
-        );
-        this.setState({
-          tiposEscolaPorFaixa: formatarEscolas(escolaPorFaixaDre),
-          totalPorFaixaLista: totalPorFaixa(formatarEscolas(escolaPorFaixaDre)),
-          tiposEscolaPorGrupo: formatarEscolasPorGrupo(
-            formatarEscolas(escolaPorFaixaDre)
-          ),
-        });
-      }
+    listarCEUsPorDRE({ dre: value }).then((ceus) =>
+      listarTiposEscolaPorFaixaPorDRE({ dre: value }).then(
+        (tiposEscolaPorFaixaPorDRE) => {
+          const escolaPorFaixaDre = unificaTipoEscola(
+            tiposEscolaPorFaixaPorDRE.results,
+            ceus
+          );
+          this.setState({
+            tiposEscolaPorFaixa: formatarEscolas(escolaPorFaixaDre),
+            totalPorFaixaLista: totalPorFaixa(
+              formatarEscolas(escolaPorFaixaDre)
+            ),
+            tiposEscolaPorGrupo: formatarEscolasPorGrupo(
+              formatarEscolas(escolaPorFaixaDre)
+            ),
+          });
+        }
+      )
     );
     this.props.onDRESelected(value);
   }
