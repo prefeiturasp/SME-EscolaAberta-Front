@@ -10,7 +10,8 @@ import {
   formatarEscolasPorGrupo,
   total,
   quantidadeAlunosGrupo,
-  totalAlunosTipoEscolaGrupo
+  totalAlunosTipoEscolaGrupo,
+  unificaTipoEscola
 } from "./helper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBook, faBars } from "@fortawesome/free-solid-svg-icons";
@@ -32,13 +33,14 @@ export class Escolas extends Component {
 
   componentDidMount() {
     listarTiposEscolaPorFaixa().then(tiposEscolaPorFaixa => {
+      const escolaPorFaixa = unificaTipoEscola(tiposEscolaPorFaixa.results)
       this.setState({
-        tiposEscolaPorFaixa: formatarEscolas(tiposEscolaPorFaixa.results),
+        tiposEscolaPorFaixa: formatarEscolas(escolaPorFaixa),
         totalPorFaixaLista: totalPorFaixa(
-          formatarEscolas(tiposEscolaPorFaixa.results)
+          formatarEscolas(escolaPorFaixa)
         ),
         tiposEscolaPorGrupo: formatarEscolasPorGrupo(
-          formatarEscolas(tiposEscolaPorFaixa.results)
+          formatarEscolas(escolaPorFaixa)
         )
       });
     });
@@ -52,15 +54,14 @@ export class Escolas extends Component {
   onSelectChanged(value) {
     listarTiposEscolaPorFaixaPorDRE({ dre: value }).then(
       tiposEscolaPorFaixaPorDRE => {
+        const escolaPorFaixaDre = unificaTipoEscola(tiposEscolaPorFaixaPorDRE.results)
         this.setState({
-          tiposEscolaPorFaixa: formatarEscolas(
-            tiposEscolaPorFaixaPorDRE.results
-          ),
+          tiposEscolaPorFaixa: formatarEscolas(escolaPorFaixaDre),
           totalPorFaixaLista: totalPorFaixa(
-            formatarEscolas(tiposEscolaPorFaixaPorDRE.results)
+            formatarEscolas(escolaPorFaixaDre)
           ),
           tiposEscolaPorGrupo: formatarEscolasPorGrupo(
-            formatarEscolas(tiposEscolaPorFaixaPorDRE.results)
+            formatarEscolas(escolaPorFaixaDre)
           )
         });
       }
