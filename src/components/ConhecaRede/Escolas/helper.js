@@ -420,3 +420,12 @@ export const total = tiposEscolaFormatado => {
   });
   return pontuarValor(total);
 };
+
+export const unificaTipoEscola = listaTiposEscola => {
+  listaTiposEscola.forEach(escola => {
+    if (escola.tipoesc === 'CEU AT COMPL'){
+      escola.faixa = 'Sem estudantes cadastrados';
+    } 
+  });
+  return listaTiposEscola;
+};
