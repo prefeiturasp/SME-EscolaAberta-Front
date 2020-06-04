@@ -85,10 +85,6 @@ export async function listarCEUs() {
   });
 }
 
-// export async function listarCEUsPorDRE(params) {
-//   const { dre = "" } = params;
-//   return await fetch(`${API_EOL}/ceus/?dre=${dre}`).then((ceus) => ceus.json());
-// }
 // TODO: remover filter e count -1 quando o ceu for inalgurado
 export async function listarCEUsPorDRE(params) {
   const INVALID_CD = "200793"
@@ -100,4 +96,3 @@ export async function listarCEUsPorDRE(params) {
   }
   );
  }
- 
