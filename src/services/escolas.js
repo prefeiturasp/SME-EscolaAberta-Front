@@ -77,11 +77,27 @@ export async function listarTiposEscolaPorFaixaPorDRE(params) {
   );
 }
 
+// TODO: remover filter e count -1 quando o ceu for inalgurado
 export async function listarCEUs() {
-  return await fetch(`${API_EOL}/ceus/`).then((ceus) => ceus.json());
+  return await fetch(`${API_EOL}/ceus/`).then((ceus) => ceus.json()).then((ceus) => {
+    ceus.count = ceus.count -1;
+    return ceus
+  });
 }
 
+// export async function listarCEUsPorDRE(params) {
+//   const { dre = "" } = params;
+//   return await fetch(`${API_EOL}/ceus/?dre=${dre}`).then((ceus) => ceus.json());
+// }
+// TODO: remover filter e count -1 quando o ceu for inalgurado
 export async function listarCEUsPorDRE(params) {
+  const INVALID_CD = "200793"
   const { dre = "" } = params;
-  return await fetch(`${API_EOL}/ceus/?dre=${dre}`).then((ceus) => ceus.json());
-}
+  return await fetch(`${API_EOL}/ceus/?dre=${dre}`).then((ceus) => ceus.json()).then((ceus) => {
+    ceus.count = ceus.count -1;
+    ceus.results.filter(el => el.cd_unidade !== INVALID_CD);
+    return ceus
+  }
+  );
+ }
+ 
