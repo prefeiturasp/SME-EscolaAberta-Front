@@ -20,3 +20,15 @@ export const tipoEscolaFormatar = tipoEscola => {
       return tipoEscola;
   }
 };
+
+export const limpaStrNomeEscola = nome => {
+  return nome.replace("VER. ", "").replace(", VER.", "").replace(".", "");
+}
+
+export const nomeEscolaFormatar = escola => {
+  if (limpaStrNomeEscola(escola.nomesc) === limpaStrNomeEscola(escola.nomescofi)) {
+    return tipoEscolaFormatar(escola.tipoesc) + " " + escola.nomesc;
+  } else {
+    return tipoEscolaFormatar(escola.tipoesc) + " " + escola.nomesc + " - " + tipoEscolaFormatar(escola.tipoesc) + " " + escola.nomescofi;
+  }
+};
