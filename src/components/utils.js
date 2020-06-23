@@ -21,8 +21,14 @@ export const tipoEscolaFormatar = tipoEscola => {
   }
 };
 
+export const SIGLA_NOME_ESCOLA = ["DEP. ", ", DEP.", "VER. ", ", VER.", "DR. ", ", DR.", "BRIG. ", ", BRIG.", "CDE. ", ", CDE.", "CEL. ", ", CEL.", "CTE. ", ", CTE.", "DA. ", ", DA.", "DES. ", ", DES.", "DRA. ", ", DRA.", "CTE. ", ", CTE.", "ENG. ", ", ENG.", "GEN. ", ", GEN.", "GOV. ", ", GOV.", "IRMA ", ", IRMA", "MAL. ", ", MAL.", "ME. ", ", ME.", "PE. ", ", PE.", "PREF. ", ", PREF.", "PRES. ", ", PRES.", "PROFA. ", ", PROFA.", "PROF. ", ", PROF.", ", PROF", "SEN. ", ", SEN.", "VEREADOR. ", ", VEREADOR."];
+
 export const limpaStrNomeEscola = nome => {
-  return nome.replace("VER. ", "").replace(", VER.", "").replace(".", "");
+  for (let i = 0; i < SIGLA_NOME_ESCOLA.length; i++) {
+    nome = nome.replace(SIGLA_NOME_ESCOLA[i], "")
+  }
+  nome = nome.replace(".", "").replace(/ /g, "");
+  return nome;
 }
 
 export const nomeEscolaFormatar = escola => {
