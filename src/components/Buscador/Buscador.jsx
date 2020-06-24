@@ -136,6 +136,7 @@ export default class Buscador extends Component {
       lista.results.forEach(function(escola) {
         escolas.push({
           value: escola.codesc,
+          label_raw: escola.nomesc,
           label: nomeEscolaFormatar(escola)
         });
       });
@@ -346,7 +347,7 @@ export default class Buscador extends Component {
                         to={{
                           pathname: "/escolas",
                           state: {
-                            escola: escola.label
+                            escola: escola.label_raw
                           }
                         }}
                         onClick={() =>
