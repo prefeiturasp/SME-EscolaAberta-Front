@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import TabelaDetalhe from "./TabelaDetalhe";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChartBar } from "@fortawesome/free-solid-svg-icons";
-import { tipoEscolaFormatar } from "components/utils";
+import { nomeEscolaFormatar } from "components/utils";
 import ConsultarNovamente from "../ConsultarNovamente/ConsultarNovamente";
 
 
@@ -43,7 +43,7 @@ export default class TabelaEscolas extends Component {
                           aria-controls={`escola-${escola.codesc}`}
                           onClick={() =>
                             this.props.atualizarMapa(
-                              escola.nomesc,
+                              nomeEscolaFormatar(escola),
                               escola.latitude,
                               escola.longitude
                             )
@@ -57,14 +57,11 @@ export default class TabelaEscolas extends Component {
                             pathname: "/estatisticas",
                             state: {
                               codesc: escola.codesc,
-                              nomesc:
-                                tipoEscolaFormatar(escola.tipoesc) +
-                                " " +
-                                escola.nomesc
+                              nomesc: nomeEscolaFormatar(escola)
                             }
                           }}
                         >
-                          {tipoEscolaFormatar(escola.tipoesc) + " " + escola.nomesc}
+                          {nomeEscolaFormatar(escola)}
                         </Link>
                       </td>
                       <td>{escola.tipoesc}</td>
@@ -75,10 +72,7 @@ export default class TabelaEscolas extends Component {
                             pathname: "/estatisticas",
                             state: {
                               codesc: escola.codesc,
-                              nomesc:
-                                tipoEscolaFormatar(escola.tipoesc) +
-                                " " +
-                                escola.nomesc
+                              nomesc: nomeEscolaFormatar(escola)
                             }
                           }}
                         >
