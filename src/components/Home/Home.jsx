@@ -4,7 +4,7 @@ import Buscador from "../Buscador/Buscador";
 import logoEscolaAberta from "../../img/escola_aberta.png";
 import imgAluno from "../../img/aluno.png";
 import imgSociedadeGoverno from "../../img/sociedade-governo.png";
-import Rodape from "../Rodape/Rodape";
+import { Rodape } from "../Rodape";
 
 export default class Home extends Component {
   constructor(props) {

@@ -2,7 +2,7 @@ import React, { Component, lazy, Suspense } from "react";
 import Menu from "../MenuSuperior/Menu";
 import { listarDREs } from "../../services/escolas";
 import Auxiliar from "../MenuSuperior/Auxiliar";
-import Rodape from "../Rodape/Rodape";
+import { Rodape } from "../Rodape";
 import NullView from "./NullView";
 import {
   agregarDefaultDiretoriaRegional,
