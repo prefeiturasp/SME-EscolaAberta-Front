@@ -3,7 +3,7 @@ import PubSub from "pubsub-js";
 import Filtros from "./Filtros";
 import Mapa from "../Mapa/Mapa";
 import TabelaEscolas from "./Tabela";
-import Rodape from "../Rodape/Rodape";
+import { Rodape } from "../Rodape";
 import { listarEscolas } from "../../services/escolas";
 import Menu from "../MenuSuperior/Menu";
 import Auxiliar from "../MenuSuperior/Auxiliar";
