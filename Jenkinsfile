@@ -43,7 +43,7 @@ pipeline {
                     -Dsonar.projectKey=SME-EscolaAberta-Front \
                     -Dsonar.sources=. \
                     -Dsonar.host.url=http://sonar.sme.prefeitura.sp.gov.br \
-                    -Dsonar.login=fd20a2b581340184908dc853647ac1fd3970b720'
+                    -Dsonar.login=7efb0af2fd6f7ebb6007b504a4657594d6b795b5'
             }
         }
       
