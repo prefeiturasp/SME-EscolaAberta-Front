@@ -1,4 +1,5 @@
-const API_EOL = process.env.REACT_APP_API_EOL;
+const API_EOL = "REPLACE_API_EOL";
+
 
 export async function listarSeriesEstudantes(params) {
   const { codesc = '' } = params;
