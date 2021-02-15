@@ -5,7 +5,6 @@ import {
   listarServidoresEscolarizacao,
   listarServidoresPorEscola
 } from "../../services/estatisticas";
-import shortid from "shortid";
 import {
   cargosPorGrupo,
   formatarCargosProfissionais,
@@ -151,7 +150,7 @@ export default class Profissionais extends Component {
                       cargosPorGrupo.map((grupoCargo, key) => {
                         return [
                           grupoCargo[getKey(grupoCargo)].total > 0 && (
-                            <tr className="main">
+                            <tr key={key} className="main">
                               <td className="font-weight-bold">
                                 {getKey(grupoCargo)}
                               </td>
@@ -187,7 +186,7 @@ export default class Profissionais extends Component {
                                 return (
                                   cargo.formacoes.length > 0 &&
                                   grupoCargo[getKey(grupoCargo)].total > 0 && (
-                                    <tr key={indice}>
+                                    <tr key={indice_}>
                                       <td className="font-weight-bold">
                                         {cargo.tipo_cargo}
                                       </td>
@@ -224,9 +223,9 @@ export default class Profissionais extends Component {
                     <tr>
                       <td>TOTAL DE PROFISSIONAIS POR ESCOLARIDADE</td>
                       {totalPorFormacaoLista &&
-                        totalPorFormacaoLista.map(formacaoTotal => {
+                        totalPorFormacaoLista.map((formacaoTotal, key) => {
                           return (
-                            <td className="font-weight-bold bg-light">
+                            <td key={key} className="font-weight-bold bg-light">
                               {pontuarValor(formacaoTotal.total)}
                             </td>
                           );
@@ -264,7 +263,7 @@ export default class Profissionais extends Component {
                     servidoresCargos.map((grupo, key) => {
                       return [
                         grupo[getKey(grupo)].total > 0 && (
-                          <tr className="main">
+                          <tr key={key} className="main">
                             <td className="font-weight-bold">
                               {getKey(grupo)}
                               <ToggleExpandir

@@ -52,7 +52,7 @@ export default class Ambientes extends Component {
                         </tr>
                       );
                     })
-                  ) : (null)}
+                  ) : null}
                 </tbody>
               </table>
             </div>

@@ -11,8 +11,6 @@ export default class TabelaEscolas extends Component {
 
   render() {
 
-    console.log("Render ", this.props)
-
     return (
       <Fragment>
         {

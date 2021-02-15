@@ -1,5 +1,4 @@
 import { pontuarValor } from "components/utils";
-import { listarCEUs } from "services/escolas";
 
 export const inicializarTiposEscola = [
   {
