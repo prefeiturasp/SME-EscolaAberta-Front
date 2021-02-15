@@ -48,7 +48,7 @@ export async function listarServidoresEscolarizacao(params) {
 export async function listarServidoresPorEscola(params) {
   const { codesc = '' } = params;
   if (codesc) {
-    return await fetch(`${API_EOL}/servidores/${codesc}`).then(servidores =>
+    return await fetch(`${API_EOL}/servidores/${codesc}/`).then(servidores =>
         servidores.json()
     );
   }
