@@ -1,8 +1,8 @@
-const API_IDEP_LOGIN = process.env.REACT_APP_API_IDEP_LOGIN;
-const USUARIO_RF = process.env.REACT_APP_USUARIO_RF;
-const USUARIO_CPF = process.env.REACT_APP_USUARIO_CPF;
-const USUARIO_MES = process.env.REACT_APP_USUARIO_MES;
-const USUARIO_ANO = process.env.REACT_APP_USUARIO_ANO;
+const API_IDEP_LOGIN = "REPLACE_IDEP_LOGIN";
+const USUARIO_RF = "REPLACE_USUARIO_RF";
+const USUARIO_CPF = "REPLACE_USUARIO_CPF";
+const USUARIO_MES = "REPLACE_USUARIO_MES";
+const USUARIO_ANO = "REPLACE_USUARIO_ANO";
 
 export async function loginIdep() {
   const requestInfo = {
