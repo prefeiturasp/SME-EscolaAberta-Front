@@ -1,7 +1,9 @@
 import { STOP_WORDS } from "../constants";
 
-const API_EOL = "REPLACE_API_EOL";
-
+let API_EOL = "REPLACE_API_EOL";
+if (process.env.REACT_APP_NODE_ENV === "local") {
+  API_EOL = process.env.REACT_APP_API_EOL;
+}
 
 
 export async function listarEscolas(params) {
