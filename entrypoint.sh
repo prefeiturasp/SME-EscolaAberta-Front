@@ -15,4 +15,13 @@ set -xe
 
 sed -i "s,SERVER_NAME,$SERVER_NAME,g" /etc/nginx/conf.d/default.conf
 
+sed -i "s,REPLACE_API_EOL,$API_EOL,g" /usr/share/nginx/html/static/js/*.js
+sed -i "s,REPLACE_API_RUA,$API_RUA,g" /usr/share/nginx/html/static/js/*.js
+sed -i "s,REPLACE_API_CEP,$API_CEP,g" /usr/share/nginx/html/static/js/*.js
+sed -i "s,REPLACE_API_NOMINATIM,$API_NOMINATIM,g" /usr/share/nginx/html/static/js/*.js
+sed -i "s,REPLACE_IDEP_LOGIN,$IDEP_LOGIN,g" /usr/share/nginx/html/static/js/*.js
+sed -i "s,REPLACE_USUARIO_RF,$USUARIO_RF,g" /usr/share/nginx/html/static/js/*.js
+sed -i "s,REPLACE_USUARIO_CPF,$USUARIO_CPF,g" /usr/share/nginx/html/static/js/*.js
+sed -i "s,REPLACE_USUARIO_MES,$USUARIO_MES,g" /usr/share/nginx/html/static/js/*.js
+sed -i "s,REPLACE_USUARIO_ANO,$USUARIO_ANO,g" /usr/share/nginx/html/static/js/*.js
 exec "$@"

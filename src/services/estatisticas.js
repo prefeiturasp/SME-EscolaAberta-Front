@@ -1,4 +1,9 @@
-const API_EOL = process.env.REACT_APP_API_EOL;
+let API_EOL = "REPLACE_API_EOL";
+if (process.env.REACT_APP_NODE_ENV === "local") {
+  API_EOL = process.env.REACT_APP_API_EOL;
+}
+
+
 
 export async function listarSeriesEstudantes(params) {
   const { codesc = '' } = params;
@@ -48,7 +53,7 @@ export async function listarServidoresEscolarizacao(params) {
 export async function listarServidoresPorEscola(params) {
   const { codesc = '' } = params;
   if (codesc) {
-    return await fetch(`${API_EOL}/servidores/${codesc}`).then(servidores =>
+    return await fetch(`${API_EOL}/servidores/${codesc}/`).then(servidores =>
         servidores.json()
     );
   }

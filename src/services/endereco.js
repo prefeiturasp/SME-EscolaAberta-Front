@@ -1,6 +1,12 @@
-const API_RUA = process.env.REACT_APP_API_RUA;
-const API_CEP = process.env.REACT_APP_API_CEP;
-const API_LAT_LNG = process.env.REACT_APP_API_NOMINATIM;
+let API_RUA = "REPLACE_API_RUA";
+let API_CEP = "REPLACE_API_CEP";
+let API_LAT_LNG = "REPLACE_API_NOMINATIM";
+if (process.env.REACT_APP_NODE_ENV === "local") {
+  API_RUA = process.env.REACT_APP_API_RUA;
+  API_CEP = process.env.REACT_APP_API_CEP;
+  API_LAT_LNG = process.env.REACT_APP_API_NOMINATIM;
+}
+
 
 export async function buscarLogradouroPorCep(params) {
   const { cep } = params;
