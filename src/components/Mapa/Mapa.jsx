@@ -20,28 +20,28 @@ export default class Mapa extends Component {
   componentDidMount() {
     PubSub.subscribe(
       "escola",
-      function(topico, escola) {
+      function (topico, escola) {
         this.setState({ escola: escola, zoom: 15 });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "latitude",
-      function(topico, latitude) {
+      function (topico, latitude) {
         this.setState({ lat: latitude });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "longitude",
-      function(topico, longitude) {
+      function (topico, longitude) {
         this.setState({ lng: longitude });
       }.bind(this)
     );
 
     PubSub.subscribe(
       "lista-escolas",
-      function(topico, listaEscolas) {
+      function (topico, listaEscolas) {
         this.criarMarcadores(listaEscolas);
       }.bind(this)
     );
@@ -88,8 +88,8 @@ export default class Mapa extends Component {
                 <Popup>
                   <strong>
                     {tipoEscolaFormatar(marcador.escola.tipoesc) +
-                    " " +
-                    marcador.escola.nomesc}
+                      " " +
+                      marcador.escola.nomesc}
                   </strong>
                   <div>
                     {marcador.escola.endereco}, {marcador.escola.numero} -{" "}
@@ -99,6 +99,8 @@ export default class Mapa extends Component {
                     <a href={`tel:${marcador.escola.tel1}`}>
                       Tel: {marcador.escola.tel1}
                     </a>{" "}
+                    <br />
+                    Email: {marcador.escola.email}
                   </div>
                 </Popup>
               </Marker>

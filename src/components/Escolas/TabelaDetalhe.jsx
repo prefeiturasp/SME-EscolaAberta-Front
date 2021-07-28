@@ -15,9 +15,11 @@ export default class TabelaDetalhe extends Component {
           </div>
           <div>Distrito {this.props.escola.distrito}</div>
         </td>
-        <td colSpan="2">
+        <td colSpan="4">
           <h3>Contatos</h3>
-          Telefone {this.props.escola.tel1}
+          <div>Telefone {this.props.escola.tel1}</div>
+          <br />
+          <div>Email {this.props.escola.email}</div>
         </td>
         <td />
       </tr>
