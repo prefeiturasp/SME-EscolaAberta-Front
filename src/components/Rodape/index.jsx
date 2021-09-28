@@ -26,7 +26,7 @@ export const Rodape = (props) => {
                 </li>
               </ul>
               <ul className="list-unstyled mb-0 mt-0">
-                <li>Prefeito Bruno Covas:</li>
+                <li>Prefeito Ricardo Nunes:</li>
                 <li>
                   <a href="https://www.prefeitura.sp.gov.br/cidade/secretarias/comunicacao/organizacao/index.php?p=192554">
                     Equipe de Governo
