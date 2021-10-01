@@ -38,7 +38,7 @@ export const Rodape = (props) => {
                   </a>
                 </li>
                 <li>
-                  <a href="https://portal.sme.prefeitura.sp.gov.br/agenda/">
+                  <a href="https://educacao.sme.prefeitura.sp.gov.br/agenda/">
                     Agenda do Secretário
                   </a>
                 </li>
