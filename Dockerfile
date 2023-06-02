@@ -1,4 +1,4 @@
-FROM node:8.11.2 as builder
+FROM node:10.19.0 as builder
 RUN mkdir -p /opt/services/front/src
 WORKDIR /opt/services/front/src
 COPY . ./
