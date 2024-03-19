@@ -14,7 +14,9 @@ import { dataReferencia } from "services/estatisticas";
 const Escolas = lazy(() => import("./Escolas/Container"));
 const Profissionais = lazy(() => import("./Profissionais/Container"));
 const VagasMatriculas = lazy(() => import("./VagasMatriculas/Container"));
-const Ambientes = lazy(() => import("./Ambientes/Container"));
+
+// TODO removido a Aba de Ambientes a pedido da história 117151 - Suprimir dados de ambientes, na área "Conheça a rede"
+//const Ambientes = lazy(() => import("./Ambientes/Container"));
 
 export default class ConhecaRede extends Component {
   constructor(props) {
@@ -33,10 +35,10 @@ export default class ConhecaRede extends Component {
           nome: "VagasMatriculas",
           label: "Vagas e Matrículas"
         },
-        {
-          nome: "Ambientes",
-          label: "Ambientes"
-        }
+        // {
+        //   nome: "Ambientes",
+        //   label: "Ambientes"
+        // }
       ],
       diretoriasRegionais: [],
       codesc: "",
@@ -95,8 +97,8 @@ export default class ConhecaRede extends Component {
         return (
           <VagasMatriculas onDRESelected={this.onDRESelected} {...this.state} />
         );
-      case "Ambientes":
-        return <Ambientes onDRESelected={this.onDRESelected} {...this.state} />;
+      // case "Ambientes":
+      //   return <Ambientes onDRESelected={this.onDRESelected} {...this.state} />;
       default:
         return <NullView />;
     }
