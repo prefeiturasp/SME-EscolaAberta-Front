@@ -1,12 +1,12 @@
-import React, {memo} from 'react'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBars, faDollarSign} from "@fortawesome/free-solid-svg-icons";
+import React from 'react'
 import "./ptrf.css"
-import {TabelaPtrf} from "./TabelaPtrf";
+import {ExibeDadosPtrf2020} from "./ExibeDadosPtrf2020";
+import {ExibeDadosPtrf2021} from "./ExibeDadosPtrf2021";
+import {ExibeDadosPtrf2022} from "./ExibeDadosPtrf2022";
+import {ExibeDadosPtrf2023} from "./ExibeDadosPtrf2023";
+import NullView from "../NullView";
 
-const Ptrf = ({dadosDaEscolaPtrf}) => {
-
-  const indice = "abc";
+const Ptrf = ({codesc}) => {
 
   return (
     <>
@@ -14,40 +14,31 @@ const Ptrf = ({dadosDaEscolaPtrf}) => {
         <div className="estatisticas-cabecalho mb-5">
           <h1 className="border-bottom font-weight-light">Programa de Transferência de Recursos Financeiros – PTRF</h1>
           <div className="referencia mt-1 mb-5">
-            Verba recebida pela escola em 2020
+            Verba recebida pela escola
           </div>
         </div>
       </div>
-      <div key={indice} className="card shadow-sm mt-3 mb-3">
-        <div className="card-header bg-white d-flex align-items-center">
-          <FontAwesomeIcon icon={faDollarSign} className="cor-azul"/>
-          <div className="ml-3 fonte-14 font-weight-bold">
-            Total repassado para a escola em 2020: R$ {dadosDaEscolaPtrf.TOTAL}
-          </div>
-          <a
-            className="text-decoration-none cor-cinza ml-auto"
-            data-toggle="collapse"
-            data-target={`#${indice}`}
-            aria-expanded="false"
-            aria-controls={`${indice}`}
-            href={`#${indice}`}
-          >
-            <FontAwesomeIcon icon={faBars} className="stretched-link"/>
-          </a>
-        </div>
-        <div className="collapse fade" id={`${indice}`}>
-          <div className="card-body p-0">
-            <div className="table-responsive">
-              <TabelaPtrf
-                dadosDaEscolaPtrf={dadosDaEscolaPtrf}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      {codesc ? (
+        <>
+          <ExibeDadosPtrf2020
+            codesc={codesc}
+          />
+          <ExibeDadosPtrf2021
+            codesc={codesc}
+          />
+          <ExibeDadosPtrf2022
+            codesc={codesc}
+          />
+          <ExibeDadosPtrf2023
+            codesc={codesc}
+          />
+        </>
+      ):
+        <NullView/>
+      }
     </>
   )
 };
 
-export default memo(Ptrf)
+export default Ptrf
 
