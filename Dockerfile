@@ -1,4 +1,4 @@
-FROM node:10.19.0 as builder
+FROM node:18-alpine as builder
 RUN mkdir -p /opt/services/front/src
 WORKDIR /opt/services/front/src
 COPY . ./
