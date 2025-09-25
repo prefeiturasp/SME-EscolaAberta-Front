@@ -4,6 +4,8 @@ import {ExibeDadosPtrf2020} from "./ExibeDadosPtrf2020";
 import {ExibeDadosPtrf2021} from "./ExibeDadosPtrf2021";
 import {ExibeDadosPtrf2022} from "./ExibeDadosPtrf2022";
 import {ExibeDadosPtrf2023} from "./ExibeDadosPtrf2023";
+import {ExibeDadosPtrf2024} from "./ExibeDadosPtrf2024";
+import {ExibeDadosPtrf2025} from "./ExibeDadosPtrf2025";
 import NullView from "../NullView";
 
 const Ptrf = ({codesc}) => {
@@ -30,6 +32,12 @@ const Ptrf = ({codesc}) => {
             codesc={codesc}
           />
           <ExibeDadosPtrf2023
+            codesc={codesc}
+          />
+          <ExibeDadosPtrf2024
+            codesc={codesc}
+          />
+          <ExibeDadosPtrf2025
             codesc={codesc}
           />
         </>
