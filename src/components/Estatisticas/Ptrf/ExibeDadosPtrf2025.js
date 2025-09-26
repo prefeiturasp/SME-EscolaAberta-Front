@@ -1,22 +1,21 @@
 import React, {useEffect, useState} from "react";
-import {DadosPtrf2023} from "./DadosPtrf2023";
+import {DadosPtrf2025} from "./DadosPtrf2025";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faDollarSign} from "@fortawesome/free-solid-svg-icons";
-import {TabelaPtrf2023} from "./TabelaPtrf2023";
+import {TabelaPtrf2025} from "./TabelaPtrf2025";
 
-export const ExibeDadosPtrf2023 = ({codesc}) => {
+export const ExibeDadosPtrf2025 = ({codesc}) => {
 
   const [dadosDaEscolaPtrf, setDadosDaEscolaPtrf] = useState({})
 
   useEffect(()=>{
-    let escola = DadosPtrf2023.filter(item => String(item.EOL) === String(codesc));
+    let escola = DadosPtrf2025.filter(item => String(item.EOL) === String(codesc));
     if (escola && escola.length > 0){
       setDadosDaEscolaPtrf({
         EOL: escola[0].EOL,
         UNIDADE: escola[0].UNIDADE,
         DRE: escola[0].DRE,
         REP_1_PARC: escola[0].REP_1_PARC,
-        REP_1_ADIC: escola[0].REP_1_ADIC,
         REP_2_PARC: escola[0].REP_2_PARC,
         REP_2_ADIC: escola[0].REP_2_ADIC,
         REP_2_GREMIO: escola[0].REP_2_GREMIO,
@@ -29,27 +28,27 @@ export const ExibeDadosPtrf2023 = ({codesc}) => {
   }, [codesc])
 
   return (
-    <div key='dadosPtrf2023' className="card shadow-sm mt-3 mb-3">
+    <div key='dadosPtrf2025' className="card shadow-sm mt-3 mb-3">
       <div className="card-header bg-white d-flex align-items-center">
         <FontAwesomeIcon icon={faDollarSign} className="cor-azul"/>
         <div className="ml-3 fonte-14 font-weight-bold">
-          2023 - Total repassado para a escola: R$ {dadosDaEscolaPtrf.TOTAL}
+          2025 - Total repassado para a escola: R$ {dadosDaEscolaPtrf.TOTAL}
         </div>
         <a
           className="text-decoration-none cor-cinza ml-auto"
           data-toggle="collapse"
-          data-target={`#dadosPtrf2023`}
+          data-target={`#dadosPtrf2025`}
           aria-expanded="false"
-          aria-controls={`dadosPtrf2023`}
-          href={`#dadosPtrf2023`}
+          aria-controls={`dadosPtrf2025`}
+          href={`#dadosPtrf2025`}
         >
           <FontAwesomeIcon icon={faBars} className="stretched-link"/>
         </a>
       </div>
-      <div className="collapse fade" id='dadosPtrf2023'>
+      <div className="collapse fade" id='dadosPtrf2025'>
         <div className="card-body p-0">
           <div className="table-responsive">
-            <TabelaPtrf2023
+            <TabelaPtrf2025
               dadosDaEscolaPtrf={dadosDaEscolaPtrf}
             />
           </div>
