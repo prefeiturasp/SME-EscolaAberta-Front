@@ -7,6 +7,7 @@ import Estatisticas from "./components/Estatisticas/Estatisticas";
 import ConhecaRede from "./components/ConhecaRede";
 import ReactGA from 'react-ga';
 //ReactGA.initialize('UA-149756375-1');
+import "App.css"
 
 ReactGA.initialize([{
   // https://educacao.sme.prefeitura.sp.gov.br/escolaaberta/
