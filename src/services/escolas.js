@@ -6,7 +6,7 @@ if (process.env.REACT_APP_NODE_ENV === "local") {
 }
 
 
-export async function listarEscolas(params) {
+export async function listarEscolas(params, options = {}) {
   let {
     escola = "",
     bairro = "",
@@ -28,7 +28,8 @@ export async function listarEscolas(params) {
     escola = escola.substr(escola.indexOf(" ") + 1);
   }
   return await fetch(
-    `${API_EOL}/escolas/?search=${escola}&bairro=${bairro}&distrito=${distrito}&tipoesc=${tipo}&dre=${dre}&subpref=${subpref}&page=${pagina}`
+    `${API_EOL}/escolas/?search=${escola}&bairro=${bairro}&distrito=${distrito}&tipoesc=${tipo}&dre=${dre}&subpref=${subpref}&page=${pagina}`,
+    options
   ).then((escolas) => escolas.json());
 }
 
@@ -46,16 +47,17 @@ export async function listarBairros(params) {
   );
 }
 
-export async function listarDistritos(params) {
+export async function listarDistritos(params, options = {}) {
   const { distrito = "" } = params;
   return await fetch(
-    `${API_EOL}/distritos/?search=${distrito}`
+    `${API_EOL}/distritos/?search=${distrito}`,
+    options
   ).then((distritos) => distritos.json());
 }
 
-export async function listarSubpref(params) {
+export async function listarSubpref(params, options = {}) {
   const { subpref = "" } = params;
-  return await fetch(`${API_EOL}/subpref/?search=${subpref}`).then((subprefs) =>
+  return await fetch(`${API_EOL}/subpref/?search=${subpref}`, options).then((subprefs) =>
     subprefs.json()
   );
 }

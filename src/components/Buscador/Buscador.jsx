@@ -17,6 +17,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow, faClock } from "@fortawesome/free-solid-svg-icons";
 import { nomeEscolaFormatar } from "components/utils";
 
+const MINIMO_CARACTERES_BUSCA = 4;
+const ATRASO_BUSCA_MS = 500;
+
 export default class Buscador extends Component {
   constructor(props) {
     super(props);
@@ -35,11 +38,35 @@ export default class Buscador extends Component {
     this.trataErros = this.trataErros.bind(this);
     this.mostrarBusca = this.mostrarBusca.bind(this);
     this.salvarHistoricoBusca = this.salvarHistoricoBusca.bind(this);
+    this.buscaAtual = 0;
+    this.termoAtual = "";
   }
 
   componentDidMount() {
     this.carregarHistorico();
   }
+
+  componentWillUnmount() {
+    this.cancelarBusca();
+  }
+
+  cancelarBusca = () => {
+    clearTimeout(this.buscaTimeout);
+    this.buscaAtual += 1;
+    if (this.buscaController) {
+      this.buscaController.abort();
+    }
+  };
+
+  limparResultados = () => {
+    this.setState({
+      escolasLista: [],
+      bairrosLista: [],
+      distritosLista: [],
+      subprefsLista: [],
+      logradourosLista: []
+    });
+  };
 
   carregarHistorico() {
     const cookiesLista = Object.entries(cookie.loadAll());
@@ -69,57 +96,59 @@ export default class Buscador extends Component {
   }
 
   buscarPorTermo = e => {
-    let escolas = [];
-    let bairros = [];
-    let distritos = [];
-    let subprefs = [];
-    let ruas = [];
-    if (e.target.value.length >= 3) {
-      if (!isNaN(e.target.value)) {
-        this.buscarLogradouroCep(e.target.value);
-        this.setState({ escolasLista: [] });
-        this.setState({ bairrosLista: [] });
-        this.setState({ distritosLista: [] });
-        this.setState({ subprefsLista: [] });
-      } else {
-        escolas = this.buscarEscolasPorNome(e.target.value);
-        distritos = this.buscarDistritos(e.target.value);
-        // bairros = this.buscarBairros(e.target.value);
-        subprefs = this.buscarSubprefs(e.target.value);
-
-        buscarLatLngPorLogradouroV2({ logradouro: e.target.value }).then(
-          localizacoes => {
-            localizacoes.features
-              .filter(local => local.properties.street !== undefined)
-              .forEach(function(local) {
-                let nome =
-                  local.properties.street +
-                  ", " +
-                  (local.properties.neighbourhood ||
-                    local.properties.localadmin);
-                ruas.push({
-                  value: {
-                    lat: local.geometry.coordinates[1],
-                    lon: local.geometry.coordinates[0]
-                  },
-                  label: nome
-                });
-              });
-          }
-        );
-
-        setTimeout(
-          function() {
-            this.setState({ logradourosLista: ruas });
-            this.setState({ escolasLista: escolas });
-            this.setState({ bairrosLista: bairros });
-            this.setState({ distritosLista: distritos });
-            this.setState({ subprefsLista: subprefs });
-          }.bind(this),
-          1000
-        );
-      }
+    const termo = e.target.value.trim();
+    if (termo === this.termoAtual) {
+      return;
     }
+    this.termoAtual = termo;
+    this.cancelarBusca();
+    this.limparResultados();
+    if (termo.length < MINIMO_CARACTERES_BUSCA) {
+      return;
+    }
+    const buscaAtual = this.buscaAtual;
+    this.buscaTimeout = setTimeout(
+      () => this.executarBusca(termo, buscaAtual),
+      ATRASO_BUSCA_MS
+    );
+  };
+
+  executarBusca = async (termo, buscaAtual) => {
+    this.buscaController = new AbortController();
+    const options = { signal: this.buscaController.signal };
+    if (!isNaN(termo)) {
+      const ruas = await this.buscarLogradouroCep(termo, options).catch(() => []);
+      if (buscaAtual === this.buscaAtual) {
+        this.setState({ logradourosLista: ruas });
+      }
+      return;
+    }
+
+    const consultas = [
+      ["escolasLista", this.buscarEscolasPorNome(termo, options)],
+      ["distritosLista", this.buscarDistritos(termo, options)],
+      ["subprefsLista", this.buscarSubprefs(termo, options)],
+      ["logradourosLista", buscarLatLngPorLogradouroV2({ logradouro: termo }, options).then(
+        localizacoes => localizacoes.features
+          .filter(local => local.properties.street !== undefined)
+          .map(local => ({
+            value: {
+              lat: local.geometry.coordinates[1],
+              lon: local.geometry.coordinates[0]
+            },
+            label: local.properties.street + ", " +
+              (local.properties.neighbourhood || local.properties.localadmin)
+          }))
+      )]
+    ];
+
+    await Promise.all(consultas.map(([campo, consulta]) =>
+      consulta.catch(() => []).then(resultados => {
+        if (buscaAtual === this.buscaAtual) {
+          this.setState({ [campo]: resultados });
+        }
+      })
+    ));
   };
 
   removerAcentos = string_com_acentuacao => {
@@ -128,20 +157,16 @@ export default class Buscador extends Component {
       .replace(/[\u0300-\u036f]/g, ""); // Remove acentos
   };
 
-  buscarEscolasPorNome(e) {
-    let escolas = [];
+  buscarEscolasPorNome(e, options) {
     const string_sem_acento = this.removerAcentos(e);
 
-    listarEscolas({ escola: string_sem_acento }).then(lista => {
-      lista.results.forEach(function(escola) {
-        escolas.push({
-          value: escola.codesc,
-          label_raw: escola.nomesc,
-          label: nomeEscolaFormatar(escola)
-        });
-      });
-    });
-    return escolas;
+    return listarEscolas({ escola: string_sem_acento }, options).then(lista =>
+      lista.results.map(escola => ({
+        value: escola.codesc,
+        label_raw: escola.nomesc,
+        label: nomeEscolaFormatar(escola)
+      }))
+    );
   }
 
   buscarBairros(e) {
@@ -154,54 +179,46 @@ export default class Buscador extends Component {
     return bairros;
   }
 
-  buscarDistritos(e) {
-    let distritos = [];
-    listarDistritos({ distrito: e }).then(lista => {
-      lista.results.forEach(function(distrito) {
-        distritos.push({ label: distrito.distrito });
-      });
-    });
-    return distritos;
+  buscarDistritos(e, options) {
+    return listarDistritos({ distrito: e }, options).then(lista =>
+      lista.results.map(distrito => ({ label: distrito.distrito }))
+    );
   }
 
-  buscarSubprefs(e) {
-    let subprefs = [];
-    listarSubpref({ subpref: e }).then(lista => {
-      lista.results.forEach(function(subpref) {
-        subprefs.push({ label: subpref.subpref });
-      });
-    });
-    return subprefs;
+  buscarSubprefs(e, options) {
+    return listarSubpref({ subpref: e }, options).then(lista =>
+      lista.results.map(subpref => ({ label: subpref.subpref }))
+    );
   }
 
-  buscarLogradouroCep(e) {
-    buscarLogradouroPorCep({ cep: e }).then(logradouro => {
-      buscarLatLngPorLogradouro({ logradouro: logradouro.logradouro }).then(
-        localizacoes => {
-          let ruas = [];
-          localizacoes.results.forEach(function(local) {
-            if (local.type.indexOf("residential") !== -1 && ruas.length < 1) {
-              ruas.push({
-                value: { lat: local.lat, lon: local.lon },
-                label: local.name
-              });
-            }
-          });
-          setTimeout(
-            function() {
-              this.setState({ logradourosLista: ruas });
-            }.bind(this),
-            1000
-          );
-        }
-      );
-    });
+  async buscarLogradouroCep(e, options) {
+    const logradouro = await buscarLogradouroPorCep({ cep: e }, options);
+    if (options.signal.aborted || !logradouro.logradouro) {
+      return [];
+    }
+    const localizacoes = await buscarLatLngPorLogradouro(
+      { logradouro: logradouro.logradouro }, options
+    );
+    return localizacoes.results
+      .filter(local => local.type.indexOf("residential") !== -1)
+      .slice(0, 1)
+      .map(local => ({
+        value: { lat: local.lat, lon: local.lon },
+        label: local.name
+      }));
   }
 
   retornaLocalizacao() {
+    this.cancelarBusca();
+    this.limparResultados();
+    const buscaAtual = this.buscaAtual;
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
-        this.defineLatitudeLongitude,
+        position => {
+          if (buscaAtual === this.buscaAtual) {
+            this.defineLatitudeLongitude(position);
+          }
+        },
         this.trataErros
       );
     } else {
@@ -210,26 +227,23 @@ export default class Buscador extends Component {
   }
 
   defineLatitudeLongitude(position) {
-    let ruas = [];
-    this.setState({ escolasLista: [] });
-    this.setState({ bairrosLista: [] });
-    this.setState({ distritosLista: [] });
-    this.setState({ logradourosLista: [] });
+    const buscaAtual = this.buscaAtual;
+    this.buscaController = new AbortController();
     buscaLogradouroPorLatLng({
       lat: position.coords.latitude,
       lng: position.coords.longitude
-    }).then(logradouro => {
-      ruas.push({
-        value: { lat: logradouro.lat, lon: logradouro.lon },
-        label: logradouro.address.road
-      });
+    }, { signal: this.buscaController.signal }).then(logradouro => {
+      if (buscaAtual === this.buscaAtual) {
+        this.setState({ logradourosLista: [{
+          value: { lat: logradouro.lat, lon: logradouro.lon },
+          label: logradouro.address.road
+        }] });
+      }
+    }).catch(erro => {
+      if (buscaAtual === this.buscaAtual && erro.name !== "AbortError") {
+        this.trataErros(erro);
+      }
     });
-    setTimeout(
-      function() {
-        this.setState({ logradourosLista: ruas });
-      }.bind(this),
-      1000
-    );
   }
 
   trataErros(message) {
@@ -260,6 +274,7 @@ export default class Buscador extends Component {
   }
 
   salvarHistoricoBusca(busca) {
+    this.cancelarBusca();
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
     cookie.save(
@@ -286,7 +301,7 @@ export default class Buscador extends Component {
             type="text"
             className="form-control form-control-lg rounded-pill shadow d-inline-block h-100 pt-3 pb-3"
             placeholder="Encontre uma escola pelo nome ou endereço"
-            onKeyUp={this.buscarPorTermo}
+            onChange={this.buscarPorTermo}
             onFocus={this.mostrarBusca}
             onBlur={this.mostrarBusca}
           />
@@ -316,6 +331,7 @@ export default class Buscador extends Component {
                     return (
                       <Link
                         key={indice}
+                        onClick={this.cancelarBusca}
                         to={{
                           pathname: "/escolas",
                           state: {
@@ -458,6 +474,7 @@ export default class Buscador extends Component {
                     return (
                       <Link
                         key={indice}
+                        onClick={this.cancelarBusca}
                         to={{
                           pathname: "/escolas",
                           state: {
