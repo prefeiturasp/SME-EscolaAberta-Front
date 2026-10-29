@@ -210,6 +210,10 @@ export default class Buscador extends Component {
 
   retornaLocalizacao() {
     this.cancelarBusca();
+    this.termoAtual = "";
+    if (this.inputBusca) {
+      this.inputBusca.value = "";
+    }
     this.limparResultados();
     const buscaAtual = this.buscaAtual;
     if ("geolocation" in navigator) {
