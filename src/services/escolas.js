@@ -28,7 +28,7 @@ export async function listarEscolas(params, options = {}) {
     escola = escola.substr(escola.indexOf(" ") + 1);
   }
   return await fetch(
-    `${API_EOL}/escolas/?search=${escola}&bairro=${bairro}&distrito=${distrito}&tipoesc=${tipo}&dre=${dre}&subpref=${subpref}&page=${pagina}`,
+    `${API_EOL}/escolas/?search=${encodeURIComponent(escola)}&bairro=${encodeURIComponent(bairro)}&distrito=${encodeURIComponent(distrito)}&tipoesc=${encodeURIComponent(tipo)}&dre=${encodeURIComponent(dre)}&subpref=${encodeURIComponent(subpref)}&page=${encodeURIComponent(pagina)}`,
     options
   ).then((escolas) => escolas.json());
 }
@@ -42,7 +42,7 @@ export async function listarEscolasLocalizacao(params) {
 
 export async function listarBairros(params) {
   const { bairro = "" } = params;
-  return await fetch(`${API_EOL}/bairros/?search=${bairro}`).then((bairros) =>
+  return await fetch(`${API_EOL}/bairros/?search=${encodeURIComponent(bairro)}`).then((bairros) =>
     bairros.json()
   );
 }
@@ -50,14 +50,14 @@ export async function listarBairros(params) {
 export async function listarDistritos(params, options = {}) {
   const { distrito = "" } = params;
   return await fetch(
-    `${API_EOL}/distritos/?search=${distrito}`,
+    `${API_EOL}/distritos/?search=${encodeURIComponent(distrito)}`,
     options
   ).then((distritos) => distritos.json());
 }
 
 export async function listarSubpref(params, options = {}) {
   const { subpref = "" } = params;
-  return await fetch(`${API_EOL}/subpref/?search=${subpref}`, options).then((subprefs) =>
+  return await fetch(`${API_EOL}/subpref/?search=${encodeURIComponent(subpref)}`, options).then((subprefs) =>
     subprefs.json()
   );
 }
