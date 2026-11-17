@@ -8,28 +8,30 @@ if (process.env.REACT_APP_NODE_ENV === "local") {
 }
 
 
-export async function buscarLogradouroPorCep(params) {
+export async function buscarLogradouroPorCep(params, options = {}) {
   const { cep } = params;
-  return await fetch(`${API_CEP}${cep}/json`).then(logradouro =>
+  return await fetch(`${API_CEP}${cep}/json`, options).then(logradouro =>
     logradouro.json()
   );
 }
 
-export async function buscarLatLngPorLogradouro(params) {
+export async function buscarLatLngPorLogradouro(params, options = {}) {
   const { logradouro } = params;
-  return await fetch(`${API_RUA}${logradouro}.js`).then(local => local.json());
+  return await fetch(`${API_RUA}${encodeURIComponent(logradouro)}.js`, options).then(local => local.json());
 }
 
-export async function buscarLatLngPorLogradouroV2(params) {
+export async function buscarLatLngPorLogradouroV2(params, options = {}) {
   const { logradouro } = params;
   return await fetch(
-    `https://georef.sme.prefeitura.sp.gov.br/v1/search?text=${logradouro}&size=10&boundary.gid=whosonfirst:locality:101965533`
+    `https://georef.sme.prefeitura.sp.gov.br/v1/search?text=${encodeURIComponent(logradouro)}&size=10&boundary.gid=whosonfirst:locality:101965533`,
+    options
   ).then(local => local.json());
 }
 
-export async function buscaLogradouroPorLatLng(params) {
+export async function buscaLogradouroPorLatLng(params, options = {}) {
   const { lat, lng } = params;
   return await fetch(
-    `${API_LAT_LNG}?format=json&lat=${lat}&lon=${lng}&zoom=17`
+    `${API_LAT_LNG}?format=json&lat=${lat}&lon=${lng}&zoom=17`,
+    options
   ).then(local => local.json());
 }
